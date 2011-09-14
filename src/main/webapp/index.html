@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<title>DexBoard</title>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+	<style>
+		table tr {
+			border: 1px solid black;
+		}
+
+		table tr td {
+			padding: 3px;
+		}
+	</style>
+</head>
+
+<body>
+	<table>
+	</table>
+</body>
+
+<script>
+	$.get('/dados/397', function(dados) {
+		var tabela = $('table');
+		for (var chave in dados) {
+			var valor = dados[chave];
+			var novaColuna1 = $('<td>').text(chave);
+			var novaColuna2 = $('<td>').text(valor);
+			var novaLinha = $('<tr>').append(novaColuna1).append(novaColuna2);
+			tabela.append(novaLinha);
+		}
+	});
+</script>
+
+</html>
