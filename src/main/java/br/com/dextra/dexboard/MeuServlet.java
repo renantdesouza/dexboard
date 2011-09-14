@@ -7,13 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.JsonElement;
+
 public class MeuServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -1248500946944090403L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.setContentType("text/plain");
-		resp.getWriter().println("Hello World");
+		// XXX
+		int id = Integer.parseInt(req.getPathInfo().split("/")[1]);
+
+		JsonElement dados = PmaDataFetcher.fetchData(id);
+
+		resp.setContentType("application/json");
+		resp.getWriter().println(dados);
 	}
 }
