@@ -1,10 +1,10 @@
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
     <servlet>
-        <servlet-name>MeuServlet</servlet-name>
-        <servlet-class>br.com.dextra.dexboard.MeuServlet</servlet-class>
+        <servlet-name>DadosServlet</servlet-name>
+        <servlet-class>br.com.dextra.dexboard.DadosServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>MeuServlet</servlet-name>
+        <servlet-name>DadosServlet</servlet-name>
         <url-pattern>/dados/*</url-pattern>
     </servlet-mapping>
 </web-app>
