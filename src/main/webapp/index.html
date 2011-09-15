@@ -23,14 +23,18 @@
 </body>
 
 <script>
-	$.get('/dados/397', function(dados) {
-		var tabela = $('table');
-		for (var chave in dados) {
-			var valor = dados[chave];
-			var novaColuna1 = $('<td>').text(chave);
-			var novaColuna2 = $('<td>').text(valor);
-			var novaLinha = $('<tr>').append(novaColuna1).append(novaColuna2);
-			tabela.append(novaLinha);
+	$.get('/dados/projetos', function(projetos) {
+		for (var projeto in projetos) {
+
+			for (var chave in projeto) {
+				var valor = dados[chave];
+
+				var novaColuna1 = $('<td>').text(chave);
+				var novaColuna2 = $('<td>').text(valor);
+				var novaLinha = $('<tr>').append(novaColuna1).append(novaColuna2);
+
+				$('table').append(novaLinha);
+			}
 		}
 	});
 </script>
