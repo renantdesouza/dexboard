@@ -11,19 +11,26 @@
 			padding: 10px;
 			border-bottom: 1px solid black;
 		}
+
+		table {
+			margin-bottom: 2em;
+		}
 	</style>
 </head>
 
 <body>
-	<table>
-	</table>
+	<h1>Projetos</h1>
+	<div id="projetos">Carregando...</div>
 </body>
 
 <script>
 	$.get('dados/projetos', function(projetos) {
+		var divProjetos = $('div#projetos').text('');
+
 		for (var i = 0; i < projetos.length; ++i) {
 			var projeto = projetos[i];
 
+			var novaTabela = $('<table>').appendTo(divProjetos);
 			for (var campo in projeto) {
 				var valor = projeto[campo];
 
@@ -31,7 +38,7 @@
 				var novaColuna2 = $('<td>').text(valor);
 				var novaLinha = $('<tr>').append(novaColuna1).append(novaColuna2);
 
-				$('table').append(novaLinha);
+				novaTabela.append(novaLinha);
 			}
 		}
 	});

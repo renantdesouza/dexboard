@@ -19,13 +19,13 @@ public class UrlDataFetchService {
 
 	public static JsonElement baixarJson(String uri) {
 		try {
-			LOG.debug("Baixando JSON da URI: " + uri);
+			LOG.info("Baixando JSON da URI: " + uri);
 			URLFetchService urlFetchService = URLFetchServiceFactory.getURLFetchService();
 			HTTPResponse response = urlFetchService.fetch(new URL(uri));
 			String json = new String(response.getContent());
-			LOG.debug("JSON baixado: {");
-			LOG.debug(json);
-			LOG.debug("}");
+			LOG.info("JSON baixado: {");
+			LOG.info(json);
+			LOG.info("}");
 			return JsonUtil.parse(json);
 		} catch (MalformedURLException e) {
 			throw new RuntimeException(e);
