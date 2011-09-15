@@ -1,46 +1,45 @@
 package br.com.dextra.dexboard;
 
-import com.google.gson.JsonArray;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.google.gson.JsonObject;
 
-public class Planilha {
+public abstract class Planilha {
 
-	public static final String CHAVE_PLANILHA = "0Au2Lk990DvFfdGVDQm9rTW1OYmw3dW5yOUVQSkdPSGc";
+	protected final String chave;
 
-	private static String gerarUri(String celula) {
-		return "https://spreadsheets.google.com/feeds/cells/" + CHAVE_PLANILHA + "/1/public/values/" + celula
-				+ "?alt=json";
+	protected Planilha(String chave) {
+		this.chave = chave;
 	}
 
-	private static String gerarUri(int linha, int coluna) {
+	@SuppressWarnings("unused")
+	// O parametro boolean serve somente para diferenciar os construtores
+	protected Planilha(String uri, boolean criarUsandoUri) {
+
+		// Usa expressao regular para extrair da URI a chave da planilha
+
+		Matcher matcher = Pattern.compile("key=(.+?)([&#]|$)").matcher(uri);
+
+		if (!matcher.matches()) {
+			throw new IllegalArgumentException("Esta URI nao representa uma planilha do Google Docs valida: " + uri);
+		}
+
+		this.chave = matcher.group(1);
+	}
+
+	protected String gerarUri(String celula) {
+		return "https://spreadsheets.google.com/feeds/cells/" + chave + "/1/public/values/" + celula + "?alt=json";
+	}
+
+	protected String gerarUri(int linha, int coluna) {
 		return gerarUri("R" + linha + "C" + coluna);
 	}
 
-	private static String recuperarConteudoCelula(int linha, int coluna) {
-		JsonObject json = UrlDataFetchService.baixarJson(gerarUri(linha, coluna)).getAsJsonObject();
-		return json.getAsJsonObject("entry").getAsJsonObject("content").get("$t").getAsString();
+	protected String recuperarConteudoCelula(int linha, int coluna) {
+		JsonObject json = Utils.baixarJson(gerarUri(linha, coluna)).getAsJsonObject();
+		String asString = json.getAsJsonObject("entry").getAsJsonObject("content").get("$t").getAsString();
+		return asString.isEmpty() ? null : asString;
 	}
 
-	private static int buscarQuantidadeProjetos() {
-		return Integer.parseInt(recuperarConteudoCelula(2, 5));
-	}
-
-	private static int buscarIdProjeto(int i) {
-		return Integer.parseInt(recuperarConteudoCelula(i + 2, 2));
-	}
-
-	public static JsonArray buscarDadosProjetos() {
-		JsonArray ret = new JsonArray();
-
-		int qtdeProjetos = buscarQuantidadeProjetos();
-
-		for (int i = 0; i < qtdeProjetos; ++i) {
-			int idProjetoAtual = buscarIdProjeto(i);
-			JsonObject projeto = new JsonObject();
-			projeto.addProperty("id", idProjetoAtual);
-			ret.add(projeto);
-		}
-
-		return ret;
-	}
 }

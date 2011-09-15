@@ -19,6 +19,8 @@ public class DadosServlet extends HttpServlet {
 
 		if (pathInfo.equals("/projetos")) {
 			resp.getWriter().print(Projeto.buscarDadosProjetos());
+		} else {
+			resp.getWriter().print("Caminho invalido: " + pathInfo);
 		}
 	}
 
