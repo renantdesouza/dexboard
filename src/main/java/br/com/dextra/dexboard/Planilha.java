@@ -13,6 +13,10 @@ public abstract class Planilha {
 		this.chave = chave;
 	}
 
+	public static void main(String[] args) {
+		System.out.println(new PlanilhaProjeto("https://docs.google.com/a/dextra-sw.com/spreadsheet/ccc?key=0AuUR54zFnHLOdHdrR3BNVHJ0b2J2QWRsekRxR29RN2c&hl=en_US#gid=0").chave);
+	}
+
 	@SuppressWarnings("unused")
 	// O parametro boolean serve somente para diferenciar os construtores
 	protected Planilha(String uri, boolean criarUsandoUri) {
@@ -21,7 +25,7 @@ public abstract class Planilha {
 
 		Matcher matcher = Pattern.compile("key=(.+?)([&#]|$)").matcher(uri);
 
-		if (!matcher.matches()) {
+		if (!matcher.find()) {
 			throw new IllegalArgumentException("Esta URI nao representa uma planilha do Google Docs valida: " + uri);
 		}
 

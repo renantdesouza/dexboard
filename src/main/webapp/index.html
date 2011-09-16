@@ -7,7 +7,7 @@
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 	<style>
-		table tr td {
+		table td {
 			padding: 10px;
 			border-bottom: 1px solid black;
 		}
@@ -25,18 +25,26 @@
 
 <script>
 	$.get('dados/projetos', function(projetos) {
-		var divProjetos = $('div#projetos').text('');
+		var divProjetos = $('div#projetos').empty();
 
 		for (var i = 0; i < projetos.length; ++i) {
 			var projeto = projetos[i];
 
 			var novaTabela = $('<table>').appendTo(divProjetos);
+
+			var novaColuna1 = $('<td>').text('Projeto');
+			var novaColuna2 = $('<td>').text(projeto.projeto);
+			var novaLinha = $('<tr>').append(novaColuna1).append(novaColuna2);
+			novaTabela.append(novaLinha);
+
+			delete projeto.projeto;
+
 			for (var campo in projeto) {
 				var valor = projeto[campo];
 
-				var novaColuna1 = $('<td>').text(campo);
-				var novaColuna2 = $('<td>').text(valor);
-				var novaLinha = $('<tr>').append(novaColuna1).append(novaColuna2);
+				novaColuna1 = $('<td>').text(campo);
+				novaColuna2 = $('<td>').text(valor);
+				novaLinha = $('<tr>').append(novaColuna1).append(novaColuna2);
 
 				novaTabela.append(novaLinha);
 			}

@@ -9,7 +9,7 @@ public class Projeto {
 	private static final PlanilhaDexboard PLANILHA_DEXBOARD = new PlanilhaDexboard(
 			"0Au2Lk990DvFfdGVDQm9rTW1OYmw3dW5yOUVQSkdPSGc");
 
-	private static final ServicoPma SERVICO_PMA = new ServicoPma("http://172.16.129.159:8001/services/indicadores",
+	private static final ServicoPma SERVICO_PMA = new ServicoPma("http://50.19.12.252:3000/services/indicadores",
 			"ac4ef0ec195ed24ab08d1e4a8a3a1ed0");
 
 	public static JsonArray buscarDadosProjetos() {
