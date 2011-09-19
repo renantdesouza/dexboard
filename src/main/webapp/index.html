@@ -14,6 +14,8 @@
 
 		table {
 			margin-bottom: 2em;
+			padding: 2em;
+			border: 2px solid black;
 		}
 	</style>
 </head>
@@ -24,32 +26,36 @@
 </body>
 
 <script>
+
+	function tabularObjeto(objeto) {
+		var novaTabela = $('<table>');
+
+		for (var campo in objeto) {
+			var valor = objeto[campo];
+
+			var novaLinha = $('<tr>').appendTo(novaTabela);
+			var novaColuna1 = $('<td>').text(campo);
+			var novaColuna2 = $('<td>');
+			novaLinha.append(novaColuna1).append(novaColuna2);
+
+			if (typeof valor == 'object') {
+				novaColuna2.append(tabularObjeto(objeto[campo]));
+			} else {
+				novaColuna2.text(valor);
+			}
+		}
+
+		return novaTabela;
+	}
+
 	$.get('dados/projetos', function(projetos) {
 		var divProjetos = $('div#projetos').empty();
 
 		for (var i = 0; i < projetos.length; ++i) {
-			var projeto = projetos[i];
-
-			var novaTabela = $('<table>').appendTo(divProjetos);
-
-			var novaColuna1 = $('<td>').text('Projeto');
-			var novaColuna2 = $('<td>').text(projeto.projeto);
-			var novaLinha = $('<tr>').append(novaColuna1).append(novaColuna2);
-			novaTabela.append(novaLinha);
-
-			delete projeto.projeto;
-
-			for (var campo in projeto) {
-				var valor = projeto[campo];
-
-				novaColuna1 = $('<td>').text(campo);
-				novaColuna2 = $('<td>').text(valor);
-				novaLinha = $('<tr>').append(novaColuna1).append(novaColuna2);
-
-				novaTabela.append(novaLinha);
-			}
+			divProjetos.append(tabularObjeto(projetos[i]));
 		}
 	});
+
 </script>
 
 </html>

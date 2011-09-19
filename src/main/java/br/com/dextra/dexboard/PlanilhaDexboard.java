@@ -6,11 +6,13 @@ import com.google.gson.JsonObject;
 public class PlanilhaDexboard extends Planilha {
 
 	public PlanilhaDexboard(String chavePlanilha) {
-		super(chavePlanilha);
+		super(chavePlanilha, 1);
 	}
 
+	// -----------------------------------------------------------
+
 	private int buscarQuantidadeDeProjetos() {
-		return Integer.parseInt(recuperarConteudoCelula(2, 6));
+		return recuperarConteudoCelulaInt(2, 6);
 	}
 
 	private String buscarUriPlanilhaDoProjeto(int indiceProjeto) {
@@ -18,8 +20,10 @@ public class PlanilhaDexboard extends Planilha {
 	}
 
 	private int buscarIdProjeto(int indiceProjeto) {
-		return Integer.parseInt(recuperarConteudoCelula(2 + indiceProjeto, 2));
+		return recuperarConteudoCelulaInt(2 + indiceProjeto, 2);
 	}
+
+	// -----------------------------------------------------------
 
 	public JsonArray buscarDadosDosProjetos() {
 		JsonArray ret = new JsonArray();

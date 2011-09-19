@@ -21,11 +21,11 @@ public class Utils {
 
 	public static JsonElement baixarJson(String uri) {
 		try {
-			LOG.debug("Baixando JSON da URI: " + uri);
+			LOG.error("Baixando JSON da URI: " + uri);
 			URLFetchService urlFetchService = URLFetchServiceFactory.getURLFetchService();
 			HTTPResponse response = urlFetchService.fetch(new URL(uri));
 			String json = new String(response.getContent());
-			LOG.debug("JSON baixado >>>\n" + json + "\n<<< JSON baixado");
+			LOG.error("JSON baixado >>>\n" + json + "\n<<< JSON baixado");
 			return JsonUtil.parse(json);
 		} catch (MalformedURLException e) {
 			throw new RuntimeException(e);
