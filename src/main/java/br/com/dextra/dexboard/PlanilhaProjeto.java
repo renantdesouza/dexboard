@@ -12,7 +12,7 @@ public class PlanilhaProjeto extends Planilha {
 	}
 
 	public PlanilhaProjeto(String uriPlanilhaProjeto) {
-		super(uriPlanilhaProjeto, true, 10);
+		super(true, uriPlanilhaProjeto, 10);
 	}
 
 	// -----------------------------------------------------------
