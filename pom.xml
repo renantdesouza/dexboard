@@ -22,6 +22,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.google.gdata.client.spreadsheet</groupId>
+			<artifactId>spreadsheet</artifactId>
+			<version>1.46.0</version>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
@@ -184,6 +189,11 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>com.google.gdata.client.spreadsheet</groupId>
+				<artifactId>spreadsheet</artifactId>
+				<version>1.46.0</version>
+			</dependency>
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
