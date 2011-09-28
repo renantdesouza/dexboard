@@ -41,7 +41,7 @@ public abstract class Planilha {
 
 	private CellFeed criarFeed() {
 		try {
-			URL cellFeedUrl = factory.getCellFeedUrl(chave, String.valueOf(idAba), "private", "basic");
+			URL cellFeedUrl = factory.getCellFeedUrl(chave, String.valueOf(idAba), "public", "basic");
 			return service.getFeed(cellFeedUrl, CellFeed.class);
 		} catch (MalformedURLException e) {
 			throw new RuntimeException(e);
