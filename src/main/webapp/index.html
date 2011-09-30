@@ -9,8 +9,12 @@
 </head>
 
 <body>
-	<h1>Projetos</h1>
-	<div id="projetos">Carregando...</div>
+	<div class="main">
+		<div class="interMain">
+			<h1>Projetos</h1>
+			<div id="projetos">Carregando...</div>
+		</div>
+	</div>
 </body>
 
 <script>
@@ -46,9 +50,6 @@ function tabularObjeto(objeto) {
 			cpi = cpi+",00";
 		}
 
-		var fase = objeto.fase;
-		fase = fase.substr(0, 1).toUpperCase()+fase.substr(1);
-
 		var divHeader = $('<div class="header '+header+'" onclick="mostrar('+objeto.id+')">').appendTo(novoProjeto);
 
 		var divTitle = $('<div class="title">').appendTo(divHeader);
@@ -63,7 +64,11 @@ function tabularObjeto(objeto) {
 
 		var divAdd = $('<div class="adicionais">').appendTo(divHeader);
 
-		divAdd.append('<span>Fase: '+fase+'</span>');
+		if (objeto.fase != null) {
+			var fase = objeto.fase;
+			fase = fase.substr(0, 1).toUpperCase()+fase.substr(1);
+			divAdd.append('<span>Fase: '+fase+'</span>');
+		}
 
 		var divCPI = $('<div class="cpi">').appendTo(divAdd);
 		divCPI.append('CPI <strong>'+ cpi +'</strong>');
