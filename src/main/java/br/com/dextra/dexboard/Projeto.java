@@ -7,7 +7,7 @@ import com.google.gson.JsonObject;
 public class Projeto {
 
 	private static final ServicoPma SERVICO_PMA_AMAZON = new ServicoPma(
-			"http://50.19.12.252:3000/services/indicadores", "ac4ef0ec195ed24ab08d1e4a8a3a1ed0");
+			"http://50.17.210.152/services/indicadores", "ac4ef0ec195ed24ab08d1e4a8a3a1ed0");
 
 	@SuppressWarnings("unused")
 	private static final ServicoPma SERVICO_PMA_LOCAL = new ServicoPma("http://localhost:3000/services/indicadores",
