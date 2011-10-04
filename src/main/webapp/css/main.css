@@ -2,6 +2,7 @@ body { font-family: Verdana; background: #EAEAEA; margin:0; }
 
 .main {position: relative; margin: 0 auto; float:none; width: 1025px; }
 .main .interMain { float:left; width: 100%; background-color: white; padding: 0 0 0 30px; }
+.main .interMain h1 {background:url(../images/logoBoard.png) top left no-repeat; color: white; font-size:0; height:90px; width:350px; }
 
 .titulo { font-weight:normal; }
 

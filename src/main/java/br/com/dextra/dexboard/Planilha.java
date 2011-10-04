@@ -95,6 +95,26 @@ public abstract class Planilha {
 	// -----------------------------------------------------------
 
 	protected String recuperarConteudoCelula(int linha, int coluna) {
+		Map<Integer, String> mapa = cache.get(linha);
+		if (mapa == null) {
+			cache.put(linha, new HashMap<Integer, String>());
+			mapa = cache.get(linha);
+		}
+		if (mapa.containsKey(coluna)) {
+			// Esta' no cache
+			return mapa.get(coluna);
+		} else {
+			// Buscar da internet
+			mapa.put(coluna, recuperaValorCelulaDaInternet(linha, coluna));
+			// Insere no cache
+			cache.put(linha, mapa);
+			// Retorna o valor
+			return mapa.get(coluna);
+		}
+	}
+
+	protected String recuperaValorCelulaDaInternet (int linha, int coluna) {
+
 	    for (CellEntry entry : feed.getEntries()) {
 	    	Matcher matcher = Pattern.compile("R(\\d+)C(\\d+)").matcher(entry.getId());
 
@@ -112,6 +132,7 @@ public abstract class Planilha {
 
 //	    throw new NoSuchElementException("R" + linha + "C" + coluna + " da planilha " + gerarUriPlanilha());
 	    return null;
+
 	}
 
 	protected Integer recuperarConteudoCelulaInt(int linha, int coluna) {
