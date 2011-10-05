@@ -29,8 +29,8 @@ function troca (palavra) {
 	var acentos = ['&ccedil;', '&Ccedil;', '&aacute;', '&agrave;', '&Aaacute;', '&Agrave;', '&atilde;', '&Atilde;', '&eacute;', '&Eacute;', '&oacute;', '&Oacute;', '&otilde;', '&acirc;', '&Acirc;']
 
 	for (i=0; i< palavra.length; i++){
-		for (j=0; j<acento; j++)
-			palavra[i].replace(acento[j], acentos[j]);
+		for (j=0; j<acento.length; j++)
+			palavra.replace(acento[j], acentos[j]);
 	}
 
 	return palavra;
