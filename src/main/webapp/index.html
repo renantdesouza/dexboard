@@ -23,8 +23,17 @@ function mostrar (id){
 	$('#content_'+id).toggle('fast');
 };
 
-//var acento 	= ['ç', 'Ç', 'á', 'à', 'Á', 'À', 'ã', 'Ã', 'é', 'É', 'ó', 'Ó', 'õ', 'â', 'Â'];
-//var acentos = ['&ccedil;', '&Ccedil;', '&aacute;', '&agrave;', '&Aaacute;', '&Agrave;', '&atilde;', '&Atilde;', '&eacute;', '&Eacute;', '&oacute;', '&Oacute;', '&otilde;', '&acirc;', '&Acirc;']
+function troca (palavra) {
+
+	var acento 	= ['ç', 'Ç', 'á', 'à', 'Á', 'À', 'ã', 'Ã', 'é', 'É', 'ó', 'Ó', 'õ', 'â', 'Â'];
+	var acentos = ['&ccedil;', '&Ccedil;', '&aacute;', '&agrave;', '&Aaacute;', '&Agrave;', '&atilde;', '&Atilde;', '&eacute;', '&Eacute;', '&oacute;', '&Oacute;', '&otilde;', '&acirc;', '&Acirc;']
+
+	for (i=0; i< palavra.length; i++){
+		palavra.replace(acento[i], acentos[i]);
+	}
+
+	return palavra;
+}
 
 var classes =  ['', 'ms', 's', 'i', 'mi'];
 var classes2 = ['', 'mi', 'i', 's', 'ms'];
@@ -61,6 +70,7 @@ function tabularObjeto(objeto) {
 
 		if (nome.indexOf(':') != -1) {
 			nome = nome.replace(':', ' -');
+			nome = troca(nome);
 		}
 
 		divTitle.append('<h2>Projeto: '+nome+'</h2>');
@@ -70,7 +80,7 @@ function tabularObjeto(objeto) {
 		if (objeto.fase != null) {
 			var fase = objeto.fase;
 			fase = fase.substr(0, 1).toUpperCase()+fase.substr(1);
-			divAdd.append('<span>Fase: '+fase+'</span>');
+			divAdd.append('<span>Fase: '+troca(fase)+'</span>');
 		}
 
 		var divCPI = $('<div class="cpi">').appendTo(divAdd);
