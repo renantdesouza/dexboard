@@ -13,7 +13,7 @@ public class Projeto {
 	private static final ServicoPma SERVICO_PMA_LOCAL = new ServicoPma("http://localhost:3000/services/indicadores",
 			"ac4ef0ec195ed24ab08d1e4a8a3a1ed0");
 
-	private static final ServicoPma SERVICO_PMA = SERVICO_PMA_AMAZON;
+	private static final ServicoPma SERVICO_PMA = SERVICO_PMA_AMAZON ;
 
 	public static JsonArray buscarDadosProjetos() {
 		JsonArray dadosPlanilha = new PlanilhaDexboard(
