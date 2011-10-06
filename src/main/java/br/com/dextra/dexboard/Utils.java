@@ -3,6 +3,7 @@ package br.com.dextra.dexboard;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.Map.Entry;
 
 import org.slf4j.Logger;
@@ -20,11 +21,16 @@ public class Utils {
 	private static final Logger LOG = LoggerFactory.getLogger(Utils.class);
 
 	public static JsonElement baixarJson(String uri) {
+		return baixarJson(uri, Charset.defaultCharset());
+	}
+
+	public static JsonElement baixarJson(String uri, Charset encoding) {
+
 		try {
 			LOG.debug("Baixando JSON da URI: " + uri);
 			URLFetchService urlFetchService = URLFetchServiceFactory.getURLFetchService();
 			HTTPResponse response = urlFetchService.fetch(new URL(uri));
-			String json = new String(response.getContent());
+			String json = new String(response.getContent(), encoding);
 			LOG.debug("JSON baixado >>>\n" + json + "\n<<< JSON baixado");
 			return JsonUtil.parse(json);
 		} catch (MalformedURLException e) {

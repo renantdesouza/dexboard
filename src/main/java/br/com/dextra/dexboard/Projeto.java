@@ -1,5 +1,8 @@
 package br.com.dextra.dexboard;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -16,6 +19,7 @@ public class Projeto {
 	private static final ServicoPma SERVICO_PMA = SERVICO_PMA_AMAZON;
 
 	public static JsonArray buscarDadosProjetos() {
+
 		JsonArray dadosPlanilha = new PlanilhaDexboard(
 				"0Au2Lk990DvFfdGVDQm9rTW1OYmw3dW5yOUVQSkdPSGc").buscarDadosDosProjetos();
 

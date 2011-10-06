@@ -1,8 +1,12 @@
 package br.com.dextra.dexboard;
 
+import java.nio.charset.Charset;
+
 import com.google.gson.JsonObject;
 
 public class ServicoPma {
+
+	private static final Charset ENCODING = Charset.forName("latin1");
 
 	private final String url;
 	private final String token;
@@ -13,7 +17,7 @@ public class ServicoPma {
 	}
 
 	public JsonObject buscarDadosDoProjeto(int idProjeto) {
-		return Utils.baixarJson(url + "?token=" + token + "&projeto_id=" + idProjeto).getAsJsonObject();
+		return Utils.baixarJson(url + "?token=" + token + "&projeto_id=" + idProjeto, ENCODING).getAsJsonObject();
 	}
 
 }
