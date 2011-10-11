@@ -14,11 +14,15 @@ import com.google.appengine.api.urlfetch.URLFetchService;
 import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.googlecode.restitory.gae.filter.util.JsonUtil;
+import com.google.gson.JsonParser;
 
 public class Utils {
 
 	private static final Logger LOG = LoggerFactory.getLogger(Utils.class);
+
+	// private SampleConsumer teste = new SampleConsumer();
+
+	// teste.authRequest();
 
 	public static JsonElement baixarJson(String uri) {
 		return baixarJson(uri, Charset.defaultCharset());
@@ -32,7 +36,7 @@ public class Utils {
 			HTTPResponse response = urlFetchService.fetch(new URL(uri));
 			String json = new String(response.getContent(), encoding);
 			LOG.debug("JSON baixado >>>\n" + json + "\n<<< JSON baixado");
-			return JsonUtil.parse(json);
+			return parse(json);
 		} catch (MalformedURLException e) {
 			throw new RuntimeException(e);
 		} catch (IOException e) {
@@ -46,4 +50,11 @@ public class Utils {
 		}
 		return destino;
 	}
+
+	public static JsonElement parse(String json) {
+		JsonParser parser = new JsonParser();
+		JsonElement ret = parser.parse(json);
+		return ret;
+	}
+
 }

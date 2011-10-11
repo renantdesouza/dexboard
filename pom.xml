@@ -17,10 +17,10 @@
 		<gae.rt.version>1.5.2</gae.rt.version>
 		<gae.application.version>test</gae.application.version>
 		<mycontainer.version>1.2.33</mycontainer.version>
-		<restitory.version>1.0.43</restitory.version>
 	</properties>
 
 	<dependencies>
+
 		<dependency>
 			<groupId>com.google.gdata.client.spreadsheet</groupId>
 			<artifactId>spreadsheet</artifactId>
@@ -44,12 +44,10 @@
 			<artifactId>easymock</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
-			<groupId>com.googlecode.restitory</groupId>
-			<artifactId>restitory-gae-api</artifactId>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -69,6 +67,16 @@
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-testing</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.kindleit</groupId>
+			<artifactId>gae-runtime</artifactId>
+			<version>${gae.version}</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>org.openid4java</groupId>
+			<artifactId>openid4java</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -168,6 +176,10 @@
 		<repository>
 			<id>pyrata</id>
 			<url>http://repo.pyrata.org/release/maven2</url>
+		</repository>
+		<repository>
+			<id>dexboard</id>
+			<url>file:///projects/shared/dextra_dexboard/repo</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>
@@ -270,6 +282,16 @@
 				<groupId>com.google.appengine</groupId>
 				<artifactId>appengine-testing</artifactId>
 				<version>${gae.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.openid4java</groupId>
+				<artifactId>openid4java</artifactId>
+				<version>0.9.3</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.code.gson</groupId>
+				<artifactId>gson</artifactId>
+				<version>1.7.1</version>
 			</dependency>
 
 
