@@ -7,12 +7,12 @@
 
 	<static-files>
 		<include path="/**" />
-		<exclude path="/index.html" />
+		<!--  <exclude path="/index.html" />-->
 	</static-files>
 
-	<resource-files>
+	<!--  <resource-files>
 		<include path="/index.html" />
-	</resource-files>
+	</resource-files>-->
 
 	<system-properties>
 		<property name="java.util.logging.config.file" value="WEB-INF/logging.properties" />

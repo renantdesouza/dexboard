@@ -3,10 +3,14 @@ package br.com.dextra.dexboard;
 import java.nio.charset.Charset;
 
 import com.google.gson.JsonObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ServicoPma {
 
 	private static final Charset ENCODING = Charset.forName("latin1");
+
+	private Logger LOG = LoggerFactory.getLogger(ServicoPma.class);
 
 	private final String url;
 	private final String token;

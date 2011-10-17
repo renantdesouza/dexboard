@@ -1,5 +1,8 @@
 package br.com.dextra.dexboard;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -15,24 +18,36 @@ public class Projeto {
 
 	private static final ServicoPma SERVICO_PMA = SERVICO_PMA_AMAZON;
 
+	private static JsonArray cache = null;
+
+	//@SuppressWarnings("unused")
+	private final static Logger LOG = LoggerFactory.getLogger(Projeto.class);
+
 	public static JsonArray buscarDadosProjetos() {
 
 		JsonArray dadosPlanilha = new PlanilhaDexboard(
 				"0Au2Lk990DvFfdGVDQm9rTW1OYmw3dW5yOUVQSkdPSGc").buscarDadosDosProjetos();
 
-		JsonArray ret = new JsonArray();
-		for (JsonElement elemento : dadosPlanilha) {
-			int idProjeto = Integer.parseInt(elemento.getAsJsonObject().get("id").getAsString());
+		if (cache == null) {
+			cache = new JsonArray();
 
-			// Busca dados do PMA
-			JsonObject dados = SERVICO_PMA.buscarDadosDoProjeto(idProjeto);
+			for (JsonElement elemento : dadosPlanilha) {
+				int idProjeto = Integer.parseInt(elemento.getAsJsonObject().get("id").getAsString());
+				// Busca dados do PMA
+				JsonObject dados = SERVICO_PMA.buscarDadosDoProjeto(idProjeto);
 
-			// Acrescenta a estes os outros dados, vindos da planilha
-			Utils.mesclar(dados, elemento.getAsJsonObject());
+				// Acrescenta a estes os outros dados, vindos da planilha
+				Utils.mesclar(dados, elemento.getAsJsonObject());
 
-			ret.add(dados);
+				cache.add(dados);
+			}
 		}
-		return ret;
+
+		return cache;
+	}
+
+	public static void limparCache() {
+		cache = null;
 	}
 
 }

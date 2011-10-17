@@ -17,8 +17,8 @@ public class LimparServlet extends HttpServlet {
 		String pathInfo = req.getPathInfo();
 
 		if (pathInfo.equals("/limpar")) {
-			PlanilhaProjeto.limparCache();
-			resp.sendRedirect("/index.html");
+			Projeto.limparCache();
+			resp.sendRedirect("/");
 		} else {
 			resp.getWriter().print("Caminho invalido: " + pathInfo);
 		}

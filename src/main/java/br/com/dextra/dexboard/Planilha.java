@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,8 +25,6 @@ public abstract class Planilha {
 	private final int idAba;
 	private final String chave;
 	private final CellFeed feed;
-
-	private final Map<Integer, Map<Integer, String>> cache = new HashMap<Integer, Map<Integer, String>>();
 
 	private static final SpreadsheetService service = new SpreadsheetService("DexBoard");
 	private static final FeedURLFactory factory = FeedURLFactory.getDefault();
@@ -94,28 +90,10 @@ public abstract class Planilha {
 
 	// -----------------------------------------------------------
 
-	protected String recuperarConteudoCelula(int linha, int coluna) {
-		Map<Integer, String> mapa = cache.get(linha);
-		if (mapa == null) {
-			cache.put(linha, new HashMap<Integer, String>());
-			mapa = cache.get(linha);
-		}
-		if (mapa.containsKey(coluna)) {
-			// Esta' no cache
-			return mapa.get(coluna);
-		} else {
-			// Buscar da internet
-			mapa.put(coluna, recuperaValorCelulaDaInternet(linha, coluna));
-			// Insere no cache
-			cache.put(linha, mapa);
-			// Retorna o valor
-			return mapa.get(coluna);
-		}
-	}
-
-	protected String recuperaValorCelulaDaInternet (int linha, int coluna) {
+	protected String recuperarConteudoCelula (int linha, int coluna) {
 
 	    for (CellEntry entry : feed.getEntries()) {
+
 	    	Matcher matcher = Pattern.compile("R(\\d+)C(\\d+)").matcher(entry.getId());
 
 			if (!matcher.find()) {

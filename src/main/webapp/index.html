@@ -5,13 +5,16 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>DexBoard</title>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="js/jquery.tooltip.js"></script>
 	<link rel="stylesheet" href="css/main.css" type="text/css" />
 </head>
 
 <body>
 	<div class="main">
 		<div class="interMain">
-			<h1>DextraBoard</h1>
+			<h1>DextraBoard
+				<a class="btn_atualiza" href="/comando/limpar">Atualizar Dados</a>
+			</h1>
 			<div id="projetos">Carregando...</div>
 		</div>
 	</div>
@@ -38,6 +41,12 @@ function troca (palavra) {
 var classes =  ['', 'ms', 's', 'i', 'mi'];
 var classes2 = ['', 'mi', 'i', 's', 'ms'];
 
+var evoluir	 = ['É fácil fazer altera&ccedil;&otilde;es no sistema e identificar os impactos das altera&ccedil;&otilde;es no sistema', 'Nunca', 'Poucas vezes', 'Quase sempre', 'Sempre'];
+var erros	 = ['Erros sendo encontrados pela equipe durante desenvolvimento e homologa&ccedil;&atilde;o do sistema', 'Nunca', 'Poucas vezes', 'Quase sempre', 'Sempre'];
+var testar	 = ['Facilidade para testar altera&ccedil;&otilde;es, garantindo boa funcionalidade do sistema ', 'Nunca', 'Poucas vezes', 'Quase sempre', 'Sempre'];
+var aprender = ['A curva de aprendizado de novos membros da equipe sobre o sistema &eacute; r&aacute;pida ', 'Nunca', 'Poucas vezes', 'Quase sempre', 'Sempre'];
+
+
 function tabularObjeto(objeto) {
 		var novoProjeto = $('<div class="projeto">');
 
@@ -62,7 +71,7 @@ function tabularObjeto(objeto) {
 			cpi = cpi+",00";
 		}
 
-		var divHeader = $('<div class="header '+header+'" onclick="mostrar('+objeto.id+')">').appendTo(novoProjeto);
+		var divHeader = $('<div class="header '+troca(header)+'" onclick="mostrar('+objeto.id+')">').appendTo(novoProjeto);
 
 		var divTitle = $('<div class="title">').appendTo(divHeader);
 
@@ -143,22 +152,22 @@ function tabularObjeto(objeto) {
 			var divMinis = $('<div class="minis">').appendTo(divQualidade);
 
 			if (objeto.qualidade.evoluir != null) {
-				var divEvoluir = $('<div class="miniStatus '+classes2[objeto.qualidade.evoluir]+'">').appendTo(divMinis);
+				var divEvoluir = $('<div class="miniStatus '+classes2[objeto.qualidade.evoluir]+'" title="'+evoluir[0]+'" >').appendTo(divMinis);
 				divEvoluir.append('Evoluir');
 			}
 
 			if (objeto.qualidade.erros != null) {
-				var divDetectarErros = $('<div class="miniStatus '+classes2[objeto.qualidade.erros]+'">').appendTo(divMinis);
+				var divDetectarErros = $('<div class="miniStatus '+classes2[objeto.qualidade.erros]+'" title="'+erros[0]+'">').appendTo(divMinis);
 				divDetectarErros.append('Detectar Erros');
 			}
 
 			if (objeto.qualidade.testar != null) {
-				var divTestar = $('<div class="miniStatus '+classes2[objeto.qualidade.testar]+'">').appendTo(divMinis);
+				var divTestar = $('<div class="miniStatus '+classes2[objeto.qualidade.testar]+'" title="'+testar[0]+'">').appendTo(divMinis);
 				divTestar.append('Testar');
 			}
 
 			if (objeto.qualidade.aprender != null) {
-				var divAprender = $('<div class="miniStatus '+classes2[objeto.qualidade.aprender]+'">').appendTo(divMinis);
+				var divAprender = $('<div class="miniStatus '+classes2[objeto.qualidade.aprender]+'" title="'+aprender[0]+'">').appendTo(divMinis);
 				divAprender.append('Aprender');
 			}
 		}
@@ -219,6 +228,9 @@ function tabularObjeto(objeto) {
 		for (var i = 0; i < projetos.length; ++i) {
 			divProjetos.append(tabularObjeto(projetos[i]));
 		}
+
+		$('div.projeto *').tooltip();
+
 	});
 
 </script>
