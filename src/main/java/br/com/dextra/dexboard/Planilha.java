@@ -13,6 +13,9 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gdata.client.spreadsheet.FeedURLFactory;
 import com.google.gdata.client.spreadsheet.SpreadsheetService;
+import com.google.gdata.data.docs.DocumentListEntry;
+import com.google.gdata.data.docs.DocumentListFeed;
+import com.google.gdata.data.media.MediaByteArraySource;
 import com.google.gdata.data.spreadsheet.CellEntry;
 import com.google.gdata.data.spreadsheet.CellFeed;
 import com.google.gdata.util.AuthenticationException;
@@ -43,6 +46,19 @@ public abstract class Planilha {
 		try {
 			URL cellFeedUrl = factory.getCellFeedUrl(chave, String.valueOf(idAba), "public", "basic");
 			return service.getFeed(cellFeedUrl, CellFeed.class);
+		} catch (MalformedURLException e) {
+			throw new RuntimeException(e);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} catch (ServiceException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private DocumentListFeed criarFeed2() {
+		try {
+			URL documentFeedUrl = factory.getListFeedUrl(chave, String.valueOf(idAba), "public", "basic");
+			return service.getFeed(documentFeedUrl, DocumentListFeed.class);
 		} catch (MalformedURLException e) {
 			throw new RuntimeException(e);
 		} catch (IOException e) {
@@ -89,6 +105,36 @@ public abstract class Planilha {
 //	}
 
 	// -----------------------------------------------------------
+
+	protected void gravarConteudoCelula (int linha, int coluna, String dado) {
+
+		DocumentListFeed feed2 = criarFeed2();
+
+		for (DocumentListEntry entry : feed2.getEntries()) {
+
+	    	Matcher matcher = Pattern.compile("R(\\d+)C(\\d+)").matcher(entry.getId());
+
+			if (!matcher.find()) {
+				throw new IllegalArgumentException("Este identificador nao representa uma entrada valida de planilha: " + entry.getId());
+			}
+
+	    	int linhaCellEntry = Integer.parseInt(matcher.group(1));
+	    	int colunaCellEntry = Integer.parseInt(matcher.group(2));
+
+			if (linha == linhaCellEntry && coluna == colunaCellEntry) {
+				entry.setMediaSource(new MediaByteArraySource(dado.getBytes(), "text/plain"));
+				try {
+					DocumentListEntry updatedEntry = entry.updateMedia(true);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ServiceException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 
 	protected String recuperarConteudoCelula (int linha, int coluna) {
 
