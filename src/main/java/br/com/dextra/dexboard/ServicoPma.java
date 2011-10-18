@@ -10,6 +10,7 @@ public class ServicoPma {
 
 	private static final Charset ENCODING = Charset.forName("latin1");
 
+	@SuppressWarnings("unused")
 	private Logger LOG = LoggerFactory.getLogger(ServicoPma.class);
 
 	private final String url;

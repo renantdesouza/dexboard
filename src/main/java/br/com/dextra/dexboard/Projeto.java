@@ -20,7 +20,7 @@ public class Projeto {
 
 	private static JsonArray cache = null;
 
-	//@SuppressWarnings("unused")
+	@SuppressWarnings("unused")
 	private final static Logger LOG = LoggerFactory.getLogger(Projeto.class);
 
 	public static JsonArray buscarDadosProjetos() {
