@@ -15,8 +15,6 @@ public class DadosServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("application/json");
 
-		resp.setDateHeader("Expires", System.currentTimeMillis() + 604800000L); // 1 week in future.
-
 		String pathInfo = req.getPathInfo();
 
 		if (pathInfo.equals("/projetos")) {
