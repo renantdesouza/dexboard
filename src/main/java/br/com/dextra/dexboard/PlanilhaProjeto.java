@@ -2,15 +2,9 @@ package br.com.dextra.dexboard;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.gson.JsonObject;
 
 public class PlanilhaProjeto extends Planilha {
-
-	@SuppressWarnings("unused")
-	private Logger LOG = LoggerFactory.getLogger(PlanilhaProjeto.class);
 
 	enum Satisfacao {
 		// Mesma ordem da planilha
@@ -33,7 +27,6 @@ public class PlanilhaProjeto extends Planilha {
 	}
 
 	private int buscarUltimoSprintEquipe() {
-		//LOG.error("Equipe: " + recuperarConteudoCelulaInt(4, 30));
 		return recuperarConteudoCelulaInt(4, 30);
 	}
 
