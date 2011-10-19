@@ -2,9 +2,15 @@ package br.com.dextra.dexboard;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.gson.JsonObject;
 
 public class PlanilhaProjeto extends Planilha {
+
+	@SuppressWarnings("unused")
+	private Logger LOG = LoggerFactory.getLogger(PlanilhaProjeto.class);
 
 	enum Satisfacao {
 		// Mesma ordem da planilha
@@ -22,8 +28,17 @@ public class PlanilhaProjeto extends Planilha {
 
 	// -----------------------------------------------------------
 
-	private int buscarUltimoSprint() {
-		return recuperarConteudoCelulaInt(3, 26);
+	private int buscarUltimoSprintCliente() {
+		return recuperarConteudoCelulaInt(6, 30);
+	}
+
+	private int buscarUltimoSprintEquipe() {
+		//LOG.error("Equipe: " + recuperarConteudoCelulaInt(4, 30));
+		return recuperarConteudoCelulaInt(4, 30);
+	}
+
+	private int buscarUltimoSprintQualidade() {
+		return recuperarConteudoCelulaInt(8, 30);
 	}
 
 	private JsonObject buscarSatisfacaoEquipe(int ultimoSprint) {
@@ -32,13 +47,11 @@ public class PlanilhaProjeto extends Planilha {
 
 		JsonObject retEntregue = new JsonObject();
 		for (int i = 0; i < Satisfacao.values().length; ++i) {
-
 			retEntregue.addProperty(Satisfacao.values()[i].name(), resultadoEquipe.get(i));
 		}
 
 		JsonObject retAndamento = new JsonObject();
 		for (int i = 0; i < Satisfacao.values().length; ++i) {
-
 			retAndamento.addProperty(Satisfacao.values()[i].name(), andamentoEquipe.get(i));
 		}
 
@@ -86,12 +99,14 @@ public class PlanilhaProjeto extends Planilha {
 	public JsonObject buscarDadosProjeto() {
 		JsonObject ret = new JsonObject();
 
-		int ultimoSprint = buscarUltimoSprint();
+		int sprintEquipe = buscarUltimoSprintEquipe();
+		int sprintCliente = buscarUltimoSprintCliente();
+		int sprintQualidade = buscarUltimoSprintQualidade();
 
-		ret.addProperty("ultimoSprint", ultimoSprint);
-		ret.add("satisfacaoEquipe", buscarSatisfacaoEquipe(ultimoSprint));
-		ret.add("satisfacaoCliente", buscarSatisfacaoCliente(ultimoSprint));
-		ret.add("qualidade", buscarQualidade(ultimoSprint));
+		ret.addProperty("ultimoSprint", sprintEquipe);
+		ret.add("satisfacaoEquipe", buscarSatisfacaoEquipe(sprintEquipe));
+		ret.add("satisfacaoCliente", buscarSatisfacaoCliente(sprintCliente));
+		ret.add("qualidade", buscarQualidade(sprintQualidade));
 
 		return ret;
 	}
