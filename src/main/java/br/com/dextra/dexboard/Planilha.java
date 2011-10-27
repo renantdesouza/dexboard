@@ -177,7 +177,6 @@ public abstract class Planilha {
 	    	int colunaCellEntry = Integer.parseInt(matcher.group(2));
 
 	    	if (linha == linhaCellEntry && coluna == colunaCellEntry) {
-	    		LOG.error("DADO: " + entry.getTextContent().getContent().getPlainText());
 	    		return entry.getTextContent().getContent().getPlainText();
 	    	}
 	    }
