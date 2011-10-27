@@ -127,6 +127,8 @@ function tabularObjeto(objeto) {
 
 					if (estrutura) {
 						var posicao = Math.round(totalPontos / totalVotos);
+						if (posicao == 0)
+								posicao = 1;
 
 						var divResultadoEntregueEquipe = $('<div class="status '+ classes[posicao] +'">').appendTo(divEquipe);
 						divResultadoEntregueEquipe.append('Resultado Entregue');
