@@ -169,10 +169,9 @@ function tabularObjeto(objeto) {
 
 			var divQualidade = $('<div class="contentQualidade">').appendTo(divContent);
 			divQualidade.append('<h2>Qualidade do Software</h2>');
-			divQualidade.append('<span>As m&eacute;tricas abaixo demonstram qu&atilde;o f&aacute;cil o sistema &eacute; para:</span>');
-
 
 			if (objeto.qualidade != null) {
+				divQualidade.append('<span>As m&eacute;tricas abaixo demonstram qu&atilde;o f&aacute;cil o sistema &eacute; para:</span>');
 				var divMinis = $('<div class="minis">').appendTo(divQualidade);
 
 				if (objeto.qualidade.evoluir != null) {
@@ -194,6 +193,8 @@ function tabularObjeto(objeto) {
 					var divAprender = $('<div class="miniStatus '+classes2[objeto.qualidade.aprender]+'" title="'+aprender[0]+'">').appendTo(divMinis);
 					divAprender.append('Aprender');
 				}
+			}else {
+				divQualidade.append('<div class="error">Não foram encontrados dados na tabela</div>');
 			}
 
 			var divCliente = $('<div class="contentCliente">').appendTo(divContent);
