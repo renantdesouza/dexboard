@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 public class PlanilhaDexboard extends Planilha {
 
 	public PlanilhaDexboard(String chavePlanilha) {
-		super(chavePlanilha, 1);
+		super(chavePlanilha, "Principal");
 	}
 
 	// -----------------------------------------------------------
@@ -37,6 +37,8 @@ public class PlanilhaDexboard extends Planilha {
 			String uriPlanilhaDoProjeto = buscarUriPlanilhaDoProjeto(i);
 			if (uriPlanilhaDoProjeto != null) {
 				acrescentarDadosDaPlanilhaDoProjeto(projeto, uriPlanilhaDoProjeto);
+			} else {
+				projeto.addProperty("semTabela", "");
 			}
 
 			ret.add(projeto);

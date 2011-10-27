@@ -13,11 +13,10 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gdata.client.spreadsheet.FeedURLFactory;
 import com.google.gdata.client.spreadsheet.SpreadsheetService;
-import com.google.gdata.data.docs.DocumentListEntry;
-import com.google.gdata.data.docs.DocumentListFeed;
-import com.google.gdata.data.media.MediaByteArraySource;
 import com.google.gdata.data.spreadsheet.CellEntry;
 import com.google.gdata.data.spreadsheet.CellFeed;
+import com.google.gdata.data.spreadsheet.WorksheetEntry;
+import com.google.gdata.data.spreadsheet.WorksheetFeed;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 
@@ -25,16 +24,18 @@ public abstract class Planilha {
 
 	private static final Logger LOG = LoggerFactory.getLogger(Planilha.class);
 
-	private final int idAba;
+	private final String sheetName;
 	private final String chave;
 	private final CellFeed feed;
+	public boolean achouAba = true;
+	public boolean estrutura = true;
 
 	private static final SpreadsheetService service = new SpreadsheetService("DexBoard");
 	private static final FeedURLFactory factory = FeedURLFactory.getDefault();
 
 	static {
-		final String usuario = "build-continua@dextra-sw.com";
-		final String senha = "2275N5";
+		final String usuario = "dexboard@dextra-sw.com";
+		final String senha = "dexboardprojeto";
 		try {
 			service.setUserCredentials(usuario, senha);
 		} catch (AuthenticationException e) {
@@ -42,20 +43,46 @@ public abstract class Planilha {
 		}
 	}
 
+	private String idDexBoard() {
+		try {
+			URL spread = new URL ("https://spreadsheets.google.com/feeds/worksheets/" + chave +"/private/full") ;
+			List<WorksheetEntry> entry = service.getFeed(spread, WorksheetFeed.class).getEntries();
+			for (int i = 0; i < entry.size(); i++) {
+				String title = entry.get(i).getTitle().getPlainText();
+				if (title.equals(sheetName)){
+					return (i+1)+"" ;
+				}
+			}
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.achouAba = false;
+		return "1";
+	}
+
 	private CellFeed criarFeed() {
 		try {
-			URL cellFeedUrl = factory.getCellFeedUrl(chave, String.valueOf(idAba), "public", "basic");
+			URL cellFeedUrl = factory.getCellFeedUrl(chave, idDexBoard(), "private", "basic");
 			return service.getFeed(cellFeedUrl, CellFeed.class);
 		} catch (MalformedURLException e) {
 			throw new RuntimeException(e);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		} catch (ServiceException e) {
-			throw new RuntimeException(e);
+			//não tem acesso
+			//throw new RuntimeException(e);
+			return null;
 		}
 	}
 
-	private DocumentListFeed criarFeed2() {
+	/*private DocumentListFeed criarFeed2() {
 		try {
 			URL documentFeedUrl = factory.getListFeedUrl(chave, String.valueOf(idAba), "public", "basic");
 			return service.getFeed(documentFeedUrl, DocumentListFeed.class);
@@ -66,17 +93,17 @@ public abstract class Planilha {
 		} catch (ServiceException e) {
 			throw new RuntimeException(e);
 		}
-	}
+	}*/
 
-	protected Planilha(String chave, int idAba) {
+	protected Planilha(String chave, String sheet) {
 		this.chave = chave;
-		this.idAba = idAba;
+		this.sheetName = sheet;
 		this.feed = criarFeed();
 	}
 
 	@SuppressWarnings("unused")
 	// O parametro boolean serve somente para diferenciar os construtores
-	protected Planilha(boolean criarUsandoUri, String uri, int idAba) {
+	protected Planilha(boolean criarUsandoUri, String uri, String sheet) {
 
 		// Usa expressao regular para extrair da URI a chave da planilha
 
@@ -87,12 +114,12 @@ public abstract class Planilha {
 		}
 
 		this.chave = matcher.group(1);
-		this.idAba = idAba;
+		this.sheetName = sheet;
 		this.feed = criarFeed();
 	}
 
 	protected String gerarUriPlanilha() {
-		return "https://docs.google.com/spreadsheet/ccc?key=" + chave + "#gid=" + idAba;
+		return "https://docs.google.com/spreadsheet/ccc?key=" + chave + "#gid=" + idDexBoard();
 	}
 
 //	protected String gerarUri(String celula) {
@@ -106,7 +133,7 @@ public abstract class Planilha {
 
 	// -----------------------------------------------------------
 
-	protected void gravarConteudoCelula (int linha, int coluna, String dado) {
+	/*protected void gravarConteudoCelula (int linha, int coluna, String dado) {
 
 		DocumentListFeed feed2 = criarFeed2();
 
@@ -134,7 +161,7 @@ public abstract class Planilha {
 				}
 			}
 		}
-	}
+	}*/
 
 	protected String recuperarConteudoCelula (int linha, int coluna) {
 
@@ -150,6 +177,7 @@ public abstract class Planilha {
 	    	int colunaCellEntry = Integer.parseInt(matcher.group(2));
 
 	    	if (linha == linhaCellEntry && coluna == colunaCellEntry) {
+	    		LOG.error("DADO: " + entry.getTextContent().getContent().getPlainText());
 	    		return entry.getTextContent().getContent().getPlainText();
 	    	}
 	    }

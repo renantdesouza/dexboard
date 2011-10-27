@@ -29,11 +29,14 @@ body { font-family: Verdana; background: #EAEAEA; margin:0; }
 .a .cpi { float:left; border:2px solid #947B16; background-color: #FFF9D7; color:#595959; margin:3px 0 0px 2px; height: 30px; width:90px; padding: 2px 0 0 3px; font-weight:bold; -moz-border-radius: 10px 10px 10px 10px; -webkit-border-radius: 10px 10px 10px 10px; }
 .a .cpi strong { color:#D69700; font-size:23px; }
 
-.projeto .content { display:none; float:left; background-color:white; -moz-border-radius: 10px 10px 10px 10px; -webkit-border-radius: 10px 10px 10px 10px; }
+.projeto .content { display:none; float:left; width:100%; background-color:white; -moz-border-radius: 10px 10px 10px 10px; -webkit-border-radius: 10px 10px 10px 10px; }
 .projeto .content h2 { font-weight:normal; font-size:18px; text-align:center; color: #343434; }
 .projeto .content .contentEquipe { float:left; width:256px; }
 .projeto .content .contentQualidade { background-color:#F5F5F5; float:left; width:478px; min-height:160px; }
 .projeto .content .contentCliente {float:left; width:256px;}
+
+.projeto .content .error { background:none repeat scroll 0 0 #FFCFC5; border:2px solid #DD1B00; color:#DD1B00; float:none; font-size:12px; margin:0 auto; padding:15px 0; text-align:center; width:200px; -moz-border-radius: 10px 10px 10px 10px; -webkit-border-radius: 10px 10px 10px 10px; }
+.projeto .content .error2 { background:none repeat scroll 0 0 #FFCFC5; border:2px solid #DD1B00; color:#DD1B00; float:none; font-size:12px; margin:35px auto; padding:15px 0; text-align:center; width:500px; -moz-border-radius: 10px 10px 10px 10px; -webkit-border-radius: 10px 10px 10px 10px; }
 
 .projeto .content .contentQualidade span { float:left; font-size:12px; text-align:center; width:100%; color:#444444; }
 

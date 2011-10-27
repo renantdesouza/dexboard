@@ -97,124 +97,181 @@ function tabularObjeto(objeto) {
 
 		var divContent = $('<div class="content" id="content_'+ objeto.id +'">').appendTo(novoProjeto);
 
-		var divEquipe = $('<div class="contentEquipe">').appendTo(divContent);
-		divEquipe.append('<h2>Satisfa&ccedil;&atilde;o da Equipe</h2>');
+		if (objeto.semDexBoard == null && objeto.semTabela == null && objeto.estrutura == null) {
+			var divEquipe = $('<div class="contentEquipe">').appendTo(divContent);
+			divEquipe.append('<h2>Satisfa&ccedil;&atilde;o da Equipe</h2>');
 
-		if (objeto.satisfacaoEquipe != null) {
+			if (objeto.satisfacaoEquipe != null) {
 
-			if (objeto.satisfacaoEquipe.resultadoEntregue != null) {
+				if (objeto.satisfacaoEquipe.resultadoEntregue != null) {
 
-				var satistacao = objeto.satisfacaoEquipe.resultadoEntregue;
+					var satistacao = objeto.satisfacaoEquipe.resultadoEntregue;
 
-				var totalPontos = 0;
-				var totalVotos = 0;
+					var totalPontos = 0;
+					var totalVotos = 0;
 
-				var i = 1;
-				for (var sub in satistacao) {
-					totalPontos += (satistacao[sub] * i);
-					totalVotos += satistacao[sub];
-					i++;
+					var i = 1;
+
+					var estrutura = true;
+
+					for (var sub in satistacao) {
+						if (satistacao[sub] != null) {
+							totalPontos += (satistacao[sub] * i);
+							totalVotos += satistacao[sub];
+							i++;
+						} else {
+							estrutura = false;
+						}
+
+					}
+
+					if (estrutura) {
+						var posicao = Math.round(totalPontos / totalVotos);
+
+						var divResultadoEntregueEquipe = $('<div class="status '+ classes[posicao] +'">').appendTo(divEquipe);
+						divResultadoEntregueEquipe.append('Resultado Entregue');
+					}
 				}
 
-				var posicao = Math.round(totalPontos / totalVotos);
+				if ( objeto.satisfacaoEquipe.andamentoDoSprint != null) {
 
-				var divResultadoEntregueEquipe = $('<div class="status '+ classes[posicao] +'">').appendTo(divEquipe);
-				divResultadoEntregueEquipe.append('Resultado Entregue');
+					var satistacao = objeto.satisfacaoEquipe.andamentoDoSprint;
+
+					var totalPontos = 0;
+					var totalVotos = 0;
+
+					var estrutura2 = true;
+
+					var i = 1;
+					for (var sub in satistacao) {
+						if (satistacao[sub] != null) {
+							totalPontos += (satistacao[sub] * i);
+							totalVotos += satistacao[sub];
+							i++;
+						} else {
+							estrutura2 = false;
+						}
+					}
+
+					if (estrutura2) {
+						var posicao = Math.round(totalPontos / totalVotos);
+
+						var divAndamentoDoSprintEquipe = $('<div class="status '+classes[posicao]+'">').appendTo(divEquipe);
+						divAndamentoDoSprintEquipe.append('Andamento do Sprint');
+					}
+				}
+				if (!estrutura || !estrutura2)
+					divEquipe.append('<div class="error">Verifique a estruturação da tabela do projeto</div>');
+
+			} else {
+				divEquipe.append('<div class="error">Não foram encontrados dados na tabela</div>');
 			}
 
-			if ( objeto.satisfacaoEquipe.andamentoDoSprint != null) {
+			var divQualidade = $('<div class="contentQualidade">').appendTo(divContent);
+			divQualidade.append('<h2>Qualidade do Software</h2>');
+			divQualidade.append('<span>As m&eacute;tricas abaixo demonstram qu&atilde;o f&aacute;cil o sistema &eacute; para:</span>');
 
-				var satistacao = objeto.satisfacaoEquipe.andamentoDoSprint;
 
-				var totalPontos = 0;
-				var totalVotos = 0;
+			if (objeto.qualidade != null) {
+				var divMinis = $('<div class="minis">').appendTo(divQualidade);
 
-				var i = 1;
-				for (var sub in satistacao) {
-					totalPontos += (satistacao[sub] * i);
-					totalVotos += satistacao[sub];
-					i++;
+				if (objeto.qualidade.evoluir != null) {
+					var divEvoluir = $('<div class="miniStatus '+classes2[objeto.qualidade.evoluir]+'" title="'+evoluir[0]+'" >').appendTo(divMinis);
+					divEvoluir.append('Evoluir');
 				}
 
-				var posicao = Math.round(totalPontos / totalVotos);
-
-				var divAndamentoDoSprintEquipe = $('<div class="status '+classes[posicao]+'">').appendTo(divEquipe);
-				divAndamentoDoSprintEquipe.append('Andamento do Sprint');
-			}
-		}
-
-		var divQualidade = $('<div class="contentQualidade">').appendTo(divContent);
-		divQualidade.append('<h2>Qualidade do Software</h2>');
-		divQualidade.append('<span>As m&eacute;tricas abaixo demonstram qu&atilde;o f&aacute;cil o sistema &eacute; para:</span>');
-
-
-		if (objeto.qualidade != null) {
-			var divMinis = $('<div class="minis">').appendTo(divQualidade);
-
-			if (objeto.qualidade.evoluir != null) {
-				var divEvoluir = $('<div class="miniStatus '+classes2[objeto.qualidade.evoluir]+'" title="'+evoluir[0]+'" >').appendTo(divMinis);
-				divEvoluir.append('Evoluir');
-			}
-
-			if (objeto.qualidade.erros != null) {
-				var divDetectarErros = $('<div class="miniStatus '+classes2[objeto.qualidade.erros]+'" title="'+erros[0]+'">').appendTo(divMinis);
-				divDetectarErros.append('Detectar Erros');
-			}
-
-			if (objeto.qualidade.testar != null) {
-				var divTestar = $('<div class="miniStatus '+classes2[objeto.qualidade.testar]+'" title="'+testar[0]+'">').appendTo(divMinis);
-				divTestar.append('Testar');
-			}
-
-			if (objeto.qualidade.aprender != null) {
-				var divAprender = $('<div class="miniStatus '+classes2[objeto.qualidade.aprender]+'" title="'+aprender[0]+'">').appendTo(divMinis);
-				divAprender.append('Aprender');
-			}
-		}
-
-		var divCliente = $('<div class="contentCliente">').appendTo(divContent);
-		divCliente.append('<h2>Satisfa&ccedil;&atilde;o do Cliente</h2>');
-
-		if (objeto.satisfacaoCliente != null) {
-
-			if (objeto.satisfacaoCliente.resultadoEntregue != null) {
-
-				var satistacao = objeto.satisfacaoCliente.resultadoEntregue;
-
-				var totalPontos = 0;
-				var totalVotos = 0;
-
-				var i = 1;
-				for (var sub in satistacao) {
-					totalPontos += (satistacao[sub] * i);
-					totalVotos += satistacao[sub];
-					i++;
+				if (objeto.qualidade.erros != null) {
+					var divDetectarErros = $('<div class="miniStatus '+classes2[objeto.qualidade.erros]+'" title="'+erros[0]+'">').appendTo(divMinis);
+					divDetectarErros.append('Detectar Erros');
 				}
 
-				var posicao = Math.round(totalPontos / totalVotos);
-
-				var divResultadoEntregueCliente = $('<div class="status '+classes[posicao]+'">').appendTo(divCliente);
-				divResultadoEntregueCliente.append('Resultado Entregue');
-			}
-
-			if (objeto.satisfacaoCliente.andamentoDoSprint != null) {
-
-				var satistacao = objeto.satisfacaoCliente.andamentoDoSprint;
-
-				var totalPontos = 0;
-				var totalVotos = 0;
-
-				var i = 1;
-				for (var sub in satistacao) {
-					totalPontos += (satistacao[sub] * i);
-					totalVotos += satistacao[sub];
-					i++;
+				if (objeto.qualidade.testar != null) {
+					var divTestar = $('<div class="miniStatus '+classes2[objeto.qualidade.testar]+'" title="'+testar[0]+'">').appendTo(divMinis);
+					divTestar.append('Testar');
 				}
 
-				var posicao = Math.round(totalPontos / totalVotos);
+				if (objeto.qualidade.aprender != null) {
+					var divAprender = $('<div class="miniStatus '+classes2[objeto.qualidade.aprender]+'" title="'+aprender[0]+'">').appendTo(divMinis);
+					divAprender.append('Aprender');
+				}
+			}
 
-				var divAndamentoDoSprintCliente = $('<div class="status '+classes[posicao]+'">').appendTo(divCliente);
-				divAndamentoDoSprintCliente.append('Andamento do Sprint');
+			var divCliente = $('<div class="contentCliente">').appendTo(divContent);
+			divCliente.append('<h2>Satisfa&ccedil;&atilde;o do Cliente</h2>');
+
+			if (objeto.satisfacaoCliente != null) {
+
+				if (objeto.satisfacaoCliente.resultadoEntregue != null) {
+
+					var satistacao = objeto.satisfacaoCliente.resultadoEntregue;
+
+					var totalPontos = 0;
+					var totalVotos = 0;
+
+					var i = 1;
+
+					var estruturaCliente = true;
+
+					for (var sub in satistacao) {
+						if (satistacao[sub] != null) {
+							totalPontos += (satistacao[sub] * i);
+							totalVotos += satistacao[sub];
+							i++;
+						} else {
+							estruturaCliente = false;
+						}
+					}
+
+					if (estruturaCliente) {
+						var posicao = Math.round(totalPontos / totalVotos);
+
+						var divResultadoEntregueCliente = $('<div class="status '+classes[posicao]+'">').appendTo(divCliente);
+						divResultadoEntregueCliente.append('Resultado Entregue');
+					}
+				}
+
+				if (objeto.satisfacaoCliente.andamentoDoSprint != null) {
+
+					var satistacao = objeto.satisfacaoCliente.andamentoDoSprint;
+
+					var totalPontos = 0;
+					var totalVotos = 0;
+
+					var estruturaCliente2 = true;
+
+					var i = 1;
+					for (var sub in satistacao) {
+						if (satistacao[sub] != null) {
+							totalPontos += (satistacao[sub] * i);
+							totalVotos += satistacao[sub];
+							i++;
+						} else {
+							estruturaCliente2 = false;
+						}
+					}
+
+					if (estruturaCliente2)
+						var posicao = Math.round(totalPontos / totalVotos);
+
+						var divAndamentoDoSprintCliente = $('<div class="status '+classes[posicao]+'">').appendTo(divCliente);
+						divAndamentoDoSprintCliente.append('Andamento do Sprint');
+				}
+
+				if (!estruturaCliente || !estruturaCliente2) {
+					divCliente.append('<div class="error">Verifique a estruturação dos dados da tabela de projeto</div>');
+				}
+			} else {
+				divCliente.append('<div class="error">Não foram encontrados dados na tabela</div>');
+			}
+		} else {
+			if (objeto.semTabela != null) {
+				divContent.append('<div class="error2">Esse projeto não possui URL indicada para o DexBoard </div>');
+			}
+			if (objeto.semDexBoard != null) {
+				divContent.append('<div class="error2">Não foi encontrada aba "DexBoard" na tabela ou não foi possível acessar a tabela pelo usuário "dexboard@dextra-sw.com"</div>');
+			}
+			if (objeto.estrutura != null) {
+				divContent.append('<div class="error2">Verifique a estruturação dos dados da tabela de projeto</div>');
 			}
 
 		}

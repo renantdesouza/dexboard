@@ -23,24 +23,40 @@ public class PlanilhaProjeto extends Planilha {
 	}
 
 	public PlanilhaProjeto(String uriPlanilhaProjeto) {
-		super(true, uriPlanilhaProjeto, 10);
+		super(true, uriPlanilhaProjeto, "DexBoard");
 	}
 
 	// -----------------------------------------------------------
 
 	private int buscarUltimoSprintCliente() {
-		return recuperarConteudoCelulaInt(6, 29);
+		if (recuperarConteudoCelulaInt(8, 29) != null)
+			return recuperarConteudoCelulaInt(6, 29);
+		else {
+			estrutura = false;
+			return 0;
+		}
 	}
 
 	private int buscarUltimoSprintEquipe() {
-		return recuperarConteudoCelulaInt(4, 29);
+		if (recuperarConteudoCelulaInt(4, 29) != null)
+			return recuperarConteudoCelulaInt(4, 29);
+		else {
+			estrutura = false;
+			return 0;
+		}
 	}
 
 	private int buscarUltimoSprintQualidade() {
-		return recuperarConteudoCelulaInt(8, 29);
+		if (recuperarConteudoCelulaInt(8, 29) != null)
+			return recuperarConteudoCelulaInt(8, 29);
+		else {
+			estrutura = false;
+			return 0;
+		}
 	}
 
 	private JsonObject buscarSatisfacaoEquipe(int ultimoSprint) {
+
 		List<Integer> resultadoEquipe = recuperarConteudoCelulasInt(3 + ultimoSprint, 2, Satisfacao.values().length);
 		List<Integer> andamentoEquipe = recuperarConteudoCelulasInt(3 + ultimoSprint, 6, Satisfacao.values().length);
 
@@ -93,19 +109,47 @@ public class PlanilhaProjeto extends Planilha {
 		return ret;
 	}
 
+	private int maiorSprint(int s1, int s2, int s3) {
+
+		if (s1 > s2 && s1 > s3) {
+			return s1;
+		} else if (s2 > s1 && s2 > s3) {
+			return s2;
+		} else if (s3 > s1 && s3 > s2) {
+			return s3;
+		} else return 0;
+	}
+
 	// -----------------------------------------------------------
 
 	public JsonObject buscarDadosProjeto() {
 		JsonObject ret = new JsonObject();
 
-		int sprintEquipe = buscarUltimoSprintEquipe();
-		int sprintCliente = buscarUltimoSprintCliente();
-		int sprintQualidade = buscarUltimoSprintQualidade();
+		if (achouAba) {
+			int sprintEquipe = buscarUltimoSprintEquipe();
+			int sprintCliente = buscarUltimoSprintCliente();
+			int sprintQualidade = buscarUltimoSprintQualidade();
 
-		ret.addProperty("ultimoSprint", sprintEquipe);
-		ret.add("satisfacaoEquipe", buscarSatisfacaoEquipe(sprintEquipe));
-		ret.add("satisfacaoCliente", buscarSatisfacaoCliente(sprintCliente));
-		ret.add("qualidade", buscarQualidade(sprintQualidade));
+			if (estrutura) {
+				ret.addProperty("ultimoSprint", maiorSprint(sprintEquipe, sprintCliente, sprintQualidade));
+
+				if (sprintEquipe > 0) {
+					ret.add("satisfacaoEquipe", buscarSatisfacaoEquipe(sprintEquipe));
+				}
+
+				if (sprintCliente > 0) {
+					ret.add("satisfacaoCliente", buscarSatisfacaoCliente(sprintCliente));
+				}
+
+				if (sprintQualidade > 0) {
+					ret.add("qualidade", buscarQualidade(sprintQualidade));
+				}
+			} else {
+				ret.add("estrutura", new JsonObject());
+			}
+		} else {
+				ret.add("semDexBoard", new JsonObject());
+		}
 
 		return ret;
 	}
