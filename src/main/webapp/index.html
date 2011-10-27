@@ -126,7 +126,11 @@ function tabularObjeto(objeto) {
 					}
 
 					if (estrutura) {
-						var posicao = Math.round(totalPontos / totalVotos);
+						if (totalVotos != 0) {
+							var posicao = Math.round(totalPontos / totalVotos);
+						} else {
+							var posicao = 0;
+						}
 
 						var divResultadoEntregueEquipe = $('<div class="status '+ classes[posicao] +'">').appendTo(divEquipe);
 						divResultadoEntregueEquipe.append('Resultado Entregue');
@@ -154,7 +158,11 @@ function tabularObjeto(objeto) {
 					}
 
 					if (estrutura2) {
-						var posicao = Math.round(totalPontos / totalVotos);
+						if (totalVotos != 0) {
+							var posicao = Math.round(totalPontos / totalVotos);
+						} else {
+							var posicao = 0;
+						}
 
 						var divAndamentoDoSprintEquipe = $('<div class="status '+classes[posicao]+'">').appendTo(divEquipe);
 						divAndamentoDoSprintEquipe.append('Andamento do Sprint');
@@ -224,7 +232,11 @@ function tabularObjeto(objeto) {
 					}
 
 					if (estruturaCliente) {
-						var posicao = Math.round(totalPontos / totalVotos);
+						if (totalVotos != 0) {
+							var posicao = Math.round(totalPontos / totalVotos);
+						} else {
+							var posicao = 0;
+						}
 
 						var divResultadoEntregueCliente = $('<div class="status '+classes[posicao]+'">').appendTo(divCliente);
 						divResultadoEntregueCliente.append('Resultado Entregue');
@@ -252,7 +264,11 @@ function tabularObjeto(objeto) {
 					}
 
 					if (estruturaCliente2)
-						var posicao = Math.round(totalPontos / totalVotos);
+						if (totalVotos != 0) {
+							var posicao = Math.round(totalPontos / totalVotos);
+						} else {
+							var posicao = 0;
+						}
 
 						var divAndamentoDoSprintCliente = $('<div class="status '+classes[posicao]+'">').appendTo(divCliente);
 						divAndamentoDoSprintCliente.append('Andamento do Sprint');
