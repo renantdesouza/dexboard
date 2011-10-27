@@ -38,8 +38,8 @@ function troca (palavra) {
 	return palavra;
 }
 
-var classes =  ['', 'ms', 's', 'i', 'mi'];
-var classes2 = ['', 'mi', 'i', 's', 'ms'];
+var classes =  ['mi', 'ms', 's', 'i', 'mi'];
+var classes2 = ['mi', 'mi', 'i', 's', 'ms'];
 
 var evoluir	 = ['É fácil fazer altera&ccedil;&otilde;es no sistema e identificar os impactos das altera&ccedil;&otilde;es no sistema', 'Nunca', 'Poucas vezes', 'Quase sempre', 'Sempre'];
 var erros	 = ['Erros sendo encontrados pela equipe durante desenvolvimento e homologa&ccedil;&atilde;o do sistema', 'Nunca', 'Poucas vezes', 'Quase sempre', 'Sempre'];
@@ -127,8 +127,6 @@ function tabularObjeto(objeto) {
 
 					if (estrutura) {
 						var posicao = Math.round(totalPontos / totalVotos);
-						if (posicao == 0)
-								posicao = 1;
 
 						var divResultadoEntregueEquipe = $('<div class="status '+ classes[posicao] +'">').appendTo(divEquipe);
 						divResultadoEntregueEquipe.append('Resultado Entregue');
