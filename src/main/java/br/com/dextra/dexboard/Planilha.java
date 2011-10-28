@@ -61,7 +61,7 @@ public abstract class Planilha {
 			e.printStackTrace();
 		} catch (ServiceException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		this.achouAba = false;
 		return "1";
