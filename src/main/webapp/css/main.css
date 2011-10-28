@@ -15,7 +15,7 @@ body { font-family: Verdana; background: #EAEAEA; margin:0; }
 .projeto .header .title { float:left; color:white; font-size: 12px; }
 .projeto .header .title h2 { font-weight: normal; text-shadow: 0 0.06em 0.1em #333333; margin:9px 0 0 10px; }
 .projeto .header .adicionais { font-size:11px; float:right; margin:0 5px 0 0;  }
-.projeto .header .adicionais span { color:white; font-weight:bold; float:left; margin:22px 0 0; }
+.projeto .header .adicionais span { color:white; font-weight:bold; float:left; margin:20px 0 0; }
 
 .b {background-color:#4CA018; -moz-border-radius: 10px 10px 10px 10px; -webkit-border-radius: 10px 10px 10px 10px; -moz-box-shadow: 0 0 18px #756969 inset; -webkit-box-shadow: 0 0 18px #756969 inset; }
 .b .cpi { float:left; border:2px solid #2A6D00; background-color: #E6F8EA; color:#595959; margin:6px 0 0px 2px; height: 26px; width:80px; padding: 0 0 0 3px; font-weight:bold; -moz-border-radius: 10px 10px 10px 10px; -webkit-border-radius: 10px 10px 10px 10px; }
