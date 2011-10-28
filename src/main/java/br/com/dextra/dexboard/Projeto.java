@@ -25,10 +25,10 @@ public class Projeto {
 
 	public static JsonArray buscarDadosProjetos() {
 
-		JsonArray dadosPlanilha = new PlanilhaDexboard(
-				"0Au2Lk990DvFfdGVDQm9rTW1OYmw3dW5yOUVQSkdPSGc").buscarDadosDosProjetos();
-
 		if (cache == null) {
+			JsonArray dadosPlanilha = new PlanilhaDexboard(
+					"0Au2Lk990DvFfdGVDQm9rTW1OYmw3dW5yOUVQSkdPSGc").buscarDadosDosProjetos();
+
 			cache = new JsonArray();
 
 			for (JsonElement elemento : dadosPlanilha) {
