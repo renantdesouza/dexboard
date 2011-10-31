@@ -24,7 +24,7 @@
 
 function mostrar (id){
 	$('#content_'+id).toggle('fast');
-};
+}
 
 function troca (palavra) {
 
@@ -36,6 +36,15 @@ function troca (palavra) {
 			palavra.replace(acento[j], acentos[j]);
 	}
 	return palavra;
+}
+
+function grafico (ms, s, i, mi) {
+	total = ms + s + i + mi;
+
+	ms = (total/ms)*100;
+	s = (total/s)*100;
+	i = (total/i)*100;
+	mi = (total/mi)*100;
 }
 
 var classes =  ['mi', 'ms', 's', 'i', 'mi'];
