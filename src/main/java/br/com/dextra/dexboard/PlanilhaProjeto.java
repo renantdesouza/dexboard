@@ -29,7 +29,7 @@ public class PlanilhaProjeto extends Planilha {
 	// -----------------------------------------------------------
 
 	private int buscarUltimoSprintCliente() {
-		if (recuperarConteudoCelulaInt(8, 29) != null)
+		if (recuperarConteudoCelulaInt(6, 29) != null || recuperarConteudoCelulaInt(6, 29) == 0)
 			return recuperarConteudoCelulaInt(6, 29);
 		else {
 			estrutura = false;
@@ -38,7 +38,7 @@ public class PlanilhaProjeto extends Planilha {
 	}
 
 	private int buscarUltimoSprintEquipe() {
-		if (recuperarConteudoCelulaInt(4, 29) != null)
+		if (recuperarConteudoCelulaInt(4, 29) != null || recuperarConteudoCelulaInt(4, 29) != 0)
 			return recuperarConteudoCelulaInt(4, 29);
 		else {
 			estrutura = false;
@@ -47,7 +47,7 @@ public class PlanilhaProjeto extends Planilha {
 	}
 
 	private int buscarUltimoSprintQualidade() {
-		if (recuperarConteudoCelulaInt(8, 29) != null)
+		if (recuperarConteudoCelulaInt(8, 29) != null || recuperarConteudoCelulaInt(8, 29) != 0)
 			return recuperarConteudoCelulaInt(8, 29);
 		else {
 			estrutura = false;
