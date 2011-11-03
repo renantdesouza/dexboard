@@ -78,6 +78,11 @@
 			<groupId>org.openid4java</groupId>
 			<artifactId>openid4java</artifactId>
 		</dependency>
+		<dependency>
+		    <groupId>jcache</groupId>
+		    <artifactId>jcache</artifactId>
+		    <version>1.0-dev-2</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -321,6 +326,12 @@
 				<artifactId>mycontainer-gae-web</artifactId>
 				<version>${mycontainer.version}</version>
 			</dependency>
+			<dependency>
+			    <groupId>jcache</groupId>
+			    <artifactId>jcache</artifactId>
+			    <version>1.0-dev-2</version>
+			</dependency>
+
 			<dependency>
 				<groupId>com.googlecode.mycontainer</groupId>
 				<artifactId>mycontainer-servlet-commons</artifactId>
