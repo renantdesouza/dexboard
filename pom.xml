@@ -16,11 +16,20 @@
 		<gae.version>1.5.3</gae.version>
 		<gae.rt.version>1.5.2</gae.rt.version>
 		<gae.application.version>test</gae.application.version>
-		<mycontainer.version>1.2.33</mycontainer.version>
+		<mycontainer.version>1.2.35</mycontainer.version>
+		<restitory.version>1.0.50</restitory.version>
 	</properties>
 
 	<dependencies>
-
+		<dependency>
+			<groupId>com.googlecode.restitory</groupId>
+			<artifactId>restitory-gae-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.mycontainer</groupId>
+			<artifactId>mycontainer-gae-web</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.google.gdata.client.spreadsheet</groupId>
 			<artifactId>spreadsheet</artifactId>
@@ -79,9 +88,9 @@
 			<artifactId>openid4java</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>jcache</groupId>
-		    <artifactId>jcache</artifactId>
-		    <version>1.0-dev-2</version>
+			<groupId>jcache</groupId>
+			<artifactId>jcache</artifactId>
+			<version>1.0-dev-2</version>
 		</dependency>
 	</dependencies>
 
@@ -308,28 +317,13 @@
 
 			<dependency>
 				<groupId>com.googlecode.mycontainer</groupId>
-				<artifactId>mycontainer-ejb</artifactId>
-				<version>${mycontainer.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.googlecode.mycontainer</groupId>
-				<artifactId>mycontainer-jpa</artifactId>
-				<version>${mycontainer.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.googlecode.mycontainer</groupId>
-				<artifactId>mycontainer-web</artifactId>
-				<version>${mycontainer.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.googlecode.mycontainer</groupId>
 				<artifactId>mycontainer-gae-web</artifactId>
 				<version>${mycontainer.version}</version>
 			</dependency>
 			<dependency>
-			    <groupId>jcache</groupId>
-			    <artifactId>jcache</artifactId>
-			    <version>1.0-dev-2</version>
+				<groupId>jcache</groupId>
+				<artifactId>jcache</artifactId>
+				<version>1.0-dev-2</version>
 			</dependency>
 
 			<dependency>

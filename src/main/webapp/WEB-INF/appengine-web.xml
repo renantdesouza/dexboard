@@ -6,13 +6,12 @@
 	<version>test</version>
 
 	<static-files>
-		<include path="/**" />
-		<!--  <exclude path="/index.html" />-->
+		<exclude path="/**" />
 	</static-files>
 
-	<!--  <resource-files>
-		<include path="/index.html" />
-	</resource-files>-->
+	<resource-files>
+		<include path="/**" />
+	</resource-files>
 
 	<system-properties>
 		<property name="java.util.logging.config.file" value="WEB-INF/logging.properties" />

@@ -1,7 +1,7 @@
 package br.com.dextra.dexboard;
 
 import java.io.IOException;
-import java.security.Principal;
+import java.io.PrintWriter;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -12,15 +12,11 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
 public class AuthFilter implements Filter {
-
-	private static final Logger LOG = LoggerFactory.getLogger(AuthFilter.class);
 
 	@Override
 	public void destroy() {
@@ -28,28 +24,32 @@ public class AuthFilter implements Filter {
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
+	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException,
 			ServletException {
-		HttpServletRequest req = (HttpServletRequest) request;
-		HttpServletResponse resp = (HttpServletResponse) response;
-
-		String uri = req.getRequestURI();
-		if("/".equals(uri)) {
-			resp.sendRedirect("/index.html");
+		HttpServletRequest request = (HttpServletRequest) req;
+		HttpServletResponse response = (HttpServletResponse) resp;
+		UserService service = UserServiceFactory.getUserService();
+		String uri = request.getRequestURI();
+		if (uri.equals("/logout")) {
+			response.sendRedirect(service.createLogoutURL("/"));
 			return;
 		}
-
-		Principal principal = req.getUserPrincipal();
-		if(principal != null) {
-			LOG.info("User: " + principal.getName());
+		User user = service.getCurrentUser();
+		if (user != null || uri.startsWith("/_ah")) {
 			chain.doFilter(request, response);
 			return;
 		}
-
-		LOG.info("Redirect to login");
-		UserService userService = UserServiceFactory.getUserService();
-		String url = userService.createLoginURL(uri);
-		resp.sendRedirect(url);
+		if ("GET".equals(request.getMethod())) {
+			response.sendRedirect(service.createLoginURL(uri));
+			return;
+		}
+		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+		response.setContentType("text/html");
+		PrintWriter writer = response.getWriter();
+		writer.append("<html><head><title>Murkfight</title></head><body>You need login <a href=\"");
+		writer.append(service.createLoginURL("/"));
+		writer.append("\">here</a></body></html>");
+		return;
 	}
 
 	@Override
