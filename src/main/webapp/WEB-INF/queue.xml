@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<queue-entries>
+	<!--
+	<queue>
+		<name>batch</name>
+		<rate>10/m</rate>
+		<retry-parameters>
+			<min-backoff-seconds>300</min-backoff-seconds>
+			<task-retry-limit>2</task-retry-limit>
+		</retry-parameters>
+	</queue>
+	-->
+</queue-entries>
