@@ -14,7 +14,7 @@ import com.googlecode.restitory.gae.filter.util.JsonUtil;
 
 public class Projeto {
 
-	private static final int CACHE_EXPIRATION_SECONDS = 30 * 60;
+	private static final int CACHE_EXPIRATION_SECONDS = 60 * 120;
 
 	@SuppressWarnings("unused")
 	private final static Logger LOG = LoggerFactory.getLogger(Projeto.class);
