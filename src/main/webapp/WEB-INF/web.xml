@@ -10,7 +10,15 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>DadosServlet</servlet-name>
-		<url-pattern>/dados/*</url-pattern>
+		<url-pattern>/dados/projetos</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>QueryServlet</servlet-name>
+		<servlet-class>br.com.dextra.dexboard.QueryServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>QueryServlet</servlet-name>
+		<url-pattern>/query</url-pattern>
 	</servlet-mapping>
 
 	<servlet>

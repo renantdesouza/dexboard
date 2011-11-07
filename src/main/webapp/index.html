@@ -305,7 +305,7 @@ function tabularObjeto(objeto) {
 		return novoProjeto;
 }
 
-	$.get('dados/projetos', function(projetos) {
+	$.get('query', function(projetos) {
 		var divProjetos = $('div#projetos').empty();
 
 		for (var i = 0; i < projetos.length; ++i) {
