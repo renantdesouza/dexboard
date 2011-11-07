@@ -23,7 +23,7 @@ public class QueryServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -1248500946944090403L;
 
-	public static final int CACHE_EXPIRATION_SECONDS = 10;
+	public static final int CACHE_EXPIRATION_SECONDS = 60 * 60;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

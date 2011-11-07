@@ -2,6 +2,6 @@
 <cronentries>
   <cron>
     <url>/dados/projetos</url>
-    <schedule>every 2 minutes</schedule>
+    <schedule>every 2 hours</schedule>
   </cron>
 </cronentries>
