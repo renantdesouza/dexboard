@@ -17,14 +17,14 @@ public class Projeto {
 	@SuppressWarnings("unused")
 	public final static Logger LOG = LoggerFactory.getLogger(Projeto.class);
 
-	@SuppressWarnings("unused")
 	public static final ServicoPma SERVICO_PMA_AMAZON = new ServicoPma(
 			"https://50.17.210.152/pma/services/indicadores", "ac4ef0ec195ed24ab08d1e4a8a3a1ed0");
 
+	@SuppressWarnings("unused")
 	public static final ServicoPma SERVICO_PMA_LOCAL = new ServicoPma("http://localhost:3000/services/indicadores",
 			"ac4ef0ec195ed24ab08d1e4a8a3a1ed0");
 
-	public static final ServicoPma SERVICO_PMA = SERVICO_PMA_LOCAL;
+	public static final ServicoPma SERVICO_PMA = SERVICO_PMA_AMAZON;
 
 	public static JsonArray buscarDadosProjetos() {
 		// MemcacheService cache =
