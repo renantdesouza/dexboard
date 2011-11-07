@@ -308,11 +308,14 @@ function tabularObjeto(objeto) {
 	$.get('query', function(projetos) {
 		var divProjetos = $('div#projetos').empty();
 
-		for (var i = 0; i < projetos.length; ++i) {
-			divProjetos.append(tabularObjeto(projetos[i]));
+		if (projetos == null) {
+			divProjetos.append("<div class='projError'>Favor recarregar a página, ouve um erro no processo</div>");
+		} else {
+			for (var i = 0; i < projetos.length; ++i) {
+				divProjetos.append(tabularObjeto(projetos[i]));
+			}
+			$('div.projeto *').tooltip();
 		}
-
-		$('div.projeto *').tooltip();
 
 	});
 

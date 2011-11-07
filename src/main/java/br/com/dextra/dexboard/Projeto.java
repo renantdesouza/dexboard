@@ -14,7 +14,6 @@ import com.googlecode.restitory.gae.filter.util.JsonUtil;
 
 public class Projeto {
 
-	@SuppressWarnings("unused")
 	public final static Logger LOG = LoggerFactory.getLogger(Projeto.class);
 
 	public static final ServicoPma SERVICO_PMA_AMAZON = new ServicoPma(

@@ -5,6 +5,7 @@ body { font-family: Verdana; background: #EAEAEA; margin:0; }
 .main .interMain h1 {background:url(../images/logoBoard.png) top left no-repeat; color: white; font-size:0; height:90px; width:100%; }
 
 #projetos { float:none; margin:0 auto; width:990px; }
+#projetos .projError {margin: 20px 0;}
 
 .titulo { font-weight:normal; }
 
