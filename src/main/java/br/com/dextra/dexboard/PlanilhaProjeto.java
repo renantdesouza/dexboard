@@ -56,7 +56,7 @@ public class PlanilhaProjeto extends Planilha {
 		}
 	}
 
-	@SuppressWarnings("unused")
+	//@SuppressWarnings("unused")
 	private List<Integer> tresUltimosSprints(int ultimoSprint, int coluna) {
 		List<Integer> valores = new ArrayList<Integer>();
 
@@ -102,13 +102,12 @@ public class PlanilhaProjeto extends Planilha {
 		return ret;
 	}
 
-	/*private JsonObject buscarSatisfacaoCliente(int ultimoSprint) {
+	private JsonObject buscarSatisfacaoCliente(int ultimoSprint) {
 		List<Integer> indices = tresUltimosSprints(ultimoSprint, 25);
 
 		JsonObject retResultado = new JsonObject();
 		JsonObject retAndamento = new JsonObject();
 		for (int i = 0; i < indices.size(); i++) {
-			LOG.error("\n\nSatisfacao do Cliente preenchido: "+ indices.get(i)+"\n");
 
 			if (indices.get(i) > 0) {
 				List<Integer> resultadoCliente = recuperarConteudoCelulasInt(3 + indices.get(i), 10, Satisfacao.values().length);
@@ -134,9 +133,9 @@ public class PlanilhaProjeto extends Planilha {
 		ret.add("andamentoDoSprint", retAndamento);
 
 		return ret;
-	}*/
+	}
 
-	private JsonObject buscarSatisfacaoCliente(int ultimoSprint) {
+	/*private JsonObject buscarSatisfacaoCliente(int ultimoSprint) {
 		List<Integer> resultadoCliente = recuperarConteudoCelulasInt(3 + ultimoSprint, 10, Satisfacao.values().length);
 		List<Integer> andamentoCliente = recuperarConteudoCelulasInt(3 + ultimoSprint, 14, Satisfacao.values().length);
 
@@ -155,7 +154,7 @@ public class PlanilhaProjeto extends Planilha {
 		ret.add("andamentoDoSprint", retAndamento);
 
 		return ret;
-	}
+	}*/
 
 	private JsonObject buscarQualidade(int ultimoSprint) {
 		List<Integer> qualidade = recuperarConteudoCelulasInt(3 + ultimoSprint, 18, Qualidade.values().length);
