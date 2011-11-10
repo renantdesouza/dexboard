@@ -31,7 +31,7 @@ public class Utils {
 	public static JsonElement baixarJson(String uri, Charset encoding) {
 
 		try {
-			LOG.debug("Baixando JSON da URI: " + uri);
+			LOG.info("Baixando JSON da URI: " + uri);
 			URLFetchService urlFetchService = URLFetchServiceFactory.getURLFetchService();
 			HTTPResponse response = urlFetchService.fetch(new URL(uri));
 			String json = new String(response.getContent(), encoding);

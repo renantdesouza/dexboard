@@ -6,6 +6,7 @@ body { font-family: Verdana; background: #EAEAEA; margin:0; }
 
 #projetos { float:none; margin:0 auto; width:990px; }
 #projetos .projError {margin: 20px 0;}
+#data {color:#555555; float:right; font-family:Verdana; font-size:12px; font-weight:bold; margin:10px 25px 10px 0; text-align:right;}
 
 .titulo { font-weight:normal; }
 

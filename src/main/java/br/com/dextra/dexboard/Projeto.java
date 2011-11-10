@@ -1,16 +1,18 @@
 package br.com.dextra.dexboard;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.appengine.api.memcache.Expiration;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
-import com.google.appengine.api.memcache.MemcacheService.SetPolicy;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.googlecode.restitory.gae.filter.util.JsonUtil;
 
 public class Projeto {
 
@@ -46,6 +48,17 @@ public class Projeto {
 			obj.add(dados);
 		}
 		LOG.info("json criado");
+		JsonObject data = new JsonObject();
+
+		TimeZone tz = TimeZone.getTimeZone("America/Sao_Paulo");
+		TimeZone.setDefault(tz);
+		Calendar ca = GregorianCalendar.getInstance(tz);
+
+		SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		String modified = formatador.format(ca.getTime());
+		data.addProperty("lastModified", modified);
+
+		obj.add(data);
 		// cache.put("dados-projetos", obj.toString(),
 		// Expiration.byDeltaSeconds(CACHE_EXPIRATION_SECONDS),
 		// SetPolicy.ADD_ONLY_IF_NOT_PRESENT);

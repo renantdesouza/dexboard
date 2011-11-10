@@ -1,5 +1,6 @@
 package br.com.dextra.dexboard;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -55,6 +56,29 @@ public class PlanilhaProjeto extends Planilha {
 		}
 	}
 
+	private List<Integer> tresUltimosSprints(int ultimoSprint, int coluna) {
+		List<Integer> valores = new ArrayList<Integer>();
+
+		int cont = 0;
+		for (int i = ultimoSprint+4; i > 4; i-- ) {
+			if (recuperarConteudoCelulaInt(i, coluna) != null) {
+				valores.add(recuperarConteudoCelulaInt(i, coluna));
+				if (cont == 2) {
+					break;
+				}
+				cont++;
+			}
+		}
+
+		if (cont < 2) {
+			for (int i = cont; i < 3; i++) {
+				valores.add(0);
+			}
+		}
+
+		return valores;
+	}
+
 	private JsonObject buscarSatisfacaoEquipe(int ultimoSprint) {
 
 		List<Integer> resultadoEquipe = recuperarConteudoCelulasInt(3 + ultimoSprint, 2, Satisfacao.values().length);
@@ -78,17 +102,30 @@ public class PlanilhaProjeto extends Planilha {
 	}
 
 	private JsonObject buscarSatisfacaoCliente(int ultimoSprint) {
-		List<Integer> resultadoCliente = recuperarConteudoCelulasInt(3 + ultimoSprint, 10, Satisfacao.values().length);
-		List<Integer> andamentoCliente = recuperarConteudoCelulasInt(3 + ultimoSprint, 14, Satisfacao.values().length);
+		List<Integer> indices = tresUltimosSprints(ultimoSprint, 25);
 
 		JsonObject retResultado = new JsonObject();
-		for (int i = 0; i < Satisfacao.values().length; ++i) {
-			retResultado.addProperty(Satisfacao.values()[i].name(), resultadoCliente.get(i));
-		}
-
 		JsonObject retAndamento = new JsonObject();
-		for (int i = 0; i < Satisfacao.values().length; ++i) {
-			retAndamento.addProperty(Satisfacao.values()[i].name(), andamentoCliente.get(i));
+		for (int i = 0; i < indices.size(); i++) {
+			LOG.error("\n\nSatisfacao do Cliente preenchido: "+ indices.get(i)+"\n");
+
+			if (indices.get(i) > 0) {
+				List<Integer> resultadoCliente = recuperarConteudoCelulasInt(3 + indices.get(i), 10, Satisfacao.values().length);
+				List<Integer> andamentoCliente = recuperarConteudoCelulasInt(3 + indices.get(i), 14, Satisfacao.values().length);
+
+				JsonObject retResultadoAux = new JsonObject();
+				for (int j = 0; j < Satisfacao.values().length; ++j) {
+					retResultadoAux.addProperty(Satisfacao.values()[j].name(), resultadoCliente.get(j));
+				}
+
+				JsonObject retAndamentoAux = new JsonObject();
+				for (int j = 0; j < Satisfacao.values().length; ++j) {
+					retAndamentoAux.addProperty(Satisfacao.values()[j].name(), andamentoCliente.get(j));
+				}
+
+				retResultado.add("sprint"+i, retResultadoAux);
+				retAndamento.add("sprint"+i, retAndamentoAux);
+			}
 		}
 
 		JsonObject ret = new JsonObject();

@@ -128,7 +128,11 @@ public abstract class Planilha {
 
 	protected Integer recuperarConteudoCelulaInt(int linha, int coluna) {
 		String conteudo = recuperarConteudoCelula(linha, coluna);
-		return conteudo == null ? null : Integer.valueOf(conteudo);
+		try {
+			return Integer.valueOf(conteudo);
+		} catch (NumberFormatException e) {
+			return null;
+		}
 	}
 
 	protected List<String> recuperarConteudoCelulas(int linha, int colunaInicial, int quantasColunas) {

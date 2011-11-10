@@ -12,10 +12,9 @@
 <body>
 	<div class="main">
 		<div class="interMain">
-			<h1>DexBoard
-				<a class="btn_atualiza" href="/">Atualizar Dados</a>
-			</h1>
+			<h1>DexBoard</h1>
 			<div id="projetos">Carregando...</div>
+			<div id="data"></div>
 		</div>
 	</div>
 </body>
@@ -219,9 +218,9 @@ function tabularObjeto(objeto) {
 
 			if (objeto.satisfacaoCliente != null) {
 
-				if (objeto.satisfacaoCliente.resultadoEntregue != null) {
+				if (objeto.satisfacaoCliente.resultadoEntregue.sprint0 != null) {
 
-					var satistacao = objeto.satisfacaoCliente.resultadoEntregue;
+					var satistacao = objeto.satisfacaoCliente.resultadoEntregue.sprint0;
 
 					var totalPontos = 0;
 					var totalVotos = 0;
@@ -252,9 +251,9 @@ function tabularObjeto(objeto) {
 					}
 				}
 
-				if (objeto.satisfacaoCliente.andamentoDoSprint != null) {
+				if (objeto.satisfacaoCliente.andamentoDoSprint.sprint0 != null) {
 
-					var satistacao = objeto.satisfacaoCliente.andamentoDoSprint;
+					var satistacao = objeto.satisfacaoCliente.andamentoDoSprint.sprint0;
 
 					var totalPontos = 0;
 					var totalVotos = 0;
@@ -307,12 +306,17 @@ function tabularObjeto(objeto) {
 
 	$.get('query', function(projetos) {
 		var divProjetos = $('div#projetos').empty();
-
+		var divData = $('div#data').empty();
 		if (projetos == null) {
 			divProjetos.append("<div class='projError'>Favor recarregar a página, ouve um erro no processo</div>");
 		} else {
 			for (var i = 0; i < projetos.length; ++i) {
-				divProjetos.append(tabularObjeto(projetos[i]));
+				if (projetos[i].lastModified == null) {
+					divProjetos.append(tabularObjeto(projetos[i]));
+				} else {
+					divData.append("&Uacute;ltima atualiza&ccedil;&atilde;o: "+ projetos[i].lastModified);
+				}
+
 			}
 			$('div.projeto *').tooltip();
 		}
