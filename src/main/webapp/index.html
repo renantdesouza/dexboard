@@ -22,7 +22,7 @@
 <script>
 
 function mostrar (id){
-	$('#content_'+id).toggle('fast');
+	$('#content_'+id).slideToggle("fast");
 }
 
 function troca (palavra) {
@@ -218,9 +218,9 @@ function tabularObjeto(objeto) {
 
 			if (objeto.satisfacaoCliente != null) {
 
-				if (objeto.satisfacaoCliente.resultadoEntregue.sprint0 != null) {
+				if (objeto.satisfacaoCliente.resultadoEntregue != null) {
 
-					var satistacao = objeto.satisfacaoCliente.resultadoEntregue.sprint0;
+					var satistacao = objeto.satisfacaoCliente.resultadoEntregue;
 
 					var totalPontos = 0;
 					var totalVotos = 0;
@@ -251,9 +251,9 @@ function tabularObjeto(objeto) {
 					}
 				}
 
-				if (objeto.satisfacaoCliente.andamentoDoSprint.sprint0 != null) {
+				if (objeto.satisfacaoCliente.andamentoDoSprint != null) {
 
-					var satistacao = objeto.satisfacaoCliente.andamentoDoSprint.sprint0;
+					var satistacao = objeto.satisfacaoCliente.andamentoDoSprint;
 
 					var totalPontos = 0;
 					var totalVotos = 0;
