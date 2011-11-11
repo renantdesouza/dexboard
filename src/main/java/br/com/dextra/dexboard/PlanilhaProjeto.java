@@ -167,15 +167,24 @@ public class PlanilhaProjeto extends Planilha {
 		return ret;
 	}
 
+	/*	private JsonObject buscarQualidade(int ultimoSprint) {
+		List<Integer> qualidade = recuperarConteudoCelulasInt(3 + ultimoSprint, 18, Qualidade.values().length);
+
+		JsonObject ret = new JsonObject();
+		for (int i = 0; i < Qualidade.values().length; ++i) {
+			ret.addProperty(Qualidade.values()[i].name(), qualidade.get(i));
+		}
+
+		return ret;
+	}*/
+
 	private int maiorSprint(int s1, int s2, int s3) {
 
 		if (s1 > s2 && s1 > s3) {
 			return s1;
 		} else if (s2 > s1 && s2 > s3) {
 			return s2;
-		} else if (s3 > s1 && s3 > s2) {
-			return s3;
-		} else return 0;
+		} else return s3;
 	}
 
 	// -----------------------------------------------------------
