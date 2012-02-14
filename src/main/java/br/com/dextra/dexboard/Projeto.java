@@ -29,13 +29,6 @@ public class Projeto {
 	public static final ServicoPma SERVICO_PMA = SERVICO_PMA_AMAZON;
 
 	public static JsonArray buscarDadosProjetos() {
-		// MemcacheService cache =
-		// MemcacheServiceFactory.getMemcacheService("dados-projetos");
-		// String json = (String) cache.get("dados-projetos");
-		// LOG.info("Cache hit: " + (json != null));
-		// if (json != null) {
-		// return (JsonArray) JsonUtil.parse(json);
-		// }
 		LOG.info("Criando planilhaDexboard");
 		PlanilhaDexboard planilhaDexboard = new PlanilhaDexboard("0Au2Lk990DvFfdGVDQm9rTW1OYmw3dW5yOUVQSkdPSGc");
 		LOG.info("buscarDadosProjetos");
