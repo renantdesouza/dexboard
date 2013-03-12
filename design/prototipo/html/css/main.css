@@ -88,12 +88,12 @@ tbody > tr > th > .block-light{
 	z-index:2;
 	text-align:center;
 	font-size:20px;
-	color:#fff;
-	letter-spacing:-1px;
+	color:rgba(185,235,195,0.8);
+	letter-spacing:-2px;
 	font-weight:bold;
-	text-shadow:0 1px 0 #000;
+	text-shadow:0 1px 0 #000,0 0 1px rgba(255,255,255,0.15);
 	width:56px;}
-.cell-ok > div{opacity:0.5;}
+.cell-ok > div{opacity:0.95;background-color:rgba(255,255,255,0.075);border-color:rgba(255,255,255,0.015);}
 .cell-att > div,
 .cell-crit > div{border:0;height:41px;width:57px;color:rgba(0,0,0,0.9);text-shadow:0 1px 0 rgba(255,255,255,0.4);}
 .cell-att > div{background-color:#f6d700;}
