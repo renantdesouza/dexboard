@@ -31,9 +31,9 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.google.gdata.client.spreadsheet</groupId>
-			<artifactId>spreadsheet</artifactId>
-			<version>1.46.0</version>
+			<groupId>com.google.gdata</groupId>
+			<artifactId>core</artifactId>
+			<version>1.47.1</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -195,6 +195,14 @@
 			<id>dexboard</id>
 			<url>file:///projects/shared/dextra_dexboard/repo</url>
 		</repository>
+		<repository>
+			<id>jakubiak-gdata</id>
+			<url>http://jakubiak-gdata.googlecode.com/svn/trunk/jakubiak-gdata/repo</url>
+		</repository>
+		<repository>
+			<id>google-maven</id>
+			<url>http://google-maven-repository.googlecode.com/svn/repository</url>
+		</repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
@@ -216,9 +224,9 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>com.google.gdata.client.spreadsheet</groupId>
-				<artifactId>spreadsheet</artifactId>
-				<version>1.46.0</version>
+				<groupId>com.google.gdata</groupId>
+				<artifactId>core</artifactId>
+				<version>1.47.1</version>
 			</dependency>
 			<dependency>
 				<groupId>junit</groupId>
