@@ -27,7 +27,7 @@ html{font-size:100%;}
 .hidden{display:none;}
 
 /*----------  Tipografia & Botões  ----------*/
-body{font-family:'Open Sans', arial, sans-serif;background:url('../img/body-pattern.png') repeat;color:#ededed;text-rendering:optimizeLegibility;-webkit-text-rendering:optimizeLegibility;}
+body{font-family:'Open Sans', arial, sans-serif;background:url('../img/body-pattern.png') repeat;color:#ededed;text-rendering:optimizeLegibility;-webkit-text-rendering:optimizeLegibility;overflow-x:hidden;}
 
 /*----------  Estrutura do layout  ----------*/
 #body-topbar,
@@ -35,12 +35,12 @@ body{font-family:'Open Sans', arial, sans-serif;background:url('../img/body-patt
 #body-bottombar{position:absolute;left:0;bottom:0;box-shadow:inset 0 6px 6px #aaa;}
 #body-topbar{box-shadow:inset 0 -6px 6px #bbb;margin-bottom:15px;}
 
-#wrapper{padding-bottom:20px;}
+#wrapper{padding:10px 0 20px;}
 
 /*----------  Exibição de tabela de projetos  ----------*/
-table{width:100%;table-layout:fixed;}
+table{width:100%;table-layout:fixed;margin-bottom:20px;}
 
-th,td{padding:7px;}
+th,td{padding:5px;}
 
 thead > tr > th{text-align:left;height:220px;padding:0;vertical-align:top;width:87px;}
 thead > tr > th.tbl-head-logo{width:280px;text-align:center;vertical-align:middle;}
@@ -63,7 +63,7 @@ thead > tr > th.tbl-projeto-att > div{background-color:#e9cb00;box-shadow:inset 
 thead > tr > th.tbl-projeto-crit > div{background-color:#ff0000;box-shadow:inset 0 0 4px 0 #000,inset 0 -18px 18px -6px rgba(0,0,0,0.3),inset 0 18px 18px -6px #ff3434;}
 
 tbody > tr{}
-tbody > tr > th{padding-bottom:15px;text-align:left;}
+tbody > tr > th{padding-bottom:5px;padding-right:20px;text-align:left;}
 tbody > tr > th > .block-light{
 	background:url('../img/th-left-pattern.png') repeat;
 	padding:18px 22px;
@@ -75,9 +75,29 @@ tbody > tr > th > .block-light{
 	border-radius:4px;
 	box-shadow:inset 0 0 3px 2px #000,inset 0 9px 9px -3px #666,inset 0 -35px 35px -30px #000;}
 
-
-
-
+.cell{vertical-align:middle;}
+.cell > div {
+	background-color:#2E2E2E;
+	padding-top:14px;
+	height:39px;
+	margin-left:5px;
+	border-radius:4px;
+	box-shadow:inset 0 0 4px 1px rgba(0,0,0,0.85),0 -1px 1px #000,inset 0 -16px 16px -6px rgba(0,0,0,0.45);
+	border:1px solid #1e1e1e;
+	position:relative;
+	z-index:2;
+	text-align:center;
+	font-size:20px;
+	color:rgba(185,235,195,0.8);
+	letter-spacing:-2px;
+	font-weight:bold;
+	text-shadow:0 1px 0 #000,0 0 1px rgba(255,255,255,0.15);
+	width:56px;}
+.cell-ok > div{opacity:0.95;background-color:rgba(255,255,255,0.075);border-color:rgba(255,255,255,0.015);}
+.cell-att > div,
+.cell-crit > div{border:0;height:41px;width:57px;color:rgba(0,0,0,0.9);text-shadow:0 1px 0 rgba(255,255,255,0.4);}
+.cell-att > div{background-color:#f6d700;}
+.cell-crit > div{background-color:#eb0000;}
 
 
 
