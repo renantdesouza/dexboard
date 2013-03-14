@@ -1,4 +1,4 @@
-package br.com.dextra.dexboard;
+package br.com.dextra.dexboard.old;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

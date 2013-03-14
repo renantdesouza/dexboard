@@ -1,4 +1,4 @@
-package br.com.dextra.dexboard;
+package br.com.dextra.dexboard.old;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -7,6 +7,9 @@ import java.util.TimeZone;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import br.com.dextra.dexboard.service.ServicoPma;
+import br.com.dextra.dexboard.service.Utils;
 
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;

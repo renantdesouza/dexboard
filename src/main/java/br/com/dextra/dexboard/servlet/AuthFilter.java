@@ -1,4 +1,4 @@
-package br.com.dextra.dexboard;
+package br.com.dextra.dexboard.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;

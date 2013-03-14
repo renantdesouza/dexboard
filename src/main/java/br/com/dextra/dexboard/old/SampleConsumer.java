@@ -1,4 +1,4 @@
-package br.com.dextra.dexboard;
+package br.com.dextra.dexboard.old;
 
 import org.openid4java.consumer.ConsumerException;
 import org.openid4java.consumer.ConsumerManager;

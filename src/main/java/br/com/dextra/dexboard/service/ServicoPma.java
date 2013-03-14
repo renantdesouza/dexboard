@@ -1,4 +1,4 @@
-package br.com.dextra.dexboard;
+package br.com.dextra.dexboard.service;
 
 import java.nio.charset.Charset;
 
