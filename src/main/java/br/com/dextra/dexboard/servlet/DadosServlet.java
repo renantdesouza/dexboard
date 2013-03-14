@@ -1,4 +1,4 @@
-package br.com.dextra.dexboard.old;
+package br.com.dextra.dexboard.servlet;
 
 import java.io.IOException;
 import java.util.Date;
@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
+import br.com.dextra.dexboard.service.DadosProjeto;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -22,7 +24,7 @@ public class DadosServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("application/json");
-		JsonArray ret = Projeto.buscarDadosProjetos();
+		JsonArray ret = DadosProjeto.buscarDadosProjetos();
 		DatastoreService service = DatastoreServiceFactory.getDatastoreService();
 		Entity entity = new Entity("projectData", "data");
 		entity.setProperty("json", new Text(ret.toString()));

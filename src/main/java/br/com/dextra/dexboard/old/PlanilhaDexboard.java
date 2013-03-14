@@ -1,12 +1,13 @@
 package br.com.dextra.dexboard.old;
 
-import br.com.dextra.dexboard.service.Utils;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import br.com.dextra.dexboard.domain.Projeto;
+import br.com.dextra.dexboard.planilha.Planilha;
 
 public class PlanilhaDexboard extends Planilha {
-//
+	//
 	public PlanilhaDexboard(String chavePlanilha) {
 		super(chavePlanilha, "Principal");
 	}
@@ -17,8 +18,8 @@ public class PlanilhaDexboard extends Planilha {
 		return recuperarConteudoCelulaInt(2, 6);
 	}
 
-	private String buscarUriPlanilhaDoProjeto(int indiceProjeto) {
-		return recuperarConteudoCelula(2 + indiceProjeto, 3);
+	private String buscarNomeDoProjeto(int indiceProjeto) {
+		return recuperarConteudoCelula(2 + indiceProjeto, 1);
 	}
 
 	private int buscarIdProjeto(int indiceProjeto) {
@@ -27,32 +28,19 @@ public class PlanilhaDexboard extends Planilha {
 
 	// -----------------------------------------------------------
 
-	public JsonArray buscarDadosDosProjetos() {
-		JsonArray ret = new JsonArray();
+	public List<Projeto> buscarDadosDosProjetos() {
+		List<Projeto> ret = new ArrayList<Projeto>();
 
 		int qtdeProjetos = buscarQuantidadeDeProjetos();
 
 		for (int i = 0; i < qtdeProjetos; ++i) {
-			JsonObject projeto = new JsonObject();
-			projeto.addProperty("id", buscarIdProjeto(i));
-
-			String uriPlanilhaDoProjeto = buscarUriPlanilhaDoProjeto(i);
-			if (uriPlanilhaDoProjeto != null) {
-				acrescentarDadosDaPlanilhaDoProjeto(projeto, uriPlanilhaDoProjeto);
-			} else {
-				projeto.addProperty("semTabela", "");
-			}
-
-			ret.add(projeto);
+			Projeto proj = new Projeto();
+			proj.setIdPma(buscarIdProjeto(i));
+			proj.setNome(buscarNomeDoProjeto(i));
+			ret.add(proj);
 		}
 
 		return ret;
-	}
-
-	private void acrescentarDadosDaPlanilhaDoProjeto(JsonObject projeto, String uriPlanilhaProjeto) {
-		PlanilhaProjeto planilhaProjeto = new PlanilhaProjeto(uriPlanilhaProjeto);
-		JsonObject dadosPlanilhaDoProjeto = planilhaProjeto.buscarDadosProjeto();
-		Utils.mesclar(projeto, dadosPlanilhaDoProjeto);
 	}
 
 }

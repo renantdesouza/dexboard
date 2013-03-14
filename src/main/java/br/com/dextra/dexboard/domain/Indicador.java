@@ -6,7 +6,6 @@ public class Indicador {
 	private int cor;
 	private String descricao;
 	private String usuario;
-	private double valor;
 
 	public String getNome() {
 		return nome;
@@ -38,14 +37,6 @@ public class Indicador {
 
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
-	}
-
-	public double getValor() {
-		return valor;
-	}
-
-	public void setValor(double valor) {
-		this.valor = valor;
 	}
 
 }

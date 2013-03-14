@@ -10,6 +10,7 @@ public class Projeto {
 	private String nome;
 	private List<Indicador> indicadores;
 	private Date ultimaAlteracao;
+	private Double cpi;
 
 	public int getIdPma() {
 		return idPma;
@@ -48,5 +49,13 @@ public class Projeto {
 
 	public void setUltimaAlteracao(Date ultimaAlteracao) {
 		this.ultimaAlteracao = ultimaAlteracao;
+	}
+
+	public Double getCpi() {
+		return cpi;
+	}
+
+	public void setCpi(Double cpi) {
+		this.cpi = cpi;
 	}
 }
