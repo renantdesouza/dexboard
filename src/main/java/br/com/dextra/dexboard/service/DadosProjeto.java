@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import br.com.dextra.dexboard.domain.Projeto;
-import br.com.dextra.dexboard.old.PlanilhaDexboard;
+import br.com.dextra.dexboard.planilha.PlanilhaDexboard;
 
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
