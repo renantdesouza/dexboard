@@ -24,8 +24,7 @@ import com.googlecode.mycontainer.web.jetty.JettyServerDeployer;
 
 public class GAETestHelper {
 
-	private static final Logger LOG = LoggerFactory
-			.getLogger(GAETestHelper.class);
+	private static final Logger LOG = LoggerFactory.getLogger(GAETestHelper.class);
 
 	protected LocalServiceTestHelper helper;
 
