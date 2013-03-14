@@ -17,7 +17,6 @@ public class DadosProjeto {
 
 	public final static Logger LOG = LoggerFactory.getLogger(DadosProjeto.class);
 
-	@SuppressWarnings("unused")
 	public static final ServicoPma SERVICO_PMA_AMAZON = new ServicoPma(
 			"https://50.17.210.152/pma/services/indicadores", "ac4ef0ec195ed24ab08d1e4a8a3a1ed0");
 
