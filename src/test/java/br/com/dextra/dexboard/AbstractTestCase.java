@@ -3,9 +3,11 @@ package br.com.dextra.dexboard;
 import org.junit.After;
 import org.junit.Before;
 
+import com.google.gson.JsonObject;
 import com.googlecode.restitory.gae.http.HttpClientRequestService;
 import com.googlecode.restitory.gae.http.RequestAdapter;
 import com.googlecode.restitory.gae.http.RequestService;
+import com.googlecode.restitory.gae.http.Response;
 
 public class AbstractTestCase {
 
@@ -30,6 +32,10 @@ public class AbstractTestCase {
 		if (helper != null) {
 			helper.shutdownMycontainer();
 		}
+	}
+
+	protected JsonObject getJson(Response resp) {
+		return resp.getContent().getJson().getAsJsonObject();
 	}
 
 }

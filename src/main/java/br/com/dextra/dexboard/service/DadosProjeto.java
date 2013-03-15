@@ -37,10 +37,10 @@ public class DadosProjeto {
 
 		List<Projeto> projetos = planilhaPrincipal.buscarDadosDosProjetos();
 
-		for (Projeto p : projetos) {
-			p.setIndicadores(indicadores);
-			JsonObject dados = SERVICO_PMA.buscarDadosDoProjeto(p.getIdPma());
-			p.setCpi(dados.get("cpi").getAsDouble());
+		for (Projeto projeto : projetos) {
+			projeto.setIndicadores(indicadores);
+			JsonObject dados = SERVICO_PMA.buscarDadosDoProjeto(projeto.getIdPma());
+			projeto.setCpi(dados.get("cpi").getAsDouble());
 		}
 
 		return projetos;

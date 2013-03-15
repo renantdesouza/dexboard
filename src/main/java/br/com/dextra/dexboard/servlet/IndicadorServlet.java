@@ -16,8 +16,8 @@ import com.google.appengine.api.datastore.EntityNotFoundException;
 
 import flexjson.JSONDeserializer;
 
-public class IndicadorServlet extends HttpServlet{
-	
+public class IndicadorServlet extends HttpServlet {
+
 	private static final long serialVersionUID = -7416705488396246559L;
 
 	@Override
@@ -25,18 +25,16 @@ public class IndicadorServlet extends HttpServlet{
 			throws ServletException, IOException {
 
 		Integer idProjeto = Integer.valueOf(req.getParameter("projeto"));
-		
+
 		JSONDeserializer<Indicador> deserializer = new JSONDeserializer<Indicador>();
-		Indicador indicador = deserializer.deserialize(req.getParameter("indicador"));
-		
+		Indicador indicador = deserializer.deserialize(req
+				.getParameter("indicador"));
+
 		List<Projeto> todosProjetos;
-		try {
-			todosProjetos = ProjetoRepository.buscaProjetos();
-		} catch (EntityNotFoundException e) {
-			throw new RuntimeException(e);
-		}
-		
-		Projeto projeto = ProjetoRepository.buscarPorId(idProjeto, todosProjetos);
+		todosProjetos = ProjetoRepository.buscaProjetos();
+
+		Projeto projeto = ProjetoRepository.buscarPorId(idProjeto,
+				todosProjetos);
 		projeto.alteraIndicador(indicador);
 
 		ProjetoRepository.persisteProjetos(todosProjetos);

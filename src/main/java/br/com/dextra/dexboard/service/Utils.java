@@ -1,5 +1,7 @@
 package br.com.dextra.dexboard.service;
 
+import static com.google.appengine.api.urlfetch.FetchOptions.Builder.doNotValidateCertificate;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -9,6 +11,8 @@ import java.util.Map.Entry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.appengine.api.urlfetch.HTTPMethod;
+import com.google.appengine.api.urlfetch.HTTPRequest;
 import com.google.appengine.api.urlfetch.HTTPResponse;
 import com.google.appengine.api.urlfetch.URLFetchService;
 import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
@@ -30,6 +34,10 @@ public class Utils {
 			LOG.info("Baixando JSON da URI: " + uri);
 			URLFetchService urlFetchService = URLFetchServiceFactory.getURLFetchService();
 			HTTPResponse response = urlFetchService.fetch(new URL(uri));
+			
+			LOG.info("Not Validade Certificate: " + doNotValidateCertificate());
+			//HTTPResponse response = urlFetchService.fetch(new HTTPRequest(new URL(uri), HTTPMethod.GET, doNotValidateCertificate()));
+			
 			String json = new String(response.getContent(), encoding);
 			LOG.debug("JSON baixado >>>\n" + json + "\n<<< JSON baixado");
 			return parse(json);

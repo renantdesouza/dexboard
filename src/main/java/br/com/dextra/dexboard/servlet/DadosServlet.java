@@ -13,12 +13,10 @@ import br.com.dextra.dexboard.domain.Projeto;
 import br.com.dextra.dexboard.repository.ProjetoRepository;
 import br.com.dextra.dexboard.service.DadosProjeto;
 
-import com.google.appengine.api.datastore.EntityNotFoundException;
-
 public class DadosServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -1248500946944090403L;
-	
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -28,23 +26,19 @@ public class DadosServlet extends HttpServlet {
 		List<Projeto> projetosPlanilha = DadosProjeto.buscarDadosProjetos();
 		List<Projeto> projetosDataStore;
 
-		try {
-			projetosDataStore = ProjetoRepository.buscaProjetos();
-		} catch (EntityNotFoundException e) {
-			throw new RuntimeException(e);
-		}
+		projetosDataStore = ProjetoRepository.buscaProjetos();
 
 		adicionaProjetosAtivos(projetos, projetosPlanilha, projetosDataStore);
 		adicionaProjetosNovos(projetos, projetosPlanilha);
 
 		ProjetoRepository.persisteProjetos(projetos);
 
-		resp.getWriter().print("true");
+		resp.getWriter().print("{status: 'success'}");
 	}
 
 	private void adicionaProjetosNovos(List<Projeto> destino,
 			List<Projeto> origem) {
-		
+
 		for (Projeto p : origem) {
 			if (!projetoEstaNaLista(p, destino)) {
 				destino.add(p);

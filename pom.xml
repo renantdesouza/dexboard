@@ -13,8 +13,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<downloadSources>true</downloadSources>
-		<gae.version>1.5.3</gae.version>
-		<gae.rt.version>1.5.2</gae.rt.version>
+		<gae.version>1.7.4</gae.version>
+		<gae.rt.version>1.7.4</gae.rt.version>
 		<gae.application.version>test</gae.application.version>
 		<mycontainer.version>1.2.35</mycontainer.version>
 		<restitory.version>1.0.50</restitory.version>
@@ -80,7 +80,7 @@
 		<dependency>
 			<groupId>net.kindleit</groupId>
 			<artifactId>gae-runtime</artifactId>
-			<version>${gae.version}</version>
+			<version>${gae.rt.version}</version>
 			<type>pom</type>
 		</dependency>
 		<dependency>
