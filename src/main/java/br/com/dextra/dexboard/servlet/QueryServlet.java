@@ -1,4 +1,4 @@
-package br.com.dextra.dexboard.old;
+package br.com.dextra.dexboard.servlet;
 
 import java.io.IOException;
 
@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-import br.com.dextra.dexboard.servlet.CacheEntry;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
