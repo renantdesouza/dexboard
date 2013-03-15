@@ -43,12 +43,14 @@ public class Projeto {
 		this.getIndicadores().add(indicador);
 	}
 
-	public void alteraIndicador(Indicador indicadorAlterado) {
+	public void alteraIndicador(Indicador indicadorAlterado, String usuario) {
 		int i = 0;
+
 		while (i < this.getIndicadores().size()) {
 			Indicador indicador = this.getIndicadores().get(i);
 			if (indicador.getId() == indicadorAlterado.getId()) {
 				this.getIndicadores().remove(i);
+				indicador.setUsuarioUltimaAlteracao(usuario);
 				indicador.setUltimaAlteracao(new Date());
 				this.addIndicador(indicador);
 				break;

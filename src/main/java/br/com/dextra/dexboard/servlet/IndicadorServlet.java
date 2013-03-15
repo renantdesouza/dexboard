@@ -13,6 +13,8 @@ import br.com.dextra.dexboard.domain.Projeto;
 import br.com.dextra.dexboard.repository.ProjetoRepository;
 
 import com.google.appengine.api.datastore.EntityNotFoundException;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 import flexjson.JSONDeserializer;
 
@@ -36,10 +38,15 @@ public class IndicadorServlet extends HttpServlet{
 			throw new RuntimeException(e);
 		}
 		
-		Projeto projeto = ProjetoRepository.buscarPorId(idProjeto, todosProjetos);
-		projeto.alteraIndicador(indicador);
 
-		ProjetoRepository.persisteProjetos(todosProjetos);
+        if (req.getUserPrincipal() != null) {
+		
+        	UserService userService = UserServiceFactory.getUserService();
+			Projeto projeto = ProjetoRepository.buscarPorId(idProjeto, todosProjetos);
+			projeto.alteraIndicador(indicador, userService.getCurrentUser().getEmail());
+	
+			ProjetoRepository.persisteProjetos(todosProjetos);
+        }
 	}
 
 }
