@@ -12,7 +12,8 @@ import br.com.dextra.dexboard.domain.Indicador;
 import br.com.dextra.dexboard.domain.Projeto;
 import br.com.dextra.dexboard.repository.ProjetoRepository;
 
-import com.google.appengine.api.datastore.EntityNotFoundException;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 import flexjson.JSONDeserializer;
 
@@ -30,13 +31,11 @@ public class IndicadorServlet extends HttpServlet {
 		Indicador indicador = deserializer.deserialize(req
 				.getParameter("indicador"));
 
-		List<Projeto> todosProjetos;
-		todosProjetos = ProjetoRepository.buscaProjetos();
+		List<Projeto> todosProjetos = ProjetoRepository.buscaProjetos();
+		UserService userService = UserServiceFactory.getUserService();
 
-		Projeto projeto = ProjetoRepository.buscarPorId(idProjeto,
-				todosProjetos);
-		projeto.alteraIndicador(indicador);
-
+		Projeto projeto = ProjetoRepository.buscarPorId(idProjeto, todosProjetos);
+		projeto.alteraIndicador(indicador, userService.getCurrentUser().getEmail());
 		ProjetoRepository.persisteProjetos(todosProjetos);
 	}
 

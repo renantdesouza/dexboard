@@ -8,7 +8,7 @@ public class Indicador {
 	private String nome;
 	private int cor;
 	private String descricao;
-	private String usuario;
+	private String usuarioUltimaAlteracao;
 	private Date ultimaAlteracao;
 	
 	public Indicador(int id, String nomeIndicador) {
@@ -52,12 +52,12 @@ public class Indicador {
 		this.descricao = descricao;
 	}
 
-	public String getUsuario() {
-		return usuario;
+	public String getUsuarioUltimaAlteracao() {
+		return usuarioUltimaAlteracao;
 	}
-
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+	
+	public void setUsuarioUltimaAlteracao(String usuarioUltimaAlteracao) {
+		this.usuarioUltimaAlteracao = usuarioUltimaAlteracao;
 	}
 
 }
