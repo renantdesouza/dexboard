@@ -38,15 +38,11 @@ public class IndicadorServlet extends HttpServlet{
 			throw new RuntimeException(e);
 		}
 		
+    	UserService userService = UserServiceFactory.getUserService();
 
-        if (req.getUserPrincipal() != null) {
-		
-        	UserService userService = UserServiceFactory.getUserService();
-			Projeto projeto = ProjetoRepository.buscarPorId(idProjeto, todosProjetos);
-			projeto.alteraIndicador(indicador, userService.getCurrentUser().getEmail());
-	
-			ProjetoRepository.persisteProjetos(todosProjetos);
-        }
+		Projeto projeto = ProjetoRepository.buscarPorId(idProjeto, todosProjetos);
+		projeto.alteraIndicador(indicador, userService.getCurrentUser().getEmail());
+		ProjetoRepository.persisteProjetos(todosProjetos);
 	}
 
 }
