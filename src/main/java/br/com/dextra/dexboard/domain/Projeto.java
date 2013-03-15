@@ -9,7 +9,7 @@ public class Projeto {
 	private int idPma;
 	private String nome;
 	private List<Indicador> indicadores;
-	private Date ultimaAlteracao;
+
 	private Double cpi;
 
 	public int getIdPma() {
@@ -43,14 +43,19 @@ public class Projeto {
 		this.getIndicadores().add(indicador);
 	}
 
-	public Date getUltimaAlteracao() {
-		return ultimaAlteracao;
+	public void alteraIndicador(Indicador indicadorAlterado) {
+		int i = 0;
+		while (i < this.getIndicadores().size()) {
+			Indicador indicador = this.getIndicadores().get(i);
+			if (indicador.getId() == indicadorAlterado.getId()) {
+				this.getIndicadores().remove(i);
+				indicador.setUltimaAlteracao(new Date());
+				this.addIndicador(indicador);
+				break;
+			}
+		}
 	}
-
-	public void setUltimaAlteracao(Date ultimaAlteracao) {
-		this.ultimaAlteracao = ultimaAlteracao;
-	}
-
+	
 	public Double getCpi() {
 		return cpi;
 	}

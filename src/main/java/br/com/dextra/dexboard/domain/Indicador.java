@@ -1,11 +1,32 @@
 package br.com.dextra.dexboard.domain;
 
+import java.util.Date;
+
 public class Indicador {
 
+	private Integer id;
 	private String nome;
 	private int cor;
 	private String descricao;
 	private String usuario;
+	private Date ultimaAlteracao;
+	
+	public Indicador(int id, String nomeIndicador) {
+		this.id = id;
+		this.nome = nomeIndicador;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public Date getUltimaAlteracao() {
+		return ultimaAlteracao;
+	}
+	
+	public void setUltimaAlteracao(Date ultimaAlteracao) {
+		this.ultimaAlteracao = ultimaAlteracao;
+	}
 
 	public String getNome() {
 		return nome;

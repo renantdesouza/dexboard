@@ -6,12 +6,10 @@ import java.util.List;
 import br.com.dextra.dexboard.domain.Projeto;
 
 public class PlanilhaDexboard extends Planilha {
-	//
+
 	public PlanilhaDexboard(String chavePlanilha) {
 		super(chavePlanilha, "Principal");
 	}
-
-	// -----------------------------------------------------------
 
 	private int buscarQuantidadeDeProjetos() {
 		return recuperarConteudoCelulaInt(2, 6);
@@ -24,8 +22,6 @@ public class PlanilhaDexboard extends Planilha {
 	private int buscarIdProjeto(int indiceProjeto) {
 		return recuperarConteudoCelulaInt(2 + indiceProjeto, 2);
 	}
-
-	// -----------------------------------------------------------
 
 	public List<Projeto> buscarDadosDosProjetos() {
 		List<Projeto> ret = new ArrayList<Projeto>();

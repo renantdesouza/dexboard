@@ -20,10 +20,6 @@ public class Utils {
 
 	private static final Logger LOG = LoggerFactory.getLogger(Utils.class);
 
-	// private SampleConsumer teste = new SampleConsumer();
-
-	// teste.authRequest();
-
 	public static JsonElement baixarJson(String uri) {
 		return baixarJson(uri, Charset.defaultCharset());
 	}
