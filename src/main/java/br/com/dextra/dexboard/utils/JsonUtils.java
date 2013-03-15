@@ -1,4 +1,4 @@
-package br.com.dextra.dexboard.service;
+package br.com.dextra.dexboard.utils;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -16,9 +16,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-public class Utils {
+public class JsonUtils {
 
-	private static final Logger LOG = LoggerFactory.getLogger(Utils.class);
+	private static final Logger LOG = LoggerFactory.getLogger(JsonUtils.class);
 
 	public static JsonElement baixarJson(String uri) {
 		return baixarJson(uri, Charset.defaultCharset());

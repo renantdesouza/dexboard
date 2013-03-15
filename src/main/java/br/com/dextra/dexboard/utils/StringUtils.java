@@ -1,4 +1,4 @@
-package br.com.dextra.dexboard.service;
+package br.com.dextra.dexboard.utils;
 
 public class StringUtils {
 

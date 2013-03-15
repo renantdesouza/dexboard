@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.dextra.dexboard.domain.Indicador;
-import br.com.dextra.dexboard.service.StringUtils;
+import br.com.dextra.dexboard.utils.StringUtils;
 
 public class PlanilhaIndicadores extends Planilha {
 

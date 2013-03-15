@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.com.dextra.dexboard.domain.Projeto;
 import br.com.dextra.dexboard.repository.ProjetoRepository;
-import br.com.dextra.dexboard.service.DadosProjeto;
+import br.com.dextra.dexboard.service.ProjetoService;
 
-public class DadosServlet extends HttpServlet {
+public class ReloadProjetosServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -1248500946944090403L;
 
@@ -23,7 +23,7 @@ public class DadosServlet extends HttpServlet {
 
 		resp.setContentType("application/json");
 		List<Projeto> projetos = new ArrayList<Projeto>();
-		List<Projeto> projetosPlanilha = DadosProjeto.buscarDadosProjetos();
+		List<Projeto> projetosPlanilha = ProjetoService.buscarDadosProjetos();
 		List<Projeto> projetosDataStore;
 
 		projetosDataStore = ProjetoRepository.buscaProjetos();
