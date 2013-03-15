@@ -11,7 +11,7 @@ import com.googlecode.restitory.gae.http.Response;
 public class CronTest extends AbstractTestCase {
 
 	@Test
-	public void testDadosProjeto() {
+	public void testDadosServlet() {
 		Response resp = adapter.success("GET", "/dados/projetos", null, null);		
 		String status = getJson(resp).get("status").getAsString();
 		assertEquals("success", status);
