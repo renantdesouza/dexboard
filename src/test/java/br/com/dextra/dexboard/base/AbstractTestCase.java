@@ -1,4 +1,4 @@
-package br.com.dextra.dexboard;
+package br.com.dextra.dexboard.base;
 
 import org.junit.After;
 import org.junit.Before;

@@ -1,4 +1,4 @@
-package br.com.dextra.dexboard;
+package br.com.dextra.dexboard.base;
 
 import java.util.ArrayList;
 import java.util.HashMap;
