@@ -25,12 +25,13 @@ import com.meterware.servletunit.ServletUnitClient;
 public class CronTest extends AbstractTestCase {
 
 	@Test
-	public void testReloadProjetos() throws IOException, SAXException {
+	public void testaCarregarProjetosEAlterarIndicadores() throws IOException, SAXException {
 
 		carregaProjetos();
 		alteraIndicadorDeProjeto(495, 1);
+		alteraIndicadorDeProjeto(495, 2);
 		verificaSeProjetoEstaComIndicadorPreenchido(495, 1);
-		
+		verificaSeProjetoEstaComIndicadorPreenchido(495, 2);
 	}
 
 	private void verificaSeProjetoEstaComIndicadorPreenchido(Integer idProjeto, Integer idIndicadorAlterado) {
@@ -62,7 +63,7 @@ public class CronTest extends AbstractTestCase {
 		sr.registerServlet("indicadorServlet", IndicadorServlet.class.getName());
 		
 		ServletUnitClient sc = sr.newClient();
-	    WebRequest request   = new PostMethodWebRequest("http://localhost:8380/indicadorServlet");
+	    WebRequest request = new PostMethodWebRequest("http://localhost:8380/indicadorServlet");
 	    request.setParameter("projeto", idProjeto.toString());
 	    request.setParameter("indicador", "{ 'id' : '" + idIndicador + "', 'nome' : 'NomeBla', 'cor' : '2', 'descricao': 'desc desc' }");
 
