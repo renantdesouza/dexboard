@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import flexjson.JSON;
+
 public class Projeto {
 
 	private int idPma;
@@ -28,6 +30,7 @@ public class Projeto {
 		this.nome = nome;
 	}
 
+	@JSON
 	public List<Indicador> getIndicadores() {
 		if (indicadores == null) {
 			indicadores = new ArrayList<Indicador>();
@@ -57,7 +60,7 @@ public class Projeto {
 			}
 		}
 	}
-	
+
 	public Double getCpi() {
 		return cpi;
 	}

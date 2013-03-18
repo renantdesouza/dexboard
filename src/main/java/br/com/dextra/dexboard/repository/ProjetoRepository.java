@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import br.com.dextra.dexboard.domain.ListaProjeto;
 import br.com.dextra.dexboard.domain.Projeto;
 
 import com.google.appengine.api.datastore.DatastoreService;
@@ -14,9 +15,7 @@ import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Text;
-
-import flexjson.JSONDeserializer;
-import flexjson.JSONSerializer;
+import com.google.gson.Gson;
 
 public class ProjetoRepository {
 
@@ -31,29 +30,29 @@ public class ProjetoRepository {
 	}
 
 	public static List<Projeto> buscaProjetos() {
-		List<Projeto> projetos = new ArrayList<Projeto>();
-
 		DatastoreService service = DatastoreServiceFactory.getDatastoreService();
 		Key key = KeyFactory.createKey("projectData", "data");
 		Entity entity;
+		ListaProjeto projetos = null;
 		try {
 			entity = service.get(key);
 			Text text = (Text) entity.getProperty("json");
 
 			if (text != null) {
-				JSONDeserializer<List<Projeto>> deserializer = new JSONDeserializer<List<Projeto>>();
-				projetos = deserializer.deserialize(text.toString());
+				Gson gson = new Gson();
+				projetos = gson.fromJson(text.getValue(), ListaProjeto.class);
 			}
 		} catch (EntityNotFoundException e) {
-			return projetos;
+			return new ArrayList<Projeto>();
 		}
-		return projetos;
+		return projetos.getValue();
 	}
 
 	public static void persisteProjetos(List<Projeto> projetos) {
 
-		JSONSerializer serializer = new JSONSerializer();
-		String data = serializer.deepSerialize(projetos);
+		ListaProjeto lista = new ListaProjeto(projetos);
+		Gson gson = new Gson();
+		String data = gson.toJson(lista);
 
 		DatastoreService service = DatastoreServiceFactory
 				.getDatastoreService();

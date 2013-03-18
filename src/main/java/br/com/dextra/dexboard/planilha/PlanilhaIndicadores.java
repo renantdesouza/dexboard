@@ -9,7 +9,7 @@ import br.com.dextra.dexboard.utils.StringUtils;
 public class PlanilhaIndicadores extends Planilha {
 
 	public PlanilhaIndicadores(String chavePlanilha) {
-		super(chavePlanilha, "Principal");
+		super(chavePlanilha, "Indicadores");
 	}
 
 	private String buscarNomeDoIndicador(int linha) {

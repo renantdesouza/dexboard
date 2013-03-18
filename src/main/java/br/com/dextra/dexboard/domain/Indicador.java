@@ -11,7 +11,11 @@ public class Indicador {
 	private String descricao;
 	private String usuarioUltimaAlteracao;
 	private Date ultimaAlteracao;
-	
+
+	public Indicador() {
+		super();
+	}
+
 	public Indicador(int id, String nomeIndicador) {
 		this.id = id;
 		this.nome = nomeIndicador;
@@ -20,8 +24,6 @@ public class Indicador {
 	public Indicador(Map<String, Object> indicadorJSon) {
 		
 		if (indicadorJSon.containsKey("id")) {
-			String x = indicadorJSon.get("id").toString();
-			System.out.println(x);
 			this.id = Integer.valueOf(indicadorJSon.get("id").toString());
 		}
 
@@ -30,7 +32,7 @@ public class Indicador {
 		}
 
 		if (indicadorJSon.containsKey("cor")) {
-			this.cor = (Integer) indicadorJSon.get("cor");
+			this.cor = Integer.valueOf(indicadorJSon.get("cor").toString());
 		}
 
 		if (indicadorJSon.containsKey("descricao")) {
