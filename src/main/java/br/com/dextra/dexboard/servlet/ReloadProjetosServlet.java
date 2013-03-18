@@ -32,8 +32,8 @@ public class ReloadProjetosServlet extends HttpServlet {
 		adicionaProjetosNovos(projetos, projetosPlanilha);
 
 		ProjetoRepository.persisteProjetos(projetos);
-
-		resp.getWriter().print(projetos);
+		
+		resp.getWriter().print("{status: 'success'}");
 	}
 
 	private void adicionaProjetosNovos(List<Projeto> destino,
