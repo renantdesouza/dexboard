@@ -60,7 +60,7 @@ public class QueryServlet extends HttpServlet {
 					.byDeltaSeconds(CACHE_EXPIRATION_SECONDS), SetPolicy.ADD_ONLY_IF_NOT_PRESENT);
 
 		} catch (EntityNotFoundException e) {
-			resp.getWriter().print("null");
+			resp.getWriter().print("null q ta");
 		}
 	}
 
