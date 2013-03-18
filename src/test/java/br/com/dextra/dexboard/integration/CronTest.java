@@ -41,7 +41,7 @@ public class CronTest extends AbstractTestCase {
 		Indicador indicadorAlterado = encontraIndicadorDeId(indicadores, 1);
 
 		Assert.assertNotNull(indicadorAlterado);
-		Assert.assertEquals(2, indicadorAlterado.getCor());
+		Assert.assertEquals(2, indicadorAlterado.getClassified());
 		Assert.assertNotNull(indicadorAlterado.getUltimaAlteracao());
 		Assert.assertEquals("test@example.com", indicadorAlterado.getUsuarioUltimaAlteracao());
 		
