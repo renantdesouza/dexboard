@@ -68,4 +68,8 @@ public class Projeto {
 	public void setCpi(Double cpi) {
 		this.cpi = cpi;
 	}
+
+	public Classified getClassified() {
+		return Classified.CAUTION;
+	}
 }

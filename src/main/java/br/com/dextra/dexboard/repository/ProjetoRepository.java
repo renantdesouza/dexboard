@@ -59,7 +59,7 @@ public class ProjetoRepository {
 		Entity entity = new Entity("projectData", "data");
 		entity.setProperty("json", new Text(data));
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-		entity.setProperty("lastModified", sdf.format(new Date()));
+		entity.setProperty("lastModified", new Date().getTime());
 
 		service.put(entity);
 	}
