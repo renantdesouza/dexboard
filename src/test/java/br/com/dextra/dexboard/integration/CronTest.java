@@ -3,18 +3,22 @@ package br.com.dextra.dexboard.integration;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
+import java.util.List;
+
+import junit.framework.Assert;
 
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
 import br.com.dextra.dexboard.base.AbstractTestCase;
+import br.com.dextra.dexboard.domain.Indicador;
+import br.com.dextra.dexboard.domain.Projeto;
 import br.com.dextra.dexboard.repository.ProjetoRepository;
 import br.com.dextra.dexboard.servlet.IndicadorServlet;
 
 import com.googlecode.restitory.gae.http.Response;
 import com.meterware.httpunit.PostMethodWebRequest;
 import com.meterware.httpunit.WebRequest;
-import com.meterware.httpunit.WebResponse;
 import com.meterware.servletunit.ServletRunner;
 import com.meterware.servletunit.ServletUnitClient;
 
@@ -24,20 +28,35 @@ public class CronTest extends AbstractTestCase {
 	public void testReloadProjetos() throws IOException, SAXException {
 
 		carregaProjetos();
-		
-		alteraIndicadorDeProjeto(495);
-
-		verificaSeProjetoEstaComIndicadorPreenchido(495);
+		alteraIndicadorDeProjeto(495, 1);
+		verificaSeProjetoEstaComIndicadorPreenchido(495, 1);
 		
 	}
 
-	private void verificaSeProjetoEstaComIndicadorPreenchido(Integer idProjeto) {
+	private void verificaSeProjetoEstaComIndicadorPreenchido(Integer idProjeto, Integer idIndicadorAlterado) {
 
-	//	ProjetoRepository.buscarPorId(495, projetos)
+		Projeto projeto = ProjetoRepository.buscarPorId(495, ProjetoRepository.buscaProjetos());
+		List<Indicador> indicadores = projeto.getIndicadores();
+		
+		Indicador indicadorAlterado = encontraIndicadorDeId(indicadores, 1);
+
+		Assert.assertNotNull(indicadorAlterado);
+		Assert.assertEquals(2, indicadorAlterado.getCor());
+		Assert.assertNotNull(indicadorAlterado.getUltimaAlteracao());
+		Assert.assertEquals("test@example.com", indicadorAlterado.getUsuarioUltimaAlteracao());
 		
 	}
 
-	private void alteraIndicadorDeProjeto(Integer idProjeto) throws IOException, SAXException {
+	private Indicador encontraIndicadorDeId(List<Indicador> indicadores, int idParaEncontrar) {
+		for (Indicador ind : indicadores) {
+			if (ind.getId().intValue() == idParaEncontrar) {
+				return ind;
+			}
+		}
+		return null;
+	}
+
+	private void alteraIndicadorDeProjeto(Integer idProjeto, Integer idIndicador) throws IOException, SAXException {
 
 		ServletRunner sr = new ServletRunner();
 		sr.registerServlet("indicadorServlet", IndicadorServlet.class.getName());
@@ -45,7 +64,7 @@ public class CronTest extends AbstractTestCase {
 		ServletUnitClient sc = sr.newClient();
 	    WebRequest request   = new PostMethodWebRequest("http://localhost:8380/indicadorServlet");
 	    request.setParameter("projeto", idProjeto.toString());
-	    request.setParameter("indicador", "{ 'id' : '1', 'nome' : 'nome', 'cor' : '2', 'descricao': 'desc desc' }");
+	    request.setParameter("indicador", "{ 'id' : '" + idIndicador + "', 'nome' : 'NomeBla', 'cor' : '2', 'descricao': 'desc desc' }");
 
 	    sc.getResponse(request);
 	}

@@ -53,9 +53,9 @@ public class Projeto {
 			Indicador indicador = this.getIndicadores().get(i);
 			if (indicador.getId() == indicadorAlterado.getId()) {
 				this.getIndicadores().remove(i);
-				indicador.setUsuarioUltimaAlteracao(usuario);
-				indicador.setUltimaAlteracao(new Date());
-				this.addIndicador(indicador);
+				indicadorAlterado.setUsuarioUltimaAlteracao(usuario);
+				indicadorAlterado.setUltimaAlteracao(new Date());
+				this.addIndicador(indicadorAlterado);
 				break;
 			}
 		}
