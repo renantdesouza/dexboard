@@ -2,7 +2,6 @@ package br.com.dextra.dexboard.servlet;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,8 +14,7 @@ import br.com.dextra.dexboard.repository.ProjetoRepository;
 
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
-
-import flexjson.JSONDeserializer;
+import com.google.gson.Gson;
 
 public class IndicadorServlet extends HttpServlet {
 
@@ -30,10 +28,8 @@ public class IndicadorServlet extends HttpServlet {
 
 		Integer idProjeto = Integer.valueOf(req.getParameter("projeto"));
 
-		Map<String, Object> indicadorJSon = new JSONDeserializer<Map<String, Object>>()
-				.deserialize(req.getParameter("indicador"));
-		
-		Indicador indicador = new Indicador(indicadorJSon);
+		Gson gson = new Gson();
+		Indicador indicador = gson.fromJson(req.getParameter("indicador"), Indicador.class);
 
 		List<Projeto> todosProjetos = ProjetoRepository.buscaProjetos();
 		UserService userService = UserServiceFactory.getUserService();
