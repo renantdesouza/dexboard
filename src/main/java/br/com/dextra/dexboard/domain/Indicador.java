@@ -1,6 +1,7 @@
 package br.com.dextra.dexboard.domain;
 
 import java.util.Date;
+import java.util.Map;
 
 public class Indicador {
 
@@ -14,6 +15,28 @@ public class Indicador {
 	public Indicador(int id, String nomeIndicador) {
 		this.id = id;
 		this.nome = nomeIndicador;
+	}
+
+	public Indicador(Map<String, Object> indicadorJSon) {
+		
+		if (indicadorJSon.containsKey("id")) {
+			String x = indicadorJSon.get("id").toString();
+			System.out.println(x);
+			this.id = Integer.valueOf(indicadorJSon.get("id").toString());
+		}
+
+		if (indicadorJSon.containsKey("nome")) {
+			this.nome = (String) indicadorJSon.get("nome");
+		}
+
+		if (indicadorJSon.containsKey("cor")) {
+			this.cor = (Integer) indicadorJSon.get("cor");
+		}
+
+		if (indicadorJSon.containsKey("descricao")) {
+			this.descricao = (String) indicadorJSon.get("descricao");
+		}
+
 	}
 
 	public Integer getId() {

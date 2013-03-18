@@ -33,8 +33,7 @@ public class ProjetoRepository {
 	public static List<Projeto> buscaProjetos() {
 		List<Projeto> projetos = new ArrayList<Projeto>();
 
-		DatastoreService service = DatastoreServiceFactory
-				.getDatastoreService();
+		DatastoreService service = DatastoreServiceFactory.getDatastoreService();
 		Key key = KeyFactory.createKey("projectData", "data");
 		Entity entity;
 		try {

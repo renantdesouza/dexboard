@@ -2,6 +2,7 @@ package br.com.dextra.dexboard.servlet;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -25,11 +26,14 @@ public class IndicadorServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
+		resp.setContentType("application/json");
+
 		Integer idProjeto = Integer.valueOf(req.getParameter("projeto"));
 
-		JSONDeserializer<Indicador> deserializer = new JSONDeserializer<Indicador>();
-		Indicador indicador = deserializer.deserialize(req
-				.getParameter("indicador"));
+		Map<String, Object> indicadorJSon = new JSONDeserializer<Map<String, Object>>()
+				.deserialize(req.getParameter("indicador"));
+		
+		Indicador indicador = new Indicador(indicadorJSon);
 
 		List<Projeto> todosProjetos = ProjetoRepository.buscaProjetos();
 		UserService userService = UserServiceFactory.getUserService();
