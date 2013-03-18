@@ -21,6 +21,11 @@ import flexjson.JSONSerializer;
 public class ProjetoRepository {
 
 	public static Projeto buscarPorId(int id, List<Projeto> projetos) {
+		
+		for (Projeto projeto : projetos) {
+			if (projeto.getIdPma() == id)
+				return projeto;
+		}
 
 		return null;
 	}
