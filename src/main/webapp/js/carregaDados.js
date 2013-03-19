@@ -12,7 +12,7 @@
 	        adicionaProjetos : function (container, value) {
                 var projetos = value;
                 $.each(projetos, function(key, val) {
-                    var liProjeto = $('<li id="' + val.idPma + '" class="' + val.classified + '"/>');
+                    var liProjeto = $('<li id="' + val.idPma + '" class="' + val.classificacao + '"/>');
                     liProjeto.html(val.nome);
                     container.append(liProjeto);
                     CarregaDados.adicionaIndicadores(liProjeto, val.indicadores, val.idPma, val.cpi);
@@ -24,7 +24,7 @@
                 var indicadores = value;
                 $.each(indicadores, function(key, val) {
                     var id = "indicador_" + val.id + "_" + idPma;
-                    var liIndicador = $('<li id="' + id + '" class="' + val.classified + '"></li>');
+                    var liIndicador = $('<li id="' + id + '" class="' + val.classificacao + '"></li>');
                     if (val.nome == "CPI") {
                         liIndicador.html(cpi);
                     }

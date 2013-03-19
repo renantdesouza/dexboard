@@ -69,7 +69,7 @@ public class Projeto {
 		this.cpi = cpi;
 	}
 
-	public Classified getClassified() {
-		return Classified.CAUTION;
+	public Classificacao getClassified() {
+		return Classificacao.ATENCAO;
 	}
 }
