@@ -6,7 +6,7 @@ public class Indicador {
 
 	private Integer id;
 	private String nome;
-	private int cor;
+	private Classified classified = Classified.OK;
 	private String descricao;
 	private String usuarioUltimaAlteracao;
 	private Date ultimaAlteracao;
@@ -40,12 +40,12 @@ public class Indicador {
 		this.nome = nome;
 	}
 
-	public int getCor() {
-		return cor;
+	public Classified getClassified() {
+		return classified;
 	}
 
-	public void setCor(int cor) {
-		this.cor = cor;
+	public void setClassified(Classified classified) {
+		this.classified = classified;
 	}
 
 	public String getDescricao() {

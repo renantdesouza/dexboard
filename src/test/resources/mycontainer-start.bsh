@@ -8,6 +8,11 @@ helper.setPort(8080);
 helper.prepareLocalServiceTestHelper();
 container = helper.bootMycontainer();
 
+service = new HttpClientRequestService("http://localhost:8080");
+adapter = new RequestAdapter(service);
+
+adapter.success("GET", "/reload/projetos", null, null);
+
 container.waitFor();
 
 helper.shutdownMycontainer();
