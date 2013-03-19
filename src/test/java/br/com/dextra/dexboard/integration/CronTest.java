@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.xml.sax.SAXException;
 
 import br.com.dextra.dexboard.base.AbstractTestCase;
+import br.com.dextra.dexboard.domain.Classificacao;
 import br.com.dextra.dexboard.domain.Indicador;
 import br.com.dextra.dexboard.domain.Projeto;
 import br.com.dextra.dexboard.repository.ProjetoRepository;
@@ -28,21 +29,21 @@ public class CronTest extends AbstractTestCase {
 	public void testaCarregarProjetosEAlterarIndicadores() throws IOException, SAXException {
 
 		carregaProjetos();
-		alteraIndicadorDeProjeto(495, 1);
-		alteraIndicadorDeProjeto(495, 2);
-		verificaSeProjetoEstaComIndicadorPreenchido(495, 1);
-		verificaSeProjetoEstaComIndicadorPreenchido(495, 2);
+		alteraIndicadorDeProjeto(495, 1, Classificacao.OK);
+		alteraIndicadorDeProjeto(495, 2, Classificacao.ATENCAO);
+		verificaSeProjetoEstaComIndicadorPreenchido(495, 1, Classificacao.OK);
+		verificaSeProjetoEstaComIndicadorPreenchido(495, 2, Classificacao.ATENCAO);
 	}
 
-	private void verificaSeProjetoEstaComIndicadorPreenchido(Integer idProjeto, Integer idIndicadorAlterado) {
+	private void verificaSeProjetoEstaComIndicadorPreenchido(Integer idProjeto, Integer idIndicadorAlterado, Classificacao classificacao) {
 
-		Projeto projeto = ProjetoRepository.buscarPorId(495, ProjetoRepository.buscaProjetos());
+		Projeto projeto = ProjetoRepository.buscarPorId(idProjeto, ProjetoRepository.buscaProjetos());
 		List<Indicador> indicadores = projeto.getIndicadores();
 		
-		Indicador indicadorAlterado = encontraIndicadorDeId(indicadores, 1);
+		Indicador indicadorAlterado = encontraIndicadorDeId(indicadores, idIndicadorAlterado);
 
 		Assert.assertNotNull(indicadorAlterado);
-		Assert.assertEquals(2, indicadorAlterado.getClassified());
+		Assert.assertEquals(classificacao, indicadorAlterado.getClassificacao());
 		Assert.assertNotNull(indicadorAlterado.getUltimaAlteracao());
 		Assert.assertEquals("test@example.com", indicadorAlterado.getUsuarioUltimaAlteracao());
 		
@@ -57,7 +58,7 @@ public class CronTest extends AbstractTestCase {
 		return null;
 	}
 
-	private void alteraIndicadorDeProjeto(Integer idProjeto, Integer idIndicador) throws IOException, SAXException {
+	private void alteraIndicadorDeProjeto(Integer idProjeto, Integer idIndicador, Classificacao classificacao) throws IOException, SAXException {
 
 		ServletRunner sr = new ServletRunner();
 		sr.registerServlet("indicadorServlet", IndicadorServlet.class.getName());
@@ -65,7 +66,7 @@ public class CronTest extends AbstractTestCase {
 		ServletUnitClient sc = sr.newClient();
 	    WebRequest request = new PostMethodWebRequest("http://localhost:8380/indicadorServlet");
 	    request.setParameter("projeto", idProjeto.toString());
-	    request.setParameter("indicador", "{ 'id' : '" + idIndicador + "', 'nome' : 'NomeBla', 'cor' : '2', 'descricao': 'desc desc' }");
+	    request.setParameter("indicador", "{ 'id' : '" + idIndicador + "', 'nome' : 'NomeBla', 'classificacao' : '" + classificacao + "', 'descricao': 'desc desc' }");
 
 	    sc.getResponse(request);
 	}

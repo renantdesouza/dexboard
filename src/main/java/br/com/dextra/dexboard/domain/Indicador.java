@@ -6,7 +6,7 @@ public class Indicador {
 
 	private Integer id;
 	private String nome;
-	private Classified classified = Classified.OK;
+	private Classificacao classificacao = Classificacao.OK;
 	private String descricao;
 	private String usuarioUltimaAlteracao;
 	private Date ultimaAlteracao;
@@ -40,12 +40,12 @@ public class Indicador {
 		this.nome = nome;
 	}
 
-	public Classified getClassified() {
-		return classified;
+	public Classificacao getClassificacao() {
+		return classificacao;
 	}
 
-	public void setClassified(Classified classified) {
-		this.classified = classified;
+	public void setClassificacao(Classificacao classificacao) {
+		this.classificacao = classificacao;
 	}
 
 	public String getDescricao() {

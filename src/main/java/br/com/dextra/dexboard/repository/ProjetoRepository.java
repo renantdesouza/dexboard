@@ -1,6 +1,5 @@
 package br.com.dextra.dexboard.repository;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,7 +57,6 @@ public class ProjetoRepository {
 				.getDatastoreService();
 		Entity entity = new Entity("projectData", "data");
 		entity.setProperty("json", new Text(data));
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 		entity.setProperty("lastModified", new Date().getTime());
 
 		service.put(entity);
