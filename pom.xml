@@ -329,6 +329,22 @@
 				<version>1.7R3</version>
 			</dependency>
 
+      		<dependency>
+                <groupId>commons-httpclient</groupId>
+                <artifactId>commons-httpclient</artifactId>
+                <version>3.0.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>4.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpcore</artifactId>
+                <version>4.2.3</version>
+            </dependency>
+
 			<dependency>
 				<groupId>com.googlecode.mycontainer</groupId>
 				<artifactId>mycontainer-gae-web</artifactId>
