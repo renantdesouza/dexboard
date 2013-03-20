@@ -58,6 +58,7 @@ public class Projeto {
 				this.addIndicador(indicadorAlterado);
 				break;
 			}
+			i++;
 		}
 	}
 
