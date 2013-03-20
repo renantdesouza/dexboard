@@ -46,7 +46,7 @@
                 var projetos = value;
                 $.each(projetos, function(key, val) {
                     var liProjeto = $('<li id="' + val.idPma + '" class="' + val.classificacao + '"/>');
-                    liProjeto.html(val.nome);
+                    liProjeto.html('<h4 class="projeto-ok">'+val.nome+'</h4>');
                     container.append(liProjeto);
                     CarregaDados.adicionaIndicadores(liProjeto, val);
                 });
