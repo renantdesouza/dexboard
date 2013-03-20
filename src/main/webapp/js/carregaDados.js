@@ -3,7 +3,7 @@
 	CarregaDados = {
 	        carregar : function() {
 	            $.getJSON('/query', function(resultado) {
-	                var ulProjetos = $('<ul id="projetos" />');
+	                var ulProjetos = $('<ul id="lista-projetos" />');
 	                CarregaDados.adicionaProjetos(ulProjetos, resultado.value);
 	                $("#data").append(ulProjetos);
 	            });
