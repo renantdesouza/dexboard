@@ -1,0 +1,78 @@
+/*----------  Reset  -----------*/
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,
+q,s,samp,small,strike,strong,sub,sup, tt,var,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,input, table,caption,tbody,tfoot,thead,tr,th,td
+{margin:0;padding:0;border:0;outline:0;font-weight:inherit;font-style:inherit;font-size:100%;font-family:inherit;vertical-align:baseline;}
+h1,h2,h3,h4,h5,h6,body{margin:0;}
+ul{list-style:none;}
+blockquote,q{quotes:none;}
+blockquote:before,blockquote:after,q:before,q:after{content:'';content:none;}
+em,i{font-style:italic!important;}
+b,strong{font-weight:bold!important;}
+:focus{outline:0;}
+::-moz-focus-inner{border:0;}
+ins{text-decoration:none;}
+del{text-decoration:line-through;}
+table{border-collapse:collapse;border-spacing:0;}
+input,textarea,select{box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;-khtml-box-sizing:border-box;}
+button{background-color:transparent;border:0;}
+
+/*----------  Preparação para layout elástico  ----------*/
+body,html{min-height:100%;}
+body{font-size:1em;position:relative; }
+html{font-size:100%;}
+
+/*----------  Características  ----------*/
+.clear{clear:both;}
+.clearfix:after{content:".";clear:both;display:block;height:0;visibility:hidden;}
+.hidden{display:none;}
+
+/*----------  Tipografia & Botões  ----------*/
+body{font-family:'Open Sans', arial, sans-serif;background:url('../img/body-pattern.png') repeat;color:#ededed;text-rendering:optimizeLegibility;-webkit-text-rendering:optimizeLegibility;overflow:hidden;}
+
+/*----------  Estrutura do layout  ----------*/
+#body-topbar,
+#body-bottombar{ border:0;background-color:#efefef;height:14px;margin:0;width:100%; }
+#body-bottombar{ position:fixed;left:0;bottom:0;box-shadow:inset 0 6px 6px #aaa; }
+#body-topbar{ box-shadow:inset 0 -6px 6px #bbb; position:fixed;left:0;top:0; }
+
+#wrapper{ overflow:hidden; }
+
+/*----------  Exibição de  de projetos  ----------*/
+
+.container-left {width: 31%; float:left ; margin-top: 20px; }
+.content-logo { height: 246px; text-align: center; }
+.content-logo img { margin-top: 90px; }
+.content-menu-indicadores { }
+.menu-indicadores { margin-top: 10px;  }
+.menu-indicadores li { padding: 26px 20px; font-weight: bold;font-size: 30px; margin-bottom: 8px; cursor: default; color: rgba(255,255,255,0.9); 
+    text-shadow: 0 2px 0 rgba(0,0,0,0.2),0 1px 0 rgba(255,255,255,0.5); border-radius: 4px;	box-shadow: inset 0 0 3px 2px #000,
+    inset 0 9px 9px -3px #666,inset 0 -35px 35px -30px #000;  background: url('../img/th-left-pattern.png') repeat;}
+
+.container-right { width: 68%; float:right ; margin-top: 20px;  }
+
+#lista-projetos > li { display: inline-block; }
+
+#lista-projetos > li > h4 { color: rgba(0, 0, 0, 0.95); font-size: 26px; padding: 25px 23px; margin: 78px -70px 0px -76px; width:200px; transform: rotate(270deg); 
+    -webkit-transform: rotate(270deg); border: 1px solid rgb(0, 0, 0); cursor: default; font-weight: bold;
+     text-align: left; border-radius: 4px 4px 4px 4px;  text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.4), 0px 0px 1px rgba(0, 0, 0, 0.35); 
+}
+
+#lista-projetos > li > ul { margin-top: 90px;  } 
+
+#lista-projetos > li > ul > li {  margin: 0 5px 10px 0; padding: 24px 0px; font-weight: bold;  display: block; font-size: 30px; 
+    text-align: center; color: rgba(185, 235, 195, 0.8); border: 1px solid rgb(30, 30, 30); opacity: 0.95; letter-spacing: -2px; 
+    background-color: rgba(255, 255, 255, 0.075); border-color: rgba(255, 255, 255, 0.016); border-radius: 4px 4px 4px 4px; 
+    box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.85) inset,  0px -1px 1px rgb(0, 0, 0), 0px -16px 16px -6px rgba(0, 0, 0, 0.45) inset;  
+    text-shadow: 0px 1px 0px rgb(0, 0, 0), 0px 0px 1px rgba(255, 255, 255, 0.15); }
+
+.projeto-ok { background-color:#59be00; box-shadow:inset 0 0 4px 0 #000,inset 0 -18px 18px -6px rgba(0,0,0,0.3),inset 0 18px 18px -6px #77ff00; }
+.projeto-att { background-color:#e9cb00; box-shadow:inset 0 0 4px 0 #000,inset 0 -18px 18px -6px rgba(0,0,0,0.3),inset 0 18px 18px -6px #ffdf00; }
+.projeto-crit { background-color:#ff0000; box-shadow:inset 0 0 4px 0 #000,inset 0 -18px 18px -6px rgba(0,0,0,0.3),inset 0 18px 18px -6px #ff3434;}
+
+.cell-ok { opacity:0.95;background-color:rgba(255,255,255,0.075) !important; border-color:rgba(255,255,255,0.015) !important; }
+.cell-att, .cell-crit {  border:0; color:rgba(0,0,0,0.9); text-shadow:0 1px 0 rgba(255,255,255,0.4); }
+.cell-att { background-color:#f6d700 !important; }
+.cell-crit { background-color:#eb0000 !important; }
+
+
+
