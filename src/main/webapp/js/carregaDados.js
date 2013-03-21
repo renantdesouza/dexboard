@@ -7,39 +7,50 @@
                     var todosProjetos = resultado.value;
                     CarregaDados.adicionaProjetos(ulProjetos, todosProjetos);
                     $("#data").append(ulProjetos);
-                    CarregaDados.defineComportamentoDosBotoes(todosProjetos);
+//                    CarregaDados.defineComportamentoDosBotoes(todosProjetos);
+                    CarregaDados.defineCliqueEmIndicador();
+                
                 
                 });
             },
             
-            defineComportamentoDosBotoes : function (todosProjetos) {
-                
-                $(".permiteAlteracao").each(function() {
-                    $(this).click(function() { 
-                        
-                        var split = $(this).data("idpma").split("_");
-                        idIndicador = split[1]; 
-                        idProjeto = split[2];
-                        
-                        for (var i = 0; i < todosProjetos.length; i++) {
-                            var projeto = todosProjetos[i];
-                            if (idProjeto == projeto.idPma) {
-                                break;
-                            }
-                        }
-
-                        for (i = 0; i < projeto.indicadores.length; i++) {
-                            var indicador = projeto.indicadores[i];
-                            if (indicador.id == idIndicador) {
-                                break;
-                            }
-                        }
-                        
-                        CarregaDados.populaDiv(projeto, indicador);
+            defineCliqueEmIndicador : function() {
+                $(".opener").each(function() {
+                    $(this).click(function() {
+                        $("#dialog").dialog("open");
+                        return false;
                     });
                 });
-                
             },
+            
+//            defineComportamentoDosBotoes : function (todosProjetos) {
+//                
+//                $(".permiteAlteracao").each(function() {
+//                    $(this).click(function() { 
+//                        
+//                        var split = $(this).data("idpma").split("_");
+//                        idIndicador = split[1]; 
+//                        idProjeto = split[2];
+//                        
+//                        for (var i = 0; i < todosProjetos.length; i++) {
+//                            var projeto = todosProjetos[i];
+//                            if (idProjeto == projeto.idPma) {
+//                                break;
+//                            }
+//                        }
+//
+//                        for (i = 0; i < projeto.indicadores.length; i++) {
+//                            var indicador = projeto.indicadores[i];
+//                            if (indicador.id == idIndicador) {
+//                                break;
+//                            }
+//                        }
+//                        
+//                        CarregaDados.populaDiv(projeto, indicador);
+//                    });
+//                });
+//                
+//            },
             
             adicionaProjetos : function (container, value) {
                 var projetos = value;
@@ -61,7 +72,7 @@
                 
                 $.each(indicadores, function(key, val) {
                     var id = "indicador_" + val.id + "_" + projeto.idPma;
-                    var liIndicador = $('<li data-idpma=' + id + ' class="' + val.classificacao + ' permiteAlteracao" id="CorInterior">&nbsp;</li>');
+                    var liIndicador = $('<li data-idpma=' + id + ' class="' + val.classificacao + ' permiteAlteracao opener">&nbsp;</li>');
                     if (val.nome == "CPI") {
                         liIndicador.html(projeto.cpi);
                     }
@@ -72,9 +83,6 @@
             },
             
             populaDiv : function (projeto, indicador){
-                
-                
-                
                   
                 $("#edicaoIndicadorNomeProjeto").html(projeto.nome);
                 $("#edicaoIndicadorNomeIndicador").html(indicador.nome);
@@ -84,7 +92,6 @@
                     CarregaDados.trocaIndicador(projeto.idPma, indicador);
                 });
                 
-                document.getElementById("edicaoIndicador").style.display = "block";
             },
             
             trocaIndicador : function(idProjeto, indicador){
