@@ -48,7 +48,7 @@
                         val.nome = val.nome.substring(0,10)+"...";                        
                     }
                     var liProjeto = $('<li id="' + val.idPma + '" />');
-                    liProjeto.html('<h4 class="projeto-ok">'+val.nome+'</h4>');
+                    liProjeto.html('<h4 class="projeto-' + val.classificacao + '">'+val.nome+'</h4>');
                     container.append(liProjeto);
                     CarregaDados.adicionaIndicadores(liProjeto, val);
                 });
@@ -75,15 +75,6 @@
                 
                 
                 
-                    
-                    var width = 150;
-                    var height = 250;
-                   
-                    var left = 99;
-                    var top = 99;
-                   
-                    window.open("http://localhost:8080/popupTrocaIndicador.html",'janela', 'width='+width+', height='+height+', top='+top+', left='+left+', scrollbars=yes, status=no, toolbar=no, location=no, directories=no, menubar=no, resizable=no, fullscreen=no');
-                   
                   
                 $("#edicaoIndicadorNomeProjeto").html(projeto.nome);
                 $("#edicaoIndicadorNomeIndicador").html(indicador.nome);

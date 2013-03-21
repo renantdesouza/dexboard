@@ -11,7 +11,6 @@ public class Projeto {
 	private int idPma;
 	private String nome;
 	private List<Indicador> indicadores;
-
 	private Double cpi;
 
 	public int getIdPma() {
@@ -45,6 +44,7 @@ public class Projeto {
 	public void addIndicador(Indicador indicador) {
 		this.getIndicadores().add(indicador);
 	}
+	
 
 	public void alteraIndicador(Indicador indicadorAlterado, String usuario) {
 		int i = 0;
@@ -70,8 +70,20 @@ public class Projeto {
 		this.cpi = cpi;
 	}
 
-	public Classificacao getClassified() {
-		//TODO
-		return Classificacao.ATENCAO;
+	public Classificacao getClassificacao() {
+
+		for (Indicador indicador : this.getIndicadores()) {
+			
+			Classificacao classificacao = indicador.getClassificacao();
+			
+			if (classificacao.equals(Classificacao.PERIGO)) {
+				return Classificacao.PERIGO;
+			}
+			
+			if (classificacao.equals(Classificacao.ATENCAO)) {
+				return Classificacao.ATENCAO;
+			}
+		}
+		return Classificacao.OK;
 	}
 }

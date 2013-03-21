@@ -16,6 +16,8 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Text;
 import com.google.gson.Gson;
 
+import flexjson.JSONSerializer;
+
 public class ProjetoRepository {
 
 	public static Projeto buscarPorId(int id, List<Projeto> projetos) {
@@ -50,8 +52,10 @@ public class ProjetoRepository {
 	public static void persisteProjetos(List<Projeto> projetos) {
 
 		ListaProjeto lista = new ListaProjeto(projetos);
-		Gson gson = new Gson();
-		String data = gson.toJson(lista);
+		
+		JSONSerializer serializer = new JSONSerializer();
+		serializer.exclude("*.class");
+		String data = serializer.deepSerialize(lista);
 
 		DatastoreService service = DatastoreServiceFactory
 				.getDatastoreService();

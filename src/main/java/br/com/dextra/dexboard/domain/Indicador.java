@@ -1,6 +1,8 @@
 package br.com.dextra.dexboard.domain;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Indicador {
 
@@ -27,7 +29,7 @@ public class Indicador {
 	public Date getUltimaAlteracao() {
 		return ultimaAlteracao;
 	}
-	
+
 	public void setUltimaAlteracao(Date ultimaAlteracao) {
 		this.ultimaAlteracao = ultimaAlteracao;
 	}
@@ -41,7 +43,17 @@ public class Indicador {
 	}
 
 	public Classificacao getClassificacao() {
-		return classificacao;
+		if (this.ultimaAlteracao == null) {
+			return Classificacao.PERIGO;
+		}
+
+		Calendar calendar = GregorianCalendar.getInstance();
+		calendar.roll(Calendar.DAY_OF_MONTH, -20);
+		if (calendar.after(ultimaAlteracao)) {
+			return Classificacao.PERIGO;
+		}
+
+		return this.classificacao;
 	}
 
 	public void setClassificacao(Classificacao classificacao) {
@@ -59,7 +71,7 @@ public class Indicador {
 	public String getUsuarioUltimaAlteracao() {
 		return usuarioUltimaAlteracao;
 	}
-	
+
 	public void setUsuarioUltimaAlteracao(String usuarioUltimaAlteracao) {
 		this.usuarioUltimaAlteracao = usuarioUltimaAlteracao;
 	}
