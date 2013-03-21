@@ -14,11 +14,10 @@
             
             defineComportamentoDosBotoes : function (todosProjetos) {
                 
-                $(".classeX").each(function() {
-                    
+                $(".permiteAlteracao").each(function() {
                     $(this).click(function() { 
                         
-                        var split = $(this).attr("id").split("_");
+                        var split = $(this).data("idpma").split("_");
                         idIndicador = split[1]; 
                         idProjeto = split[2];
                         
@@ -45,7 +44,10 @@
             adicionaProjetos : function (container, value) {
                 var projetos = value;
                 $.each(projetos, function(key, val) {
-                    var liProjeto = $('<li id="' + val.idPma + '" class="' + val.classificacao + '"/>');
+                    if (val.nome.length >= 14){
+                        val.nome = val.nome.substring(0,10)+"...";                        
+                    }
+                    var liProjeto = $('<li id="' + val.idPma + '" />');
                     liProjeto.html('<h4 class="projeto-ok">'+val.nome+'</h4>');
                     container.append(liProjeto);
                     CarregaDados.adicionaIndicadores(liProjeto, val);
@@ -59,8 +61,7 @@
                 
                 $.each(indicadores, function(key, val) {
                     var id = "indicador_" + val.id + "_" + projeto.idPma;
-                    var botao = '<input type="button" value="Trocar Indicador" id=' + id + ' class="classeX"/>';
-                    var liIndicador = $('<li class="' + val.classificacao + '">' + botao + '</li>');
+                    var liIndicador = $('<li data-idpma=' + id + ' class="' + val.classificacao + ' permiteAlteracao" id="CorInterior">&nbsp;</li>');
                     if (val.nome == "CPI") {
                         liIndicador.html(projeto.cpi);
                     }
@@ -72,6 +73,18 @@
             
             populaDiv : function (projeto, indicador){
                 
+                
+                
+                    
+                    var width = 150;
+                    var height = 250;
+                   
+                    var left = 99;
+                    var top = 99;
+                   
+                    window.open("http://localhost:8080/popupTrocaIndicador.html",'janela', 'width='+width+', height='+height+', top='+top+', left='+left+', scrollbars=yes, status=no, toolbar=no, location=no, directories=no, menubar=no, resizable=no, fullscreen=no');
+                   
+                  
                 $("#edicaoIndicadorNomeProjeto").html(projeto.nome);
                 $("#edicaoIndicadorNomeIndicador").html(indicador.nome);
                 
