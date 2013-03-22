@@ -80,6 +80,7 @@ public class Projeto {
 	}
 
 	public Classificacao getClassificacao() {
+		Classificacao retorno = Classificacao.OK;
 
 		for (Indicador indicador : this.getIndicadores()) {
 			
@@ -90,9 +91,10 @@ public class Projeto {
 			}
 			
 			if (classificacao.equals(Classificacao.ATENCAO)) {
-				return Classificacao.ATENCAO;
+				retorno = Classificacao.ATENCAO;
 			}
 		}
-		return Classificacao.OK;
+
+		return retorno;
 	}
 }

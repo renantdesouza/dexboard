@@ -14,7 +14,8 @@ import br.com.dextra.dexboard.repository.ProjetoRepository;
 
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
-import com.google.gson.Gson;
+
+import flexjson.JSONDeserializer;
 
 public class IndicadorServlet extends HttpServlet {
 
@@ -28,15 +29,25 @@ public class IndicadorServlet extends HttpServlet {
 
 		Integer idProjeto = Integer.valueOf(req.getParameter("projeto"));
 
-		Gson gson = new Gson();
-		Indicador indicador = gson.fromJson(req.getParameter("indicador"), Indicador.class);
+		JSONDeserializer<Indicador> des = new JSONDeserializer<Indicador>();
+		Indicador indicador = des.deserialize(req.getParameter("indicador"),
+				Indicador.class);
 
 		List<Projeto> todosProjetos = ProjetoRepository.buscaProjetos();
 		UserService userService = UserServiceFactory.getUserService();
 
-		Projeto projeto = ProjetoRepository.buscarPorId(idProjeto, todosProjetos);
-		projeto.alteraIndicador(indicador, userService.getCurrentUser().getEmail());
+		Projeto projeto = ProjetoRepository.buscarPorId(idProjeto,
+				todosProjetos);
+		projeto.alteraIndicador(indicador, userService.getCurrentUser()
+				.getEmail());
 		ProjetoRepository.persisteProjetos(todosProjetos);
+
+		resp.getWriter().println("true");
 	}
 
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		doPost(req, resp);
+	}
 }

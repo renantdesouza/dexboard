@@ -1,15 +1,14 @@
 (function($) {
 
-    CarregaDados = {
+    var CarregaDados = {
             carregar : function() {
                 $.getJSON('/query', function(resultado) {
-                    var ulProjetos = $('<ul id="lista-projetos" />');
                     var todosProjetos = resultado.value;
+                    CarregaDados.carregarIndicadores(todosProjetos[0].indicadores);
+                    var ulProjetos = $('<ul id="lista-projetos" />');
                     CarregaDados.adicionaProjetos(ulProjetos, todosProjetos);
-                    $("#data").append(ulProjetos);
+                    $("#data").html(ulProjetos);
                     CarregaDados.defineCliqueEmIndicador(todosProjetos);
-                
-                
                 });
             },
             
@@ -89,21 +88,50 @@
             
             trocaIndicador : function(idProjeto, indicador){
   
-                console.info(indicador);
                 indicador.classificacao = $("#classificacaoIndicador").val();
-                console.info(JSON.stringify(indicador));
                     
                 $.ajax({    
-                    type: "post",    
+                    type: "POST",    
                     url: "/indicador",    
                     data: {  
                         projeto: idProjeto,  
-                        indicador: JSON.stringify(indicador)  
-                    },  
-                  
-                });  
+                        indicador: JSON.stringify(indicador)
+                    },
+                    complete : function() {
+                        CarregaDados.carregar();
+                    }
+                });
+                $("#dialog").dialog("close");
                 
-            }               
+            },
+
+            carregarIndicadores : function (indicadores) {
+                var ul = $("#menuIndicadores");
+                ul.html('');
+                $.each(indicadores, function(key, val){
+                   var li = '<li>' + val.nome +'</li>';
+                   ul.append(li);
+                    
+                });
+            }
     }
+    
+    
+    $(window).ready(function() {
+        $("#dialog").dialog({
+            autoOpen : false,
+            show : {
+                effect : "blind",
+                duration : 400
+            },
+            hide : {
+                effect : "explode",
+                duration : 400
+            }
+        });
+        
+        
+        CarregaDados.carregar();
+    });
         
 })(jQuery);

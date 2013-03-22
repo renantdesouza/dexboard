@@ -18,7 +18,8 @@
 	<title>DexBoard</title>
 </head>
 
-<body onload="CarregaDados.carregar();">
+
+<body>
 	
 	
 	<hr id="body-topbar" />
@@ -30,13 +31,7 @@
 					 </a>
 				</div>
 				<div class="content-menu-indicadores">
-					<ul class="menu-indicadores">
-						<li>Satisfa&ccedil;&atilde;o do cliente</li>
-						<li>Satisfa&ccedil;&atilde;o da equipe</li>
-						<li>Foco em entrega de valor</li>
-						<li>Qualidade funcional</li>
-						<li>Qualidade do c&oacute;digo</li>
-						<li>CPI</li>
+					<ul id="menuIndicadores" class="menu-indicadores">
 					</ul>					
 				</div>
 			</div>
@@ -58,23 +53,7 @@
 			
 <hr id="body-bottombar" />
 			
-	<script>
-		
-		$(function() {
-			$("#dialog").dialog({
-				autoOpen : false,
-				show : {
-					effect : "blind",
-					duration : 1000
-				},
-				hide : {
-					effect : "explode",
-					duration : 1000
-				}
-			});
-		});
-		
-	</script>
+
 
 </body>
 </html>
