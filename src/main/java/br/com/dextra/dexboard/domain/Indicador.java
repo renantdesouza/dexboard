@@ -4,6 +4,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import com.ibm.icu.text.SimpleDateFormat;
+
+import flexjson.JSON;
+
 public class Indicador {
 
 	private Integer id;
@@ -76,4 +80,13 @@ public class Indicador {
 		this.usuarioUltimaAlteracao = usuarioUltimaAlteracao;
 	}
 
+	@JSON
+	public String getUltimaAlteracaoString() {
+		if (getUltimaAlteracao() == null) {
+			return "";
+		}
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		return sdf.format(getUltimaAlteracao());
+	}
 }

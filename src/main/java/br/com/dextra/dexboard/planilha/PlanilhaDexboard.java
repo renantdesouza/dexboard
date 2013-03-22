@@ -26,7 +26,7 @@ public class PlanilhaDexboard extends Planilha {
 	public List<Projeto> buscarDadosDosProjetos() {
 		List<Projeto> ret = new ArrayList<Projeto>();
 
-		int qtdeProjetos = buscarQuantidadeDeProjetos();
+		int qtdeProjetos = 10;//buscarQuantidadeDeProjetos();
 
 		for (int i = 0; i < qtdeProjetos; ++i) {
 			Projeto proj = new Projeto();

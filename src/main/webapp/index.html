@@ -4,8 +4,8 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script type="text/javascript" src="js/carregaDados.js"></script> 
-	
+	<script type="text/javascript" src="js/carregaDados.js"></script>
+
 	<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
 	<script type="text/javascript" src="js/jquery-ui.js"></script>
 	<link
@@ -20,39 +20,45 @@
 
 
 <body>
-	
-	
+
+
 	<hr id="body-topbar" />
 		<div id="wrapper" class="clearfix">
 			<div class="container-left">
 				<div class="content-logo">
-					<a href="#"> 
+					<a href="#">
 						<img src="img/header-logo.png" alt="dxb - DexBoard" width="" height=""/>
 					 </a>
 				</div>
 				<div class="content-menu-indicadores">
 					<ul id="menuIndicadores" class="menu-indicadores">
-					</ul>					
+					</ul>
 				</div>
 			</div>
 			<div class="container-right">
 				<div class="content-projetos" id="data" >
 				</div>
 				<div id="dialog" title="Alteração do indicador">
-				Nome do projeto : <div id="edicaoIndicadorNomeProjeto"></div>
-				Nome do Indicador : <div id="edicaoIndicadorNomeIndicador"></div>
+					<h2><b>Nome do projeto:</b> <span id="edicaoIndicadorNomeProjeto"></span></h2>
+					<h3><b>Nome do Indicador:</b> <span id="edicaoIndicadorNomeIndicador"></span></h3>
+					<h4><b>Ultima alteração:</b> <span id="edicaoIndicadorNomeIndicador"></span></h4>
+					<div id="edicaoIndicadorDescricao">
+					<label>Descrição:</label>
+					<textarea id="edicaoIndicadorTxtDescricao" rows="3" cols="50"></textarea>
+					</div>
+					<br clear="all">
 				Status : <select id = "classificacaoIndicador">
 							  <option value="OK">OK</option>
 							  <option value="ATENCAO">ATENÇÃO</option>
 							  <option value="PERIGO">PERIGO</option>
-							</select> 
+							</select>
 				<input type = "button" id ="botaoDeTroca" value = "Trocar!" />
 			</div>
 			</div>
 	</div>
-			
+
 <hr id="body-bottombar" />
-			
+
 
 
 </body>

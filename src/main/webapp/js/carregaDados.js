@@ -11,16 +11,16 @@
                     CarregaDados.defineCliqueEmIndicador(todosProjetos);
                 });
             },
-            
+
             defineCliqueEmIndicador : function (todosProjetos) {
-                
+
                  $(".opener").each(function() {
-                    $(this).click(function() { 
-                        
+                    $(this).click(function() {
+
                         var split = $(this).data("idpma").split("_");
-                        idIndicador = split[1]; 
+                        idIndicador = split[1];
                         idProjeto = split[2];
-                        
+
                         for (var i = 0; i < todosProjetos.length; i++) {
                             var projeto = todosProjetos[i];
                             if (idProjeto == projeto.idPma) {
@@ -38,14 +38,14 @@
                         CarregaDados.populaDiv(projeto, indicador);
                     });
                 });
-                
+
             },
-            
+
             adicionaProjetos : function (container, value) {
                 var projetos = value;
                 $.each(projetos, function(key, val) {
                     if (val.nome.length >= 14){
-                        var nome = val.nome.substring(0,10)+"...";                        
+                        var nome = val.nome.substring(0,10)+"...";
                     }
                     else{
                         var nome = val.nome;
@@ -56,12 +56,12 @@
                     CarregaDados.adicionaIndicadores(liProjeto, val);
                 });
             },
-            
+
             adicionaIndicadores : function (container, projeto) {
-                
+
                 var ulIndicadores = $('<ul id="' + projeto.idPma + '_indicadores" class="indicadores" />');
                 var indicadores = projeto.indicadores;
-                
+
                 $.each(indicadores, function(key, val) {
                     var id = "indicador_" + val.id + "_" + projeto.idPma;
                     var liIndicador = $('<li data-idpma=' + id + ' class="' + val.classificacao + ' permiteAlteracao opener" id="'+ id +'">&nbsp;</li>');
@@ -73,28 +73,31 @@
 
                 container.append(ulIndicadores);
             },
-            
+
             populaDiv : function (projeto, indicador){
-                
+
                 $("#edicaoIndicadorNomeProjeto").html(projeto.nome);
                 $("#edicaoIndicadorNomeIndicador").html(indicador.nome);
-                
+                $("#edicaoIndicadorNomeIndicador").html(indicador.usuarioUltimaAlteracao + " em " + indicador.ultimaAlteracaoString);
+                $("#edicaoIndicadorTxtDescricao").val(indicador.descricao);
+
                 $("#botaoDeTroca").unbind('click');
                 $("#botaoDeTroca").click(function() {
                     CarregaDados.trocaIndicador(projeto.idPma, indicador);
                 });
-                
+
             },
-            
+
             trocaIndicador : function(idProjeto, indicador){
-  
+
+            	indicador.descricao = $("#edicaoIndicadorTxtDescricao").val();
                 indicador.classificacao = $("#classificacaoIndicador").val();
-                    
-                $.ajax({    
-                    type: "POST",    
-                    url: "/indicador",    
-                    data: {  
-                        projeto: idProjeto,  
+
+                $.ajax({
+                    type: "POST",
+                    url: "/indicador",
+                    data: {
+                        projeto: idProjeto,
                         indicador: JSON.stringify(indicador)
                     },
                     complete : function() {
@@ -102,7 +105,7 @@
                     }
                 });
                 $("#dialog").dialog("close");
-                
+
             },
 
             carregarIndicadores : function (indicadores) {
@@ -111,12 +114,12 @@
                 $.each(indicadores, function(key, val){
                    var li = '<li>' + val.nome +'</li>';
                    ul.append(li);
-                    
+
                 });
             }
     }
-    
-    
+
+
     $(window).ready(function() {
         $("#dialog").dialog({
             autoOpen : false,
@@ -127,11 +130,13 @@
             hide : {
                 effect : "explode",
                 duration : 400
-            }
+            },
+            width : 550,
+            height : 290
         });
-        
-        
+
+
         CarregaDados.carregar();
     });
-        
+
 })(jQuery);
