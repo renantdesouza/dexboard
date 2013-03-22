@@ -12,11 +12,11 @@ public class PlanilhaDexboard extends Planilha {
 	}
 
 	private int buscarQuantidadeDeProjetos() {
-		return recuperarConteudoCelulaInt(2, 6);
+		return recuperarConteudoCelulaInt(2, 7);
 	}
 
 	private String buscarNomeDoProjeto(int indiceProjeto) {
-		return recuperarConteudoCelula(2 + indiceProjeto, 1);
+		return recuperarConteudoCelula(2 + indiceProjeto, 4);
 	}
 
 	private int buscarIdProjeto(int indiceProjeto) {
