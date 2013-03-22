@@ -14,8 +14,8 @@ import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Text;
-import com.google.gson.Gson;
 
+import edu.emory.mathcs.backport.java.util.Collections;
 import flexjson.JSONDeserializer;
 import flexjson.JSONSerializer;
 
@@ -47,12 +47,15 @@ public class ProjetoRepository {
 		} catch (EntityNotFoundException e) {
 			return new ArrayList<Projeto>();
 		}
+
 		return projetos.getValue();
 	}
 
 	public static void persisteProjetos(List<Projeto> projetos) {
 
+		Collections.sort(projetos, new ProjetoComparator());
 		ListaProjeto lista = new ListaProjeto(projetos);
+		
 		
 		JSONSerializer serializer = new JSONSerializer();
 		serializer.exclude("*.class");

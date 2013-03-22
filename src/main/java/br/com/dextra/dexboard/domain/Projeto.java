@@ -1,9 +1,11 @@
 package br.com.dextra.dexboard.domain;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import edu.emory.mathcs.backport.java.util.Collections;
 import flexjson.JSON;
 
 public class Projeto {
@@ -34,6 +36,13 @@ public class Projeto {
 		if (indicadores == null) {
 			indicadores = new ArrayList<Indicador>();
 		}
+		Collections.sort(indicadores, new Comparator<Indicador>() {
+
+			@Override
+			public int compare(Indicador o1, Indicador o2) {
+				return o1.getNome().compareToIgnoreCase(o2.getNome());
+			}
+		});
 		return indicadores;
 	}
 
