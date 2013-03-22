@@ -33,8 +33,7 @@ public class CronTest extends AbstractTestCase {
 		alteraIndicadorDeProjeto(495, 1, Classificacao.OK);
 		alteraIndicadorDeProjeto(495, 2, Classificacao.ATENCAO);
 		verificaSeProjetoEstaComIndicadorPreenchido(495, 1, Classificacao.OK);
-		verificaSeProjetoEstaComIndicadorPreenchido(495, 2,
-				Classificacao.ATENCAO);
+		verificaSeProjetoEstaComIndicadorPreenchido(495, 2, Classificacao.ATENCAO);
 	}
 
 	private void verificaSeProjetoEstaComIndicadorPreenchido(Integer idProjeto,

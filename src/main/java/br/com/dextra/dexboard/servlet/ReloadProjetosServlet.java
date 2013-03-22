@@ -24,9 +24,7 @@ public class ReloadProjetosServlet extends HttpServlet {
 		resp.setContentType("application/json");
 		List<Projeto> projetos = new ArrayList<Projeto>();
 		List<Projeto> projetosPlanilha = ProjetoService.buscarDadosProjetos();
-		List<Projeto> projetosDataStore;
-
-		projetosDataStore = ProjetoRepository.buscaProjetos();
+		List<Projeto> projetosDataStore = ProjetoRepository.buscaProjetos();
 
 		adicionaProjetosAtivos(projetos, projetosPlanilha, projetosDataStore);
 		adicionaProjetosNovos(projetos, projetosPlanilha);
