@@ -7,59 +7,52 @@
                     var todosProjetos = resultado.value;
                     CarregaDados.adicionaProjetos(ulProjetos, todosProjetos);
                     $("#data").append(ulProjetos);
-//                    CarregaDados.defineComportamentoDosBotoes(todosProjetos);
-                    CarregaDados.defineCliqueEmIndicador();
+                    CarregaDados.defineCliqueEmIndicador(todosProjetos);
                 
                 
                 });
             },
             
-            defineCliqueEmIndicador : function() {
-                $(".opener").each(function() {
-                    $(this).click(function() {
+            defineCliqueEmIndicador : function (todosProjetos) {
+                
+                 $(".opener").each(function() {
+                    $(this).click(function() { 
+                        
+                        var split = $(this).data("idpma").split("_");
+                        idIndicador = split[1]; 
+                        idProjeto = split[2];
+                        
+                        for (var i = 0; i < todosProjetos.length; i++) {
+                            var projeto = todosProjetos[i];
+                            if (idProjeto == projeto.idPma) {
+                                break;
+                            }
+                        }
+
+                        for (i = 0; i < projeto.indicadores.length; i++) {
+                            var indicador = projeto.indicadores[i];
+                            if (indicador.id == idIndicador) {
+                                break;
+                            }
+                        }
                         $("#dialog").dialog("open");
-                        return false;
+                        CarregaDados.populaDiv(projeto, indicador);
                     });
                 });
+                
             },
-            
-//            defineComportamentoDosBotoes : function (todosProjetos) {
-//                
-//                $(".permiteAlteracao").each(function() {
-//                    $(this).click(function() { 
-//                        
-//                        var split = $(this).data("idpma").split("_");
-//                        idIndicador = split[1]; 
-//                        idProjeto = split[2];
-//                        
-//                        for (var i = 0; i < todosProjetos.length; i++) {
-//                            var projeto = todosProjetos[i];
-//                            if (idProjeto == projeto.idPma) {
-//                                break;
-//                            }
-//                        }
-//
-//                        for (i = 0; i < projeto.indicadores.length; i++) {
-//                            var indicador = projeto.indicadores[i];
-//                            if (indicador.id == idIndicador) {
-//                                break;
-//                            }
-//                        }
-//                        
-//                        CarregaDados.populaDiv(projeto, indicador);
-//                    });
-//                });
-//                
-//            },
             
             adicionaProjetos : function (container, value) {
                 var projetos = value;
                 $.each(projetos, function(key, val) {
                     if (val.nome.length >= 14){
-                        val.nome = val.nome.substring(0,10)+"...";                        
+                        var nome = val.nome.substring(0,10)+"...";                        
+                    }
+                    else{
+                        var nome = val.nome;
                     }
                     var liProjeto = $('<li id="' + val.idPma + '" />');
-                    liProjeto.html('<h4 class="projeto-' + val.classificacao + '">'+val.nome+'</h4>');
+                    liProjeto.html('<h4 class="projeto-' + val.classificacao + '">'+nome+'</h4>');
                     container.append(liProjeto);
                     CarregaDados.adicionaIndicadores(liProjeto, val);
                 });
@@ -72,7 +65,7 @@
                 
                 $.each(indicadores, function(key, val) {
                     var id = "indicador_" + val.id + "_" + projeto.idPma;
-                    var liIndicador = $('<li data-idpma=' + id + ' class="' + val.classificacao + ' permiteAlteracao opener">&nbsp;</li>');
+                    var liIndicador = $('<li data-idpma=' + id + ' class="' + val.classificacao + ' permiteAlteracao opener" id="'+ id +'">&nbsp;</li>');
                     if (val.nome == "CPI") {
                         liIndicador.html(projeto.cpi);
                     }
@@ -83,7 +76,7 @@
             },
             
             populaDiv : function (projeto, indicador){
-                  
+                
                 $("#edicaoIndicadorNomeProjeto").html(projeto.nome);
                 $("#edicaoIndicadorNomeIndicador").html(indicador.nome);
                 

@@ -8,6 +8,9 @@ public class ListaProjeto {
 
 	private List<Projeto> value;
 
+	
+	public ListaProjeto() {
+	}
 	public ListaProjeto(List<Projeto> value) {
 		this.value = value;
 	}

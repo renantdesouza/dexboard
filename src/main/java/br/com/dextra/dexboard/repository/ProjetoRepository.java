@@ -16,6 +16,7 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Text;
 import com.google.gson.Gson;
 
+import flexjson.JSONDeserializer;
 import flexjson.JSONSerializer;
 
 public class ProjetoRepository {
@@ -40,8 +41,8 @@ public class ProjetoRepository {
 			Text text = (Text) entity.getProperty("json");
 
 			if (text != null) {
-				Gson gson = new Gson();
-				projetos = gson.fromJson(text.getValue(), ListaProjeto.class);
+				JSONDeserializer<ListaProjeto> des = new JSONDeserializer<ListaProjeto>();
+				projetos = des.deserialize(text.getValue(), ListaProjeto.class);
 			}
 		} catch (EntityNotFoundException e) {
 			return new ArrayList<Projeto>();
