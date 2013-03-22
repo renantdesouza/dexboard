@@ -78,20 +78,28 @@
 
                 $("#edicaoIndicadorNomeProjeto").html(projeto.nome);
                 $("#edicaoIndicadorNomeIndicador").html(indicador.nome);
-                $("#edicaoIndicadorNomeIndicador").html(indicador.usuarioUltimaAlteracao + " em " + indicador.ultimaAlteracaoString);
+                if (indicador.ultimaAlteracaoString !== '') {
+                	$("#edicaoIndicadorUltimaAlteracao").html(indicador.usuarioUltimaAlteracao + " em " + indicador.ultimaAlteracaoString);
+                } else {
+                	$("#edicaoIndicadorUltimaAlteracao").html('');
+                }
                 $("#edicaoIndicadorTxtDescricao").val(indicador.descricao);
 
-                $("#botaoDeTroca").unbind('click');
-                $("#botaoDeTroca").click(function() {
-                    CarregaDados.trocaIndicador(projeto.idPma, indicador);
+                $.each($('#divOptions input'), function(idx, obj) {
+            		$(obj).unbind('click');
+                });
+                $.each($('#divOptions input'), function(idx, obj) {
+                	$(obj).click(function() {
+                		CarregaDados.trocaIndicador(projeto.idPma, indicador, obj.name);
+                	});
                 });
 
             },
 
-            trocaIndicador : function(idProjeto, indicador){
+            trocaIndicador : function(idProjeto, indicador, classsificacao){
 
             	indicador.descricao = $("#edicaoIndicadorTxtDescricao").val();
-                indicador.classificacao = $("#classificacaoIndicador").val();
+                indicador.classificacao = classsificacao;
 
                 $.ajax({
                     type: "POST",
@@ -131,8 +139,8 @@
                 effect : "explode",
                 duration : 400
             },
-            width : 550,
-            height : 290
+            width : 600,
+            height : 370
         });
 
 

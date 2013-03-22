@@ -40,19 +40,22 @@
 				</div>
 				<div id="dialog" title="Alteração do indicador">
 					<h2><b>Nome do projeto:</b> <span id="edicaoIndicadorNomeProjeto"></span></h2>
+					<br clear="all">
 					<h3><b>Nome do Indicador:</b> <span id="edicaoIndicadorNomeIndicador"></span></h3>
-					<h4><b>Ultima alteração:</b> <span id="edicaoIndicadorNomeIndicador"></span></h4>
+					<br clear="all">
+					<h4><b>Ultima alteração:</b> <span id="edicaoIndicadorUltimaAlteracao"></span></h4>
+					<br clear="all">
 					<div id="edicaoIndicadorDescricao">
-					<label>Descrição:</label>
-					<textarea id="edicaoIndicadorTxtDescricao" rows="3" cols="50"></textarea>
+					<label><b>Descrição:</b></label>
+					<textarea id="edicaoIndicadorTxtDescricao" rows="3" cols="55"></textarea>
 					</div>
 					<br clear="all">
-				Status : <select id = "classificacaoIndicador">
-							  <option value="OK">OK</option>
-							  <option value="ATENCAO">ATENÇÃO</option>
-							  <option value="PERIGO">PERIGO</option>
-							</select>
-				<input type = "button" id ="botaoDeTroca" value = "Trocar!" />
+					<div id="divOptions" class="options">
+						<input type="button" value="Sem Problemas" class="OK" name="OK"/>
+						<input type="button" value="Turbulento" class="ATENCAO" name="ATENCAO"/>
+						<input type="button" value="PERIGO!" class="PERIGO" name="PERIGO"/>
+					</div>
+					<br clear="all">
 			</div>
 			</div>
 	</div>
