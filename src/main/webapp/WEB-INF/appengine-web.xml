@@ -5,6 +5,8 @@
 	<application>dextra-dexboard</application>
 	<version>test</version>
 
+	<threadsafe>true</threadsafe>
+
 	<static-files>
 		<exclude path="/**" />
 	</static-files>
