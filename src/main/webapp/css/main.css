@@ -73,6 +73,7 @@ body{font-family:'Open Sans', arial, sans-serif;background:url('../img/body-patt
 .ATENCAO, .PERIGO {  border:0; color:rgba(0,0,0,0.9); text-shadow:0 1px 0 rgba(255,255,255,0.4); }
 .ATENCAO { background-color:#f6d700 !important; }
 .PERIGO { background-color:#eb0000 !important; }
+.botao-ok { opacity:0.95;background-color:#59be00 !important; border-color:rgba(255,255,255,0.015) !important; }
 
 
 /*-------------------------------------------Popup---------------------------------------------------------*/
@@ -96,7 +97,7 @@ body{font-family:'Open Sans', arial, sans-serif;background:url('../img/body-patt
 
 /*---------------------------------------Options-----------------------------------------------------------*/
 
-.options {text-align: center; vertical-align: middle; color: #FFFFFF}
+.options {vertical-align: left; color: #FFFFFF}
 
 .options input {height: 40px; margin-left: 5px; margin-right: 5px; color: #FFFFFF; font-weight:bold; padding-left: 5px; padding-right: 5px;}
 
