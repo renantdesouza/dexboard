@@ -54,14 +54,13 @@ public abstract class Planilha {
 				}
 			}
 		} catch (MalformedURLException e) {
-
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		} catch (IOException e) {
-
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		} catch (ServiceException e) {
-
-		}
+			throw new RuntimeException(e);
+		} 	
+		
 		this.achouAba = false;
 		return "1";
 	}
@@ -75,8 +74,7 @@ public abstract class Planilha {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		} catch (ServiceException e) {
-
-			return null;
+			throw new RuntimeException(e);
 		}
 	}
 

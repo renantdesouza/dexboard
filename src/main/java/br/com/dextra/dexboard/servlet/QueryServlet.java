@@ -39,6 +39,7 @@ public class QueryServlet extends HttpServlet {
 			resp.getWriter().print(json);
 
 		} catch (EntityNotFoundException e) {
+			e.printStackTrace();
 			resp.getWriter().print("null");
 		}
 	}

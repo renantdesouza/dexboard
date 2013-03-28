@@ -3,12 +3,14 @@
     var CarregaDados = {
             carregar : function() {
                 $.getJSON('/query', function(resultado) {
-                    var todosProjetos = resultado.value;
-                    CarregaDados.carregarIndicadores(todosProjetos[0].indicadores);
-                    var ulProjetos = $('<ul id="lista-projetos" />');
-                    CarregaDados.adicionaProjetos(ulProjetos, todosProjetos);
-                    $("#data").html(ulProjetos);
-                    CarregaDados.defineCliqueEmIndicador(todosProjetos);
+                	if (resultado) {
+	                    var todosProjetos = resultado.value;
+	                    CarregaDados.carregarIndicadores(todosProjetos[0].indicadores);
+	                    var ulProjetos = $('<ul id="lista-projetos" />');
+	                    CarregaDados.adicionaProjetos(ulProjetos, todosProjetos);
+	                    $("#data").html(ulProjetos);
+	                    CarregaDados.defineCliqueEmIndicador(todosProjetos);
+                	}
                 });
             },
 
