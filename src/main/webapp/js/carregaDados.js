@@ -141,8 +141,8 @@
                 effect : "explode",
                 duration : 400
             },
-            width : 600,
-            height : 370
+            width : 1000,
+            height : 425
         });
 
 
