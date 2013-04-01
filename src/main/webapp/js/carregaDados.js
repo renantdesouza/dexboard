@@ -85,7 +85,9 @@
                 } else {
                 	$("#edicaoIndicadorUltimaAlteracao").html('');
                 }
-                $("#edicaoIndicadorTxtDescricao").val(indicador.descricao);
+                $("#edicaoIndicadorUltimaAlteracaoDesc").html(indicador.descricao);
+                
+                $("#edicaoIndicadorTxtDescricao").val("");
 
                 $.each($('#divOptions input'), function(idx, obj) {
             		$(obj).unbind('click');
@@ -134,11 +136,11 @@
         $("#dialog").dialog({
             autoOpen : false,
             show : {
-                effect : "blind",
+                effect : "fade",
                 duration : 400
             },
             hide : {
-                effect : "explode",
+                effect : "fade",
                 duration : 400
             },
             width : 1000,
