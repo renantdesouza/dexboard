@@ -42,6 +42,26 @@
                         CarregaDados.populaDiv(projeto, indicador);
 						
 						$("#dialog").find('textarea').focus();
+						
+						$('#dialog-overlay').bind('click', function()
+						{
+							$("#dialog").dialog("close");
+							$("#dialog-overlay").fadeOut('fast', function()
+							{
+								$(this).data("opened", false);
+							});
+							$(this).unbind('click');
+							$(this).unbind('keydown');
+						});
+						$(document).keydown(function(e)
+						{
+							if ( e.which === 27 )
+							{
+								$('#dialog-overlay').click();
+							}
+						});
+						
+						
                     });
                 });
 
