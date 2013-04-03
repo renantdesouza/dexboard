@@ -37,6 +37,7 @@
                             }
                         }
                         $("#dialog").dialog("open");
+						$("#dialog").data("opened", true);
 						$('#dialog-overlay').fadeIn('fast');
                         CarregaDados.populaDiv(projeto, indicador);
 						
@@ -121,6 +122,7 @@
                 });
 				$('#dialog-overlay').fadeOut('fast',function(){
 					$("#dialog").dialog("close");
+					$("#dialog").data("opened", false);
 				});
             },
 

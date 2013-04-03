@@ -38,7 +38,7 @@ body{font-family:'Open Sans', arial, sans-serif;background:url('../img/body-patt
 #wrapper{ overflow:hidden; }
 
 /*----------  Bloco do lado esquerdo: logomarca dxb, cabeçalhos verticais  ----------*/
-.container-left {width: 21%; float:left ; margin-top: 20px; margin-left:20px;}
+.container-left {width: 21%; float:left ; margin-top: 20px; margin-left:25px;}
 .content-logo { height: 350px; text-align: center; }
 .content-logo img { margin-top:29%; }
 .content-menu-indicadores { }
@@ -59,7 +59,7 @@ body{font-family:'Open Sans', arial, sans-serif;background:url('../img/body-patt
 .menu-indicadores li:hover{color:rgba(205,215,225,1);box-shadow:inset 0 0 3px 2px #111,inset 0 9px 9px -3px #252525,inset 0 -35px 35px -30px #000,0 0 30px 10px rgba(150,170,225,0.55);border-color:rgba(0,15,45,1);}
 
 /*----------  Bloco do lado direito; cabeçalhos horizontais (nomes dos projetos) + células de conteúdo  ----------*/
-.container-right { width: 76%; float:right ; margin-top: 40px;position:relative;z-index:20;}
+.container-right { width: 75%; float:right ; margin-top: 40px;position:relative;z-index:20;margin-right:25px;overflow:hidden;}
 
 #lista-projetos > li { display: inline-block;margin-right:25px;}
 #lista-projetos > li > h4 {
@@ -121,6 +121,9 @@ body{font-family:'Open Sans', arial, sans-serif;background:url('../img/body-patt
 
 #edicaoIndicadorTxtDescricao { width : 960px; height : 150px; }
 
+.content-projetos{white-space:nowrap;}
+
+
 /*-------------------------------------------Popup---------------------------------------------------------*/
 
 #dialog{height:475px !important;}
@@ -158,7 +161,7 @@ body{font-family:'Open Sans', arial, sans-serif;background:url('../img/body-patt
 .dialog-content #divOptions > input:active{color:#000;box-shadow:inset 0 0 0 2px rgba(0,0,0,0.2),inset 0 35px 35px -10px rgba(0,0,0,0.15),0 2px 2px rgba(0,0,0,0.1);}
 
 
-
+/*
 .dialogBox { background: #FFF; padding: 10px; border:1px solid #666; position:relative;z-index:50;}
 
 .dialogBox .close { display:block; width:20px; height:20px; line-height:20px; text-align:center; background: #000; position: absolute; right: 0px; top:-20px; color:#FFF; font-weight: bold; font-size: 11px; }
@@ -174,3 +177,4 @@ body{font-family:'Open Sans', arial, sans-serif;background:url('../img/body-patt
 .dialogBox > h3 { font:normal 22px Arial, Helvetica, sans-serif; padding: 0 5px 5px 5px; margin:0 0 15px 0; color:#23557E; border-bottom: 1px solid #B5D4DF; }
 
 .dialogBox > h3 span { color: #587391; font-size: 22px; }
+*/
