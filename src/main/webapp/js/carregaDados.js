@@ -37,7 +37,10 @@
                             }
                         }
                         $("#dialog").dialog("open");
+						$('#dialog-overlay').fadeIn('fast');
                         CarregaDados.populaDiv(projeto, indicador);
+						
+						$("#dialog").find('textarea').focus();
                     });
                 });
 
@@ -116,8 +119,9 @@
                         CarregaDados.carregar();
                     }
                 });
-                $("#dialog").dialog("close");
-
+				$('#dialog-overlay').fadeOut('fast',function(){
+					$("#dialog").dialog("close");
+				});
             },
 
             carregarIndicadores : function (indicadores) {

@@ -202,10 +202,10 @@
 			<id>pyrata</id>
 			<url>http://repo.pyrata.org/release/maven2</url>
 		</repository>
-		<repository>
+	<!--	<repository>
 			<id>dexboard</id>
 			<url>file:///projects/shared/dextra_dexboard/repo</url>
-		</repository>
+		</repository> -->
 		<repository>
 			<id>jakubiak-gdata</id>
 			<url>http://jakubiak-gdata.googlecode.com/svn/trunk/jakubiak-gdata/repo</url>

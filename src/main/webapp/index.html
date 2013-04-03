@@ -20,8 +20,8 @@
 
 
 <body>
-
-
+	<div id="dialog-overlay"></div>
+	
 	<hr id="body-topbar" />
 		<div id="wrapper" class="clearfix">
 			<div class="container-left">
@@ -38,29 +38,28 @@
 			<div class="container-right">
 				<div class="content-projetos" id="data" >
 				</div>
+				
 				<div id="dialog">
-				
-					<h2><b><span id="edicaoIndicadorNomeProjeto"></span></b></h2>
-					<hr></hr>
-				
-					<h4><b>Indicador:</b> <span id="edicaoIndicadorNomeIndicador"></span></h4>
+					<div class="dialog-content">
+						<h2><span id="edicaoIndicadorNomeProjeto"></span></h2>
+						<h4>Indicador: <span id="edicaoIndicadorNomeIndicador"></span></h4>
+						
+						<h4>Última alteração: <span id="edicaoIndicadorUltimaAlteracao"></span></h4>
+						<h4>Última justificativa: <span id="edicaoIndicadorUltimaAlteracaoDesc"></span></h4>
 					
-					<h4><b>Última alteração:</b> <span id="edicaoIndicadorUltimaAlteracao"></span></h4>
-					<h4><b>Última justificativa:</b> <span id="edicaoIndicadorUltimaAlteracaoDesc"></span></h4>
-					
-					
-					<hr></hr>					
-					<h4><b>Justificativa:</b> <span id="edicaoIndicadorUltimaAlteracao"></span></h4>
-					<div id="edicaoIndicadorDescricao">
-						<textarea id="edicaoIndicadorTxtDescricao" rows="4" cols="35" maxlength="350"></textarea>
+						<h4><label for="edicaoIndicadorTxtDescricao">Justificativa: </label><span id="edicaoIndicadorUltimaAlteracao"></span></h4>
+						<div id="edicaoIndicadorDescricao">
+							<textarea id="edicaoIndicadorTxtDescricao" rows="4" cols="35" maxlength="350" tabindex="1"></textarea>
+						</div>
+						
+						<div id="divOptions" class="options">
+							<input type="button" value="PERIGO!" class="btn-perigo" name="PERIGO" tabindex="2"/>
+							<input type="button" value="Turbulento" class="btn-atencao" name="ATENCAO" tabindex="3"/>
+							<input type="button" value="Sem Problemas" class="btn-ok" name="OK" tabindex="4"/>
+						</div>
 					</div>
-					
-					<div id="divOptions" class="options">
-						<input type="button" value="Sem Problemas" class="botao-ok" name="OK"/>
-						<input type="button" value="Turbulento" class="ATENCAO" name="ATENCAO"/>
-						<input type="button" value="PERIGO!" class="PERIGO" name="PERIGO"/>
-					</div>
-			</div>
+				</div>
+				
 			</div>
 	</div>
 
