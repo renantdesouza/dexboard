@@ -1,16 +1,15 @@
 package br.com.dextra.dexboard.servlet;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import br.com.dextra.dexboard.dao.ProjetoDao;
 import br.com.dextra.dexboard.domain.Indicador;
-import br.com.dextra.dexboard.domain.Projeto;
-import br.com.dextra.dexboard.repository.ProjetoRepository;
 
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
@@ -33,14 +32,14 @@ public class IndicadorServlet extends HttpServlet {
 		Indicador indicador = des.deserialize(req.getParameter("indicador"),
 				Indicador.class);
 
-		List<Projeto> todosProjetos = ProjetoRepository.buscaProjetos();
 		UserService userService = UserServiceFactory.getUserService();
 
-		Projeto projeto = ProjetoRepository.buscarPorId(idProjeto,
-				todosProjetos);
-		projeto.alteraIndicador(indicador, userService.getCurrentUser()
+		indicador.setUsuarioUltimaAlteracao(userService.getCurrentUser()
 				.getEmail());
-		ProjetoRepository.persisteProjetos(todosProjetos);
+		indicador.setUltimaAlteracao(new Date());
+
+		ProjetoDao dao = new ProjetoDao();
+		dao.salvaIndicador(idProjeto.intValue(), indicador);
 
 		resp.getWriter().println("true");
 	}

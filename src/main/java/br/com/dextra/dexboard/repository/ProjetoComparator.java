@@ -3,12 +3,12 @@ package br.com.dextra.dexboard.repository;
 import java.util.Comparator;
 
 import br.com.dextra.dexboard.domain.Classificacao;
-import br.com.dextra.dexboard.domain.Projeto;
+import br.com.dextra.dexboard.json.ProjetoJson;
 
-public class ProjetoComparator implements Comparator<Projeto> {
+public class ProjetoComparator implements Comparator<ProjetoJson> {
 
 	@Override
-	public int compare(Projeto p1, Projeto p2) {
+	public int compare(ProjetoJson p1, ProjetoJson p2) {
 		Classificacao c1 = p1.getClassificacao();
 		Classificacao c2 = p2.getClassificacao();
 		if (c1 == c2) {

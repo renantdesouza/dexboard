@@ -1,19 +1,18 @@
 package br.com.dextra.dexboard.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.EntityNotFoundException;
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
-import com.google.appengine.api.datastore.Text;
+import br.com.dextra.dexboard.dao.ProjetoDao;
+import br.com.dextra.dexboard.domain.Projeto;
+import br.com.dextra.dexboard.json.ProjetoJson;
+import flexjson.JSONSerializer;
 
 public class QueryServlet extends HttpServlet {
 
@@ -22,26 +21,23 @@ public class QueryServlet extends HttpServlet {
 	public static final int CACHE_EXPIRATION_SECONDS = 60 * 60;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		resp.setContentType("application/json");
-		
-		try {
 
-			DatastoreService service = DatastoreServiceFactory.getDatastoreService();
-			Key key = KeyFactory.createKey("projectData", "data");
-			Entity entity = service.get(key);
-			Text text = (Text) entity.getProperty("json");
-			Long lastModified = (Long) entity.getProperty("lastModified");
-			if (lastModified != null) {
-				resp.setDateHeader("Last-Modified", lastModified);
-			}
-			String json = text.getValue();
-			resp.getWriter().print(json);
+		ProjetoDao dao = new ProjetoDao();
+		List<ProjetoJson> projetos = new ArrayList<ProjetoJson>();
+		List<Projeto> buscarTodosProjetos = dao.buscarTodosProjetos();
 
-		} catch (EntityNotFoundException e) {
-			e.printStackTrace();
-			resp.getWriter().print("null");
+		for (Projeto projeto : buscarTodosProjetos) {
+			projetos.add(new ProjetoJson(projeto));
 		}
+
+		JSONSerializer serializer = new JSONSerializer();
+		serializer.exclude("*.class");
+		String json = serializer.deepSerialize(projetos);
+		resp.getWriter().print(json);
+
 	}
 
 }

@@ -11,10 +11,9 @@ import org.junit.Test;
 import org.xml.sax.SAXException;
 
 import br.com.dextra.dexboard.base.AbstractTestCase;
+import br.com.dextra.dexboard.dao.ProjetoDao;
 import br.com.dextra.dexboard.domain.Classificacao;
 import br.com.dextra.dexboard.domain.Indicador;
-import br.com.dextra.dexboard.domain.Projeto;
-import br.com.dextra.dexboard.repository.ProjetoRepository;
 import br.com.dextra.dexboard.servlet.IndicadorServlet;
 
 import com.googlecode.restitory.gae.http.Response;
@@ -33,15 +32,14 @@ public class CronTest extends AbstractTestCase {
 		alteraIndicadorDeProjeto(495, 1, Classificacao.OK);
 		alteraIndicadorDeProjeto(495, 2, Classificacao.ATENCAO);
 		verificaSeProjetoEstaComIndicadorPreenchido(495, 1, Classificacao.OK);
-		verificaSeProjetoEstaComIndicadorPreenchido(495, 2, Classificacao.ATENCAO);
+		verificaSeProjetoEstaComIndicadorPreenchido(495, 2,
+				Classificacao.ATENCAO);
 	}
 
 	private void verificaSeProjetoEstaComIndicadorPreenchido(Integer idProjeto,
 			Integer idIndicadorAlterado, Classificacao classificacao) {
-
-		Projeto projeto = ProjetoRepository.buscarPorId(idProjeto,
-				ProjetoRepository.buscaProjetos());
-		List<Indicador> indicadores = projeto.getIndicadores();
+		ProjetoDao dao = new ProjetoDao();
+		List<Indicador> indicadores = dao.buscarIndicadoresDoProjeto(idProjeto);
 
 		Indicador indicadorAlterado = encontraIndicadorDeId(indicadores,
 				idIndicadorAlterado);

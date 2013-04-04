@@ -1,5 +1,6 @@
 package br.com.dextra.dexboard.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.dextra.dexboard.domain.Indicador;
@@ -30,7 +31,11 @@ public class ProjetoDao {
 	}
 
 	public List<Projeto> buscarTodosProjetos() {
-		return ofy.query(Projeto.class).list();
+		List<Projeto> list = ofy.query(Projeto.class).list();
+		if (list == null) {
+			list = new ArrayList<Projeto>();
+		}
+		return list;
 	}
 
 	public List<Indicador> buscarIndicadoresDoProjeto(int idPma) {
