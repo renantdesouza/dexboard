@@ -1,41 +1,11 @@
 package br.com.dextra.dexboard.planilha;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import br.com.dextra.dexboard.domain.Projeto;
 
 public class PlanilhaDexboard extends Planilha {
 
-	public PlanilhaDexboard(String chavePlanilha) {
-		super(chavePlanilha, "Principal");
+	private static final String CHAVE_PLANILHA_DEXBOARD = "0Au2Lk990DvFfdGVDQm9rTW1OYmw3dW5yOUVQSkdPSGc";
+
+	public PlanilhaDexboard(String nomePlanilha) {
+		super(CHAVE_PLANILHA_DEXBOARD, nomePlanilha);
 	}
-
-	private int buscarQuantidadeDeProjetos() {
-		return recuperarConteudoCelulaInt(2, 7);
-	}
-
-	private String buscarNomeDoProjeto(int indiceProjeto) {
-		return recuperarConteudoCelula(2 + indiceProjeto, 4);
-	}
-
-	private int buscarIdProjeto(int indiceProjeto) {
-		return recuperarConteudoCelulaInt(2 + indiceProjeto, 2);
-	}
-
-	public List<Projeto> buscarDadosDosProjetos() {
-		List<Projeto> ret = new ArrayList<Projeto>();
-
-		int qtdeProjetos = buscarQuantidadeDeProjetos();
-
-		for (int i = 0; i < qtdeProjetos; ++i) {
-			Projeto proj = new Projeto();
-			proj.setIdPma(buscarIdProjeto(i));
-			proj.setNome(buscarNomeDoProjeto(i));
-			ret.add(proj);
-		}
-
-		return ret;
-	}
-
 }

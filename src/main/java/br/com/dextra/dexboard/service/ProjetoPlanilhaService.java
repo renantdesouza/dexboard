@@ -1,24 +1,21 @@
 package br.com.dextra.dexboard.service;
 
-import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.com.dextra.dexboard.domain.Indicador;
 import br.com.dextra.dexboard.domain.Projeto;
-import br.com.dextra.dexboard.planilha.PlanilhaDexboard;
-import br.com.dextra.dexboard.planilha.PlanilhaIndicadores;
+import br.com.dextra.dexboard.planilha.PlanilhaPrincipal;
 
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.google.gson.JsonObject;
 
-public class ProjetoService {
+public class ProjetoPlanilhaService {
 
-	private static final String CHAVE_PLANILHA_DEXBOARD = "0Au2Lk990DvFfdGVDQm9rTW1OYmw3dW5yOUVQSkdPSGc";
-
-	public final static Logger LOG = LoggerFactory.getLogger(ProjetoService.class);
+	public final static Logger LOG = LoggerFactory
+			.getLogger(ProjetoPlanilhaService.class);
 
 	public static final PMAService SERVICO_PMA_AMAZON = new PMAService(
 			"https://50.17.210.152/pma/services/indicadores",
@@ -30,16 +27,14 @@ public class ProjetoService {
 
 	public static final PMAService SERVICO_PMA = SERVICO_PMA_AMAZON;
 
-	public static List<Projeto> buscarDadosProjetos() {
-		PlanilhaDexboard planilhaPrincipal = new PlanilhaDexboard(CHAVE_PLANILHA_DEXBOARD);
-		PlanilhaIndicadores planilhaIndicadores = new PlanilhaIndicadores(CHAVE_PLANILHA_DEXBOARD);
-		List<Indicador> indicadores = planilhaIndicadores.criarListaDeIndicadores();
+	public static Map<Integer, Projeto> buscarDadosProjetosAtivos() {
+		PlanilhaPrincipal planilhaPrincipal = new PlanilhaPrincipal();
 
-		List<Projeto> projetos = planilhaPrincipal.buscarDadosDosProjetos();
+		Map<Integer, Projeto> projetos = planilhaPrincipal.buscarDadosDosProjetos();
 
-		for (Projeto projeto : projetos) {
-			projeto.setIndicadores(indicadores);
-			JsonObject dados = SERVICO_PMA.buscarDadosDoProjeto(projeto.getIdPma());
+		for (Projeto projeto : projetos.values()) {
+			JsonObject dados = SERVICO_PMA.buscarDadosDoProjeto(projeto
+					.getIdPma());
 			projeto.setCpi(dados.get("cpi").getAsDouble());
 		}
 

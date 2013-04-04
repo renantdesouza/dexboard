@@ -6,23 +6,23 @@ import java.util.List;
 import br.com.dextra.dexboard.domain.Indicador;
 import br.com.dextra.dexboard.utils.StringUtils;
 
-public class PlanilhaIndicadores extends Planilha {
+public class PlanilhaIndicadores extends PlanilhaDexboard {
 
-	public PlanilhaIndicadores(String chavePlanilha) {
-		super(chavePlanilha, "Indicadores");
+	public PlanilhaIndicadores() {
+		super("Indicadores");
 	}
 
 	private String buscarNomeDoIndicador(int linha) {
 		return recuperarConteudoCelula(linha, 1);
 	}
-	
+
 	public List<Indicador> criarListaDeIndicadores() {
 		List<Indicador> indicadores = new ArrayList<Indicador>();
 
 		int i = 1;
 		while (true) {
 			String nomeIndicador = buscarNomeDoIndicador(i);
-			
+
 			if (!StringUtils.isNullOrEmpty(nomeIndicador)) {
 				indicadores.add(new Indicador(i, nomeIndicador));
 				i++;

@@ -4,13 +4,30 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import javax.persistence.Id;
+
+import com.googlecode.objectify.Key;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Parent;
 import com.ibm.icu.text.SimpleDateFormat;
 
 import flexjson.JSON;
 
+@Entity
 public class Indicador {
 
+	public Key<Projeto> getProjeto() {
+		return projeto;
+	}
+
+	public void setProjeto(Key<Projeto> projeto) {
+		this.projeto = projeto;
+	}
+
+	@Id
 	private Integer id;
+	@Parent
+	private Key<Projeto> projeto;
 	private String nome;
 	private Classificacao classificacao = Classificacao.OK;
 	private String descricao;

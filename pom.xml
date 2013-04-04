@@ -98,6 +98,11 @@
 			<artifactId>jcache</artifactId>
 			<version>1.0-dev-2</version>
 		</dependency>
+		<dependency>
+			<groupId>com.googlecode.objectify</groupId>
+			<artifactId>objectify</artifactId>
+			<version>3.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -178,9 +183,9 @@
 			</plugin>
 
 			<plugin>
-			    <groupId>com.google.appengine</groupId>
-			    <artifactId>appengine-maven-plugin</artifactId>
-			    <version>${gae.version}</version>
+				<groupId>com.google.appengine</groupId>
+				<artifactId>appengine-maven-plugin</artifactId>
+				<version>${gae.version}</version>
 			</plugin>
 		</plugins>
 		<pluginManagement>
@@ -202,17 +207,21 @@
 			<id>pyrata</id>
 			<url>http://repo.pyrata.org/release/maven2</url>
 		</repository>
-	<!--	<repository>
-			<id>dexboard</id>
-			<url>file:///projects/shared/dextra_dexboard/repo</url>
-		</repository> -->
+		<!-- <repository> <id>dexboard</id> <url>file:///projects/shared/dextra_dexboard/repo</url>
+			</repository> -->
 		<repository>
 			<id>jakubiak-gdata</id>
-			<url>http://jakubiak-gdata.googlecode.com/svn/trunk/jakubiak-gdata/repo</url>
+			<url>http://jakubiak-gdata.googlecode.com/svn/trunk/jakubiak-gdata/repo
+			</url>
 		</repository>
 		<repository>
 			<id>google-maven</id>
-			<url>http://google-maven-repository.googlecode.com/svn/repository</url>
+			<url>http://google-maven-repository.googlecode.com/svn/repository
+			</url>
+		</repository>
+		<repository>
+			<id>objectify-appengine</id>
+			<url>http://maven.objectify-appengine.googlecode.com/git/</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>
@@ -227,8 +236,10 @@
 	</pluginRepositories>
 
 	<scm>
-		<connection>scm:svn:https://holy-avenger.googlecode.com/svn/trunk/holy</connection>
-		<developerConnection>scm:svn:https://holy-avenger.googlecode.com/svn/trunk/holy</developerConnection>
+		<connection>scm:svn:https://holy-avenger.googlecode.com/svn/trunk/holy
+		</connection>
+		<developerConnection>scm:svn:https://holy-avenger.googlecode.com/svn/trunk/holy
+		</developerConnection>
 		<url>https://holy-avenger.googlecode.com/svn/trunk/holy</url>
 	</scm>
 
@@ -334,21 +345,21 @@
 				<version>1.7R3</version>
 			</dependency>
 
-      		<dependency>
-                <groupId>commons-httpclient</groupId>
-                <artifactId>commons-httpclient</artifactId>
-                <version>3.0.1</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpclient</artifactId>
-                <version>4.1.1</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpcore</artifactId>
-                <version>4.2.3</version>
-            </dependency>
+			<dependency>
+				<groupId>commons-httpclient</groupId>
+				<artifactId>commons-httpclient</artifactId>
+				<version>3.0.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient</artifactId>
+				<version>4.1.1</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpcore</artifactId>
+				<version>4.2.3</version>
+			</dependency>
 
 			<dependency>
 				<groupId>com.googlecode.mycontainer</groupId>
