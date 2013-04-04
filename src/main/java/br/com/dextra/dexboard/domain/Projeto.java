@@ -8,15 +8,15 @@ import com.googlecode.objectify.annotation.Entity;
 public class Projeto {
 
 	@Id
-	private int idPma;
+	private Long idPma;
 	private String nome;
 	private Double cpi;
 
-	public int getIdPma() {
+	public Long getIdPma() {
 		return idPma;
 	}
 
-	public void setIdPma(int idPma) {
+	public void setIdPma(Long idPma) {
 		this.idPma = idPma;
 	}
 

@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.com.dextra.dexboard.dao.ProjetoDao;
 import br.com.dextra.dexboard.domain.Indicador;
+import br.com.dextra.dexboard.domain.Projeto;
 
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.googlecode.objectify.Key;
 
 import flexjson.JSONDeserializer;
 
@@ -37,9 +39,10 @@ public class IndicadorServlet extends HttpServlet {
 		indicador.setUsuarioUltimaAlteracao(userService.getCurrentUser()
 				.getEmail());
 		indicador.setUltimaAlteracao(new Date());
+		indicador.setProjeto(new Key<Projeto>(Projeto.class, idProjeto));
 
 		ProjetoDao dao = new ProjetoDao();
-		dao.salvaIndicador(idProjeto.intValue(), indicador);
+		dao.salvaIndicador(idProjeto.longValue(), indicador);
 
 		resp.getWriter().println("true");
 	}

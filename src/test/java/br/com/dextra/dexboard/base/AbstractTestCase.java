@@ -19,6 +19,7 @@ public class AbstractTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		System.setProperty("app.test", "true");
 		helper = new GAETestHelper();
 		helper.prepareLocalServiceTestHelper();
 		helper.bootMycontainer();

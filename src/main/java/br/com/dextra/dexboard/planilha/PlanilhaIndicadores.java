@@ -19,9 +19,9 @@ public class PlanilhaIndicadores extends PlanilhaDexboard {
 	public List<Indicador> criarListaDeIndicadores() {
 		List<Indicador> indicadores = new ArrayList<Indicador>();
 
-		int i = 1;
+		Long i = 1l;
 		while (true) {
-			String nomeIndicador = buscarNomeDoIndicador(i);
+			String nomeIndicador = buscarNomeDoIndicador(i.intValue());
 
 			if (!StringUtils.isNullOrEmpty(nomeIndicador)) {
 				indicadores.add(new Indicador(i, nomeIndicador));

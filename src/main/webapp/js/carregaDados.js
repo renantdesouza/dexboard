@@ -4,7 +4,7 @@
             carregar : function() {
                 $.getJSON('/query', function(resultado) {
                 	if (resultado) {
-	                    var todosProjetos = resultado.value;
+	                    var todosProjetos = resultado;
 	                    CarregaDados.carregarIndicadores(todosProjetos[0].indicadores);
 	                    var ulProjetos = $('<ul id="lista-projetos" />');
 	                    CarregaDados.adicionaProjetos(ulProjetos, todosProjetos);
@@ -40,9 +40,9 @@
 						$("#dialog").data("opened", true);
 						$('#dialog-overlay').fadeIn('fast');
                         CarregaDados.populaDiv(projeto, indicador);
-						
+
 						$("#dialog").find('textarea').focus();
-						
+
 						$('#dialog-overlay').bind('click', function()
 						{
 							$("#dialog").dialog("close");
@@ -60,8 +60,8 @@
 								$('#dialog-overlay').click();
 							}
 						});
-						
-						
+
+
                     });
                 });
 
@@ -110,7 +110,7 @@
                 	$("#edicaoIndicadorUltimaAlteracao").html('');
                 }
                 $("#edicaoIndicadorUltimaAlteracaoDesc").html(indicador.descricao);
-                
+
                 $("#edicaoIndicadorTxtDescricao").val("");
 
                 $.each($('#divOptions input'), function(idx, obj) {

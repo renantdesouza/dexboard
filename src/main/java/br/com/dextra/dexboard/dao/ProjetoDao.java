@@ -15,9 +15,7 @@ public class ProjetoDao {
 	private Objectify ofy;
 
 	public ProjetoDao() {
-		ObjectifyService.register(Projeto.class);
-		ObjectifyService.register(Indicador.class);
-
+		RegisterClasses.register();
 		ofy = ObjectifyService.begin();
 	}
 
@@ -25,8 +23,8 @@ public class ProjetoDao {
 		ofy.put(p);
 	}
 
-	public Projeto buscarProjeto(int idPma) {
-		Key<Projeto> key = new Key<Projeto>(Projeto.class, idPma);
+	public Projeto buscarProjeto(Long idProjeto) {
+		Key<Projeto> key = new Key<Projeto>(Projeto.class, idProjeto);
 		return ofy.get(key);
 	}
 
@@ -38,24 +36,26 @@ public class ProjetoDao {
 		return list;
 	}
 
-	public List<Indicador> buscarIndicadoresDoProjeto(int idPma) {
+	public List<Indicador> buscarIndicadoresDoProjeto(Long idPma) {
 		Projeto projeto = buscarProjeto(idPma);
 		List<Indicador> list = ofy.query(Indicador.class)
 				.filter("projeto", projeto).list();
 		return list;
 	}
 
-	public void salvaIndicador(int idProjetoPma, Indicador indicador) {
+	public void salvaIndicador(Long idProjetoPma, Indicador indicador) {
 		Key<Projeto> keyProjeto = new Key<Projeto>(Projeto.class, idProjetoPma);
 		indicador.setProjeto(keyProjeto);
+		indicador.defineComposeId();
 		ofy.put(indicador);
 	}
 
-	public void delete(int idPma) {
-		Projeto projeto = buscarProjeto(idPma);
-		List<Key<Indicador>> listKeys = ofy.query(Indicador.class).filter("projeto", projeto).listKeys();
+	public void delete(Long idProjeto) {
+		Projeto projeto = buscarProjeto(idProjeto);
+		List<Key<Indicador>> listKeys = ofy.query(Indicador.class)
+				.filter("projeto", projeto).listKeys();
 		ofy.delete(listKeys);
-		Key<Projeto> key = new Key<Projeto>(Projeto.class, idPma);
+		Key<Projeto> key = new Key<Projeto>(Projeto.class, idProjeto);
 		ofy.delete(key);
 	}
 }

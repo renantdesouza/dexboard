@@ -28,7 +28,7 @@ public class ProjetoJson {
 		return indicadores;
 	}
 
-	public int getIdPma() {
+	public Long getIdPma() {
 		return this.projeto.getIdPma();
 	}
 

@@ -18,14 +18,17 @@ public class PlanilhaPrincipal extends PlanilhaDexboard {
 		return recuperarConteudoCelula(2 + indiceProjeto, 4);
 	}
 
-	private int buscarIdProjeto(int indiceProjeto) {
-		return recuperarConteudoCelulaInt(2 + indiceProjeto, 2);
+	private Long buscarIdProjeto(int indiceProjeto) {
+		return recuperarConteudoCelulaInt(2 + indiceProjeto, 2).longValue();
 	}
 
-	public Map<Integer, Projeto> buscarDadosDosProjetos() {
-		Map<Integer, Projeto> ret = new java.util.HashMap<Integer, Projeto>();
+	public Map<Long, Projeto> buscarDadosDosProjetos() {
+		Map<Long, Projeto> ret = new java.util.HashMap<Long, Projeto>();
 
 		int qtdeProjetos = buscarQuantidadeDeProjetos();
+		if (System.getProperty("app.test") != null) {
+			qtdeProjetos = 3;
+		}
 
 		for (int i = 0; i < qtdeProjetos; ++i) {
 			Projeto proj = new Projeto();

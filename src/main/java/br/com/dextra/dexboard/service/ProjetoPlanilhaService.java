@@ -27,14 +27,14 @@ public class ProjetoPlanilhaService {
 
 	public static final PMAService SERVICO_PMA = SERVICO_PMA_AMAZON;
 
-	public static Map<Integer, Projeto> buscarDadosProjetosAtivos() {
+	public static Map<Long, Projeto> buscarDadosProjetosAtivos() {
 		PlanilhaPrincipal planilhaPrincipal = new PlanilhaPrincipal();
 
-		Map<Integer, Projeto> projetos = planilhaPrincipal.buscarDadosDosProjetos();
+		Map<Long, Projeto> projetos = planilhaPrincipal.buscarDadosDosProjetos();
 
 		for (Projeto projeto : projetos.values()) {
 			JsonObject dados = SERVICO_PMA.buscarDadosDoProjeto(projeto
-					.getIdPma());
+					.getIdPma().intValue());
 			projeto.setCpi(dados.get("cpi").getAsDouble());
 		}
 

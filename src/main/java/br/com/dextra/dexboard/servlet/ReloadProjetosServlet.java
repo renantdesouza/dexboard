@@ -30,7 +30,7 @@ public class ReloadProjetosServlet extends HttpServlet {
 		PlanilhaIndicadores planilhaIndicadores = new PlanilhaIndicadores();
 		this.indicadores = planilhaIndicadores.criarListaDeIndicadores();
 
-		Map<Integer, Projeto> projetosPlanilha = ProjetoPlanilhaService
+		Map<Long, Projeto> projetosPlanilha = ProjetoPlanilhaService
 				.buscarDadosProjetosAtivos();
 		List<Projeto> projetosDataStore = dao.buscarTodosProjetos();
 
@@ -55,7 +55,7 @@ public class ReloadProjetosServlet extends HttpServlet {
 		}
 	}
 
-	private void atualizaProjetosAtivos(Map<Integer, Projeto> projetosPlanilha,
+	private void atualizaProjetosAtivos(Map<Long, Projeto> projetosPlanilha,
 			List<Projeto> projetosEmCache) {
 
 		if (projetosEmCache != null) {

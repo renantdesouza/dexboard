@@ -31,12 +31,12 @@ public class CronTest extends AbstractTestCase {
 		carregaProjetos();
 		alteraIndicadorDeProjeto(495, 1, Classificacao.OK);
 		alteraIndicadorDeProjeto(495, 2, Classificacao.ATENCAO);
-		verificaSeProjetoEstaComIndicadorPreenchido(495, 1, Classificacao.OK);
-		verificaSeProjetoEstaComIndicadorPreenchido(495, 2,
+		verificaSeProjetoEstaComIndicadorPreenchido(495l, 1, Classificacao.OK);
+		verificaSeProjetoEstaComIndicadorPreenchido(495l, 2,
 				Classificacao.ATENCAO);
 	}
 
-	private void verificaSeProjetoEstaComIndicadorPreenchido(Integer idProjeto,
+	private void verificaSeProjetoEstaComIndicadorPreenchido(Long idProjeto,
 			Integer idIndicadorAlterado, Classificacao classificacao) {
 		ProjetoDao dao = new ProjetoDao();
 		List<Indicador> indicadores = dao.buscarIndicadoresDoProjeto(idProjeto);

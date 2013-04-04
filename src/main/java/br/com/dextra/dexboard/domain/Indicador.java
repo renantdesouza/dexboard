@@ -8,7 +8,6 @@ import javax.persistence.Id;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Parent;
 import com.ibm.icu.text.SimpleDateFormat;
 
 import flexjson.JSON;
@@ -16,17 +15,9 @@ import flexjson.JSON;
 @Entity
 public class Indicador {
 
-	public Key<Projeto> getProjeto() {
-		return projeto;
-	}
-
-	public void setProjeto(Key<Projeto> projeto) {
-		this.projeto = projeto;
-	}
-
 	@Id
-	private Integer id;
-	@Parent
+	private String composeId;
+	private Long id;
 	private Key<Projeto> projeto;
 	private String nome;
 	private Classificacao classificacao = Classificacao.OK;
@@ -38,12 +29,12 @@ public class Indicador {
 		super();
 	}
 
-	public Indicador(int id, String nomeIndicador) {
+	public Indicador(Long id, String nomeIndicador) {
 		this.id = id;
 		this.nome = nomeIndicador;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -105,5 +96,18 @@ public class Indicador {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		return sdf.format(getUltimaAlteracao());
+	}
+
+	public Key<Projeto> getProjeto() {
+		return projeto;
+	}
+
+	public void setProjeto(Key<Projeto> projeto) {
+		this.projeto = projeto;
+	}
+
+	public void defineComposeId() {
+		String value = String.format("%s;%s", this.getProjeto().getId(), this.getId().toString());
+		this.composeId = value;
 	}
 }
