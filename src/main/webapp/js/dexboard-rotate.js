@@ -14,9 +14,9 @@
 
 				var scrollOffset = $(document).width() - $('.container-right ul li').last().offset().left - $('.container-right ul li').outerWidth() + 990;
 				console.info($(document).width(), $(document).width() - $('.container-right ul li').last().offset().left - $('.container-right ul li').outerWidth() + 990);
-				container.animate({'scrollLeft' : scrollOffset > 0 ? 0 : '+=' + ($(document).width() - $('.container-right').offset().left)}, 2000, 'easeInOutCubic');
+				container.animate({'scrollLeft' : scrollOffset > 0 ? 0 : '+=' + ($(document).width() - $('.container-right').offset().left)}, 5000, 'easeInOutCubic');
 			}
 		}
-		var rotationInterval = setInterval(rotate, 3000);
+		var rotationInterval = setInterval(rotate, 15000);
 	});
 })(jQuery);
