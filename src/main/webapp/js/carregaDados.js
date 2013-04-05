@@ -105,11 +105,14 @@
                 $("#edicaoIndicadorNomeProjeto").html(projeto.nome);
                 $("#edicaoIndicadorNomeIndicador").html(indicador.nome);
                 if (indicador.ultimaAlteracaoString !== '') {
+                    $("#edicaoIndicadorUltimaAlteracaoDesc").html(indicador.descricao);
                 	$("#edicaoIndicadorUltimaAlteracao").html(indicador.usuarioUltimaAlteracao + " em " + indicador.ultimaAlteracaoString);
+                	$('#fieldsetUltimaAlteracao').show();
                 } else {
+                	$('#fieldsetUltimaAlteracao').hide();
+                    $("#edicaoIndicadorUltimaAlteracaoDesc").html('');
                 	$("#edicaoIndicadorUltimaAlteracao").html('');
                 }
-                $("#edicaoIndicadorUltimaAlteracaoDesc").html(indicador.descricao);
 
                 $("#edicaoIndicadorTxtDescricao").val("");
 
