@@ -17,63 +17,55 @@
 </head>
 
 
-<body>
+<body class="tv">
+
 	<div id="dialog-overlay"></div>
-	
-	<hr id="body-topbar" />
-		<div id="wrapper" class="clearfix">
-			<div class="container-left">
-				<div class="content-logo">
-					<a href="#">
-						<img src="img/header-logo.png" alt="dxb - DexBoard" width="" height=""/>
-					 </a>
-				</div>
-				<div class="content-menu-indicadores">
-					<ul id="menuIndicadores" class="menu-indicadores">
-					</ul>
-				</div>
+	<div id="wrapper" class="clearfix">
+		<div class="container-left">
+			<div class="content-logo">
+				<a href="#">
+					<img src="img/header-logo.png" alt="dxb - DexBoard" width="" height=""/>
+				 </a>
 			</div>
-			<div class="container-right">
-				<div class="content-projetos" id="data" >
-				</div>
+			<div class="content-menu-indicadores">
+				<ul id="menuIndicadores" class="menu-indicadores">
+				</ul>
+			</div>
+		</div>
+		<div class="container-right">
+			<div class="content-projetos" id="data" >
+			</div>
+		</div>
+		<div id="dialog">
+			<div class="dialog-content">
+				<h2><span id="edicaoIndicadorNomeProjeto"></span></h2>
+				<h4>Indicador: <span id="edicaoIndicadorNomeIndicador"></span></h4>
 				
-			</div>
-			<div id="dialog">
-				<div class="dialog-content">
-					<h2><span id="edicaoIndicadorNomeProjeto"></span></h2>
-					<h4>Indicador: <span id="edicaoIndicadorNomeIndicador"></span></h4>
-					
-					<fieldset id="fieldsetUltimaAlteracao">
-						<legend>Última Alteração</legend>
-						<h4>Última alteração: <span id="edicaoIndicadorUltimaAlteracao"></span></h4>
-						<h4>Última justificativa:<br/> <span id="edicaoIndicadorUltimaAlteracaoDesc"></span></h4>
-						<h4>Feita por: <span id="edicaoIndicadorUltimaAlteracaoAutor"></span></h4>
-					</fieldset>
-				
-					<fieldset id="fieldsetNovaAlteracao">
-						<legend>Nova Alteração</legend>
-						<h4>
-							<label for="edicaoIndicadorTxtDescricao">Justificativa: </label>
-							<span id="edicaoIndicadorUltimaAlteracao"></span>
-						</h4>
-						<div id="edicaoIndicadorDescricao">
-							<textarea id="edicaoIndicadorTxtDescricao" rows="4" cols="35" maxlength="350" tabindex="1"></textarea>
-						</div>
-					</fieldset>
-					
-					<div id="divOptions" class="options">
-						<input type="button" value="PERIGO!" class="btn-perigo" name="PERIGO" tabindex="2"/>
-						<input type="button" value="Turbulento" class="btn-atencao" name="ATENCAO" tabindex="3"/>
-						<input type="button" value="Sem Problemas" class="btn-ok" name="OK" tabindex="4"/>
-					</div>
-				</div>
-			</div>
+				<fieldset id="fieldsetUltimaAlteracao">
+					<legend>Última Alteração</legend>
+					<h4>Última alteração: <span id="edicaoIndicadorUltimaAlteracao"></span></h4>
+					<h4>Última justificativa:<br/> <span id="edicaoIndicadorUltimaAlteracaoDesc"></span></h4>
+					<h4>Feita por: <span id="edicaoIndicadorUltimaAlteracaoAutor"></span></h4>
+				</fieldset>
 			
+				<fieldset id="fieldsetNovaAlteracao">
+					<legend>Nova Alteração</legend>
+					<h4>
+						<label for="edicaoIndicadorTxtDescricao">Justificativa: </label>
+						<span id="edicaoIndicadorUltimaAlteracao"></span>
+					</h4>
+					<div id="edicaoIndicadorDescricao">
+						<textarea id="edicaoIndicadorTxtDescricao" rows="3" cols="35"  tabindex="1"></textarea>
+					</div>
+				</fieldset>
+				
+				<div id="divOptions" class="options">
+					<input type="button" value="PERIGO!" class="btn-perigo" name="PERIGO" tabindex="2"/>
+					<input type="button" value="Turbulento" class="btn-atencao" name="ATENCAO" tabindex="3"/>
+					<input type="button" value="Sem Problemas" class="btn-ok" name="OK" tabindex="4"/>
+				</div>
+			</div>
+		</div>
 	</div>
-
-<hr id="body-bottombar" />
-
-
-
 </body>
 </html>
