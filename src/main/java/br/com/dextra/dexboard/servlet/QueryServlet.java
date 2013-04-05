@@ -2,6 +2,7 @@ package br.com.dextra.dexboard.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.dextra.dexboard.dao.ProjetoDao;
 import br.com.dextra.dexboard.domain.Projeto;
 import br.com.dextra.dexboard.json.ProjetoJson;
+import br.com.dextra.dexboard.repository.ProjetoComparator;
 import flexjson.JSONSerializer;
 
 public class QueryServlet extends HttpServlet {
@@ -33,8 +35,10 @@ public class QueryServlet extends HttpServlet {
 			projetos.add(new ProjetoJson(projeto));
 		}
 
+		Collections.sort(projetos, new ProjetoComparator());
+
 		JSONSerializer serializer = new JSONSerializer();
-		serializer.exclude("*.class");
+		serializer.exclude("*.class", "*.projeto");
 		String json = serializer.deepSerialize(projetos);
 		resp.getWriter().print(json);
 

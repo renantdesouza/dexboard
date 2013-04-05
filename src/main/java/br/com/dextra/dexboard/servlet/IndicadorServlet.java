@@ -31,15 +31,14 @@ public class IndicadorServlet extends HttpServlet {
 		Integer idProjeto = Integer.valueOf(req.getParameter("projeto"));
 
 		JSONDeserializer<Indicador> des = new JSONDeserializer<Indicador>();
-		Indicador indicador = des.deserialize(req.getParameter("indicador"),
-				Indicador.class);
+		String json = req.getParameter("indicador");
+		Indicador indicador = des.deserialize(json, Indicador.class);
 
 		UserService userService = UserServiceFactory.getUserService();
 
 		indicador.setUsuarioUltimaAlteracao(userService.getCurrentUser()
 				.getEmail());
 		indicador.setUltimaAlteracao(new Date());
-		indicador.setProjeto(new Key<Projeto>(Projeto.class, idProjeto));
 
 		ProjetoDao dao = new ProjetoDao();
 		dao.salvaIndicador(idProjeto.longValue(), indicador);
