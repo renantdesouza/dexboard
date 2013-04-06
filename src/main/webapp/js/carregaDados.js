@@ -160,7 +160,6 @@
             }
     }
 
-
     $(window).ready(function() {
         $("#dialog").dialog({
             autoOpen : false,
@@ -178,6 +177,7 @@
 
 
         CarregaDados.carregar();
+
     });
 
 })(jQuery);

@@ -1,5 +1,7 @@
 package br.com.dextra.dexboard.json;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import br.com.dextra.dexboard.dao.ProjetoDao;
@@ -19,6 +21,14 @@ public class ProjetoJson {
 
 		ProjetoDao dao = new ProjetoDao();
 		this.indicadores = dao.buscarIndicadoresDoProjeto(getIdPma());
+		
+		Collections.sort(this.indicadores, new Comparator<Indicador>() {
+
+            @Override
+            public int compare(Indicador i1, Indicador i2) {
+                return i1.getNome().compareToIgnoreCase(i2.getNome());
+            }
+        });
 
 		this.classificacao = defineClassificacao();
 	}
