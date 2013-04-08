@@ -60,6 +60,12 @@
 								$('#dialog-overlay').click();
 							}
 						});
+						$('.dialog-close-button').on('click', function(e)
+						{
+							e.preventDefault();
+							$('#dialog-overlay').click();
+							$(this).off('click');
+						});
 
 
                     });
