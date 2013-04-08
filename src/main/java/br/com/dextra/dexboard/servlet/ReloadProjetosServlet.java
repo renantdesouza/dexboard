@@ -81,8 +81,8 @@ public class ReloadProjetosServlet extends HttpServlet {
 				Projeto projetoAtivo = projetosPlanilha.get(p.getIdPma());
 				if (projetoAtivo != null) {
 					LOG.info(String.format(
-							"Atualizando cpi do projeto \"%s\" para \"%d\"",
-							projetoAtivo.getNome(), projetoAtivo.getCpi()));
+							"Atualizando cpi do projeto \"%s\" para \"%s\"",
+							projetoAtivo.getNome(), projetoAtivo.getCpi().toString()));
 					p.setCpi(projetoAtivo.getCpi());
 					dao.salvarProjeto(p);
 					LOG.info(String.format("Projeto \"%s\" salvo",
