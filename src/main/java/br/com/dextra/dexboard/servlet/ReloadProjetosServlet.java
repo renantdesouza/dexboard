@@ -2,6 +2,7 @@ package br.com.dextra.dexboard.servlet;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,18 +52,28 @@ public class ReloadProjetosServlet extends HttpServlet {
 
 		LOG.info("Buscando projetos atualizados ...");
 		projetosDataStore = dao.buscarTodosProjetos();
+		Map<Long, Projeto> mapProjetosDataStore = createMapProjetos(projetosDataStore);
 
-		adicionaProjetosNovos(projetosDataStore, projetosPlanilha.values());
+		adicionaProjetosNovos(mapProjetosDataStore, projetosPlanilha.values());
 
 		LOG.info("Sucesso!");
 		resp.getWriter().print("{status: 'success'}");
 	}
 
-	private void adicionaProjetosNovos(List<Projeto> destino,
+	private Map<Long, Projeto> createMapProjetos(List<Projeto> projetos) {
+		Map<Long, Projeto> map = new HashMap<Long, Projeto>();
+		for (Projeto p : projetos) {
+			map.put(p.getIdPma(), p);
+		}
+		return map ;
+	}
+
+	private void adicionaProjetosNovos(Map<Long, Projeto> mapProjetosDataStore,
 			Collection<Projeto> ativos) {
 
 		for (Projeto p : ativos) {
-			if (!projetoEstaNaLista(p, destino)) {
+			Projeto projeto = mapProjetosDataStore.get(p.getIdPma());
+			if (projeto == null) {
 				LOG.info(String.format("Adicionando projeto \"%s\"",
 						p.getNome()));
 				dao.salvarProjeto(p);
@@ -95,15 +106,6 @@ public class ReloadProjetosServlet extends HttpServlet {
 			}
 		}
 
-	}
-
-	private boolean projetoEstaNaLista(Projeto projeto, List<Projeto> projetos) {
-		for (Projeto p : projetos) {
-			if (p.getIdPma() == projeto.getIdPma()) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 }
