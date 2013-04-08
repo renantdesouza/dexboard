@@ -1,7 +1,33 @@
 (function($)
 {
+	var APP = {
+		obtemParametroDeURL : function(parametro) {
+
+	       	var Url = function(urlString) {
+	       		var _params = {};
+
+	       		urlString.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(match, key, value) {
+	       			_params[key] = value;
+				});
+
+				this.param = function(paramName) {
+					return _params[paramName];
+				};
+	         };
+
+	         var url = new Url(window.location.href);
+	         return url.param(parametro);
+		}
+	}
+
     $(document).ready(function()
     {
+
+        var from = APP.obtemParametroDeURL('from');
+        if (from == 'TV') {
+        	$('body').addClass('tv');
+        }
+
 		if ( $('body').hasClass('tv') === true ) {
 			var rotate = function()
 			{
@@ -14,7 +40,7 @@
 
 					var scrollOffset = limitLeft - lastLiPx;
 
-					container.animate({'scrollLeft' : scrollOffset > 0 ? 0 : '+=' + container.width()}, 5000, 'easeInOutCubic');
+					container.animate({'scrollLeft' : scrollOffset > 0 ? 0 : '+=' + (container.width() - last.width())}, 5000, 'easeInOutCubic');
 				}
 			}
 			var rotationInterval = setInterval(rotate, 15000);
