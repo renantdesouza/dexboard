@@ -6,11 +6,14 @@ import java.util.List;
 import br.com.dextra.dexboard.domain.Indicador;
 import br.com.dextra.dexboard.domain.Projeto;
 
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
 
 public class ProjetoDao {
+
+	public static final String KEY_CACHE = "dexboard.cache.key";
 
 	private Objectify ofy;
 
@@ -20,6 +23,7 @@ public class ProjetoDao {
 	}
 
 	public void salvarProjeto(Projeto p) {
+		MemcacheServiceFactory.getMemcacheService().delete(KEY_CACHE);
 		ofy.put(p);
 	}
 
@@ -44,6 +48,7 @@ public class ProjetoDao {
 	}
 
 	public void salvaIndicador(Long idProjetoPma, Indicador indicador) {
+		MemcacheServiceFactory.getMemcacheService().delete(KEY_CACHE);
 		Key<Projeto> keyProjeto = new Key<Projeto>(Projeto.class, idProjetoPma);
 		indicador.setProjeto(keyProjeto);
 		indicador.defineComposeId();

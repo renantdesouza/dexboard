@@ -14,6 +14,10 @@ import br.com.dextra.dexboard.dao.ProjetoDao;
 import br.com.dextra.dexboard.domain.Projeto;
 import br.com.dextra.dexboard.json.ProjetoJson;
 import br.com.dextra.dexboard.repository.ProjetoComparator;
+
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
+
 import flexjson.JSONSerializer;
 
 public class QueryServlet extends HttpServlet {
@@ -25,22 +29,32 @@ public class QueryServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		MemcacheService memcacheService = MemcacheServiceFactory
+				.getMemcacheService();
+
 		resp.setContentType("application/json");
 
-		ProjetoDao dao = new ProjetoDao();
-		List<ProjetoJson> projetos = new ArrayList<ProjetoJson>();
-		List<Projeto> buscarTodosProjetos = dao.buscarTodosProjetos();
+		String cacheJson = (String) memcacheService.get(ProjetoDao.KEY_CACHE);
+		if (cacheJson != null) {
+			resp.getWriter().print(cacheJson);
+		} else {
+			ProjetoDao dao = new ProjetoDao();
+			List<ProjetoJson> projetos = new ArrayList<ProjetoJson>();
+			List<Projeto> buscarTodosProjetos = dao.buscarTodosProjetos();
 
-		for (Projeto projeto : buscarTodosProjetos) {
-			projetos.add(new ProjetoJson(projeto));
+			for (Projeto projeto : buscarTodosProjetos) {
+				projetos.add(new ProjetoJson(projeto));
+			}
+
+			Collections.sort(projetos, new ProjetoComparator());
+
+			JSONSerializer serializer = new JSONSerializer();
+			serializer.exclude("*.class", "*.projeto");
+			String json = serializer.deepSerialize(projetos);
+			memcacheService.put(ProjetoDao.KEY_CACHE, json);
+
+			resp.getWriter().print(json);
 		}
-
-		Collections.sort(projetos, new ProjetoComparator());
-
-		JSONSerializer serializer = new JSONSerializer();
-		serializer.exclude("*.class", "*.projeto");
-		String json = serializer.deepSerialize(projetos);
-		resp.getWriter().print(json);
 
 	}
 
