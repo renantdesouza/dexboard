@@ -35,7 +35,7 @@ public class AuthFilter implements Filter {
 			return;
 		}
 		User user = service.getCurrentUser();
-		if (user != null || uri.startsWith("/_ah") || uri.startsWith("/dados/")) {
+		if (user != null || uri.startsWith("/_ah") || uri.startsWith("/reload/")) {
 			chain.doFilter(request, response);
 			return;
 		}
