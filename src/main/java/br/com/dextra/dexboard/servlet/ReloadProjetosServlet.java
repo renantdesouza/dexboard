@@ -94,6 +94,7 @@ public class ReloadProjetosServlet extends HttpServlet {
 					LOG.info(String.format(
 							"Atualizando cpi do projeto \"%s\" para \"%s\"",
 							projetoAtivo.getNome(), projetoAtivo.getCpi().toString()));
+					p.setNome(projetoAtivo.getNome());
 					p.setCpi(projetoAtivo.getCpi());
 					dao.salvarProjeto(p);
 					LOG.info(String.format("Projeto \"%s\" salvo",
