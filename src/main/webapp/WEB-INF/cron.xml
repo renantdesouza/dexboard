@@ -4,5 +4,4 @@
 		<url>/reload/projetos</url>
 		<schedule>every 15 minutes</schedule>
 	</cron>
-
 </cronentries>

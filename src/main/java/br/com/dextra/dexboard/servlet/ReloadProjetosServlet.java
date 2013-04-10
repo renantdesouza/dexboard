@@ -44,14 +44,16 @@ public class ReloadProjetosServlet extends HttpServlet {
 		LOG.info(projetosPlanilha.size() + " projetos ativos encontrados ...");
 
 		LOG.info("Buscando projetos já registrados na data store ...");
-		List<Projeto> projetosDataStore = dao.buscarTodosProjetos();
+		List<Projeto> projetosDataStore = dao.buscarTodosProjetos(true);
 		LOG.info(projetosDataStore.size()
 				+ " projetos registrados encontrados ...");
 
 		atualizaProjetosAtivos(projetosPlanilha, projetosDataStore);
 
-		LOG.info("Buscando projetos atualizados ...");
-		projetosDataStore = dao.buscarTodosProjetos();
+		LOG.info("Buscando projetos inativos ...");
+		projetosDataStore.addAll(dao.buscarTodosProjetos(false));
+
+		LOG.info("Ataulizando projetos ...");
 		Map<Long, Projeto> mapProjetosDataStore = createMapProjetos(projetosDataStore);
 
 		adicionaProjetosNovos(mapProjetosDataStore, projetosPlanilha.values());
@@ -80,6 +82,13 @@ public class ReloadProjetosServlet extends HttpServlet {
 				for (Indicador i : indicadores) {
 					dao.salvaIndicador(p.getIdPma(), i);
 				}
+			} else if (!projeto.isAtivo()) {
+				LOG.info(String.format("Ativando projeto \"%s\"",
+						p.getNome()));
+				projeto.setNome(p.getNome());
+				projeto.setCpi(p.getCpi());
+				projeto.setAtivo(true);
+				dao.salvarProjeto(projeto);
 			}
 		}
 	}

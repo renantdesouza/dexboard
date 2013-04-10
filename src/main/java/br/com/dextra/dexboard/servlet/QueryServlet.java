@@ -40,7 +40,7 @@ public class QueryServlet extends HttpServlet {
 		} else {
 			ProjetoDao dao = new ProjetoDao();
 			List<ProjetoJson> projetos = new ArrayList<ProjetoJson>();
-			List<Projeto> buscarTodosProjetos = dao.buscarTodosProjetos();
+			List<Projeto> buscarTodosProjetos = dao.buscarTodosProjetos(true);
 
 			for (Projeto projeto : buscarTodosProjetos) {
 				projetos.add(new ProjetoJson(projeto));
