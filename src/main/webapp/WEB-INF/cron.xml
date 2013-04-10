@@ -4,11 +4,5 @@
 		<url>/reload/projetos</url>
 		<schedule>every 15 minutes</schedule>
 	</cron>
-	<cron>
-		<url>/_ah/datastore_admin/backup.create?name=BackupToCloud&amp;kind=LogTitle&amp;kind=EventLog&amp;filesystem=gs&amp;gs_bucket_name=whitsend
-		</url>
-		<description>My Daily Backup</description>
-		<schedule>every 12 hours</schedule>
-		<target>ah-builtin-python-bundle</target>
-	</cron>
+
 </cronentries>
