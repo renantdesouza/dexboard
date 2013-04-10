@@ -40,8 +40,8 @@ body{font-family:'Open Sans', arial, sans-serif;background:url('../img/body-patt
 .menu-indicadores li {
 	padding:22px 10px 21px 25px;
 	font-weight:bold;
-	font-size:140%; 
-	margin-bottom:16px; 
+	font-size:140%;
+	margin-bottom:16px;
 	cursor:default;
 	color:rgba(255,255,255,0.7);
 	border-radius:4px;
@@ -78,27 +78,27 @@ body{font-family:'Open Sans', arial, sans-serif;background:url('../img/body-patt
 	font-weight:bold;
 	text-align:left;
 	border-radius:5px;}
-#lista-projetos > li > h4.projeto-PERIGO{background-color:#eb0000;box-shadow:inset 0 0 10px 3px rgba(0,0,0,0.5),inset 18px 0 18px -6px #ff3434;}	
-#lista-projetos > li > h4.projeto-OK{background-color:#59be00;box-shadow:inset 0 0 4px 0 #000,inset 18px 0 18px -6px #77ff00;color:#000;}	
-#lista-projetos > li > h4.projeto-ATENCAO{background-color:#e9cb00; box-shadow:inset 0 0 4px 0 #000,inset 18px 0 18px -6px #ffdf00;color:#000;}	
+#lista-projetos > li > h4.projeto-PERIGO{background-color:#eb0000;box-shadow:inset 0 0 10px 3px rgba(0,0,0,0.5),inset 18px 0 18px -6px #ff3434;}
+#lista-projetos > li > h4.projeto-OK{background-color:#59be00;box-shadow:inset 0 0 4px 0 #000,inset 18px 0 18px -6px #77ff00;color:#000;}
+#lista-projetos > li > h4.projeto-ATENCAO{background-color:#e9cb00; box-shadow:inset 0 0 4px 0 #000,inset 18px 0 18px -6px #ffdf00;color:#000;}
 
 #lista-projetos > li > ul { margin-top: 123px;width:94px;}
-#lista-projetos > li > ul > li {  
+#lista-projetos > li > ul > li {
 	margin-bottom:17px;
 	clear:both;
-	font-weight:bold; 
+	font-weight:bold;
 	display:block;
 	font-size:24px;
 	padding-top:36px;
 	height:36px;
 	line-height:0;
-	text-align:center; 
+	text-align:center;
 	color:rgba(255,255,255,0.7);
 	border:1px solid rgb(30, 30, 30);
 	opacity:0.95;
 	letter-spacing:-3px;
 	cursor:pointer;
-	background-color:rgba(255, 255, 255, 0.175); 
+	background-color:rgba(255, 255, 255, 0.175);
 	border-color:rgba(255, 255, 255, 0.16);
 	border-radius:4px;
 	transition:all 200ms ease-in-out;
@@ -174,6 +174,18 @@ body{font-family:'Open Sans', arial, sans-serif;background:url('../img/body-patt
 .dialog-content #divOptions > input:hover{color:#000;}
 .dialog-content #divOptions > input:active{color:#000;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.2),inset 0 35px 35px -10px rgba(0,0,0,0.15),0 2px 2px rgba(0,0,0,0.1);}
 .dialog-content #divOptions > input:focus{outline:dotted 1px #555;}
+
+
+.ul-historico {max-height: 170px; overflow: auto;box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)}
+.ul-historico > li:first-child{border-top-left-radius:10px;}
+.ul-historico > li:last-child{border-bottom-left-radius:10px;}
+
+.historico-PERIGO,
+.historico-OK,
+.historico-ATENCAO{box-shadow:inset 0 0 10px 0 rgba(0,0,0,.1); padding: 7px;color:rgba(0,0,0,.8);text-shadow:0 1px 0 #fff;}
+.historico-PERIGO{background-color:#eeccdd;}
+.historico-OK{background-color:#ddeecc;}
+.historico-ATENCAO{background-color:#eefacb;}
 
 /* gambotas  @fixme */
 .ui-dialog-titlebar,
