@@ -15,7 +15,6 @@ import flexjson.JSON;
 @Entity
 public class Indicador {
 
-    @SuppressWarnings("unused")
     @Id
     private String composeId;
     private Long id;

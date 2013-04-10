@@ -76,12 +76,7 @@
             adicionaProjetos : function (container, value) {
                 var projetos = value;
                 $.each(projetos, function(key, val) {
-                    if (val.nome.length >= 14){
-                        var nome = val.nome.substring(0,10)+"...";
-                    }
-                    else{
-                        var nome = val.nome;
-                    }
+                    var nome = val.nome;
                     var liProjeto = $('<li id="' + val.idPma + '" />');
                     liProjeto.html('<h4 class="projeto-' + val.classificacao + '">'+nome+'</h4>');
                     container.append(liProjeto);

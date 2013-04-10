@@ -65,7 +65,7 @@ public class ReloadProjetosServlet extends HttpServlet {
 		for (Projeto p : projetos) {
 			map.put(p.getIdPma(), p);
 		}
-		return map ;
+		return map;
 	}
 
 	private void adicionaProjetosNovos(Map<Long, Projeto> mapProjetosDataStore,
@@ -90,10 +90,12 @@ public class ReloadProjetosServlet extends HttpServlet {
 		if (projetosEmCache != null) {
 			for (Projeto p : projetosEmCache) {
 				Projeto projetoAtivo = projetosPlanilha.get(p.getIdPma());
-				if (projetoAtivo != null) {
+				if (projetoAtivo != null
+						&& (!p.getCpi().equals(projetoAtivo.getCpi()) || !p.getNome().equals(projetoAtivo.getNome()))) {
 					LOG.info(String.format(
 							"Atualizando cpi do projeto \"%s\" para \"%s\"",
-							projetoAtivo.getNome(), projetoAtivo.getCpi().toString()));
+							projetoAtivo.getNome(), projetoAtivo.getCpi()
+									.toString()));
 					p.setNome(projetoAtivo.getNome());
 					p.setCpi(projetoAtivo.getCpi());
 					dao.salvarProjeto(p);
