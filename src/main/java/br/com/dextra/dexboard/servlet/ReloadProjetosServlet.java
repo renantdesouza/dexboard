@@ -90,25 +90,26 @@ public class ReloadProjetosServlet extends HttpServlet {
 		if (projetosEmCache != null) {
 			for (Projeto p : projetosEmCache) {
 				Projeto projetoAtivo = projetosPlanilha.get(p.getIdPma());
-				if (projetoAtivo != null
-						&& (!p.getCpi().equals(projetoAtivo.getCpi()) || !p.getNome().equals(projetoAtivo.getNome()))) {
-					LOG.info(String.format(
-							"Atualizando cpi do projeto \"%s\" para \"%s\"",
-							projetoAtivo.getNome(), projetoAtivo.getCpi()
-									.toString()));
-					p.setNome(projetoAtivo.getNome());
-					p.setCpi(projetoAtivo.getCpi());
-					dao.salvarProjeto(p);
-					LOG.info(String.format("Projeto \"%s\" salvo",
-							projetoAtivo.getNome()));
-				} else {
-					LOG.info(String.format("Excluindo projeto \"%s\"",
+				if (projetoAtivo != null) {
+					if (!p.getCpi().equals(projetoAtivo.getCpi()) || !p.getNome().equals(projetoAtivo.getNome())) {
+						LOG.info(String
+								.format("Atualizando cpi do projeto \"%s\" para \"%s\"",
+										projetoAtivo.getNome(), projetoAtivo
+												.getCpi().toString()));
+						p.setNome(projetoAtivo.getNome());
+						p.setCpi(projetoAtivo.getCpi());
+						dao.salvarProjeto(p);
+						LOG.info(String.format("Projeto \"%s\" salvo",
+								projetoAtivo.getNome()));
+					}
+				} else if (p.isAtivo()) {
+					LOG.info(String.format("Desativando projeto \"%s\"",
 							p.getNome()));
-					dao.delete(p.getIdPma());
+					p.setAtivo(false);
+					dao.salvarProjeto(p);
 				}
 			}
 		}
 
 	}
-
 }

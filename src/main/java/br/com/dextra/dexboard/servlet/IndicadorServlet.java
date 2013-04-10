@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import br.com.dextra.dexboard.dao.ProjetoDao;
-import br.com.dextra.dexboard.domain.Indicador;
+import br.com.dextra.dexboard.domain.RegistroAlteracao;
 
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
@@ -26,20 +26,21 @@ public class IndicadorServlet extends HttpServlet {
 
 		resp.setContentType("application/json");
 
-		Integer idProjeto = Integer.valueOf(req.getParameter("projeto"));
+		Long idProjeto = Long.valueOf(req.getParameter("projeto"));
+		Long idIndicador = Long.valueOf(req.getParameter("indicador"));
 
-		JSONDeserializer<Indicador> des = new JSONDeserializer<Indicador>();
-		String json = req.getParameter("indicador");
-		Indicador indicador = des.deserialize(json, Indicador.class);
+		JSONDeserializer<RegistroAlteracao> des = new JSONDeserializer<RegistroAlteracao>();
+		String json = req.getParameter("registro");
+		RegistroAlteracao regAlteracao = des.deserialize(json,
+				RegistroAlteracao.class);
 
 		UserService userService = UserServiceFactory.getUserService();
 
-		indicador.setUsuarioUltimaAlteracao(userService.getCurrentUser()
-				.getEmail());
-		indicador.setUltimaAlteracao(new Date());
+		regAlteracao.setUsuario(userService.getCurrentUser().getEmail());
+		regAlteracao.setData(new Date());
 
 		ProjetoDao dao = new ProjetoDao();
-		dao.salvaIndicador(idProjeto.longValue(), indicador);
+		dao.salvaAlteracao(idProjeto, idIndicador, regAlteracao);
 
 		resp.getWriter().println("true");
 	}

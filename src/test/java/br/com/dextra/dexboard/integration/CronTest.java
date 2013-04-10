@@ -14,6 +14,8 @@ import br.com.dextra.dexboard.base.AbstractTestCase;
 import br.com.dextra.dexboard.dao.ProjetoDao;
 import br.com.dextra.dexboard.domain.Classificacao;
 import br.com.dextra.dexboard.domain.Indicador;
+import br.com.dextra.dexboard.domain.RegistroAlteracao;
+import br.com.dextra.dexboard.json.IndicadorJson;
 import br.com.dextra.dexboard.servlet.IndicadorServlet;
 
 import com.googlecode.restitory.gae.http.Response;
@@ -41,22 +43,23 @@ public class CronTest extends AbstractTestCase {
 		ProjetoDao dao = new ProjetoDao();
 		List<Indicador> indicadores = dao.buscarIndicadoresDoProjeto(idProjeto);
 
-		Indicador indicadorAlterado = encontraIndicadorDeId(indicadores,
+		IndicadorJson indicadorAlterado = encontraIndicadorDeId(indicadores,
 				idIndicadorAlterado);
 
 		Assert.assertNotNull(indicadorAlterado);
 		Assert.assertEquals(classificacao, indicadorAlterado.getClassificacao());
-		Assert.assertNotNull(indicadorAlterado.getUltimaAlteracao());
+		RegistroAlteracao registroAlteracao = indicadorAlterado.getRegistros().get(0);
+		Assert.assertNotNull(registroAlteracao.getData());
 		Assert.assertEquals("test@example.com",
-				indicadorAlterado.getUsuarioUltimaAlteracao());
+				registroAlteracao.getUsuario());
 
 	}
 
-	private Indicador encontraIndicadorDeId(List<Indicador> indicadores,
+	private IndicadorJson encontraIndicadorDeId(List<Indicador> indicadores,
 			int idParaEncontrar) {
 		for (Indicador ind : indicadores) {
 			if (ind.getId().intValue() == idParaEncontrar) {
-				return ind;
+				return new IndicadorJson(ind);
 			}
 		}
 		return null;
@@ -73,8 +76,8 @@ public class CronTest extends AbstractTestCase {
 		WebRequest request = new PostMethodWebRequest(
 				"http://localhost:8380/indicadorServlet");
 		request.setParameter("projeto", idProjeto.toString());
-		request.setParameter("indicador", "{ 'id' : '" + idIndicador
-				+ "', 'nome' : 'NomeBla', 'classificacao' : '" + classificacao
+		request.setParameter("indicador", idIndicador.toString());
+		request.setParameter("registro", "{ 'classificacao' : '" + classificacao
 				+ "', 'descricao': 'desc desc' }");
 
 		sc.getResponse(request);

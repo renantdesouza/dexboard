@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.com.dextra.dexboard.domain.Indicador;
 import br.com.dextra.dexboard.domain.Projeto;
+import br.com.dextra.dexboard.domain.RegistroAlteracao;
 
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.googlecode.objectify.Key;
@@ -47,6 +48,16 @@ public class ProjetoDao {
 		return list;
 	}
 
+	public List<RegistroAlteracao> buscarRegistrosDeAlteracoes(
+			Indicador indicador) {
+		List<RegistroAlteracao> list = ofy.query(RegistroAlteracao.class)
+				.filter("indicador", indicador).list();
+		if (list == null) {
+			list = new ArrayList<RegistroAlteracao>();
+		}
+		return list;
+	}
+
 	public void salvaIndicador(Long idProjetoPma, Indicador indicador) {
 		MemcacheServiceFactory.getMemcacheService().delete(KEY_CACHE);
 		Key<Projeto> keyProjeto = new Key<Projeto>(Projeto.class, idProjetoPma);
@@ -55,12 +66,17 @@ public class ProjetoDao {
 		ofy.put(indicador);
 	}
 
-	public void delete(Long idProjeto) {
-		Projeto projeto = buscarProjeto(idProjeto);
-		List<Key<Indicador>> listKeys = ofy.query(Indicador.class)
-				.filter("projeto", projeto).listKeys();
-		ofy.delete(listKeys);
-		Key<Projeto> key = new Key<Projeto>(Projeto.class, idProjeto);
-		ofy.delete(key);
+	public void salvaAlteracao(Long idProjetoPma, Long idIndicador,
+			RegistroAlteracao registroAlteracao) {
+		MemcacheServiceFactory.getMemcacheService().delete(KEY_CACHE);
+		Key<Projeto> keyProjeto = new Key<Projeto>(Projeto.class, idProjetoPma);
+		Key<Indicador> keyIndicador = new Key<Indicador>(Indicador.class,
+				idProjetoPma + ";" + idIndicador);
+
+		registroAlteracao.setIndicador(keyIndicador);
+		registroAlteracao.setProjeto(keyProjeto);
+		registroAlteracao.defineId();
+		ofy.put(registroAlteracao);
 	}
+
 }

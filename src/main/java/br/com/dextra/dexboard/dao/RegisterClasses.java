@@ -2,6 +2,7 @@ package br.com.dextra.dexboard.dao;
 
 import br.com.dextra.dexboard.domain.Indicador;
 import br.com.dextra.dexboard.domain.Projeto;
+import br.com.dextra.dexboard.domain.RegistroAlteracao;
 
 import com.googlecode.objectify.ObjectifyService;
 
@@ -14,6 +15,7 @@ public class RegisterClasses {
 
 		ObjectifyService.register(Projeto.class);
 		ObjectifyService.register(Indicador.class);
+		ObjectifyService.register(RegistroAlteracao.class);
 
 		System.setProperty("app.objectfy.classes.registered", "true");
 	}

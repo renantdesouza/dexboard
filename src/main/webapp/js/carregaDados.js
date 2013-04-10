@@ -105,14 +105,20 @@
 
                 $("#edicaoIndicadorNomeProjeto").html(projeto.nome);
                 $("#edicaoIndicadorNomeIndicador").html(indicador.nome);
-                if (indicador.ultimaAlteracaoString !== '') {
+            	var ulHistorico = $("#historico");
+            	ulHistorico.html('');
+            	var registros = indicador.registros;
+                if (registros.length > 0) {
+                    $.each(registros, function(idx, obj) {
+                		ulHistorico.append('<li class="historico-' + obj.classificacao + '">Alterado em <b>' +
+                				obj.ultimaAlteracaoString + '</b> por <b>' + obj.usuario + '</b><br/>' + obj.comentario + '</li>');
+                    });
+
                     $("#edicaoIndicadorUltimaAlteracaoDesc").html(indicador.descricao);
                 	$("#edicaoIndicadorUltimaAlteracao").html(indicador.usuarioUltimaAlteracao + " em " + indicador.ultimaAlteracaoString);
                 	$('#fieldsetUltimaAlteracao').show();
                 } else {
                 	$('#fieldsetUltimaAlteracao').hide();
-                    $("#edicaoIndicadorUltimaAlteracaoDesc").html('');
-                	$("#edicaoIndicadorUltimaAlteracao").html('');
                 }
 
                 $("#edicaoIndicadorTxtDescricao").val("");
@@ -130,15 +136,18 @@
 
             trocaIndicador : function(idProjeto, indicador, classsificacao){
 
-            	indicador.descricao = $("#edicaoIndicadorTxtDescricao").val();
-                indicador.classificacao = classsificacao;
+            	var registro = {
+            			classificacao : classsificacao,
+            			comentario : $("#edicaoIndicadorTxtDescricao").val()
+            	};
 
                 $.ajax({
                     type: "POST",
                     url: "/indicador",
                     data: {
                         projeto: idProjeto,
-                        indicador: JSON.stringify(indicador)
+                        indicador: indicador.id,
+                        registro: JSON.stringify(registro)
                     },
                     complete : function() {
                         CarregaDados.carregar();

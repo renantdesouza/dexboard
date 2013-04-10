@@ -1,5 +1,6 @@
 package br.com.dextra.dexboard.json;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -13,19 +14,22 @@ import flexjson.JSON;
 public class ProjetoJson {
 
 	private Projeto projeto;
-	private List<Indicador> indicadores;
+	private List<IndicadorJson> indicadores = new ArrayList<IndicadorJson>();
 	private Classificacao classificacao;
 
 	public ProjetoJson(Projeto projeto) {
 		this.projeto = projeto;
 
 		ProjetoDao dao = new ProjetoDao();
-		this.indicadores = dao.buscarIndicadoresDoProjeto(getIdPma());
-		
-		Collections.sort(this.indicadores, new Comparator<Indicador>() {
+		List<Indicador> indicadoresDataStore = dao.buscarIndicadoresDoProjeto(getIdPma());
+		for (Indicador i : indicadoresDataStore) {
+			this.indicadores.add(new IndicadorJson(i));
+		}
+
+		Collections.sort(this.indicadores, new Comparator<IndicadorJson>() {
 
             @Override
-            public int compare(Indicador i1, Indicador i2) {
+            public int compare(IndicadorJson i1, IndicadorJson i2) {
                 return i1.getNome().compareToIgnoreCase(i2.getNome());
             }
         });
@@ -34,7 +38,7 @@ public class ProjetoJson {
 	}
 
 	@JSON
-	public List<Indicador> getIndicadores() {
+	public List<IndicadorJson> getIndicadores() {
 		return indicadores;
 	}
 
@@ -57,7 +61,7 @@ public class ProjetoJson {
 	private Classificacao defineClassificacao() {
 		Classificacao retorno = Classificacao.OK;
 
-		for (Indicador indicador : this.getIndicadores()) {
+		for (IndicadorJson indicador : this.getIndicadores()) {
 
 			Classificacao classificacao = indicador.getClassificacao();
 
