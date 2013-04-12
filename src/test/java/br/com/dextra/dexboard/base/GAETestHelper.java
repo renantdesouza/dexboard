@@ -53,8 +53,8 @@ public class GAETestHelper {
 		helper.setEnvAttributes(envs);
 		helper.setEnvIsLoggedIn(true);
 		helper.setEnvIsAdmin(false);
-		helper.setEnvEmail("test@example.com");
-		helper.setEnvAuthDomain("example.com");
+		helper.setEnvEmail("test@dextra-sw.com");
+		helper.setEnvAuthDomain("dextra-sw.com");
 	}
 
 	public void prepareLocalTaskQueue() {

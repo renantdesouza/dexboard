@@ -50,7 +50,7 @@ public class CronTest extends AbstractTestCase {
 		Assert.assertEquals(classificacao, indicadorAlterado.getClassificacao());
 		RegistroAlteracao registroAlteracao = indicadorAlterado.getRegistros().get(0);
 		Assert.assertNotNull(registroAlteracao.getData());
-		Assert.assertEquals("test@example.com",
+		Assert.assertEquals("test@dextra-sw.com",
 				registroAlteracao.getUsuario());
 
 	}
