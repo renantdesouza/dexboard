@@ -53,10 +53,12 @@ body{font-family:'Open Sans', arial, sans-serif;background:url('../img/body-patt
 .menu-indicadores li:hover{color:#fff;;box-shadow:inset 0 0 2px 2px #111,inset 0 6px 6px -3px #252525,inset 0 -25px 25px -20px #000,0 0 20px 6px rgba(150,170,225,0.55);border-color:rgba(0,15,45,1);}
 
 /*----------  Bloco do lado direito; cabeçalhos horizontais (nomes dos projetos) + células de conteúdo  ----------*/
-.container-right { width: 72%; float:right ; margin-top: 20px;position:relative;z-index:20;margin-right:25px;overflow-x:scroll;}
+.container-right { width: 72%; float:right ; margin-top: 20px;position:relative;z-index:20;margin-right:25px;}
+
+body:not(.tv) #wrapper{zoom:80%;}
 .tv .container-right{overflow:hidden;}
 
-#lista-projetos > li { display: inline-block;margin-right:25px;}
+#lista-projetos > li {margin-right:25px;display:inline-block;}
 #lista-projetos > li > h4 {
 	color:rgba(0, 0, 0, 0.95);
 	font-size:28px;
@@ -101,12 +103,12 @@ body{font-family:'Open Sans', arial, sans-serif;background:url('../img/body-patt
 	background-color:rgba(255, 255, 255, 0.175);
 	border-color:rgba(255, 255, 255, 0.16);
 	border-radius:4px;
-	transition:all 200ms ease-in-out;
-	-webkit-transition:all 200ms ease-in-out;
+	/*transition:all 200ms ease-in-out;
+	-webkit-transition:all 200ms ease-in-out;*/
 	text-shadow:0 0 1px rgba(255,255,255,0.5),0 1px 0 rgba(0,0,0,0.3);
 	box-shadow:0 0 4px 1px rgba(0, 0, 0, 0.85) inset,  0 -1px 1px rgb(0, 0, 0), 0 -16px 16px -6px rgba(0, 0, 0, 0.45) inset;}
 #lista-projetos > li > ul > li:hover{box-shadow:0 0 4px 1px rgba(0, 0, 0, 0.85) inset,  0 -1px 1px rgb(0, 0, 0), 0 -16px 16px -6px rgba(0, 0, 0, 0.45) inset,inset 0 0 55px 2px rgba(0,0,0,.5);border-color:rgba(0,0,0,0.4);}
-#lista-projetos > li > ul > li:active{box-shadow:0 0 4px 1px rgba(0, 0, 0, 0.85) inset,  0 -1px 1px rgb(0, 0, 0), 0 40px 40px -25px rgba(0, 0, 0, 0.45) inset,inset 0 0 55px 2px rgba(0,0,0,.5);border-color:rgba(0,0,0,0.7);transition:all 100ms ease-in-out;-webkit-transition:all 100ms ease-in-out;}
+#lista-projetos > li > ul > li:active{box-shadow:0 0 4px 1px rgba(0, 0, 0, 0.85) inset,  0 -1px 1px rgb(0, 0, 0), 0 40px 40px -25px rgba(0, 0, 0, 0.45) inset,inset 0 0 55px 2px rgba(0,0,0,.5);border-color:rgba(0,0,0,0.7);/*transition:all 100ms ease-in-out;-webkit-transition:all 100ms ease-in-out;*/}
 
 .OK { opacity:0.95;background-color:rgba(255,255,255,0.075) !important; border-color:rgba(255,255,255,0.015) !important; }
 .ATENCAO, .PERIGO {  border:0; color:rgba(0,0,0,0.75); text-shadow:0 1px 0 rgba(255,255,255,0.4); }

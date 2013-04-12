@@ -1,5 +1,10 @@
 (function($) {
 
+	$(document).ready(function()
+	{
+		//$('.container-right').jScrollPane({ showArrows: true });
+	});
+
     var CarregaDados = {
             carregar : function() {
                 $.getJSON('/query', function(resultado) {
@@ -38,7 +43,7 @@
                         }
                         $("#dialog").dialog("open");
 						$("#dialog").data("opened", true);
-						$('#dialog-overlay').fadeIn('fast');
+						$('#dialog-overlay').show();
                         CarregaDados.populaDiv(projeto, indicador);
 
 						$("#dialog").find('textarea').focus();
@@ -46,7 +51,7 @@
 						$('#dialog-overlay').bind('click', function()
 						{
 							$("#dialog").dialog("close");
-							$("#dialog-overlay").fadeOut('fast', function()
+							$("#dialog-overlay").hide(null, function()
 							{
 								$(this).data("opened", false);
 							});
@@ -173,16 +178,7 @@
     $(window).ready(function() {
         $("#dialog").dialog({
             autoOpen : false,
-            show : {
-                effect : "fade",
-                duration : 400
-            },
-            hide : {
-                effect : "fade",
-                duration : 400
-            },
-            width : 1000,
-            height : 425
+            width : 1000
         });
 
 
