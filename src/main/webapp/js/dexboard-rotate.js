@@ -40,7 +40,7 @@
 
 					var scrollOffset = limitLeft - lastLiPx;
 
-					container.animate({'scrollLeft' : scrollOffset > 0 ? 0 : '+=' + (container.width() - last.width())}, 5000, 'easeInOutCubic');
+					container.animate({'scrollLeft' : scrollOffset > 0 ? 0 : '+=' + (container.width() - last.width())}, 1, 'easeInOutCubic');
 				}
 			}
 			var rotationInterval = setInterval(rotate, 15000);

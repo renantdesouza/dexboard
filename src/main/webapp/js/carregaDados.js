@@ -165,30 +165,42 @@
             },
 
             carregarIndicadores : function (todosProjetos) {
-            	var indicadores = todosProjetos[0].indicadores;          	
+
+            	var indicadoresDoMenu = todosProjetos[0].indicadores;          	
                 var ul = $("#menuIndicadores");
                 ul.html('');
-                $.each(indicadores, function(key, val){
-                   var li = '<li>' + val.nome ;
-                   		li += '<div class="heatbar-indicadores">';
-                   		
-                   		li += '<table><tr>';
-                         
-                        for (var i = 0; i < todosProjetos.length; i++) {
-                            for (var j = 0; j < todosProjetos[i].indicadores.length; j++) {
-                                if (indicadores[j].nome == val.nome) {
-                                	li += '<th class="heatbar-indicadores-'+ indicadores[j].classificacao +'"></th>';
-                                }
-                            }
+                
+                var heatbar = $("#heatbar");
+                heatbar.html('');
+               // var contentHeatBar = '<div class="heatbar-slider"></div>';
+                var contentHeatBar = '<table><tr>';     			
+    				
+    			$.each(indicadoresDoMenu, function(key, val){
+                   var li = '<li>' + val.nome;
+                   	   li += '<div id="'  + val.nome + '"class="heatbar-indicadores">';
+                   	   li += '<table><tr>';               
+                   	
+                   for (var i = 0; i < todosProjetos.length; i++) {    
+                	   contentHeatBar += '<th class="projeto-'+todosProjetos[i].classificacao+'"></th>';
+                	   for (var j = 0; j < todosProjetos[i].indicadores.length; j++) {
+                		   var indicadoresDeProjeto = todosProjetos[i].indicadores;
+                           if (indicadoresDeProjeto[j].nome == val.nome) {
+                        	   li += '<th class="heatbar-indicadores-'+ indicadoresDeProjeto[j].classificacao +'"></th>';
+                           }
                         }
-
-                        li += '</tr></table> ';
-                   		li += '</div>';
-                   		li += '</li>';
+                   }
+                   
+                   contentHeatBar +='</tr></table>';
+                   heatbar.append(contentHeatBar); 
+                
+                   li += '</tr></table> ';
+                   li += '</div>';
+                   li += '</li>';
                    ul.append(li);
-
+                   
                 });
-            }
+                
+            }           
     }
 
     $(window).ready(function() {
