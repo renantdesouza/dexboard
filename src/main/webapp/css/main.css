@@ -52,19 +52,19 @@ body:not(.tv) #wrapper{ zoom:80%; }
 #lista-projetos > li > h4 { color:rgba(0, 0, 0, 0.95); font-size:28px; cursor:default; text-shadow:0 0 2px rgba(255,255,255,0.25),-1px 0 0 rgba(0,0,0,0.25); padding:28px 0 25px 25px; letter-spacing:-1px;
 	word-spacing:3px; color:rgba(255,255,255,0.9); margin:100px -90px 0 -89px; width:245px; transform:rotate(270deg); -webkit-transform:rotate(270deg); cursor:default; text-overflow:ellipsis;
 	overflow:hidden; white-space:nowrap; font-weight:bold; text-align:left; 	border-radius:5px;}
-.projeto-PERIGO{background-color:#eb0000;/*box-shadow:inset 0 0 10px 3px rgba(0,0,0,0.5),inset 18px 0 18px -6px #ff3434;*/ border:1px solid #ff0000;}
-.projeto-OK{background-color:#59be00;/*box-shadow:inset 0 0 4px 0 #000,inset 18px 0 18px -6px #77ff00;*/color:#000; border:1px solid #00ff00;}
-.projeto-ATENCAO{background-color:#e9cb00;/*box-shadow:inset 0 0 4px 0 #000,inset 18px 0 18px -6px #ffdf00;*/color:#000; border:1px solid #ffff00;}
+.projeto-PERIGO{background-color:#eb0000;box-shadow:inset 0 0 10px 3px rgba(0,0,0,0.5),inset 18px 0 18px -6px #ff3434; border:1px solid #ff0000;}
+.projeto-OK{background-color:#59be00;box-shadow:inset 0 0 4px 0 #000,inset 18px 0 18px -6px #77ff00;color:#000; border:1px solid #00ff00;}
+.projeto-ATENCAO{background-color:#e9cb00;box-shadow:inset 0 0 4px 0 #000,inset 18px 0 18px -6px #ffdf00;color:#000; border:1px solid #ffff00;}
 
 #lista-projetos > li > ul { margin-top: 123px;width:94px; }
 #lista-projetos > li > ul > li { margin-bottom:17px; clear:both; font-weight:bold; display:block; font-size:24px; padding-top:36px; height:36px; line-height:0; text-align:center;
 	color:rgba(255,255,255,0.7); border:1px solid rgb(30, 30, 30); opacity:0.95; letter-spacing:-3px; cursor:pointer; background-color:rgba(255, 255, 255, 0.175); border-color:rgba(255, 255, 255, 0.16);
 	border-radius:4px; text-shadow:0 0 1px rgba(255,255,255,0.5),0 1px 0 rgba(0,0,0,0.3); 
-	/*box-shadow:0 0 4px 1px rgba(0, 0, 0, 0.85) inset,  0 -1px 1px rgb(0, 0, 0), 0 -16px 16px -6px rgba(0, 0, 0, 0.45) inset;*/
+	box-shadow:0 0 4px 1px rgba(0, 0, 0, 0.85) inset,  0 -1px 1px rgb(0, 0, 0), 0 -16px 16px -6px rgba(0, 0, 0, 0.45) inset;
 	/*transition:all 200ms ease-in-out; -webkit-transition:all 200ms ease-in-out;*/ }
-#lista-projetos > li > ul > li:hover{/*box-shadow:0 0 4px 1px rgba(0, 0, 0, 0.85) inset,  0 -1px 1px rgb(0, 0, 0), 0 -16px 16px -6px rgba(0, 0, 0, 0.45) inset,inset 0 0 55px 2px rgba(0,0,0,.5);*/
+#lista-projetos > li > ul > li:hover{box-shadow:0 0 4px 1px rgba(0, 0, 0, 0.85) inset,  0 -1px 1px rgb(0, 0, 0), 0 -16px 16px -6px rgba(0, 0, 0, 0.45) inset,inset 0 0 55px 2px rgba(0,0,0,.5);
 	border-color:rgba(0,0,0,0.4);}
-#lista-projetos > li > ul > li:active{/*box-shadow:0 0 4px 1px rgba(0, 0, 0, 0.85) inset,  0 -1px 1px rgb(0, 0, 0), 0 40px 40px -25px rgba(0, 0, 0, 0.45) inset,inset 0 0 55px 2px rgba(0,0,0,.5);*/
+#lista-projetos > li > ul > li:active{ box-shadow:0 0 4px 1px rgba(0, 0, 0, 0.85) inset,  0 -1px 1px rgb(0, 0, 0), 0 40px 40px -25px rgba(0, 0, 0, 0.45) inset,inset 0 0 55px 2px rgba(0,0,0,.5);
 	border-color:rgba(0,0,0,0.7);/*transition:all 100ms ease-in-out;-webkit-transition:all 100ms ease-in-out;*/}
 
 .OK { opacity:0.95;background-color:rgba(255,255,255,0.025) !important; border-color:rgba(255,255,255,0.015) !important; }
@@ -115,8 +115,8 @@ body:not(.tv) #wrapper{ zoom:80%; }
 .dialog-content #divOptions > input:focus{ outline:dotted 1px #555; }
 
 .ul-historico {max-height: 170px; overflow: auto;box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)}
-/**.ul-historico > li:first-child{border-top-left-radius:10px;}
-.ul-historico > li:last-child{border-bottom-left-radius:10px;} **/
+.ul-historico > li:first-child{border-top-left-radius:10px;}
+.ul-historico > li:last-child{border-bottom-left-radius:10px;}
 
 .historico-PERIGO, .historico-OK, .historico-ATENCAO{ box-shadow:inset 0 0 10px 0 rgba(0,0,0,.1); padding: 7px;color:rgba(0,0,0,.8);text-shadow:0 1px 0 #fff; }
 .historico-PERIGO { background-color:#eeccdd; }

@@ -168,35 +168,62 @@
 
             	var indicadoresDoMenu = todosProjetos[0].indicadores;          	
                 var ul = $("#menuIndicadores");
-                ul.html('');
-                
-                var heatbar = $("#heatbar");
-                heatbar.html('');
-               // var contentHeatBar = '<div class="heatbar-slider"></div>';
-                var contentHeatBar = '<table><tr>';     			
-    				
+                ul.html('');                                         
+                                 
     			$.each(indicadoresDoMenu, function(key, val){
                    var li = '<li>' + val.nome;
                    	   li += '<div id="'  + val.nome + '"class="heatbar-indicadores">';
-                   	   li += '<table><tr>';               
-                   	
+                   	   li += '<table><tr>';                   	
+
+                   	   var classificacaoPERIGO = [];
+                   	   var classificacaoATENCAO = [];
+                   	   var classificacaoOK = [];
+                   	   var classificacaoOrdenada = [];
+                   	   
                    for (var i = 0; i < todosProjetos.length; i++) {    
-                	   contentHeatBar += '<th class="projeto-'+todosProjetos[i].classificacao+'"></th>';
-                	   for (var j = 0; j < todosProjetos[i].indicadores.length; j++) {
-                		   var indicadoresDeProjeto = todosProjetos[i].indicadores;
-                           if (indicadoresDeProjeto[j].nome == val.nome) {
-                        	   li += '<th class="heatbar-indicadores-'+ indicadoresDeProjeto[j].classificacao +'"></th>';
-                           }
+                	   //contentHeatBar += '<th class="projeto-'+todosProjetos[i].classificacao+'"></th>';
+                	   
+                	   for (var j = 0; j < todosProjetos[i].indicadores.length; j++) { 
+                		   
+                		   var indicadoresDeProjeto = todosProjetos[i].indicadores;  
+                		   
+                           if (indicadoresDeProjeto[j].nome == val.nome) {                  	   
+                			  
+                        	   var classificacao = indicadoresDeProjeto[j].classificacao;
+                			   
+							   if (classificacao == "PERIGO") {
+								   classificacaoPERIGO.push(classificacao);
+							   } else if ( classificacao == "ATENCAO" ) {
+								   classificacaoATENCAO.push(classificacao);
+							   } else {
+								   classificacaoOK.push(classificacao);                        		   
+							   }							   
+							   
+                            }
                         }
                    }
                    
-                   contentHeatBar +='</tr></table>';
-                   heatbar.append(contentHeatBar); 
-                
-                   li += '</tr></table> ';
-                   li += '</div>';
-                   li += '</li>';
-                   ul.append(li);
+             	   classificacaoOrdenada = classificacaoPERIGO.concat(classificacaoATENCAO).concat(classificacaoOK);
+             	  
+             	  for( var w = 0; w < classificacaoOrdenada.length; w++){
+             		  li += '<th class="heatbar-indicadores-'+ classificacaoOrdenada[w] +'"></th>';
+             	  }
+             	   
+             	  li += '</tr></table> ';
+                  li += '</div>';
+                  li += '</li>';
+                  ul.append(li);
+                  
+                  // Carregar heatbar de todos os projetos
+             	  var heatbar = $("#heatbar");
+                  heatbar.html('');
+                  var contentHeatBar = '<div class="heatbar-slider"></div> <table><tr>';
+                  
+                  for (var i = 0; i < todosProjetos.length; i++) {    
+               	   contentHeatBar += '<th class="projeto-'+todosProjetos[i].classificacao+'"></th>';
+                  }
+                  contentHeatBar +='</tr></table>';
+                  heatbar.append( contentHeatBar);     
                    
                 });
                 
