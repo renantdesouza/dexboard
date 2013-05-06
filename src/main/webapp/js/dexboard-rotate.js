@@ -37,16 +37,14 @@
 	var animateProjectsBar = function(newProjectsListOffset) {
 		var liWidth = $('#lista-projetos > li:first').width();
 		var indiceDoProjetoExibido = Math.ceil(newProjectsListOffset / (liWidth + 25));
-		var widthTh = $("#heatbar table tr th").width();
+		var widthTh = $("#heatbar table tr th").width() + 2;
 		var projectsBeenShown = 12;
 		var totalProjects = $('#lista-projetos > li').length;
 
-		$('#heatbar-slider').animate({marginLeft: (indiceDoProjetoExibido + projectsBeenShown > totalProjects ? totalProjects - projectsBeenShown : indiceDoProjetoExibido) * widthTh + "px" });
+		$('#heatbar-slider').css('margin-left', (indiceDoProjetoExibido + projectsBeenShown > totalProjects ? totalProjects - projectsBeenShown : indiceDoProjetoExibido) * widthTh + "px" );
 	}
 	
-
-    $(document).ready(function()
-    {
+    $(document).ready(function(){
     	var from = APP.obtemParametroDeURL('from');
         if (from == 'TV') {
         	$('body').addClass('tv');

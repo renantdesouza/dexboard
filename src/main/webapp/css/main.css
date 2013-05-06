@@ -52,20 +52,19 @@ body:not(.tv) #wrapper{ zoom:80%; }
 #lista-projetos > li > h4 { color:rgba(0, 0, 0, 0.95); font-size:28px; cursor:default; text-shadow:0 0 2px rgba(255,255,255,0.25),-1px 0 0 rgba(0,0,0,0.25); padding:28px 0 25px 25px; letter-spacing:-1px;
 	word-spacing:3px; color:rgba(255,255,255,0.9); margin:100px -90px 0 -89px; width:245px; transform:rotate(270deg); -webkit-transform:rotate(270deg); cursor:default; text-overflow:ellipsis;
 	overflow:hidden; white-space:nowrap; font-weight:bold; text-align:left; 	border-radius:5px;}
-.projeto-PERIGO{background-color:#eb0000;box-shadow:inset 0 0 10px 3px rgba(0,0,0,0.5),inset 18px 0 18px -6px #ff3434; border:1px solid #ff0000;}
-.projeto-OK{background-color:#59be00;box-shadow:inset 0 0 4px 0 #000,inset 18px 0 18px -6px #77ff00;color:#000; border:1px solid #00ff00;}
-.projeto-ATENCAO{background-color:#e9cb00;box-shadow:inset 0 0 4px 0 #000,inset 18px 0 18px -6px #ffdf00;color:#000; border:1px solid #ffff00;}
+.projeto-PERIGO{background-color:#eb0000;box-shadow:inset 0 0 10px 3px rgba(0,0,0,0.25); border:1px solid #ff0000;}
+.projeto-OK{background-color:#59be00;box-shadow:inset 0 0 4px 0 rgba(0,0,0,0.25);color:#000!important;border:1px solid #00ff00;}
+.projeto-ATENCAO{background-color:#e9cb00;box-shadow:inset 0 0 4px 0 rgba(0,0,0,0.25);color:#000!important;border:1px solid #ffff00;}
 
 #lista-projetos > li > ul { margin-top: 123px;width:94px; }
 #lista-projetos > li > ul > li { margin-bottom:17px; clear:both; font-weight:bold; display:block; font-size:24px; padding-top:36px; height:36px; line-height:0; text-align:center;
 	color:rgba(255,255,255,0.7); border:1px solid rgb(30, 30, 30); opacity:0.95; letter-spacing:-3px; cursor:pointer; background-color:rgba(255, 255, 255, 0.175); border-color:rgba(255, 255, 255, 0.16);
 	border-radius:4px; text-shadow:0 0 1px rgba(255,255,255,0.5),0 1px 0 rgba(0,0,0,0.3); 
-	box-shadow:0 0 4px 1px rgba(0, 0, 0, 0.85) inset,  0 -1px 1px rgb(0, 0, 0), 0 -16px 16px -6px rgba(0, 0, 0, 0.45) inset;
-	/*transition:all 200ms ease-in-out; -webkit-transition:all 200ms ease-in-out;*/ }
-#lista-projetos > li > ul > li:hover{box-shadow:0 0 4px 1px rgba(0, 0, 0, 0.85) inset,  0 -1px 1px rgb(0, 0, 0), 0 -16px 16px -6px rgba(0, 0, 0, 0.45) inset,inset 0 0 55px 2px rgba(0,0,0,.5);
-	border-color:rgba(0,0,0,0.4);}
-#lista-projetos > li > ul > li:active{ box-shadow:0 0 4px 1px rgba(0, 0, 0, 0.85) inset,  0 -1px 1px rgb(0, 0, 0), 0 40px 40px -25px rgba(0, 0, 0, 0.45) inset,inset 0 0 55px 2px rgba(0,0,0,.5);
-	border-color:rgba(0,0,0,0.7);/*transition:all 100ms ease-in-out;-webkit-transition:all 100ms ease-in-out;*/}
+	box-shadow:0 0 5px 1px rgba(0, 0, 0, 0.4) inset, 0 -1px 1px #000, 0 -10px 16px -6px rgba(0, 0, 0, 0.20) inset;}
+#lista-projetos > li > ul > li:hover{box-shadow:0 0 4px 1px rgba(0, 0, 0, 0.35) inset,  0 -1px 1px rgb(0, 0, 0), 0 -16px 16px -6px rgba(0, 0, 0, 0.15) inset,inset 0 0 55px 2px rgba(0,0,0,.25);
+	border-color:rgba(0,0,0,0.35);}
+#lista-projetos > li > ul > li:active{ box-shadow:0 0 4px 1px rgba(0, 0, 0, 0.55) inset,  0 -1px 1px rgb(0, 0, 0), 0 40px 40px -25px rgba(0, 0, 0, 0.25) inset,inset 0 0 55px 2px rgba(0,0,0,.35);
+	border-color:rgba(0,0,0,0.7);}
 
 .OK { opacity:0.95;background-color:rgba(255,255,255,0.025) !important; border-color:rgba(255,255,255,0.015) !important; }
 .ATENCAO, .PERIGO {  border:0; color:rgba(0,0,0,0.75); text-shadow:0 1px 0 rgba(255,255,255,0.4); }
@@ -102,6 +101,10 @@ body:not(.tv) #wrapper{ zoom:80%; }
 .dialog-content #divOptions{ text-align:center; }
 .dialog-content #divOptions > input{ display:inline-block; border-radius:15px; padding:10px 20px; cursor:pointer; color:rgba(0,0,0,0.9); font-weight:bold; font-size:14px; transition:all 100ms ease-in-out;
 	-webkit-transition:all 100ms ease-in-out; box-shadow:inset 0 0 0 1px rgba(0,0,0,0.2),inset 0 -5px 5px rgba(0,0,0,0.1),0 2px 2px rgba(0,0,0,0.1); text-shadow:0 1px 0 rgba(255,255,255,0.4); }
+.dialog-content #divOptions > input[disabled],
+.dialog-content #divOptions > input[disabled]:hover,
+.dialog-content #divOptions > input[disabled]:active,
+.dialog-content #divOptions > input[disabled]:focus{opacity:.5;cursor:default;box-shadow:none;}
 .dialog-content #divOptions > input:first-child{ float:left; }
 .dialog-content #divOptions > input:last-child{ float:right; }
 .dialog-content .btn-ok{ background-color:#82ec53; }
@@ -115,6 +118,7 @@ body:not(.tv) #wrapper{ zoom:80%; }
 .dialog-content #divOptions > input:focus{ outline:dotted 1px #555; }
 
 .ul-historico {max-height: 170px; overflow: auto;box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)}
+.ul-historico > li { font-size: 14px; }
 .ul-historico > li:first-child{border-top-left-radius:10px;}
 .ul-historico > li:last-child{border-bottom-left-radius:10px;}
 
@@ -127,9 +131,9 @@ body:not(.tv) #wrapper{ zoom:80%; }
 
 .heatbar{margin:0 23px 20px;position:relative; height:25px;border-radius:25px; background: url('../img/th-left-pattern.png') repeat;
 	box-shadow:inset 0 3px 3px 0 rgba(0,0,0,.1);overflow:hidden;}
-.heatbar-slider{ position:absolute; left:2px; top:-2px; height:29px; background-color:rgba(0,0,0,.35);  border-radius:25px;box-shadow:0 0 0 1px rgba(255,255,255,0.35),inset 0 0 5px 0 rgba(255,255,255,.45),inset 0 0 10px #000;}
+.heatbar-slider{ position:absolute; left:2px; top:-2px; height:29px; background-color:rgba(0,0,0,.35);  border-radius:25px;box-shadow:inset 0 0 5px 0 rgba(155,155,155,.45),inset 0 0 10px #000;}
 .heatbar > table{ width:100%; height:25px; }
-.heatbar th{ box-shadow:inset 0 6px 6px -3px rgba(0,0,0,.5), inset 0 -5px 0 5px -5px rgba(255,255,255,.3); border:1px solid rgba(0,0,0,0.9);}
+.heatbar th{ box-shadow:inset 0 15px 15px -15px rgba(0,0,0,.7);border:0;}
 .heatbar th:first-child{ border-radius:25px 0 0 25px;overflow:hidden; }
 .heatbar th:last-child{ border-radius:0 25px 25px 0; }
 
