@@ -1,15 +1,5 @@
 (function($) {
 
-	function heatbarStart()
-	{	
-		var numberTotalProjects = $('#lista-projetos > li').length;
-		var numberShowProjects = 12;		
-		var showpages =  Math.round( numberTotalProjects / numberShowProjects) ;		
-		var barWidth = 100 /  showpages ;  		
-		//console.info(barWidth);		
-		$('#heatbar-slider').width( barWidth+ '%');
-	}
-	
 	$(document).ready(function()
 	{
 		//$('.container-right').jScrollPane({ showArrows: true });
@@ -194,8 +184,7 @@
                    	   var classificacaoOrdenada = [];
                    	   
                    for (var i = 0; i < todosProjetos.length; i++) {    
-                	   //contentHeatBar += '<th class="projeto-'+todosProjetos[i].classificacao+'"></th>';
-                	   
+                	                  	   
                 	   for (var j = 0; j < todosProjetos[i].indicadores.length; j++) { 
                 		   
                 		   var indicadoresDeProjeto = todosProjetos[i].indicadores;  
@@ -242,13 +231,21 @@
                 
             }           
     }
+    
+    function heatbarStart(){    	
+		var numberTotalProjects = $('#lista-projetos > li').length;
+		var numberShowProjects = 12;		
+		var showpages =  numberTotalProjects / numberShowProjects;		
+		var barWidth = 100 /  showpages ;  		
+		
+		$('#heatbar-slider').width( barWidth + '%');
+	}
 
     $(window).ready(function() {
         $("#dialog").dialog({
             autoOpen : false,
             width : 1000
         });
-
 
         CarregaDados.carregar();
 
