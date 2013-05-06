@@ -1,5 +1,15 @@
 (function($) {
 
+	function heatbarStart()
+	{	
+		var numberTotalProjects = $('#lista-projetos > li').length;
+		var numberShowProjects = 12;		
+		var showpages =  Math.round( numberTotalProjects / numberShowProjects) ;		
+		var barWidth = 100 /  showpages ;  		
+		//console.info(barWidth);		
+		$('#heatbar-slider').width( barWidth+ '%');
+	}
+	
 	$(document).ready(function()
 	{
 		//$('.container-right').jScrollPane({ showArrows: true });
@@ -15,6 +25,9 @@
 	                    CarregaDados.adicionaProjetos(ulProjetos, todosProjetos);
 	                    $("#data").html(ulProjetos);
 	                    CarregaDados.defineCliqueEmIndicador(todosProjetos);
+	                    
+	                    // callback heatbar
+	                    heatbarStart();
                 	}
                 });
             },
@@ -217,7 +230,7 @@
                   // Carregar heatbar de todos os projetos
              	  var heatbar = $("#heatbar");
                   heatbar.html('');
-                  var contentHeatBar = '<div class="heatbar-slider"></div> <table><tr>';
+                  var contentHeatBar = '<div id="heatbar-slider" class="heatbar-slider"></div> <table><tr>';
                   
                   for (var i = 0; i < todosProjetos.length; i++) {    
                	   contentHeatBar += '<th class="projeto-'+todosProjetos[i].classificacao+'"></th>';

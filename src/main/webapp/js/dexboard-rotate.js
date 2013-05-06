@@ -1,5 +1,5 @@
 (function($)
-{
+{	
 	var APP = {
 		obtemParametroDeURL : function(parametro) {
 
@@ -22,8 +22,7 @@
 
     $(document).ready(function()
     {
-
-        var from = APP.obtemParametroDeURL('from');
+    	var from = APP.obtemParametroDeURL('from');
         if (from == 'TV') {
         	$('body').addClass('tv');
         }
@@ -41,6 +40,7 @@
 					var scrollOffset = limitLeft - lastLiPx;
 
 					container.animate({'scrollLeft' : scrollOffset > 0 ? 0 : '+=' + (container.width() - last.width())}, 1, 'easeInOutCubic');
+					
 				}
 			}
 			var rotationInterval = setInterval(rotate, 15000);
