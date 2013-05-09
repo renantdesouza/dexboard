@@ -209,7 +209,7 @@
              	   classificacaoOrdenada = classificacaoPERIGO.concat(classificacaoATENCAO).concat(classificacaoOK);
              	  
              	  for( var w = 0; w < classificacaoOrdenada.length; w++){
-             		  li += '<th class="heatbar-indicadores-'+ classificacaoOrdenada[w] +'"></th>';
+             		  li += '<th class="heatbar-indicadores-'+ classificacaoOrdenada[w] +'">&nbsp;</th>';
              	  }
              	   
              	  li += '</tr></table> ';
@@ -223,7 +223,7 @@
                   var contentHeatBar = '<div id="heatbar-slider" class="heatbar-slider"></div> <table><tr>';
                   
                   for (var i = 0; i < todosProjetos.length; i++) {    
-               	   contentHeatBar += '<th class="projeto-'+todosProjetos[i].classificacao+'"></th>';
+               	   contentHeatBar += '<th class="projeto-'+todosProjetos[i].classificacao+'">&nbsp;</th>';
                   }
                   contentHeatBar +='</tr></table>';
                   heatbar.append( contentHeatBar);  
