@@ -40,6 +40,7 @@ public abstract class Planilha {
 			service.setUserCredentials(usuario, senha);
 		} catch (AuthenticationException e) {
 			LOG.error("Problemas na autenticacao do usuario " + usuario);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -59,8 +60,8 @@ public abstract class Planilha {
 			throw new RuntimeException(e);
 		} catch (ServiceException e) {
 			throw new RuntimeException(e);
-		} 	
-		
+		}
+
 		this.achouAba = false;
 		return "1";
 	}
