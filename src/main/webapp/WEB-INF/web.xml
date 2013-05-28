@@ -27,20 +27,14 @@
 		<servlet-name>IndicadorServlet</servlet-name>
 		<servlet-class>br.com.dextra.dexboard.servlet.IndicadorServlet</servlet-class>
 	</servlet>
-	
+
 	<servlet-mapping>
 		<servlet-name>IndicadorServlet</servlet-name>
 		<url-pattern>/indicador</url-pattern>
 	</servlet-mapping>
-	
-	 <servlet>
-        <servlet-name>default</servlet-name>
-        <init-param>
-			<param-name>useFileMappedBuffer</param-name>
-			<param-value>false</param-value>
-        </init-param>
-	</servlet>
-	
+
+
+
 	<filter>
 		<filter-name>AuthFilter</filter-name>
 		<filter-class>br.com.dextra.dexboard.servlet.AuthFilter</filter-class>
