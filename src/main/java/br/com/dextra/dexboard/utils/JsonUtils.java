@@ -30,10 +30,10 @@ public class JsonUtils {
 			LOG.info("Baixando JSON da URI: " + uri);
 			URLFetchService urlFetchService = URLFetchServiceFactory.getURLFetchService();
 			HTTPResponse response = urlFetchService.fetch(new URL(uri));
-						
+
 			String json = new String(response.getContent(), encoding);
 			LOG.debug("JSON baixado >>>\n" + json + "\n<<< JSON baixado");
-			
+
 			return parse(json);
 		} catch (MalformedURLException e) {
 			throw new RuntimeException(e);

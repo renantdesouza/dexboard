@@ -18,7 +18,7 @@ public class ProjetoPlanilhaService {
 			.getLogger(ProjetoPlanilhaService.class);
 
 	public static final PMAService SERVICO_PMA_AMAZON = new PMAService(
-			"https://50.17.210.152/pma/services/indicadores",
+			"https://pma.dextra.com.br/pma/services/indicadores",
 			"ac4ef0ec195ed24ab08d1e4a8a3a1ed0");
 
 	public static final PMAService SERVICO_PMA_LOCAL = new PMAService(
