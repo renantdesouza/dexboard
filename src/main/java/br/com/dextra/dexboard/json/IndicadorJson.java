@@ -3,6 +3,7 @@ package br.com.dextra.dexboard.json;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -46,9 +47,7 @@ public class IndicadorJson {
 		}
 		RegistroAlteracao ultimaAlteracao = this.registros.get(0);
 
-		Calendar calendar = GregorianCalendar.getInstance();
-		calendar.roll(Calendar.DAY_OF_MONTH, -20);
-		if (calendar.after(ultimaAlteracao.getData())) {
+		if (!isValido(ultimaAlteracao.getData())) {
 			return Classificacao.PERIGO;
 		}
 
@@ -59,5 +58,20 @@ public class IndicadorJson {
 	@JSON
 	public List<RegistroAlteracao> getRegistros() {
 		return registros;
+	}
+
+	private boolean isValido(Date data) {
+		Calendar calendar = GregorianCalendar.getInstance();
+		calendar.setTime(data);
+		calendar.add(Calendar.DAY_OF_MONTH, getValidadeAlteracao());
+		return data.compareTo(calendar.getTime()) < 1;
+	}
+
+	private int getValidadeAlteracao() {
+		String validadeProp = System.getProperty("validade");
+		if (validadeProp != null) {
+			return Integer.parseInt(validadeProp);
+		}
+		return 20;
 	}
 }

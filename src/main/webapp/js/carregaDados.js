@@ -1,7 +1,6 @@
 (function($) {
 
-	$(document).ready(function()
-	{
+	$(document).ready(function(){
 		//$('.container-right').jScrollPane({ showArrows: true });			
 		
 	});	
@@ -54,25 +53,25 @@
 						$("#dialog").find('textarea').focus();							
 						
 
-						$('#dialog-overlay').bind('click', function()
-						{
+						$('#dialog-overlay').bind('click', function(){
+							
 							$("#dialog").dialog("close");
-							$("#dialog-overlay").hide(null, function()
-							{
+							
+							$("#dialog-overlay").hide(null, function(){
 								$(this).data("opened", false);
 							});
+							
 							$(this).unbind('click');
 							$(this).unbind('keydown');
 						});
-						$(document).keydown(function(e)
-						{
-							if ( e.which === 27 )
-							{
+						$(document).keydown(function(e)	{
+							
+							if ( e.which === 27 ){
 								$('#dialog-overlay').click();
 							}
 						});
-						$('.dialog-close-button').on('click', function(e)
-						{
+						
+						$('.dialog-close-button').on('click', function(e){
 							e.preventDefault();
 							$('#dialog-overlay').click();
 							$(this).off('click');
@@ -140,10 +139,12 @@
             		$(obj).unbind('click');
                 });
                 
-                $.each($('#divOptions input'), function(idx, obj) {                       	             	
+                $.each($('#divOptions input'), function(idx, obj) {    
+                	
                 	$(obj).click(function() {                		
                 		CarregaDados.trocaIndicador(projeto.idPma, indicador, obj.name);
                 	});
+                	
                 });
 
             },
