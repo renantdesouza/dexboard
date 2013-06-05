@@ -1,11 +1,15 @@
 package br.com.dextra.dexboard.json;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import br.com.dextra.dexboard.dao.ProjetoDao;
 import br.com.dextra.dexboard.domain.Classificacao;
@@ -15,6 +19,8 @@ import flexjson.JSON;
 
 public class IndicadorJson {
 
+	private static final Logger LOG = LoggerFactory
+			.getLogger(IndicadorJson.class);
 	private Indicador indicador;
 	private List<RegistroAlteracao> registros;
 
@@ -61,10 +67,17 @@ public class IndicadorJson {
 	}
 
 	private boolean isValido(Date data) {
+		LOG.info("===> validando data");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Calendar calendar = GregorianCalendar.getInstance();
 		calendar.setTime(data);
 		calendar.add(Calendar.DAY_OF_MONTH, getValidadeAlteracao());
-		return data.compareTo(calendar.getTime()) < 1;
+		LOG.info("===> Data alteracao: " + sdf.format(data));
+		LOG.info("===> Data validade: " + sdf.format(calendar.getTime()));
+
+		boolean validade = data.compareTo(calendar.getTime()) < 1;
+		LOG.info("===> Validade: " + validade);
+		return validade;
 	}
 
 	private int getValidadeAlteracao() {

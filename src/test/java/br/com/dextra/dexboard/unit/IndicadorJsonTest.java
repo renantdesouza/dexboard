@@ -39,7 +39,7 @@ public class IndicadorJsonTest extends AbstractTestCase {
 		Indicador indicador = indicadores.get(0);
 		IndicadorJson indicadorJson = new IndicadorJson(indicador);
 		Assert.assertEquals(Classificacao.ATENCAO, indicadorJson.getClassificacao());
-		System.setProperty("validade", "-1");
+		System.setProperty("validade", "-3");
 		Assert.assertEquals(Classificacao.PERIGO, indicadorJson.getClassificacao());
 
 	}
