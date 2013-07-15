@@ -122,8 +122,8 @@
             	var registros = indicador.registros;
                 if (registros.length > 0) {
                     $.each(registros, function(idx, obj) {
-                		ulHistorico.append('<li class="historico-' + obj.classificacao + '">Alterado em <b>' +
-                				obj.ultimaAlteracaoString + '</b> por <b>' + obj.usuario + '</b><br/>' + obj.comentario + '</li>');
+                		ulHistorico.append('<li class="historico-' + obj.classificacao + '" data-classificacao="' + obj.classificacao + '">Alterado em <b>' +
+                				obj.ultimaAlteracaoString + '</b> por <b>' + obj.usuario + '</b><br/><span class="comentario">' + obj.comentario + '</span></li>');
                     });
 
                     $("#edicaoIndicadorUltimaAlteracaoDesc").html(indicador.descricao);
@@ -135,11 +135,18 @@
 
                 $("#edicaoIndicadorTxtDescricao").val("");
 
-                $.each($('#divOptions input'), function(idx, obj) { 
-                	if( ! $(obj).hasClass('btn-sem-mudancas') ){
-                		$(obj).attr('disabled', 'disabled');
-            			$(obj).unbind('click');
+                $('#divOptions input').each(function() { 
+                	if( ! $(this).hasClass('btn-sem-mudancas') ){
+                		$(this).attr('disabled', 'disabled');
+                	} else {
+                		if ($('#historico').children().length == 0) {
+                			$(this).attr('disabled', 'disabled');
+                		} else {
+                			$(this).removeAttr('disabled');
+                		}
                 	}
+
+                	$(this).unbind('click');
                 });
                 
                 $.each($('#divOptions input'), function(idx, obj) {    	
@@ -147,7 +154,9 @@
                 		if(!$(obj).hasClass('btn-sem-mudancas') ){                		
                 			CarregaDados.trocaIndicador(projeto.idPma, indicador, obj.name);
 	                	} else {
-	                		CarregaDados.mantemIndicador(projeto.idPma, indicador, obj.name);
+	                		$('#edicaoIndicadorTxtDescricao').val($('#historico li:first-child span.comentario').text());
+	                    	var name = $('#historico li:first-child').data('classificacao');
+	                		CarregaDados.trocaIndicador(projeto.idPma, indicador, name);
 	                	}
                 	});                	
                 });
@@ -177,10 +186,6 @@
 					$("#dialog").dialog("close");
 					$("#dialog").data("opened", false);
 				});
-            },
-
-            mantemIndicador : function(idProjeto, indicador, classsificacao) {
-            	alert("OI");
             },
             
             carregarIndicadores : function (todosProjetos) {
