@@ -1,11 +1,12 @@
 (function($) {
 
 	$(document).ready(function(){
-		//$('.container-right').jScrollPane({ showArrows: true });			
+		//$('.container-right').jScrollPane({ showArrows: true });		
 		
 	});	
 	
     var CarregaDados = {
+    		
             carregar : function() {
                 $.getJSON('/query', function(resultado) {
                 	if (resultado) {
@@ -135,25 +136,28 @@
                 $("#edicaoIndicadorTxtDescricao").val("");
 
                 $.each($('#divOptions input'), function(idx, obj) { 
-                	$(obj).attr('disabled', 'disabled');
-            		$(obj).unbind('click');
+                	if( ! $(obj).hasClass('btn-sem-mudancas') ){
+                		$(obj).attr('disabled', 'disabled');
+            			$(obj).unbind('click');
+                	}
                 });
                 
-                $.each($('#divOptions input'), function(idx, obj) {    
-                	
-                	$(obj).click(function() {                		
-                		CarregaDados.trocaIndicador(projeto.idPma, indicador, obj.name);
-                	});
-                	
+                $.each($('#divOptions input'), function(idx, obj) {    	
+                	$(obj).click(function() { 
+                		if(!$(obj).hasClass('btn-sem-mudancas') ){                		
+                			CarregaDados.trocaIndicador(projeto.idPma, indicador, obj.name);
+	                	} else {
+	                		CarregaDados.mantemIndicador(projeto.idPma, indicador, obj.name);
+	                	}
+                	});                	
                 });
-
             },
 
             trocaIndicador : function(idProjeto, indicador, classsificacao){
 
             	var registro = {
             			classificacao : classsificacao,
-            			comentario : $("#edicaoIndicadorTxtDescricao").val()              			
+            			comentario : $("#edicaoIndicadorTxtDescricao").val()             			
                	};
 
                 $.ajax({
@@ -175,6 +179,10 @@
 				});
             },
 
+            mantemIndicador : function(idProjeto, indicador, classsificacao) {
+            	alert("OI");
+            },
+            
             carregarIndicadores : function (todosProjetos) {
 
             	var indicadoresDoMenu = todosProjetos[0].indicadores;          	
@@ -235,8 +243,11 @@
      function habilitarBotoesJustificativas () {    	
     	$("#edicaoIndicadorTxtDescricao").keyup(function(){
 			  $('#divOptions input').removeAttr("disabled");
-			  if ( $(this).val() === '' ) 
-				  $('#divOptions input').attr('disabled', 'disabled');  
+			  if ( $(this).val() === '' ){
+				  $('#divOptions input').attr('disabled', 'disabled');
+			  }else{
+				  $('#divOptions .btn-sem-mudancas').attr('disabled', 'disabled');
+			  }
 		});
     }
     
@@ -244,7 +255,7 @@
 		var numberTotalProjects = $('#lista-projetos > li').length;
 		var numberShowProjects = 12;		
 		var showpages =  numberTotalProjects / numberShowProjects;		
-		var barWidth = 100 /  showpages ;  		
+		var barWidth = ( 100 / showpages ) ;  		
 		
 		$('#heatbar-slider').width( barWidth + '%');
 	};
@@ -253,7 +264,7 @@
         $("#dialog").dialog({
             autoOpen : false,
             width : 1000
-        });
+     });
 
         CarregaDados.carregar();
     });

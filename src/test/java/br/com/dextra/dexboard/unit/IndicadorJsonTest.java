@@ -41,7 +41,6 @@ public class IndicadorJsonTest extends AbstractTestCase {
 		Assert.assertEquals(Classificacao.ATENCAO, indicadorJson.getClassificacao());
 		System.setProperty("validade", "-3");
 		Assert.assertEquals(Classificacao.PERIGO, indicadorJson.getClassificacao());
-
 	}
 
 	private void alteraIndicadorDeProjeto(Integer idProjeto,
@@ -63,10 +62,15 @@ public class IndicadorJsonTest extends AbstractTestCase {
 	}
 
 	private void carregaProjetos() {
-
 		Response resp = adapter.success("GET", "/reload/projetos", null, null);
 		String status = getJson(resp).get("status").getAsString();
 		assertEquals("success", status);
-
 	}
+		
+	public void expirarClassificacaoProjetos() {		
+		carregaProjetos();		
+		ProjetoDao dao = new ProjetoDao();
+		
+		
+	}	
 }
