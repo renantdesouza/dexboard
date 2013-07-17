@@ -76,7 +76,7 @@ body:not(.tv) #wrapper{ zoom:80%; }
 
 /*-------------------------------------------Popup---------------------------------------------------------*/
 
-#dialog{height:520px!important;}
+#dialog{ min-height: 520px !important; }
 #dialog-overlay{position:absolute;top:0;left:0;width:100%;z-index:49;height:100%;background-color:rgba(0,0,0,0.8);display:none;}
 .dialog-close-button{ display:block; position:absolute; right:20px;	top:20px; font:bold 14px 'Open Sans',arial,sans-serif; background-color:#bbb; color:#333; padding:3px 8px; border-radius:3px;
 	border:1px solid #aaa; cursor:pointer;	transition:all 50ms ease-in-out; -webkit-transition:all 50ms ease-in-out; 
