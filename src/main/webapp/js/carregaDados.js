@@ -88,12 +88,28 @@
                 $.each(projetos, function(key, val) {
                     var nome = val.nome;
                     var liProjeto = $('<li id="' + val.idPma + '" />');
-                    liProjeto.html('<h4 class="projeto-' + val.classificacao + '">'+nome+'</h4>');
+                   	liProjeto.html('<h4 class="' + CarregaDados.getClassProjeto(val) + '">'+nome+'</h4>');
                     container.append(liProjeto);
                     CarregaDados.adicionaIndicadores(liProjeto, val);
                 });
             },
 
+            getClassProjeto : function(projeto) {
+            	var classProjeto =  'projeto-' + projeto.classificacao;             	
+            	if(projeto.atrasado) {
+            		classProjeto += ' projeto-DESATUALIZADO';
+            	}
+            	return classProjeto;
+            },
+            
+            getClassIndicador : function(indicador) {
+            	var classIndicador =  indicador.classificacao;             	
+            	if(indicador.atrasado) {
+            		classIndicador += ' DESATUALIZADO';
+            	}
+            	return classIndicador;
+            },            
+            
             adicionaIndicadores : function (container, projeto) {
 
                 var ulIndicadores = $('<ul id="' + projeto.idPma + '_indicadores" class="indicadores" />');
@@ -101,7 +117,7 @@
 
                 $.each(indicadores, function(key, val) {
                     var id = "indicador_" + val.id + "_" + projeto.idPma;
-                    var liIndicador = $('<li data-idpma=' + id + ' class="' + val.classificacao + ' permiteAlteracao opener" id="'+ id +'">&nbsp;</li>');
+                    var liIndicador = $('<li data-idpma=' + id + ' class="' + CarregaDados.getClassIndicador(val) + ' permiteAlteracao opener" id="'+ id +'">&nbsp;</li>');
                     if (val.nome == "CPI") {
                         liIndicador.html(projeto.cpi);
                     }

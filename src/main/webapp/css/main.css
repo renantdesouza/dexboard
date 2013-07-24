@@ -175,7 +175,7 @@ body:not (.tv ) #wrapper { zoom: 80%; }
 .OK, .ATENCAO, .PERIGO, .DESATUALIZADO { color: rgba(0, 0, 0, 0.75); text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); }
 .ATENCAO { background-color: #f6d700 !important; color: #000 !important; text-shadow: 0 2px 0 rgba(255, 255, 255, .65) !important;
 	border: 1px solid #ffff00 !important; }
-.OK { background-color: #59be00 !important;  border: 1px solid #00ff00 !important;}
+.OK { background-color: #59be00 !important;  border: 1px solid #00ff00 !important;  color: #000 !important; text-shadow: 0 2px 0 rgba(255, 255, 255, .65) !important;}
 .PERIGO { background-color: #eb0000 !important; border: 1px solid #ff0000 !important; }
 .DESATUALIZADO { opacity: 0.95; background-color: rgba(255, 255, 255, 0.025) !important;  }
 

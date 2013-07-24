@@ -41,18 +41,25 @@ public class IndicadorJson {
 		return this.indicador.getNome();
 	}
 
+	public boolean isAtrasado() {
+		if (this.registros.isEmpty()) {
+			return true;
+		}
+		RegistroAlteracao ultimaAlteracao = this.registros.get(0);
+
+		if (!isValido(ultimaAlteracao.getData())) {
+			return true;
+		}
+		
+		return false;
+	}
+	
 	public Classificacao getClassificacao() {
 		if (this.registros.isEmpty()) {
 			return Classificacao.PERIGO;
 		}
 		RegistroAlteracao ultimaAlteracao = this.registros.get(0);
-
-		if (!isValido(ultimaAlteracao.getData())) {
-			return Classificacao.PERIGO;
-		}
-
-		Classificacao classificacao = ultimaAlteracao.getClassificacao();
-		return classificacao;
+		return ultimaAlteracao.getClassificacao();
 	}
 
 	@JSON

@@ -16,25 +16,38 @@ public class ProjetoJson {
 	private Projeto projeto;
 	private List<IndicadorJson> indicadores = new ArrayList<IndicadorJson>();
 	private Classificacao classificacao;
+	private boolean atrasado;
 
 	public ProjetoJson(Projeto projeto) {
 		this.projeto = projeto;
+		
+		inicializaIndicadores();
+		ordenaIndicadores();
+		
+		this.classificacao = defineClassificacao();
+		this.atrasado = defineAtrasado();
+	}
 
+	private void inicializaIndicadores() {
 		ProjetoDao dao = new ProjetoDao();
+		
 		List<Indicador> indicadoresDataStore = dao.buscarIndicadoresDoProjeto(getIdPma());
 		for (Indicador i : indicadoresDataStore) {
 			this.indicadores.add(new IndicadorJson(i));
 		}
+	}
 
+	private void ordenaIndicadores() {
 		Collections.sort(this.indicadores, new Comparator<IndicadorJson>() {
-
             @Override
             public int compare(IndicadorJson i1, IndicadorJson i2) {
                 return i1.getNome().compareToIgnoreCase(i2.getNome());
             }
         });
+	}
 
-		this.classificacao = defineClassificacao();
+	public boolean isAtrasado() {
+		return atrasado;
 	}
 
 	@JSON
@@ -58,6 +71,15 @@ public class ProjetoJson {
 		return classificacao;
 	}
 
+	private boolean defineAtrasado() {
+		for (IndicadorJson indicador : this.getIndicadores()) {
+			if(indicador.isAtrasado()) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	private Classificacao defineClassificacao() {
 		Classificacao retorno = Classificacao.OK;
 
