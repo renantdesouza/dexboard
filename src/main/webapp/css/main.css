@@ -376,9 +376,7 @@ body:not (.tv ) #wrapper { zoom: 80%; }
 	font-size: 0;
 }
 .heatbar-indicadores>table { width: 100%; height: 4px; }
-
-.HEATBAR-DESATUALIZADO{ opacity: 0.3; }
-
+.HEATBAR-DESATUALIZADO{ opacity: 0.1; }
 
 /* gambotas  @fixme */
 .ui-dialog-titlebar,.ui-resizable-handle,.ui-icon-gripsmall-diagonal-se
