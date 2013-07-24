@@ -279,7 +279,7 @@
                   for (var i = 0; i < todosProjetos.length; i++) {  
                 	  var desatualizado = "";
                 	  if(todosProjetos[i].atrasado){
-                		  var desatualizado = "HEATBAR-DESATUALIZADO";
+                		  var desatualizado = "heatbar-DESATUALIZADO";
                 	  }
                 	  contentHeatBar += '<th class="projeto-'+todosProjetos[i].classificacao+' '+ desatualizado +'">&nbsp;</th>';
                   }
