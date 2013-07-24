@@ -46,7 +46,7 @@ public class ProjetoJson {
         });
 	}
 
-	public boolean isAtrasado() {
+	public boolean getAtrasado() {
 		return atrasado;
 	}
 
@@ -73,7 +73,7 @@ public class ProjetoJson {
 
 	private boolean defineAtrasado() {
 		for (IndicadorJson indicador : this.getIndicadores()) {
-			if(indicador.isAtrasado()) {
+			if(indicador.getAtrasado()) {
 				return true;
 			}
 		}

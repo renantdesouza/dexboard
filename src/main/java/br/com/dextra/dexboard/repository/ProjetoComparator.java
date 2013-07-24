@@ -12,11 +12,11 @@ public class ProjetoComparator implements Comparator<ProjetoJson> {
 		Classificacao c1 = p1.getClassificacao();
 		Classificacao c2 = p2.getClassificacao();
 		
-		if(!p1.isAtrasado() && p2.isAtrasado()) {
+		if(!p1.getAtrasado() && p2.getAtrasado()) {
 			return 1;
 		}
 
-		if(p1.isAtrasado() && !p2.isAtrasado()) {
+		if(p1.getAtrasado() && !p2.getAtrasado()) {
 			return -1;
 		}
 				

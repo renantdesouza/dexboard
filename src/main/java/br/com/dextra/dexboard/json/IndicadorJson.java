@@ -41,7 +41,7 @@ public class IndicadorJson {
 		return this.indicador.getNome();
 	}
 
-	public boolean isAtrasado() {
+	public boolean getAtrasado() {
 		if (this.registros.isEmpty()) {
 			return true;
 		}

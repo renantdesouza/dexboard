@@ -38,9 +38,9 @@ public class IndicadorJsonTest extends AbstractTestCase {
 		List<Indicador> indicadores = dao.buscarIndicadoresDoProjeto(495l);
 		Indicador indicador = indicadores.get(0);
 		IndicadorJson indicadorJson = new IndicadorJson(indicador);
-		Assert.assertFalse(indicadorJson.isAtrasado());
+		Assert.assertFalse(indicadorJson.getAtrasado());
 		System.setProperty("validade", "-3");
-		Assert.assertTrue(indicadorJson.isAtrasado());
+		Assert.assertTrue(indicadorJson.getAtrasado());
 	}
 
 	private void alteraIndicadorDeProjeto(Integer idProjeto,
