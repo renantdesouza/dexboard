@@ -33,14 +33,6 @@
 		<url-pattern>/indicador</url-pattern>
 	</servlet-mapping>
 
-	<servlet>       
-        <servlet-name>default</servlet-name>
-        <init-param>
-            <param-name>useFileMappedBuffer</param-name>
-            <param-value>false</param-value>
-        </init-param>
-    </servlet>
-
 	<filter>
 		<filter-name>AuthFilter</filter-name>
 		<filter-class>br.com.dextra.dexboard.servlet.AuthFilter</filter-class>
