@@ -170,7 +170,6 @@ body:not (.tv ) #wrapper { zoom: 80%; }
 	border-color: rgba(0, 0, 0, 0.7);
 }
 
-.OK, .ATENCAO, .PERIGO, .DESATUALIZADO {  }
 .ATENCAO { background-color: #f6d700 !important; color: #000 !important; border: 1px solid #ffff00 !important; }
 .OK { background-color: #59be00 !important;  border: 1px solid #00ff00 !important;  color: #000 !important; }
 .PERIGO { background-color: #eb0000 !important; border: 1px solid #ff0000 !important; color: #000 !important; }
@@ -355,6 +354,7 @@ body:not (.tv ) #wrapper { zoom: 80%; }
 	box-shadow: inset 0 0 5px 0 rgba(0, 0, 0, .55), inset 0 0 10px
 		rgba(0, 0, 0, .75);
 	border: 2px solid #fff;
+	z-index: 1;
 }
 .heatbar>table { width: 100%; }
 .heatbar th {
@@ -375,11 +375,10 @@ body:not (.tv ) #wrapper { zoom: 80%; }
 	opacity: .75;
 	font-size: 0;
 }
-
 .heatbar-indicadores>table { width: 100%; height: 4px; }
-.heatbar-indicadores-PERIGO { background-color: #eb0000; }
-.heatbar-indicadores-OK { background-color: #59be00; }
-.heatbar-indicadores-ATENCAO { background-color: #e9cb00; }
+
+.HEATBAR-DESATUALIZADO{ opacity: 0.3; }
+
 
 /* gambotas  @fixme */
 .ui-dialog-titlebar,.ui-resizable-handle,.ui-icon-gripsmall-diagonal-se

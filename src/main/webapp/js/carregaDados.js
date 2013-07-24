@@ -218,25 +218,49 @@
                    	   var classificacaoPERIGO = [];
                    	   var classificacaoATENCAO = [];
                    	   var classificacaoOK = [];
+                   	   
+                   	   var classificacaoPERIGOATRASADO = [];
+                	   var classificacaoATENCAOATRASADO = [];
+                	   var classificacaoOKATRASADO = [];
+                	   
                    	   var classificacaoOrdenada = [];
                    	   
+                   	   
                    for (var i = 0; i < todosProjetos.length; i++) {                    	                  	   
-                	   for (var j = 0; j < todosProjetos[i].indicadores.length; j++) {                		   
-                		   var indicadoresDeProjeto = todosProjetos[i].indicadores;                  		   
+                	   for (var j = 0; j < todosProjetos[i].indicadores.length; j++) {   
+                		   
+                		   var indicadoresDeProjeto = todosProjetos[i].indicadores;  
+                		   
                            if (indicadoresDeProjeto[j].nome == val.nome) { 
-                        	   var classificacao = indicadoresDeProjeto[j].classificacao;                			   
+                        	   
+                        	   var classificacao = indicadoresDeProjeto[j].classificacao;  
+                        	   var atrasado = indicadoresDeProjeto[j].atrasado;
+                        	   
 							   if (classificacao == "PERIGO") {
-								   classificacaoPERIGO.push(classificacao);
+								   if(atrasado ){
+									   classificacaoPERIGOATRASADO.push(classificacao);
+								   }else {
+									   classificacaoPERIGO.push(classificacao);
+								   }
+								   
 							   } else if ( classificacao == "ATENCAO" ) {
-								   classificacaoATENCAO.push(classificacao);
+								   if(atrasado ){
+									   classificacaoATENCAOATRASADO.push(classificacao);
+								   }else{
+									   classificacaoATENCAO.push(classificacao);
+								   }
 							   } else {
-								   classificacaoOK.push(classificacao);                        		   
+								   if(atrasado ){
+									   classificacaoOKATRASADO.push(classificacao);
+								   }else{
+									   classificacaoOK.push(classificacao);
+								   }
 							   }
                             }
                         }
                    }
                    
-             	   classificacaoOrdenada = classificacaoPERIGO.concat(classificacaoATENCAO).concat(classificacaoOK);
+             	   classificacaoOrdenada =  classificacaoPERIGOATRASADO.concat(classificacaoATENCAOATRASADO).concat(classificacaoOKATRASADO).concat(classificacaoPERIGO).concat(classificacaoATENCAO).concat(classificacaoOK);
              	  
              	  for( var w = 0; w < classificacaoOrdenada.length; w++){
              		  li += '<th class="heatbar-indicadores-'+ classificacaoOrdenada[w] +'">&nbsp;</th>';
@@ -252,9 +276,14 @@
                   heatbar.html('');
                   var contentHeatBar = '<div id="heatbar-slider" class="heatbar-slider"></div> <table><tr>';
                   
-                  for (var i = 0; i < todosProjetos.length; i++) {    
-               	   contentHeatBar += '<th class="projeto-'+todosProjetos[i].classificacao+'">&nbsp;</th>';
+                  for (var i = 0; i < todosProjetos.length; i++) {  
+                	  var desatualizado = "";
+                	  if(todosProjetos[i].atrasado){
+                		  var desatualizado = "HEATBAR-DESATUALIZADO";
+                	  }
+                	  contentHeatBar += '<th class="projeto-'+todosProjetos[i].classificacao+' '+ desatualizado +'">&nbsp;</th>';
                   }
+                  
                   contentHeatBar +='</tr></table>';
                   heatbar.append( contentHeatBar);  
                 });                
