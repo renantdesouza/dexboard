@@ -110,8 +110,6 @@ body:not (.tv ) #wrapper { zoom: 80%; }
 	color: rgba(0, 0, 0, 0.95);
 	font-size: 28px;
 	cursor: default;
-	text-shadow: 0 0 2px rgba(255, 255, 255, 0.25), -1px 0 0
-		rgba(0, 0, 0, 0.25);
 	padding: 28px 0 25px 25px;
 	letter-spacing: -1px;
 	word-spacing: 3px;
@@ -172,12 +170,11 @@ body:not (.tv ) #wrapper { zoom: 80%; }
 	border-color: rgba(0, 0, 0, 0.7);
 }
 
-.OK, .ATENCAO, .PERIGO, .DESATUALIZADO { color: rgba(0, 0, 0, 0.75); text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4); }
-.ATENCAO { background-color: #f6d700 !important; color: #000 !important; text-shadow: 0 2px 0 rgba(255, 255, 255, .65) !important;
-	border: 1px solid #ffff00 !important; }
-.OK { background-color: #59be00 !important;  border: 1px solid #00ff00 !important;  color: #000 !important; text-shadow: 0 2px 0 rgba(255, 255, 255, .65) !important;}
-.PERIGO { background-color: #eb0000 !important; border: 1px solid #ff0000 !important; }
-.DESATUALIZADO { opacity: 0.95; background-color: rgba(255, 255, 255, 0.025) !important;  }
+.OK, .ATENCAO, .PERIGO, .DESATUALIZADO {  }
+.ATENCAO { background-color: #f6d700 !important; color: #000 !important; border: 1px solid #ffff00 !important; }
+.OK { background-color: #59be00 !important;  border: 1px solid #00ff00 !important;  color: #000 !important; }
+.PERIGO { background-color: #eb0000 !important; border: 1px solid #ff0000 !important; color: #000 !important; }
+.DESATUALIZADO { opacity: 0.95; background-color: rgba(255, 255, 255, 0.025) !important; color: #fff !important; }
 
 .botao-ok { opacity: 0.95; background-color: #59be00 !important; border-color: rgba(255, 255, 255, 0.015) !important; }
 
