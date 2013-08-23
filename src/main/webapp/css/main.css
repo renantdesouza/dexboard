@@ -170,7 +170,6 @@ body:not (.tv ) #wrapper { zoom: 80%; }
 	border-color: rgba(0, 0, 0, 0.7);
 }
 
-
 .ATENCAO { background-color: #f6d700 !important; color: #000 !important; border: 1px solid #ffff00 !important; }
 .OK { background-color: #59be00 !important;  border: 1px solid #00ff00 !important;  color: #000 !important; }
 .PERIGO { background-color: #eb0000 !important; border: 1px solid #ff0000 !important; color: #000 !important; }
@@ -252,7 +251,7 @@ body:not (.tv ) #wrapper { zoom: 80%; }
 	text-shadow: 0 1px 0 #fff;
 	margin-bottom: 5px;
 }
-.dialog-content>h4>span {
+.dialog-content>h4>div {
 	font-weight: normal;
 	font-size: 15px;
 	background-color: rgba(255, 255, 255, 0.5);
@@ -262,6 +261,7 @@ body:not (.tv ) #wrapper { zoom: 80%; }
 	vertical-align: baseline;
 	border: 1px solid #ddd;
 	margin-left: 10px;
+	position: relative;
 }
 .dialog-content>fieldset>h4>span { color: #666; }
 .dialog-content>#edicaoIndicadorDescricao { margin-bottom: 20px; }
@@ -300,7 +300,7 @@ body:not (.tv ) #wrapper { zoom: 80%; }
 .dialog-content #divOptions>input[disabled]:focus
 { opacity: .5; cursor: default; box-shadow: none; }
 .dialog-content #divOptions>input:first-child {	float: left; }
-.dialog-content #divOptions>input:last-child { margin: 0 0 0 60px; }
+.dialog-content #divOptions>input:last-child { margin: 0 0 0 50px; }
 .dialog-content .btn-ok { background-color: #82ec53; }
 .dialog-content .btn-ok:hover {	background-color: #62c736; }
 .dialog-content .btn-atencao { background-color: #fff32c; }
@@ -333,6 +333,16 @@ body:not (.tv ) #wrapper { zoom: 80%; }
 .historico-OK {	background-color: #ddeecc; }
 .historico-ATENCAO { background-color: #faf1cb; }
 .historico-DESATUALIZADO { background-color: #c0c0c0; }
+
+.duvida-indicador { 
+	background-color: orange;
+    border-radius: 10px;
+    display: inline-block;
+    height: 20px;
+    text-align: center;
+    text-decoration: none;
+    width: 20px;
+}
 
 /* heatbar */
 .heatbar { display: none; }
@@ -388,3 +398,24 @@ body:not (.tv ) #wrapper { zoom: 80%; }
 .ui-dialog-titlebar,.ui-resizable-handle,.ui-icon-gripsmall-diagonal-se
 { display: none !important; }
 .ui-widget-content { border: 0 !important; background: none !important; }
+
+
+/* Popover styles
+	 -------------------------------------------------- */
+	/* Required style */
+.popover { position: absolute;   left: -84px; top: 47px;  z-index: 60; }
+	
+	/* Aesthetic styles */
+.popover {
+	background: #fafafa;
+	color: #222;
+	border: 1px solid #AAAAAA;
+	font-weight:normal;
+	-moz-border-radius: 5px; /* FF1+ */
+	-webkit-border-radius: 5px; /* Saf3+, Chrome */
+	-khtml-border-radius: 5px; /* Konqueror */
+	border-radius: 5px; /* Standard. IE9 */
+	padding: 20px;
+	width: 560px;
+	text-align: left;	
+}

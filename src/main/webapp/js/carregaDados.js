@@ -108,8 +108,8 @@
             		classIndicador += ' DESATUALIZADO';
             	}
             	return classIndicador;
-            },            
-            
+            },               
+                        
             adicionaIndicadores : function (container, projeto) {
 
                 var ulIndicadores = $('<ul id="' + projeto.idPma + '_indicadores" class="indicadores" />');
@@ -127,10 +127,43 @@
                 container.append(ulIndicadores);
             },
 
+                      
             populaDiv : function (projeto, indicador){
 
                 $("#edicaoIndicadorNomeProjeto").html(projeto.nome);
-                $("#edicaoIndicadorNomeIndicador").html(indicador.nome);
+                $("#edicaoIndicadorNomeIndicador").html(indicador.nome);                
+                                   
+                var  explicacao ="";
+                
+                if( indicador.nome == "CPI" ){
+                	
+           		 	 explicacao ="CPI : lorem orbi nec nibh lacus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida nunc sed condimentum tempus. Duis hendrerit arcu tristique porttitor cursus. Nunc suscipit diam vitae est malesuada, id vestibulum sem imperdiet. Nunc nec aliquam mauris, vel rutrum magna. Ut feugiat sollicitudin odio. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer et viverra diam. ";           		 	
+           		 	
+                }else if(indicador.nome =="Foco em entrega do valor" ){
+                	
+                	 explicacao ="Foco em entrega do valor : lorem orbi nec nibh lacus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida nunc sed condimentum tempus. Duis hendrerit arcu tristique porttitor cursus. Nunc suscipit diam vitae est malesuada, id vestibulum sem imperdiet. Nunc nec aliquam mauris, vel rutrum magna. Ut feugiat sollicitudin odio. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer et viverra diam.";
+                	
+                }else if(indicador.nome =="Qualidade do código" )  {
+	            	
+                	 explicacao = "Qualidade do código : lorem orbi nec nibh lacus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida nunc sed condimentum tempus. Duis hendrerit arcu tristique porttitor cursus. Nunc suscipit diam vitae est malesuada, id vestibulum sem imperdiet. Nunc nec aliquam mauris, vel rutrum magna. Ut feugiat sollicitudin odio. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer et viverra diam.    ";
+                	
+	            }else if(indicador.nome =="Qualidade funcional" ){
+	            	
+	            	 explicacao = "Qualidade funcional : lorem orbi nec nibh lacus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida nunc sed condimentum tempus. Duis hendrerit arcu tristique porttitor cursus. Nunc suscipit diam vitae est malesuada, id vestibulum sem imperdiet. Nunc nec aliquam mauris, vel rutrum magna. Ut feugiat sollicitudin odio. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer et viverra diam.";
+	            	 
+	            }else if (indicador.nome =="Satisfação da equipe" ){
+	            	
+	            	 explicacao = "Satisfação da equipe : lorem orbi nec nibh lacus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida nunc sed condimentum tempus. Duis hendrerit arcu tristique porttitor cursus. Nunc suscipit diam vitae est malesuada, id vestibulum sem imperdiet. Nunc nec aliquam mauris, vel rutrum magna. Ut feugiat sollicitudin odio. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer et viverra diam. ";
+	            } else if (indicador.nome =="Satisfação do cliente" ){
+            	
+	            	explicacao = "Satisfação do cliente : lorem orbi nec nibh lacus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida nunc sed condimentum tempus. Duis hendrerit arcu tristique porttitor cursus. Nunc suscipit diam vitae est malesuada, id vestibulum sem imperdiet. Nunc nec aliquam mauris, vel rutrum magna. Ut feugiat sollicitudin odio. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer et viverra diam. ";
+	            }
+                 
+                $("#explicacao-indicador").html( explicacao );
+                
+                                
+                // carregarExplicacaoIndicador(indicador.nome);  
+                
                 
             	var ulHistorico = $("#historico");
             	ulHistorico.html('');
@@ -238,20 +271,20 @@
                         	   
 							   if (classificacao == "PERIGO") {
 								   if(atrasado ){
-									   classificacaoPERIGOATRASADO.push(classificacao);
+									   classificacaoPERIGOATRASADO.push(classificacao+"atrasado");
 								   }else {
 									   classificacaoPERIGO.push(classificacao);
 								   }
 								   
 							   } else if ( classificacao == "ATENCAO" ) {
 								   if(atrasado ){
-									   classificacaoATENCAOATRASADO.push(classificacao);
+									   classificacaoATENCAOATRASADO.push(classificacao+"atrasado");
 								   }else{
 									   classificacaoATENCAO.push(classificacao);
 								   }
 							   } else {
 								   if(atrasado ){
-									   classificacaoOKATRASADO.push(classificacao);
+									   classificacaoOKATRASADO.push(classificacao+"atrasado");
 								   }else{
 									   classificacaoOK.push(classificacao);
 								   }
@@ -263,6 +296,7 @@
              	   classificacaoOrdenada =  classificacaoPERIGOATRASADO.concat(classificacaoATENCAOATRASADO).concat(classificacaoOKATRASADO).concat(classificacaoPERIGO).concat(classificacaoATENCAO).concat(classificacaoOK);
              	  
              	  for( var w = 0; w < classificacaoOrdenada.length; w++){
+             		  
              		  li += '<th class="heatbar-indicadores-'+ classificacaoOrdenada[w] +'">&nbsp;</th>';
              	  }
              	   
@@ -289,6 +323,9 @@
                 });                
             }           
     }
+    
+    
+    
     
      function habilitarBotoesJustificativas () {    	
     	$("#edicaoIndicadorTxtDescricao").keyup(function(){
