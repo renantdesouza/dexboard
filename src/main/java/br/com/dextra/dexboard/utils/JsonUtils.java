@@ -9,6 +9,9 @@ import java.util.Map.Entry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.appengine.api.urlfetch.FetchOptions;
+import com.google.appengine.api.urlfetch.HTTPMethod;
+import com.google.appengine.api.urlfetch.HTTPRequest;
 import com.google.appengine.api.urlfetch.HTTPResponse;
 import com.google.appengine.api.urlfetch.URLFetchService;
 import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
@@ -29,7 +32,12 @@ public class JsonUtils {
 		try {
 			LOG.info("Baixando JSON da URI: " + uri);
 			URLFetchService urlFetchService = URLFetchServiceFactory.getURLFetchService();
-			HTTPResponse response = urlFetchService.fetch(new URL(uri));
+			
+			FetchOptions opt = FetchOptions.Builder.withDeadline(20);
+			HTTPRequest request = new HTTPRequest (new URL(uri), HTTPMethod.GET, opt);
+			
+			// TODO fetch async
+			HTTPResponse response = urlFetchService.fetch(request);
 
 			String json = new String(response.getContent(), encoding);
 			LOG.debug("JSON baixado >>>\n" + json + "\n<<< JSON baixado");
