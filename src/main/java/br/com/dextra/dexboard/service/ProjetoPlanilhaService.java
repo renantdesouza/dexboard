@@ -32,11 +32,12 @@ public class ProjetoPlanilhaService {
 
 		Map<Long, Projeto> projetos = planilhaPrincipal.buscarDadosDosProjetos();
 
+		/*
 		for (Projeto projeto : projetos.values()) {
 			JsonObject dados = SERVICO_PMA.buscarDadosDoProjeto(projeto
 					.getIdPma().intValue());
 			projeto.setCpi(dados.get("cpi").getAsDouble());
-		}
+		}*/
 
 		return projetos;
 	}

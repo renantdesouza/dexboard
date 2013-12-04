@@ -3,6 +3,9 @@ package br.com.dextra.dexboard.planilha;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -127,11 +130,22 @@ public abstract class Planilha {
 
 	protected Integer recuperarConteudoCelulaInt(int linha, int coluna) {
 		String conteudo = recuperarConteudoCelula(linha, coluna);
+		return Integer.valueOf(conteudo);
+	}
+	
+
+	protected Double recuperarConteudoCelulaDouble(int linha, int coluna) {
+		DecimalFormat df = new DecimalFormat();
+		DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+		symbols.setDecimalSeparator(',');
+		symbols.setGroupingSeparator('.');
+		df.setDecimalFormatSymbols(symbols);
 		try {
-			return Integer.valueOf(conteudo);
-		} catch (NumberFormatException e) {
-			return null;
-		}
+			String conteudo = recuperarConteudoCelula(linha, coluna);
+			return df.parse(conteudo).doubleValue();
+		} catch (ParseException e) {
+			throw new RuntimeException(e);
+		}						
 	}
 
 	protected List<String> recuperarConteudoCelulas(int linha, int colunaInicial, int quantasColunas) {

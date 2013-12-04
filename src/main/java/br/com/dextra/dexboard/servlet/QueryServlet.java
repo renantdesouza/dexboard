@@ -22,40 +22,55 @@ import flexjson.JSONSerializer;
 
 public class QueryServlet extends HttpServlet {
 
+	private static final String EQUIPE_HTTP_PARAMETER = "equipe";
+
 	private static final long serialVersionUID = -1248500946944090403L;
 
 	public static final int CACHE_EXPIRATION_SECONDS = 60 * 60;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		MemcacheService memcacheService = MemcacheServiceFactory
-				.getMemcacheService();
-
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("application/json");
-
-		String cacheJson = (String) memcacheService.get(ProjetoDao.KEY_CACHE);
-		if (cacheJson != null) {
-			resp.getWriter().print(cacheJson);
-		} else {
-			ProjetoDao dao = new ProjetoDao();
-			List<ProjetoJson> projetos = new ArrayList<ProjetoJson>();
-			List<Projeto> buscarTodosProjetos = dao.buscarTodosProjetos(true);
-
-			for (Projeto projeto : buscarTodosProjetos) {
-				projetos.add(new ProjetoJson(projeto));
-			}
-
-			Collections.sort(projetos, new ProjetoComparator());
-
-			JSONSerializer serializer = new JSONSerializer();
-			serializer.exclude("*.class", "*.projeto");
-			String json = serializer.deepSerialize(projetos);
-			memcacheService.put(ProjetoDao.KEY_CACHE, json);
-
-			resp.getWriter().print(json);
-		}
-
+		resp.getWriter().print(getJsonProjetosWithCache(req.getParameter(EQUIPE_HTTP_PARAMETER)));
 	}
 
+	private String getJsonProjetosWithCache(String equipe) {		
+		MemcacheService memcacheService = MemcacheServiceFactory.getMemcacheService();
+		
+		if(useCache(equipe)) {
+			String cacheJson = (String) memcacheService.get(ProjetoDao.KEY_CACHE);
+			if (cacheJson != null) {
+				return cacheJson;
+			}
+		}
+
+		String json = getJsonProjetos();
+		
+		if(useCache(equipe)) {
+			memcacheService.put(ProjetoDao.KEY_CACHE, json);
+		}
+
+		return json;
+	}
+
+	private String getJsonProjetos() {
+		ProjetoDao dao = new ProjetoDao();
+		List<ProjetoJson> projetos = new ArrayList<ProjetoJson>();
+		List<Projeto> buscarTodosProjetos = dao.buscarTodosProjetos(true, null);
+
+		for (Projeto projeto : buscarTodosProjetos) {
+			projetos.add(new ProjetoJson(projeto));
+		}
+
+		Collections.sort(projetos, new ProjetoComparator());
+
+		JSONSerializer serializer = new JSONSerializer();
+		serializer.exclude("*.class", "*.projeto");
+		String json = serializer.deepSerialize(projetos);
+		return json;
+	}
+
+	private boolean useCache(String equipe) {
+		return equipe == null;
+	}
 }

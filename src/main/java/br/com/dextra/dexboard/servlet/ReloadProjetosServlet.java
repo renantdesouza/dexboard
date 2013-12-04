@@ -44,14 +44,14 @@ public class ReloadProjetosServlet extends HttpServlet {
 		LOG.info(projetosPlanilha.size() + " projetos ativos encontrados ...");
 
 		LOG.info("Buscando projetos já registrados na data store ...");
-		List<Projeto> projetosDataStore = dao.buscarTodosProjetos(true);
+		List<Projeto> projetosDataStore = dao.buscarTodosProjetos(true, null);
 		LOG.info(projetosDataStore.size()
 				+ " projetos registrados encontrados ...");
 
 		atualizaProjetosAtivos(projetosPlanilha, projetosDataStore);
 
 		LOG.info("Buscando projetos inativos ...");
-		projetosDataStore.addAll(dao.buscarTodosProjetos(false));
+		projetosDataStore.addAll(dao.buscarTodosProjetos(false, null));
 
 		LOG.info("Ataulizando projetos ...");
 		Map<Long, Projeto> mapProjetosDataStore = createMapProjetos(projetosDataStore);
@@ -104,7 +104,7 @@ public class ReloadProjetosServlet extends HttpServlet {
 						LOG.info(String
 								.format("Atualizando cpi do projeto \"%s\" para \"%s\"",
 										projetoAtivo.getNome(), projetoAtivo
-												.getCpi().toString()));
+												.getCpi()));
 						p.setNome(projetoAtivo.getNome());
 						p.setCpi(projetoAtivo.getCpi());
 						dao.salvarProjeto(p);

@@ -33,7 +33,8 @@ public class ProjetoDao {
 		return ofy.get(key);
 	}
 
-	public List<Projeto> buscarTodosProjetos(boolean ativo) {
+	public List<Projeto> buscarTodosProjetos(boolean ativo, String equipe) {
+		// TODO(fer) continuar aqui
 		List<Projeto> list = ofy.query(Projeto.class).filter("ativo", ativo).list();
 		if (list == null) {
 			list = new ArrayList<Projeto>();

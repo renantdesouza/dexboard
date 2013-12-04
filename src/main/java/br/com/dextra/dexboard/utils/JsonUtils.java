@@ -33,10 +33,10 @@ public class JsonUtils {
 			LOG.info("Baixando JSON da URI: " + uri);
 			URLFetchService urlFetchService = URLFetchServiceFactory.getURLFetchService();
 			
-			FetchOptions opt = FetchOptions.Builder.withDeadline(20);
+			FetchOptions opt = FetchOptions.Builder.withDeadline(360);
 			HTTPRequest request = new HTTPRequest (new URL(uri), HTTPMethod.GET, opt);
 			
-			// TODO fetch async
+			// TODO (fer) fetch async
 			HTTPResponse response = urlFetchService.fetch(request);
 
 			String json = new String(response.getContent(), encoding);

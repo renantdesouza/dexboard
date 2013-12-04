@@ -12,6 +12,7 @@ public class Projeto {
 	private String nome;
 	private Double cpi;
 	private boolean ativo = true;
+	private String equipe;
 
 	public Long getIdPma() {
 		return idPma;
@@ -29,7 +30,6 @@ public class Projeto {
 		this.nome = nome;
 	}
 
-
 	public Double getCpi() {
 		return cpi;
 	}
@@ -46,4 +46,11 @@ public class Projeto {
 		this.ativo = ativo;
 	}
 
+	public void setEquipe(String equipe) {
+		this.equipe = equipe;
+	}
+
+	public String getEquipe() {
+		return equipe;
+	}
 }
