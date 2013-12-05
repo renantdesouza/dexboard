@@ -25,16 +25,20 @@ import com.meterware.servletunit.ServletRunner;
 import com.meterware.servletunit.ServletUnitClient;
 
 public class CronTest extends AbstractTestCase {
+	
+	private static final int ID_PROJETO_CONTPLAY = 495;	
+	private static final int ID_INDICADOR_1 = 1;	
+	private static final int ID_INDICADOR_2 = 2;
 
 	@Test
 	public void testaCarregarProjetosEAlterarIndicadores() throws IOException, SAXException {
 		carregaProjetos();
 
-		alteraIndicadorDeProjeto(495, 1, Classificacao.OK);
-		alteraIndicadorDeProjeto(495, 2, Classificacao.ATENCAO);
+		alteraIndicadorDeProjeto(ID_PROJETO_CONTPLAY, ID_INDICADOR_1, Classificacao.OK);
+		alteraIndicadorDeProjeto(ID_PROJETO_CONTPLAY, ID_INDICADOR_2, Classificacao.ATENCAO);
 
-		verificaSeProjetoEstaComIndicadorPreenchido(495, 1, Classificacao.OK);
-		verificaSeProjetoEstaComIndicadorPreenchido(495, 2, Classificacao.ATENCAO);
+		verificaSeProjetoEstaComIndicadorPreenchido(ID_PROJETO_CONTPLAY, ID_INDICADOR_1, Classificacao.OK);
+		verificaSeProjetoEstaComIndicadorPreenchido(ID_PROJETO_CONTPLAY, ID_INDICADOR_2, Classificacao.ATENCAO);
 	}
 
 	private void verificaSeProjetoEstaComIndicadorPreenchido(int idProjeto, int idIndicadorAlterado, Classificacao classificacao) {
