@@ -27,36 +27,31 @@ import com.meterware.servletunit.ServletUnitClient;
 public class CronTest extends AbstractTestCase {
 
 	@Test
-	public void testaCarregarProjetosEAlterarIndicadores() throws IOException,
-			SAXException {
-
+	public void testaCarregarProjetosEAlterarIndicadores() throws IOException, SAXException {
 		carregaProjetos();
+
 		alteraIndicadorDeProjeto(495, 1, Classificacao.OK);
 		alteraIndicadorDeProjeto(495, 2, Classificacao.ATENCAO);
-		verificaSeProjetoEstaComIndicadorPreenchido(495l, 1, Classificacao.OK);
-		verificaSeProjetoEstaComIndicadorPreenchido(495l, 2,
-				Classificacao.ATENCAO);
+
+		verificaSeProjetoEstaComIndicadorPreenchido(495, 1, Classificacao.OK);
+		verificaSeProjetoEstaComIndicadorPreenchido(495, 2, Classificacao.ATENCAO);
 	}
 
-	private void verificaSeProjetoEstaComIndicadorPreenchido(Long idProjeto,
-			Integer idIndicadorAlterado, Classificacao classificacao) {
+	private void verificaSeProjetoEstaComIndicadorPreenchido(int idProjeto, int idIndicadorAlterado, Classificacao classificacao) {
 		ProjetoDao dao = new ProjetoDao();
-		List<Indicador> indicadores = dao.buscarIndicadoresDoProjeto(idProjeto);
+		List<Indicador> indicadores = dao.buscarIndicadoresDoProjeto(new Long(idProjeto));
 
-		IndicadorJson indicadorAlterado = encontraIndicadorDeId(indicadores,
-				idIndicadorAlterado);
+		IndicadorJson indicadorAlterado = encontraIndicadorDeId(indicadores, idIndicadorAlterado);
 
 		Assert.assertNotNull(indicadorAlterado);
 		Assert.assertEquals(classificacao, indicadorAlterado.getClassificacao());
 		RegistroAlteracao registroAlteracao = indicadorAlterado.getRegistros().get(0);
 		Assert.assertNotNull(registroAlteracao.getData());
-		Assert.assertEquals("test@dextra-sw.com",
-				registroAlteracao.getUsuario());
+		Assert.assertEquals("test@dextra-sw.com", registroAlteracao.getUsuario());
 
 	}
 
-	private IndicadorJson encontraIndicadorDeId(List<Indicador> indicadores,
-			int idParaEncontrar) {
+	private IndicadorJson encontraIndicadorDeId(List<Indicador> indicadores, int idParaEncontrar) {
 		for (Indicador ind : indicadores) {
 			if (ind.getId().intValue() == idParaEncontrar) {
 				return new IndicadorJson(ind);
@@ -65,30 +60,24 @@ public class CronTest extends AbstractTestCase {
 		return null;
 	}
 
-	private void alteraIndicadorDeProjeto(Integer idProjeto,
-			Integer idIndicador, Classificacao classificacao)
-			throws IOException, SAXException {
+	private void alteraIndicadorDeProjeto(int idProjeto, int idIndicador, Classificacao classificacao) throws IOException,
+			SAXException {
 
 		ServletRunner sr = new ServletRunner();
 		sr.registerServlet("indicadorServlet", IndicadorServlet.class.getName());
 
 		ServletUnitClient sc = sr.newClient();
-		WebRequest request = new PostMethodWebRequest(
-				"http://localhost:8380/indicadorServlet");
-		request.setParameter("projeto", idProjeto.toString());
-		request.setParameter("indicador", idIndicador.toString());
-		request.setParameter("registro", "{ 'classificacao' : '" + classificacao
-				+ "', 'descricao': 'desc desc' }");
+		WebRequest request = new PostMethodWebRequest("http://localhost:8380/indicadorServlet");
+		request.setParameter("projeto", idProjeto + "");
+		request.setParameter("indicador", idIndicador + "");
+		request.setParameter("registro", "{ 'classificacao' : '" + classificacao + "', 'descricao': 'desc desc' }");
 
 		sc.getResponse(request);
 	}
 
 	private void carregaProjetos() {
-
-		Response resp = adapter.success("GET", "/reload/projetos", null, null);
-		String status = getJson(resp).get("status").getAsString();
+		Response response = adapter.success("GET", "/reload/projetos", null, null);
+		String status = getJson(response).get("status").getAsString();
 		assertEquals("success", status);
-
 	}
-
 }

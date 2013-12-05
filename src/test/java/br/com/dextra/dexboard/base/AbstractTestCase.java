@@ -11,6 +11,8 @@ import com.googlecode.restitory.gae.http.Response;
 
 public class AbstractTestCase {
 
+	private static final String APP_TEST = "app.test";
+
 	protected GAETestHelper helper;
 
 	protected RequestService service;
@@ -19,7 +21,7 @@ public class AbstractTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		System.setProperty("app.test", "true");
+		System.setProperty(APP_TEST, "true");
 		helper = new GAETestHelper();
 		helper.prepareLocalServiceTestHelper();
 		helper.bootMycontainer();
