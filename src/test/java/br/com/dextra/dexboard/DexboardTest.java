@@ -1,12 +1,14 @@
-package br.com.dextra.dexboard.integration;
+package br.com.dextra.dexboard;
 
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Assert;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
@@ -16,6 +18,7 @@ import br.com.dextra.dexboard.domain.Classificacao;
 import br.com.dextra.dexboard.domain.Indicador;
 import br.com.dextra.dexboard.domain.RegistroAlteracao;
 import br.com.dextra.dexboard.json.IndicadorJson;
+import br.com.dextra.dexboard.json.ProjetoJson;
 import br.com.dextra.dexboard.servlet.IndicadorServlet;
 
 import com.googlecode.restitory.gae.http.Response;
@@ -24,16 +27,33 @@ import com.meterware.httpunit.WebRequest;
 import com.meterware.servletunit.ServletRunner;
 import com.meterware.servletunit.ServletUnitClient;
 
-public class CronTest extends AbstractTestCase {
-	
-	private static final int ID_PROJETO_CONTPLAY = 495;	
-	private static final int ID_INDICADOR_1 = 1;	
+import flexjson.JSONDeserializer;
+
+public class DexboardTest extends AbstractTestCase {
+
+	private static final int COUNT_PROJETOS = 23;
+	private static final int ID_PROJETO_CONTPLAY = 495;
+	private static final int ID_INDICADOR_1 = 1;
 	private static final int ID_INDICADOR_2 = 2;
 
-	@Test
-	public void testaCarregarProjetosEAlterarIndicadores() throws IOException, SAXException {
+	@Before
+	public void before() {
 		carregaProjetos();
+	}
 
+	@Test
+	public void testQueryProjetos() {
+		Response response = adapter.success("GET", "/query", null, null);
+
+		List<ProjetoJson> projetos = new JSONDeserializer<List<ProjetoJson>>().use(null, ArrayList.class).deserialize(
+				response.getContent().getText());
+
+		// Todo from here
+		assertEquals(COUNT_PROJETOS, projetos.size());
+	}
+
+	@Test
+	public void testAlterarIndicadores() throws IOException, SAXException {
 		alteraIndicadorDeProjeto(ID_PROJETO_CONTPLAY, ID_INDICADOR_1, Classificacao.OK);
 		alteraIndicadorDeProjeto(ID_PROJETO_CONTPLAY, ID_INDICADOR_2, Classificacao.ATENCAO);
 
@@ -64,8 +84,7 @@ public class CronTest extends AbstractTestCase {
 		return null;
 	}
 
-	private void alteraIndicadorDeProjeto(int idProjeto, int idIndicador, Classificacao classificacao) throws IOException,
-			SAXException {
+	private void alteraIndicadorDeProjeto(int idProjeto, int idIndicador, Classificacao classificacao) throws IOException, SAXException {
 
 		ServletRunner sr = new ServletRunner();
 		sr.registerServlet("indicadorServlet", IndicadorServlet.class.getName());
