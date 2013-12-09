@@ -11,6 +11,7 @@ import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.Query;
 
 public class ProjetoDao {
 
@@ -34,8 +35,14 @@ public class ProjetoDao {
 	}
 
 	public List<Projeto> buscarTodosProjetos(boolean ativo, String equipe) {
-		// TODO(fer) continuar aqui
-		List<Projeto> list = ofy.query(Projeto.class).filter("ativo", ativo).list();
+		Query<Projeto> query = ofy.query(Projeto.class).filter("ativo", ativo);
+		
+		if(equipe != null) {
+			query = query.filter("equipe", equipe.toUpperCase());
+		}
+		
+		List<Projeto> list = query.list();
+		
 		if (list == null) {
 			list = new ArrayList<Projeto>();
 		}

@@ -31,7 +31,6 @@ import flexjson.JSONDeserializer;
 
 public class DexboardTest extends AbstractTestCase {
 
-	private static final int COUNT_PROJETOS = 23;
 	private static final int ID_PROJETO_CONTPLAY = 495;
 	private static final int ID_INDICADOR_1 = 1;
 	private static final int ID_INDICADOR_2 = 2;
@@ -43,15 +42,29 @@ public class DexboardTest extends AbstractTestCase {
 
 	@Test
 	public void testQueryProjetos() {
-		Response response = adapter.success("GET", "/query", null, null);
+		List<Map<Object, Object>> projetos = queryProjetosJson(null);
 
-		List<Map<Object, Object>> projetos = new JSONDeserializer<List<Map<Object, Object>>>().use(null, ArrayList.class).deserialize(
-				response.getContent().getText());
+		assertEquals(23, projetos.size());
 
-		assertEquals(COUNT_PROJETOS, projetos.size());
+		assertProjeto(495, "A4C", "CHAOS", 1.01, projetos.get(0));
+		assertProjeto(585, "ADV: Fase II", "MUSTACHE", 1.39, projetos.get(1));
+	}
 
-		assertProjeto(495, "A4C", "Chaos", 1.01, projetos.get(0));
-		assertProjeto(585, "ADV: Fase II", "Mustache", 1.39, projetos.get(1));
+	@Test
+	public void testQueryProjetosEquipe() {
+		List<Map<Object, Object>> projetos = queryProjetosJson("Rocket");
+
+		assertEquals(2, projetos.size());
+
+		assertProjeto(565, "Confidence", "ROCKET", 0.99, projetos.get(0));
+		assertProjeto(579, "Movile", "ROCKET", 1.70, projetos.get(1));
+
+	}
+
+	private List<Map<Object, Object>> queryProjetosJson(String equipe) {
+		String path = "/query" + (equipe != null ? "?equipe=" + equipe : "");
+		Response response = adapter.success("GET", path, null, null);
+		return new JSONDeserializer<List<Map<Object, Object>>>().use(null, ArrayList.class).deserialize(response.getContent().getText());
 	}
 
 	private void assertProjeto(int idPma, String nome, String equipe, double cpi, Map<Object, Object> projetoJson) {

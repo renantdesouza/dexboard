@@ -44,7 +44,7 @@ public class QueryServlet extends HttpServlet {
 			}
 		}
 
-		String json = getJsonProjetos();
+		String json = getJsonProjetos(equipe);
 		
 		if(useCache(equipe)) {
 			memcacheService.put(ProjetoDao.KEY_CACHE, json);
@@ -53,10 +53,10 @@ public class QueryServlet extends HttpServlet {
 		return json;
 	}
 
-	private String getJsonProjetos() {
+	private String getJsonProjetos(String equipe) {
 		ProjetoDao dao = new ProjetoDao();
 		List<ProjetoJson> projetos = new ArrayList<ProjetoJson>();
-		List<Projeto> buscarTodosProjetos = dao.buscarTodosProjetos(true, null);
+		List<Projeto> buscarTodosProjetos = dao.buscarTodosProjetos(true, equipe);
 
 		for (Projeto projeto : buscarTodosProjetos) {
 			projetos.add(new ProjetoJson(projeto));

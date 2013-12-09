@@ -24,7 +24,11 @@ public class PlanilhaPrincipal extends PlanilhaDexboard {
 	}
 	
 	private String buscarEquipeProjeto(int indiceProjeto) {
-		return recuperarConteudoCelula(2 + indiceProjeto, COLUNA_EQUIPE_PROJETO);
+		String equipe = recuperarConteudoCelula(2 + indiceProjeto, COLUNA_EQUIPE_PROJETO);
+		if(equipe != null) {
+			return equipe.toUpperCase();
+		}
+		return null;
 	}
 
 	private Long buscarIdProjeto(int indiceProjeto) {

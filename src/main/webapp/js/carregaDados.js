@@ -6,9 +6,24 @@
 	});	
 	
     var CarregaDados = {
+
+    		getURLParameter : function(name) {
+    			return decodeURIComponent((new RegExp('[?|&]' + name + '='
+    					+ '([^&;]+?)(&|#|;|$)').exec(location.search) || [ , "" ])[1]
+    					.replace(/\+/g, '%20'))
+    					|| null;
+    		},
     		
             carregar : function() {
-                $.getJSON('/query', function(resultado) {
+            	
+            	var path = '/query';
+            	
+            	var equipe = CarregaDados.getURLParameter("equipe");
+            	if(equipe) {
+            		path += '?equipe='+equipe;
+            	}
+            	            
+                $.getJSON(path, function(resultado) {
                 	if (resultado) {
 	                    var todosProjetos = resultado;
 	                    CarregaDados.carregarIndicadores(todosProjetos);
@@ -143,20 +158,20 @@
                 	
                 	 explicacao ="Foco em entrega do valor : lorem orbi nec nibh lacus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida nunc sed condimentum tempus. Duis hendrerit arcu tristique porttitor cursus. Nunc suscipit diam vitae est malesuada, id vestibulum sem imperdiet. Nunc nec aliquam mauris, vel rutrum magna. Ut feugiat sollicitudin odio. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer et viverra diam.";
                 	
-                }else if(indicador.nome =="Qualidade do código" )  {
+                }else if(indicador.nome =="Qualidade do cï¿½digo" )  {
 	            	
-                	 explicacao = "Qualidade do código : lorem orbi nec nibh lacus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida nunc sed condimentum tempus. Duis hendrerit arcu tristique porttitor cursus. Nunc suscipit diam vitae est malesuada, id vestibulum sem imperdiet. Nunc nec aliquam mauris, vel rutrum magna. Ut feugiat sollicitudin odio. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer et viverra diam.    ";
+                	 explicacao = "Qualidade do cï¿½digo : lorem orbi nec nibh lacus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida nunc sed condimentum tempus. Duis hendrerit arcu tristique porttitor cursus. Nunc suscipit diam vitae est malesuada, id vestibulum sem imperdiet. Nunc nec aliquam mauris, vel rutrum magna. Ut feugiat sollicitudin odio. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer et viverra diam.    ";
                 	
 	            }else if(indicador.nome =="Qualidade funcional" ){
 	            	
 	            	 explicacao = "Qualidade funcional : lorem orbi nec nibh lacus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida nunc sed condimentum tempus. Duis hendrerit arcu tristique porttitor cursus. Nunc suscipit diam vitae est malesuada, id vestibulum sem imperdiet. Nunc nec aliquam mauris, vel rutrum magna. Ut feugiat sollicitudin odio. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer et viverra diam.";
 	            	 
-	            }else if (indicador.nome =="Satisfação da equipe" ){
+	            }else if (indicador.nome =="Satisfaï¿½ï¿½o da equipe" ){
 	            	
-	            	 explicacao = "Satisfação da equipe : lorem orbi nec nibh lacus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida nunc sed condimentum tempus. Duis hendrerit arcu tristique porttitor cursus. Nunc suscipit diam vitae est malesuada, id vestibulum sem imperdiet. Nunc nec aliquam mauris, vel rutrum magna. Ut feugiat sollicitudin odio. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer et viverra diam. ";
-	            } else if (indicador.nome =="Satisfação do cliente" ){
+	            	 explicacao = "Satisfaï¿½ï¿½o da equipe : lorem orbi nec nibh lacus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida nunc sed condimentum tempus. Duis hendrerit arcu tristique porttitor cursus. Nunc suscipit diam vitae est malesuada, id vestibulum sem imperdiet. Nunc nec aliquam mauris, vel rutrum magna. Ut feugiat sollicitudin odio. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer et viverra diam. ";
+	            } else if (indicador.nome =="Satisfaï¿½ï¿½o do cliente" ){
             	
-	            	explicacao = "Satisfação do cliente : lorem orbi nec nibh lacus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida nunc sed condimentum tempus. Duis hendrerit arcu tristique porttitor cursus. Nunc suscipit diam vitae est malesuada, id vestibulum sem imperdiet. Nunc nec aliquam mauris, vel rutrum magna. Ut feugiat sollicitudin odio. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer et viverra diam. ";
+	            	explicacao = "Satisfaï¿½ï¿½o do cliente : lorem orbi nec nibh lacus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut gravida nunc sed condimentum tempus. Duis hendrerit arcu tristique porttitor cursus. Nunc suscipit diam vitae est malesuada, id vestibulum sem imperdiet. Nunc nec aliquam mauris, vel rutrum magna. Ut feugiat sollicitudin odio. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer et viverra diam. ";
 	            }
                  
                 $("#explicacao-indicador").html( explicacao );
