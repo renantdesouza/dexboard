@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import junit.framework.Assert;
 
@@ -18,7 +19,6 @@ import br.com.dextra.dexboard.domain.Classificacao;
 import br.com.dextra.dexboard.domain.Indicador;
 import br.com.dextra.dexboard.domain.RegistroAlteracao;
 import br.com.dextra.dexboard.json.IndicadorJson;
-import br.com.dextra.dexboard.json.ProjetoJson;
 import br.com.dextra.dexboard.servlet.IndicadorServlet;
 
 import com.googlecode.restitory.gae.http.Response;
@@ -45,11 +45,20 @@ public class DexboardTest extends AbstractTestCase {
 	public void testQueryProjetos() {
 		Response response = adapter.success("GET", "/query", null, null);
 
-		List<ProjetoJson> projetos = new JSONDeserializer<List<ProjetoJson>>().use(null, ArrayList.class).deserialize(
+		List<Map<Object, Object>> projetos = new JSONDeserializer<List<Map<Object, Object>>>().use(null, ArrayList.class).deserialize(
 				response.getContent().getText());
 
-		// Todo from here
 		assertEquals(COUNT_PROJETOS, projetos.size());
+
+		assertProjeto(495, "A4C", "Chaos", 1.01, projetos.get(0));
+		assertProjeto(585, "ADV: Fase II", "Mustache", 1.39, projetos.get(1));
+	}
+
+	private void assertProjeto(int idPma, String nome, String equipe, double cpi, Map<Object, Object> projetoJson) {
+		assertEquals(idPma, projetoJson.get("idPma"));
+		assertEquals(nome, projetoJson.get("nome"));
+		assertEquals(equipe, projetoJson.get("equipe"));
+		assertEquals(cpi, projetoJson.get("cpi"));
 	}
 
 	@Test

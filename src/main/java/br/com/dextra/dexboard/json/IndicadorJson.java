@@ -17,6 +17,10 @@ public class IndicadorJson {
 
 	private Indicador indicador;
 	private List<RegistroAlteracao> registros;
+	
+	public IndicadorJson() {
+		super();
+	}
 
 	public IndicadorJson(Indicador indicador) {
 		this.indicador = indicador;

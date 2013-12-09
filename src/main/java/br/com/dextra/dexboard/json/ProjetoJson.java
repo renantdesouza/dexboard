@@ -18,6 +18,10 @@ public class ProjetoJson {
 	private Classificacao classificacao;
 	private boolean atrasado;
 
+	public ProjetoJson() {
+		super();
+	}
+
 	public ProjetoJson(Projeto projeto) {
 		this.projeto = projeto;
 		
@@ -65,6 +69,10 @@ public class ProjetoJson {
 
 	public Double getCpi() {
 		return this.projeto.getCpi();
+	}
+	
+	public String getEquipe() {
+		return this.projeto.getEquipe();
 	}
 
 	public Classificacao getClassificacao() {

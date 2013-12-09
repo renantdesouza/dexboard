@@ -38,12 +38,9 @@ public class PlanilhaPrincipal extends PlanilhaDexboard {
 	public Map<Long, Projeto> buscarDadosDosProjetos() {
 		Map<Long, Projeto> projetos = new java.util.HashMap<Long, Projeto>();
 
-		int qtdeProjetos = buscarQuantidadeDeProjetos();
-		if (System.getProperty("app.test") != null) {
-			qtdeProjetos = 3;
-		}
+		int quantidadeProjetos = buscarQuantidadeDeProjetos();
 
-		for (int i = 0; i < qtdeProjetos; ++i) {
+		for (int i = 0; i < quantidadeProjetos; ++i) {
 			Projeto projeto = new Projeto();
 			projeto.setIdPma(buscarIdProjeto(i));
 			projeto.setNome(buscarNomeDoProjeto(i));
