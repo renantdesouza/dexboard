@@ -88,26 +88,38 @@ public class ReloadProjetosServlet extends HttpServlet {
 
 	private void atualizaProjetosAtivos(Map<Long, Projeto> projetosPlanilha, List<Projeto> projetosEmCache) {
 
-		if (projetosEmCache != null) {
-			for (Projeto p : projetosEmCache) {
-				Projeto projetoAtivo = projetosPlanilha.get(p.getIdPma());
-				if (projetoAtivo != null) {
-					if (!p.getCpi().equals(projetoAtivo.getCpi()) || !p.getNome().equals(projetoAtivo.getNome())) {
-						LOG.info(String.format("Atualizando cpi do projeto \"%s\" para \"%s\"", projetoAtivo.getNome(),
-								projetoAtivo.getCpi()));
-						p.setNome(projetoAtivo.getNome());
-						p.setCpi(projetoAtivo.getCpi());
-						p.setEquipe(projetoAtivo.getEquipe());
-						dao.salvarProjeto(p);
-						LOG.info(String.format("Projeto \"%s\" salvo", projetoAtivo.getNome()));
-					}
-				} else if (p.isAtivo()) {
-					LOG.info(String.format("Desativando projeto \"%s\"", p.getNome()));
-					p.setAtivo(false);
-					dao.salvarProjeto(p);
-				}
-			}
+		if (projetosEmCache == null) {
+			return;
 		}
 
+		for (Projeto projetoEmCache : projetosEmCache) {
+			Projeto projetoAtual = projetosPlanilha.get(projetoEmCache.getIdPma());
+			if (projetoAtual != null) {
+				if (alterouInformacoesProjeto(projetoEmCache, projetoAtual)) {
+					LOG.info(String.format("Atualizando cpi do projeto \"%s\" para \"%s\"", projetoAtual.getNome(), projetoAtual.getCpi()));
+					projetoEmCache.setNome(projetoAtual.getNome());
+					projetoEmCache.setCpi(projetoAtual.getCpi());
+					projetoEmCache.setEquipe(projetoAtual.getEquipe());
+					dao.salvarProjeto(projetoEmCache);
+					LOG.info(String.format("Projeto \"%s\" salvo", projetoAtual.getNome()));
+				}
+			} else if (projetoEmCache.isAtivo()) {
+				LOG.info(String.format("Desativando projeto \"%s\"", projetoEmCache.getNome()));
+				projetoEmCache.setAtivo(false);
+				dao.salvarProjeto(projetoEmCache);
+			}
+		}
+	}
+
+	private boolean alterouInformacoesProjeto(Projeto projetoEmCache, Projeto projetoAtual) {
+		return alterou(projetoEmCache.getCpi(), projetoAtual.getCpi()) || alterou(projetoEmCache.getNome(), projetoAtual.getNome())
+				|| alterou(projetoEmCache.getEquipe(), projetoAtual.getEquipe());
+	}
+
+	private boolean alterou(Object valorEmCache, Object valorAtual) {
+		if(valorAtual == null) {
+			return false;
+		}
+		return valorEmCache == null || !valorEmCache.equals(valorAtual);
 	}
 }
