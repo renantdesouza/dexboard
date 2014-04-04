@@ -1,9 +1,9 @@
 package br.com.dextra.dexboard.domain;
 
-import javax.persistence.Id;
-
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 @Entity
 public class Indicador {
@@ -11,6 +11,7 @@ public class Indicador {
 	@Id
 	private String composeId;
 	private Long id;
+	@Index
 	private Key<Projeto> projeto;
 	private String nome;
 
@@ -44,8 +45,7 @@ public class Indicador {
 	}
 
 	public void defineComposeId() {
-		String value = String.format("%s;%s", this.getProjeto().getId(), this
-				.getId().toString());
+		String value = String.format("%s;%s", this.getProjeto().getId(), this.getId().toString());
 		this.composeId = value;
 	}
 }

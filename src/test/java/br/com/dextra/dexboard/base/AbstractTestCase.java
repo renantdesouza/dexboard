@@ -3,7 +3,6 @@ package br.com.dextra.dexboard.base;
 import org.junit.After;
 import org.junit.Before;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.googlecode.restitory.gae.http.HttpClientRequestService;
 import com.googlecode.restitory.gae.http.RequestAdapter;

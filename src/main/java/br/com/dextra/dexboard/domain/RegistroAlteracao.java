@@ -2,10 +2,10 @@ package br.com.dextra.dexboard.domain;
 
 import java.util.Date;
 
-import javax.persistence.Id;
-
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 import com.ibm.icu.text.SimpleDateFormat;
 
 import flexjson.JSON;
@@ -16,6 +16,7 @@ public class RegistroAlteracao {
 	@Id
 	private String id;
 	private Key<Projeto> projeto;
+	@Index
 	private Key<Indicador> indicador;
 	private String usuario;
 	private Classificacao classificacao;
@@ -23,8 +24,7 @@ public class RegistroAlteracao {
 	private String comentario;
 
 	public void defineId() {
-		this.id = String.format("%s;%s;%s", this.getProjeto().getId(), this.getIndicador().getId(), this
-				.getData().getTime() + "");
+		this.id = String.format("%s;%s;%s", this.getProjeto().getId(), this.getIndicador().getId(), this.getData().getTime() + "");
 	}
 
 	public Key<Projeto> getProjeto() {
@@ -84,6 +84,5 @@ public class RegistroAlteracao {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		return sdf.format(getData());
 	}
-
 
 }
