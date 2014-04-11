@@ -16,6 +16,8 @@ public class Projeto {
 	@Index
 	private String equipe;
 
+	private String email;
+
 	public Long getIdPma() {
 		return idPma;
 	}
@@ -54,5 +56,13 @@ public class Projeto {
 
 	public String getEquipe() {
 		return equipe;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

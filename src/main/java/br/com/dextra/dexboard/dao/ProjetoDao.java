@@ -33,6 +33,10 @@ public class ProjetoDao {
 		return ofy.load().type(Projeto.class).id(idProjeto).now();
 	}
 
+	public List<Projeto> buscarTodosProjetos() {
+		return buscarTodosProjetos(true, null);
+	}
+
 	public List<Projeto> buscarTodosProjetos(boolean ativo, String equipe) {
 		Query<Projeto> query = ofy.load().type(Projeto.class).filter("ativo", ativo);
 

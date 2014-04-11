@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import br.com.dextra.dexboard.dao.NotificacaoDao;
 import br.com.dextra.dexboard.dao.ProjetoDao;
 import br.com.dextra.dexboard.domain.Classificacao;
 import br.com.dextra.dexboard.domain.Indicador;
@@ -17,7 +18,7 @@ public class IndicadorJson {
 
 	private Indicador indicador;
 	private List<RegistroAlteracao> registros;
-	
+
 	public IndicadorJson() {
 		super();
 	}
@@ -29,7 +30,6 @@ public class IndicadorJson {
 		this.registros = projetoDao.buscarRegistrosDeAlteracoes(indicador);
 
 		Collections.sort(this.registros, new Comparator<RegistroAlteracao>() {
-
 			@Override
 			public int compare(RegistroAlteracao r1, RegistroAlteracao r2) {
 				return r2.getData().compareTo(r1.getData());
@@ -54,10 +54,10 @@ public class IndicadorJson {
 		if (!isValido(ultimaAlteracao.getData())) {
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	public Classificacao getClassificacao() {
 		if (this.registros.isEmpty()) {
 			return Classificacao.PERIGO;
@@ -74,17 +74,10 @@ public class IndicadorJson {
 	private boolean isValido(Date data) {
 		Calendar calendar = GregorianCalendar.getInstance();
 		calendar.setTime(data);
-		calendar.add(Calendar.DAY_OF_MONTH, getValidadeAlteracao());
+		calendar.add(Calendar.DAY_OF_MONTH, NotificacaoDao.getValidadeAlteracao());
 
 		boolean validade = calendar.getTime().compareTo(new Date()) > -1;
 		return validade;
 	}
 
-	private int getValidadeAlteracao() {
-		String validadeProp = System.getProperty("validade");
-		if (validadeProp != null) {
-			return Integer.parseInt(validadeProp);
-		}
-		return 20;
-	}
 }

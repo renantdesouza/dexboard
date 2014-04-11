@@ -1,6 +1,7 @@
 package br.com.dextra.dexboard.dao;
 
 import br.com.dextra.dexboard.domain.Indicador;
+import br.com.dextra.dexboard.domain.Notificacao;
 import br.com.dextra.dexboard.domain.Projeto;
 import br.com.dextra.dexboard.domain.RegistroAlteracao;
 
@@ -16,6 +17,7 @@ public class RegisterClasses {
 		ObjectifyService.register(Projeto.class);
 		ObjectifyService.register(Indicador.class);
 		ObjectifyService.register(RegistroAlteracao.class);
+		ObjectifyService.register(Notificacao.class);
 
 		System.setProperty("app.objectfy.classes.registered", "true");
 	}

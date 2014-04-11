@@ -13,23 +13,18 @@ import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
-import br.com.dextra.dexboard.base.AbstractTestCase;
+import br.com.dextra.dexboard.base.DexboardTestCase;
 import br.com.dextra.dexboard.dao.ProjetoDao;
 import br.com.dextra.dexboard.domain.Classificacao;
 import br.com.dextra.dexboard.domain.Indicador;
 import br.com.dextra.dexboard.domain.RegistroAlteracao;
 import br.com.dextra.dexboard.json.IndicadorJson;
-import br.com.dextra.dexboard.servlet.IndicadorServlet;
 
 import com.googlecode.restitory.gae.http.Response;
-import com.meterware.httpunit.PostMethodWebRequest;
-import com.meterware.httpunit.WebRequest;
-import com.meterware.servletunit.ServletRunner;
-import com.meterware.servletunit.ServletUnitClient;
 
 import flexjson.JSONDeserializer;
 
-public class DexboardTest extends AbstractTestCase {
+public class DexboardTest extends DexboardTestCase {
 
 	private static final int ID_PROJETO_CONTPLAY = 495;
 	private static final int ID_INDICADOR_1 = 1;
@@ -83,6 +78,24 @@ public class DexboardTest extends AbstractTestCase {
 		verificaSeProjetoEstaComIndicadorPreenchido(ID_PROJETO_CONTPLAY, ID_INDICADOR_2, Classificacao.ATENCAO);
 	}
 
+	@Test
+	public void testAtrasoIndicadorJson() throws Exception {
+		carregaProjetos();
+
+		for (int i = 1; i <= 6; i++) {
+			alteraIndicadorDeProjeto(ID_PROJETO_CONTPLAY, i, Classificacao.ATENCAO);
+		}
+
+		ProjetoDao dao = new ProjetoDao();
+		List<Indicador> indicadores = dao.buscarIndicadoresDoProjeto(495l);
+		Indicador indicador = indicadores.get(0);
+		IndicadorJson indicadorJson = new IndicadorJson(indicador);
+		Assert.assertFalse(indicadorJson.getAtrasado());
+		System.setProperty("validade", "-3");
+		Assert.assertTrue(indicadorJson.getAtrasado());
+	}
+
+
 	private void verificaSeProjetoEstaComIndicadorPreenchido(int idProjeto, int idIndicadorAlterado, Classificacao classificacao) {
 		ProjetoDao dao = new ProjetoDao();
 		List<Indicador> indicadores = dao.buscarIndicadoresDoProjeto(new Long(idProjeto));
@@ -104,25 +117,5 @@ public class DexboardTest extends AbstractTestCase {
 			}
 		}
 		return null;
-	}
-
-	private void alteraIndicadorDeProjeto(int idProjeto, int idIndicador, Classificacao classificacao) throws IOException, SAXException {
-
-		ServletRunner sr = new ServletRunner();
-		sr.registerServlet("indicadorServlet", IndicadorServlet.class.getName());
-
-		ServletUnitClient sc = sr.newClient();
-		WebRequest request = new PostMethodWebRequest("http://localhost:8380/indicadorServlet");
-		request.setParameter("projeto", idProjeto + "");
-		request.setParameter("indicador", idIndicador + "");
-		request.setParameter("registro", "{ 'classificacao' : '" + classificacao + "', 'descricao': 'desc desc' }");
-
-		sc.getResponse(request);
-	}
-
-	private void carregaProjetos() {
-		Response response = adapter.success("GET", "/reload/projetos", null, null);
-		String status = getJson(response).get("status").getAsString();
-		assertEquals("success", status);
 	}
 }
