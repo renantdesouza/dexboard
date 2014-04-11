@@ -24,41 +24,70 @@ public class AuthFilter implements Filter {
 	}
 
 	@Override
-	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException,
-			ServletException {
+	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) resp;
+
 		UserService service = UserServiceFactory.getUserService();
+
 		String uri = request.getRequestURI();
-		if (uri.equals("/logout")) {
-			response.sendRedirect(service.createLogoutURL("/"));
-			return;
-		}
 		User user = service.getCurrentUser();
-		if (user != null && !user.getEmail().endsWith("@dextra-sw.com")) {
-			response.sendRedirect(service.createLogoutURL("/"));
-			return;
-		}
-		if (user != null || uri.startsWith("/_ah") || uri.startsWith("/reload/")) {
+
+		if (isAdminPath(uri)) {
 			chain.doFilter(request, response);
 			return;
 		}
-		if ("GET".equals(request.getMethod())) {
-			response.sendRedirect(service.createLoginURL(uri));
+
+		if (user == null) {
+			if ("GET".equals(request.getMethod())) {
+				goToLoginPage(response, service, uri);
+				return;
+			}
+
+			unautorizedRequest(response, service);
 			return;
 		}
+
+		if (isLogoutPath(uri) || !isDextraUser(user)) {
+			goToLogoutPage(response, service);
+			return;
+		}
+
+		chain.doFilter(request, response);
+		return;
+	}
+
+	private boolean isAdminPath(String uri) {
+		return uri.startsWith("/_ah") || uri.startsWith("/reload/") || uri.startsWith("/_tools");
+	}
+
+	private void unautorizedRequest(HttpServletResponse response, UserService service) throws IOException {
 		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		response.setContentType("text/html");
 		PrintWriter writer = response.getWriter();
 		writer.append("<html><head><title>Murkfight</title></head><body>You need login <a href=\"");
 		writer.append(service.createLoginURL("/"));
 		writer.append("\">here</a></body></html>");
-		return;
+	}
+
+	private void goToLoginPage(HttpServletResponse response, UserService service, String uri) throws IOException {
+		response.sendRedirect(service.createLoginURL(uri));
+	}
+
+	private void goToLogoutPage(HttpServletResponse response, UserService service) throws IOException {
+		response.sendRedirect(service.createLogoutURL("/"));
+	}
+
+	private boolean isLogoutPath(String uri) {
+		return uri.equals("/logout");
+	}
+
+	private boolean isDextraUser(User user) {
+		return user.getEmail().endsWith("@dextra-sw.com");
 	}
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 
 	}
-
 }
