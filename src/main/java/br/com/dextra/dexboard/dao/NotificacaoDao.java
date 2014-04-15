@@ -1,15 +1,23 @@
 package br.com.dextra.dexboard.dao;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import br.com.dextra.dexboard.domain.Indicador;
 import br.com.dextra.dexboard.domain.Notificacao;
 import br.com.dextra.dexboard.domain.Projeto;
 import br.com.dextra.dexboard.domain.RegistroAlteracao;
 
-import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
 
@@ -99,12 +107,33 @@ public class NotificacaoDao {
 	}
 
 	public void notificarEquipeProjeto(Projeto projeto) {
+		envioarEmailEquipeProjeto(projeto);
+		registrarDataNotificacao(projeto);
+	}
+
+	private void envioarEmailEquipeProjeto(Projeto projeto) {
+		Properties props = new Properties();
+		Session session = Session.getDefaultInstance(props, null);
+
+		String msgBody = "...";
+
+		Message msg = new MimeMessage(session);
+
+		try {
+			msg.setFrom(new InternetAddress("jose.guede@dextra-sw.com", "José Fernando Guedes"));
+			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(projeto.getEmail(), projeto.getEquipe()));
+			msg.setSubject("Your Example.com account has been activated");
+			msg.setText(msgBody);
+			Transport.send(msg);
+		} catch (UnsupportedEncodingException | MessagingException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void registrarDataNotificacao(Projeto projeto) {
 		Notificacao notificacao = new Notificacao();
 		notificacao.setDate(new Date());
 		notificacao.setIdPma(projeto.getIdPma());
 		ofy.save().entity(notificacao);
-
-		// TODO: Enviar e-mail
-
 	}
 }
