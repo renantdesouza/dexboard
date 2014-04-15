@@ -2,329 +2,89 @@
 <html>
 
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script src="js/jquery.tooltip.js"></script>
-	<link rel="stylesheet" href="css/main.css" type="text/css" />
-	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
-
-	<title>DexBoard</title>
-</head>
-
-<body>
-	<div class="main">
-		<div class="interMain">
-			<h1>DexBoard</h1>
-			<div id="projetos">Carregando...</div>
-			<div id="data"></div>
-		</div>
-	</div>
-</body>
-
-<script>
-
-function mostrar (id){
-	$('#content_'+id).slideToggle("fast");
-}
-
-function troca (palavra) {
-
-	var acento 	= ['ç', 'Ç', 'á', 'à', 'Á', 'À', 'ã', 'Ã', 'é', 'É', 'ó', 'Ó', 'õ', 'â', 'Â'];
-	var acentos = ['&ccedil;', '&Ccedil;', '&aacute;', '&agrave;', '&Aaacute;', '&Agrave;', '&atilde;', '&Atilde;', '&eacute;', '&Eacute;', '&oacute;', '&Oacute;', '&otilde;', '&acirc;', '&Acirc;']
-
-	for (i=0; i< palavra.length; i++){
-		for (j=0; j<acento.length; j++)
-			palavra.replace(acento[j], acentos[j]);
-	}
-	return palavra;
-}
-
-function grafico (ms, s, i, mi) {
-	total = ms + s + i + mi;
-
-	ms = (total/ms)*100;
-	s = (total/s)*100;
-	i = (total/i)*100;
-	mi = (total/mi)*100;
-}
-
-var classes =  ['mi', 'ms', 's', 'i', 'mi'];
-var classes2 = ['mi', 'mi', 'i', 's', 'ms'];
-
-var evoluir	 = ['É fácil fazer altera&ccedil;&otilde;es no sistema e identificar os impactos das altera&ccedil;&otilde;es no sistema', 'Nunca', 'Poucas vezes', 'Quase sempre', 'Sempre'];
-var erros	 = ['Erros sendo encontrados pela equipe durante desenvolvimento e homologa&ccedil;&atilde;o do sistema', 'Nunca', 'Poucas vezes', 'Quase sempre', 'Sempre'];
-var testar	 = ['Facilidade para testar altera&ccedil;&otilde;es, garantindo boa funcionalidade do sistema ', 'Nunca', 'Poucas vezes', 'Quase sempre', 'Sempre'];
-var aprender = ['A curva de aprendizado de novos membros da equipe sobre o sistema &eacute; r&aacute;pida ', 'Nunca', 'Poucas vezes', 'Quase sempre', 'Sempre'];
-
-
-function tabularObjeto(objeto) {
-		var novoProjeto = $('<div class="projeto">');
-
-		var header;
-		if (objeto.cpi >= 1) {
-			header = 'b';
-		}else if (objeto.cpi >= 0.9 && objeto.cpi < 1) {
-			header = 'a';
-		} else {
-			header = 'v';
-		}
-
-		var cpi = objeto.cpi+"";
-
-		if (cpi.indexOf(".") != -1) {
-			if (cpi.substr(cpi.indexOf(".")+1).length == 1 ) {
-				cpi = cpi.substr(cpi.indexOf(".")-1, 1)+','+ cpi.substr(cpi.indexOf(".")+1) +'0';
-			} else {
-				cpi = cpi.substr(cpi.indexOf(".")-1, 1)+','+ cpi.substr(cpi.indexOf(".")+1) ;
-			}
-		} else {
-			cpi = cpi+",00";
-		}
-
-		var divHeader = $('<div class="header '+troca(header)+'" onclick="mostrar('+objeto.id+')">').appendTo(novoProjeto);
-
-		var divTitle = $('<div class="title">').appendTo(divHeader);
-
-		var nome = objeto.projeto;
-
-		if (nome.indexOf(':') != -1) {
-			nome = nome.replace(':', ' -');
-			nome = troca(nome);
-		}
-
-		divTitle.append('<h2>Projeto: '+nome+'</h2>');
-
-		var divAdd = $('<div class="adicionais">').appendTo(divHeader);
-
-		if (objeto.fase != null) {
-			var fase = objeto.fase;
-			fase = fase.substr(0, 1).toUpperCase()+fase.substr(1);
-			divAdd.append('<span>Fase: '+troca(fase)+'</span>');
-		}
-
-		var divCPI = $('<div class="cpi">').appendTo(divAdd);
-		divCPI.append('CPI <strong>'+ cpi +'</strong>');
-
-		var divContent = $('<div class="content" id="content_'+ objeto.id +'">').appendTo(novoProjeto);
-
-		if (objeto.semDexBoard == null && objeto.semTabela == null && objeto.estrutura == null) {
-			var divEquipe = $('<div class="contentEquipe">').appendTo(divContent);
-			divEquipe.append('<h2>Satisfa&ccedil;&atilde;o da Equipe</h2>');
-
-			if (objeto.satisfacaoEquipe != null) {
-
-				if (objeto.satisfacaoEquipe.resultadoEntregue != null) {
-
-					var satistacao = objeto.satisfacaoEquipe.resultadoEntregue;
-
-					var totalPontos = 0;
-					var totalVotos = 0;
-
-					var i = 1;
-
-					var estrutura = true;
-
-					for (var sub in satistacao) {
-						if (satistacao[sub] != null) {
-							totalPontos += (satistacao[sub] * i);
-							totalVotos += satistacao[sub];
-							i++;
-						} else {
-							estrutura = false;
-						}
-
-					}
-
-					if (estrutura) {
-						if (totalVotos != 0) {
-							var posicao = Math.round(totalPontos / totalVotos);
-						} else {
-							var posicao = 0;
-						}
-
-						var divResultadoEntregueEquipe = $('<div class="status '+ classes[posicao] +'">').appendTo(divEquipe);
-						divResultadoEntregueEquipe.append('Resultado Entregue');
-					}
-				}
-
-				if ( objeto.satisfacaoEquipe.andamentoDoSprint != null) {
-
-					var satistacao = objeto.satisfacaoEquipe.andamentoDoSprint;
-
-					var totalPontos = 0;
-					var totalVotos = 0;
-
-					var estrutura2 = true;
-
-					var i = 1;
-					for (var sub in satistacao) {
-						if (satistacao[sub] != null) {
-							totalPontos += (satistacao[sub] * i);
-							totalVotos += satistacao[sub];
-							i++;
-						} else {
-							estrutura2 = false;
-						}
-					}
-
-					if (estrutura2) {
-						if (totalVotos != 0) {
-							var posicao = Math.round(totalPontos / totalVotos);
-						} else {
-							var posicao = 0;
-						}
-
-						var divAndamentoDoSprintEquipe = $('<div class="status '+classes[posicao]+'">').appendTo(divEquipe);
-						divAndamentoDoSprintEquipe.append('Andamento do Sprint');
-					}
-				}
-				if (!estrutura || !estrutura2)
-					divEquipe.append('<div class="error">Verifique a estruturação da tabela do projeto</div>');
-
-			} else {
-				divEquipe.append('<div class="error">Não foram encontrados dados na tabela</div>');
-			}
-
-			var divQualidade = $('<div class="contentQualidade">').appendTo(divContent);
-			divQualidade.append('<h2>Qualidade do Software</h2>');
-
-			if (objeto.qualidade != null) {
-				divQualidade.append('<span>As m&eacute;tricas abaixo demonstram qu&atilde;o f&aacute;cil o sistema &eacute; para:</span>');
-				var divMinis = $('<div class="minis">').appendTo(divQualidade);
-
-				if (objeto.qualidade.evoluir != null) {
-					var divEvoluir = $('<div class="miniStatus '+classes2[objeto.qualidade.evoluir]+'" title="'+evoluir[0]+'" >').appendTo(divMinis);
-					divEvoluir.append('Evoluir');
-				}
-
-				if (objeto.qualidade.erros != null) {
-					var divDetectarErros = $('<div class="miniStatus '+classes2[objeto.qualidade.erros]+'" title="'+erros[0]+'">').appendTo(divMinis);
-					divDetectarErros.append('Detectar Erros');
-				}
-
-				if (objeto.qualidade.testar != null) {
-					var divTestar = $('<div class="miniStatus '+classes2[objeto.qualidade.testar]+'" title="'+testar[0]+'">').appendTo(divMinis);
-					divTestar.append('Testar');
-				}
-
-				if (objeto.qualidade.aprender != null) {
-					var divAprender = $('<div class="miniStatus '+classes2[objeto.qualidade.aprender]+'" title="'+aprender[0]+'">').appendTo(divMinis);
-					divAprender.append('Aprender');
-				}
-			}else {
-				divQualidade.append('<div class="error">Não foram encontrados dados na tabela</div>');
-			}
-
-			var divCliente = $('<div class="contentCliente">').appendTo(divContent);
-			divCliente.append('<h2>Satisfa&ccedil;&atilde;o do Cliente</h2>');
-
-			if (objeto.satisfacaoCliente != null) {
-
-				if (objeto.satisfacaoCliente.resultadoEntregue.sprint0 != null) {
-
-					var satistacao = objeto.satisfacaoCliente.resultadoEntregue.sprint0;
-
-					var totalPontos = 0;
-					var totalVotos = 0;
-
-					var i = 1;
-
-					var estruturaCliente = true;
-
-					for (var sub in satistacao) {
-						if (satistacao[sub] != null) {
-							totalPontos += (satistacao[sub] * i);
-							totalVotos += satistacao[sub];
-							i++;
-						} else {
-							estruturaCliente = false;
-						}
-					}
-
-					if (estruturaCliente) {
-						if (totalVotos != 0) {
-							var posicao = Math.round(totalPontos / totalVotos);
-						} else {
-							var posicao = 0;
-						}
-
-						var divResultadoEntregueCliente = $('<div class="status '+classes[posicao]+'">').appendTo(divCliente);
-						divResultadoEntregueCliente.append('Resultado Entregue');
-					}
-				}
-
-				if (objeto.satisfacaoCliente.andamentoDoSprint.sprint0 != null) {
-
-					var satistacao = objeto.satisfacaoCliente.andamentoDoSprint.sprint0;
-
-					var totalPontos = 0;
-					var totalVotos = 0;
-
-					var estruturaCliente2 = true;
-
-					var i = 1;
-					for (var sub in satistacao) {
-						if (satistacao[sub] != null) {
-							totalPontos += (satistacao[sub] * i);
-							totalVotos += satistacao[sub];
-							i++;
-						} else {
-							estruturaCliente2 = false;
-						}
-					}
-
-					if (estruturaCliente2)
-						if (totalVotos != 0) {
-							var posicao = Math.round(totalPontos / totalVotos);
-						} else {
-							var posicao = 0;
-						}
-
-						var divAndamentoDoSprintCliente = $('<div class="status '+classes[posicao]+'">').appendTo(divCliente);
-						divAndamentoDoSprintCliente.append('Andamento do Sprint');
-				}
-
-				if (!estruturaCliente || !estruturaCliente2) {
-					divCliente.append('<div class="error">Verifique a estruturação dos dados da tabela de projeto</div>');
-				}
-			} else {
-				divCliente.append('<div class="error">Não foram encontrados dados na tabela</div>');
-			}
-		} else {
-			if (objeto.semTabela != null) {
-				divContent.append('<div class="error2">Esse projeto não possui URL indicada para o DexBoard </div>');
-			}
-			if (objeto.semDexBoard != null) {
-				divContent.append('<div class="error2">Não foi encontrada aba "DexBoard" na tabela ou não foi possível acessar a tabela pelo usuário "dexboard@dextra-sw.com"</div>');
-			}
-			if (objeto.estrutura != null) {
-				divContent.append('<div class="error2">Verifique a estruturação dos dados da tabela de projeto</div>');
-			}
-
-		}
-
-		return novoProjeto;
-}
-
-	$.get('query', function(projetos) {
-		var divProjetos = $('div#projetos').empty();
-		var divData = $('div#data').empty();
-		if (projetos == null) {
-			divProjetos.append("<div class='projError'>Favor recarregar a página, ouve um erro no processo</div>");
-		} else {
-			for (var i = 0; i < projetos.length; ++i) {
-				if (projetos[i].lastModified == null) {
-					divProjetos.append(tabularObjeto(projetos[i]));
-				} else {
-					divData.append("&Uacute;ltima atualiza&ccedil;&atilde;o: "+ projetos[i].lastModified);
-				}
-
-			}
-			$('div.projeto *').tooltip();
-		}
-
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="js/carregaDados.js"></script>
+<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="js/dexboard-rotate.js"></script>
+
+<script type="text/javascript" src="js/jquery.cf.popover.js"></script>
+
+<script type="text/javascript">
+
+	jQuery(function ($) {
+			$('#trigger').popover();			
 	});
-
+	
 </script>
+	
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600'	rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="css/main.css" media="all" />
+<link rel="stylesheet" type="text/css"
+	href="css/jquery-ui-1.9.2.custom.css" media="all" />
+<link href='img/favicon.png' rel='shortcut icon' type='image/png' />
 
+<title>DexBoard</title>
+</head>
+<body>
+	<div id="dialog-overlay"></div>
+	<div id="wrapper" class="clearfix">
+		<div class="container-left">
+			<div class="content-logo">
+				<a href="#"> <img src="img/header-logo.png" alt="dxb - DexBoard"
+					width="" height="" />
+				</a>
+			</div>
+			<div class="content-menu-indicadores">
+				<ul id="menuIndicadores" class="menu-indicadores">
+				</ul>
+			</div>
+		</div>
+		<div class="container-right clearfix">
+			<div class="content-projetos clearfix" id="data"></div>
+		</div>
+		
+		<div id="heatbar" class="heatbar clear">
+			
+		</div>
+		
+		<div id="dialog">
+			<div class="dialog-content">
+				<div class="dialog-close-button" title="Fechar janela">X</div>
+				<h2>
+					<span id="edicaoIndicadorNomeProjeto"></span>
+				</h2>
+				<h4>
+					Indicador: 
+					<div>
+						<span id="edicaoIndicadorNomeIndicador"></span>
+						 <a id="trigger" href="#explicacao-indicador" class="duvida-indicador">?</a>
+						 <div id="explicacao-indicador" style="display:none;" class="popover"></div>
+					</div>	
+				</h4>
+				<fieldset id="fieldsetUltimaAlteracao">
+					<legend>Histórico de alterações</legend>
+					<ul id="historico" class="ul-historico">
+					</ul>
+				</fieldset>
+				
+				<fieldset id="fieldsetNovaAlteracao">
+					<legend>Nova Alteração</legend>
+					<div id="edicaoIndicadorDescricao">
+						<textarea id="edicaoIndicadorTxtDescricao" rows="3" cols="35"
+							tabindex="1"></textarea>
+					</div>
+				</fieldset>
+				<div id="divOptions" class="options">
+					<input type="button" value="Stop the line!" class="btn-perigo"	name="PERIGO" tabindex="2" />
+					<input type="button" value="Atenção" class="btn-atencao" name="ATENCAO" tabindex="3" />
+					<input type="button" value="Caminho livre!" class="btn-ok" name="OK"	tabindex="4" />
+					<input type="button" value="Sem Mudanças" class="btn-sem-mudancas"	name="SEMMUDANCAS" tabindex="5" />
+				</div>
+			</div>
+		</div>
+		
+	</div>	
+</body>
 </html>
