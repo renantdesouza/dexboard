@@ -38,7 +38,7 @@ public abstract class Planilha {
 
 	static {
 		final String usuario = "dexboard@dextra-sw.com";
-		final String senha = "dexboardprojeto";
+		final String senha = "???";
 		try {
 			service.setUserCredentials(usuario, senha);
 		} catch (AuthenticationException e) {
@@ -132,7 +132,7 @@ public abstract class Planilha {
 		String conteudo = recuperarConteudoCelula(linha, coluna);
 		return Integer.valueOf(conteudo);
 	}
-	
+
 
 	protected Double recuperarConteudoCelulaDouble(int linha, int coluna) {
 		DecimalFormat df = new DecimalFormat();
@@ -145,7 +145,7 @@ public abstract class Planilha {
 			return df.parse(conteudo).doubleValue();
 		} catch (ParseException e) {
 			throw new RuntimeException(e);
-		}						
+		}
 	}
 
 	protected List<String> recuperarConteudoCelulas(int linha, int colunaInicial, int quantasColunas) {
