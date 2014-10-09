@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
@@ -22,6 +23,7 @@ public class NotificacaoTest extends DexboardTestCase {
 	private static final long ID_PROJETO_CONFIDENCE = 565l;
 
 	@Test
+	@Ignore
 	public void testNotificacaoAtraso() throws Exception {
 		carregaProjetos();
 		registraAlteracoesEmProjetos();
