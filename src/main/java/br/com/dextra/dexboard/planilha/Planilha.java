@@ -40,7 +40,7 @@ public abstract class Planilha {
 		service = new SpreadsheetService("DexBoard");
 		factory = FeedURLFactory.getDefault();
 
-		final String usuario = "dexboard@dextra-sw.com";
+		final String usuario = "dashboard.cea@gmail.com";
 		final String senha = "???";
 		try {
 			service.setUserCredentials(usuario, senha);

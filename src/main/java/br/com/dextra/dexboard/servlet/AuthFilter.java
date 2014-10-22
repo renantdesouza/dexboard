@@ -83,7 +83,7 @@ public class AuthFilter implements Filter {
 	}
 
 	private boolean isDextraUser(User user) {
-		return user.getEmail().endsWith("@dextra-sw.com");
+		return user.getEmail().equals("dashboard.cea@gmail.com") || user.getEmail().equals("feroult@gmail.com");
 	}
 
 	@Override
