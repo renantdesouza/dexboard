@@ -37,7 +37,7 @@ public abstract class Planilha {
 	private static final FeedURLFactory factory = FeedURLFactory.getDefault();
 
 	static {
-		final String usuario = "dexboard@dextra-sw.com";
+		final String usuario = "dashboard.cea@gmail.com";
 		final String senha = "???";
 		try {
 			service.setUserCredentials(usuario, senha);
