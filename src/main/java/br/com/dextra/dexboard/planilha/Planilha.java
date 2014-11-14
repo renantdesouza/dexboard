@@ -33,10 +33,13 @@ public abstract class Planilha {
 	public boolean achouAba = true;
 	public boolean estrutura = true;
 
-	private static final SpreadsheetService service = new SpreadsheetService("DexBoard");
-	private static final FeedURLFactory factory = FeedURLFactory.getDefault();
+	private static final SpreadsheetService service;
+	private static final FeedURLFactory factory;
 
 	static {
+		service = new SpreadsheetService("DexBoard");
+		factory = FeedURLFactory.getDefault();
+
 		final String usuario = "dexboard@dextra-sw.com";
 		final String senha = "???";
 		try {
