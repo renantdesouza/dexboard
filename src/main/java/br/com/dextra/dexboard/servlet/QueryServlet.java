@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import br.com.dextra.dexboard.dao.ProjetoDao;
 import br.com.dextra.dexboard.domain.Projeto;
 import br.com.dextra.dexboard.json.ProjetoJson;
@@ -21,6 +24,8 @@ import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import flexjson.JSONSerializer;
 
 public class QueryServlet extends HttpServlet {
+
+	private static final Logger LOG = LoggerFactory.getLogger(QueryServlet.class);
 
 	private static final String EQUIPE_HTTP_PARAMETER = "equipe";
 
@@ -34,9 +39,9 @@ public class QueryServlet extends HttpServlet {
 		resp.getWriter().print(getJsonProjetosWithCache(req.getParameter(EQUIPE_HTTP_PARAMETER)));
 	}
 
-	private String getJsonProjetosWithCache(String equipe) {		
+	private String getJsonProjetosWithCache(String equipe) {
 		MemcacheService memcacheService = MemcacheServiceFactory.getMemcacheService();
-		
+
 		if(useCache(equipe)) {
 			String cacheJson = (String) memcacheService.get(ProjetoDao.KEY_CACHE);
 			if (cacheJson != null) {
@@ -45,7 +50,7 @@ public class QueryServlet extends HttpServlet {
 		}
 
 		String json = getJsonProjetos(equipe);
-		
+
 		if(useCache(equipe)) {
 			memcacheService.put(ProjetoDao.KEY_CACHE, json);
 		}
@@ -59,6 +64,7 @@ public class QueryServlet extends HttpServlet {
 		List<Projeto> buscarTodosProjetos = dao.buscarTodosProjetos(true, equipe);
 
 		for (Projeto projeto : buscarTodosProjetos) {
+			LOG.info("buscando projeto: " + projeto.getNome());
 			projetos.add(new ProjetoJson(projeto));
 		}
 

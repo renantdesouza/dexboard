@@ -3,9 +3,13 @@ package br.com.dextra.dexboard.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import br.com.dextra.dexboard.domain.Indicador;
 import br.com.dextra.dexboard.domain.Projeto;
 import br.com.dextra.dexboard.domain.RegistroAlteracao;
+import br.com.dextra.dexboard.planilha.Planilha;
 
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.googlecode.objectify.Key;
@@ -14,6 +18,8 @@ import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.cmd.Query;
 
 public class ProjetoDao {
+
+	private static final Logger LOG = LoggerFactory.getLogger(ProjetoDao.class);
 
 	public static final String KEY_CACHE = "dexboard.cache.key";
 
@@ -63,6 +69,13 @@ public class ProjetoDao {
 		if (list == null) {
 			list = new ArrayList<RegistroAlteracao>();
 		}
+
+		if(indicador.getProjeto().getId() == 619) {
+			for(RegistroAlteracao reg : list) {
+				LOG.info(indicador.getNome() + "-" + reg.getUsuario() + "-" + reg.getData());
+			}
+		}
+
 		return list;
 	}
 

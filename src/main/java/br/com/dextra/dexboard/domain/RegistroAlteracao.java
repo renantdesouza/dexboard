@@ -20,13 +20,13 @@ public class RegistroAlteracao {
 	private Key<Indicador> indicador;
 	private String usuario;
 	private Classificacao classificacao;
-	
+
 	@Index
 	private Date data;
 	private String comentario;
 
 	public void defineId() {
-		this.id = String.format("%s;%s", this.getProjeto().getId(), this.getIndicador().getName(), this.getData().getTime() + "");
+		this.id = String.format("%s;%s;%s", this.getProjeto().getId(), this.getIndicador().getName(), System.currentTimeMillis() + "");
 	}
 
 	public Key<Projeto> getProjeto() {
