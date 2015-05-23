@@ -36,7 +36,7 @@ public class HistoricoJson {
 	public HistoricoJson(RegistroAlteracao registro, Projeto projeto, Indicador indicador) {
 		this.nomeProjeto = projeto.getNome();
 		this.equipe = projeto.getEquipe();
-		this.autor = "walter.mesquita@dextra-sw.com";///registro.getUsuario();
+		this.autor = registro.getUsuario();
 		this.dateAlteracao = registro.getData();
 		this.descricao = registro.getComentario();
 		this.classificacao = ESTILO_CLASSIFICACAO.get(registro.getClassificacao());
