@@ -23,6 +23,15 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>HistoryServlet</servlet-name>
+		<servlet-class>br.com.dextra.dexboard.servlet.HistoryServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HistoryServlet</servlet-name>
+		<url-pattern>/history</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>IndicadorServlet</servlet-name>
 		<servlet-class>br.com.dextra.dexboard.servlet.IndicadorServlet</servlet-class>
 	</servlet>
