@@ -45,34 +45,31 @@ public class ProjetoDao {
 	public List<Projeto> buscarTodosProjetos() {
 		return buscarTodosProjetos(true, null);
 	}
-	
+
 	public Projeto buscarProjetoByKey(Key<Projeto> key) {
 		LoadResult<Projeto> first = ofy.load().type(Projeto.class).filterKey(key).first();
 		return first.now();
 	}
-	
+
 	public Indicador buscarIndicadorByKey(Key<Indicador> key) {
 		LoadResult<Indicador> first = ofy.load().type(Indicador.class).filterKey(key).first();
 		return first.now();
 	}
-	
+
 	public List<RegistroAlteracao> buscarHistoricoAlteracoes(Date minDate, Integer limit) {
-	
 		List<RegistroAlteracao> list;
 
-		Query<RegistroAlteracao> queryByDate = ofy.load().type(RegistroAlteracao.class).filter("date > ", minDate);
-		queryByDate.order("-date");
+		Query<RegistroAlteracao> queryByDate = ofy.load().type(RegistroAlteracao.class).filter("data >=", minDate);
+		String orderCondition = "-data";
+		queryByDate.order(orderCondition);
 		if (limit != null)
 			queryByDate.limit(limit);
 		list = queryByDate.list();
 
-		if (list == null || list.size() == 0) {
-			if (limit != null)
-				list = ofy.load().type(RegistroAlteracao.class).limit(limit).list();
-			
-			if (list == null)
-				list = new ArrayList<RegistroAlteracao>();
+		if (list.size() == 0 && limit != null) {
+			list = ofy.load().type(RegistroAlteracao.class).limit(limit).order(orderCondition).list();
 		}
+
 		return list;
 	}
 
@@ -103,8 +100,8 @@ public class ProjetoDao {
 			list = new ArrayList<RegistroAlteracao>();
 		}
 
-		if(indicador.getProjeto().getId() == 619) {
-			for(RegistroAlteracao reg : list) {
+		if (indicador.getProjeto().getId() == 619) {
+			for (RegistroAlteracao reg : list) {
 				LOG.info(indicador.getNome() + "-" + reg.getUsuario() + "-" + reg.getData());
 			}
 		}
