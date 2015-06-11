@@ -61,7 +61,7 @@ public class ProjetoDao {
 		List<RegistroAlteracao> list;
 
 		Query<RegistroAlteracao> queryByDate = ofy.load().type(RegistroAlteracao.class).filter("date > ", minDate);
-		queryByDate.order("date");
+		queryByDate.order("-date");
 		if (limit != null)
 			queryByDate.limit(limit);
 		list = queryByDate.list();
