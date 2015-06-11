@@ -1,6 +1,7 @@
 package br.com.dextra.dexboard.dao;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -60,17 +61,19 @@ public class ProjetoDao {
 		List<RegistroAlteracao> list;
 
 		Query<RegistroAlteracao> queryByDate = ofy.load().type(RegistroAlteracao.class).filter("data >=", minDate);
-		String orderCondition = "-data";
-		queryByDate.order(orderCondition);
-		if (limit != null)
-			queryByDate.limit(limit);
 		list = queryByDate.list();
 
-		if (list.size() == 0 && limit != null) {
-			list = ofy.load().type(RegistroAlteracao.class).limit(limit).order(orderCondition).list();
+		if (list == null || list.size() == 0) {
+			return new ArrayList<RegistroAlteracao>();
 		}
+		
+		Collections.reverse(list);
 
-		return list;
+		if (list.size() <= limit-1) {
+			return list;
+		} else {
+			return list.subList(0, limit);
+		}
 	}
 
 	public List<Projeto> buscarTodosProjetos(boolean ativo, String equipe) {
