@@ -59,7 +59,8 @@
 		}
 		
 		.dx-description {
-			font-weight: bold; 
+			font-weight: bold;
+			font-sixe: 22px; 
 		}
 		
 		.dx-date {
@@ -68,14 +69,8 @@
 			color: #cccccc;
 		}
 		
-		.dx-panel h3 .team-name,
-		.dx-panel h3 .project-name {
-			font-size: small;
-		}
-		
 		.dx-panel h3 .indicador {
 			font-weight: bold;
-			font-size: small;
 		}
 		
 		.dx-panel .panel-body {
@@ -141,7 +136,7 @@
         	if (resultado) {
         		panelParent.append(Mustache.render(panelHtml, {'registros':resultado}));
         		
-        		if (getURLParameter(fromTv) === 'true') {
+        		if (getURLParameter('fromTv') === 'true') {
         			$('.panel-column').addClass('col-xs-12 col-sm-6');
         		} else {
         			$('.panel-column').addClass('col-xs-8 col-sm-4');
