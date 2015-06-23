@@ -53,7 +53,7 @@ public class HistoryServlet extends HttpServlet {
 
 		String json = getJsonHistory();
 
-		memcacheService.put(ProjetoDao.KEY_CACHE, json);
+		memcacheService.put(ProjetoDao.HISTORY_CACHE, json);
 
 		return json;
 	}
@@ -67,9 +67,9 @@ public class HistoryServlet extends HttpServlet {
 	private String getJsonHistory() {
 		Calendar cal = GregorianCalendar.getInstance();
 		cal.setTime(new Date());
-		cal.add(Calendar.DAY_OF_MONTH, -15);
+		cal.add(Calendar.DAY_OF_MONTH, -30);
 
-		List<RegistroAlteracao> buscarHistoricoAlteracoes = getDao().buscarHistoricoAlteracoes(cal.getTime(), 20);
+		List<RegistroAlteracao> buscarHistoricoAlteracoes = getDao().buscarHistoricoAlteracoes(cal.getTime(), 16);
 		List<HistoricoJson> historico = new ArrayList<HistoricoJson>();
 
 		for (RegistroAlteracao h : buscarHistoricoAlteracoes) {
