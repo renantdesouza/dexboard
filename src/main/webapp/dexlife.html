@@ -15,11 +15,12 @@
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 	
 	<script type="text/javascript" src="js/mustache.js"></script>
+	<script type="text/javascript" src="js/utils.js"></script>
 
 	<style type="text/css">
 		html { height: 100%; }
 		body { min-height: 100%; }
-		.dx-container {
+		.dx-container-tv {
 			padding: 0px 10px 0px 10px;
 			overflow: hidden;
 		}
@@ -82,7 +83,7 @@
 	
 	<script type="text/x-mustache" id="template">
 		{{#registros}}
-		<div class="panel-column col-xs-8 col-sm-4">
+		<div class="panel-column">
 			<div class="panel panel-info dx-panel">
 				<div class="panel-heading">
 					<span class="dx-post-status pull-left btn-{{classificacao}}"></span>
@@ -136,6 +137,13 @@
 		$.getJSON("/history", function(resultado) {
         	if (resultado) {
         		panelParent.append(Mustache.render(panelHtml, {'registros':resultado}));
+        		
+        		if (getURLParameter(fromTv) === 'true') {
+        			$('.panel-column').addClass('col-xs-12 col-sm-6');
+        		} else {
+        			$('.panel-column').addClass('col-xs-8 col-sm-4');
+        		}
+        		
         	}
         });
 	});
