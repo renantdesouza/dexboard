@@ -18,6 +18,8 @@
 
 	<system-properties>
 		<property name="java.util.logging.config.file" value="WEB-INF/logging.properties" />
+		<property name="gapi.service.account.email" value="136167132204@developer.gserviceaccount.com" />
+		<property name="gapi.service.account.key" value="/google-querysheet-key.p12" />
 	</system-properties>
 
 	<sessions-enabled>false</sessions-enabled>

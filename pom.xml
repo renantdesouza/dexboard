@@ -18,6 +18,8 @@
 		<gae.application.version>test</gae.application.version>
 		<mycontainer.version>1.2.35</mycontainer.version>
 		<restitory.version>1.0.50</restitory.version>
+		<gapi.service.account.email>${env.GAPI_SERVICE_ACCOUNT_EMAIL}</gapi.service.account.email>
+		<gapi.service.account.key>${env.GAPI_SERVICE_ACCOUNT_KEY}</gapi.service.account.key>
 	</properties>
 
 	<dependencies>
@@ -108,9 +110,14 @@
 			<artifactId>endpoint</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>gapi</groupId>
+			<artifactId>gapi</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 
-		<!-- dependency> <groupId>org.hibernate.javax.persistence</groupId> <artifactId>hibernate-jpa-2.0-api</artifactId> <version>1.0.1.Final</version> 
-			</dependency -->
+		<!-- dependency> <groupId>org.hibernate.javax.persistence</groupId> <artifactId>hibernate-jpa-2.0-api</artifactId>
+			<version>1.0.1.Final</version> </dependency -->
 	</dependencies>
 
 	<build>
@@ -217,7 +224,8 @@
 			<id>pyrata</id>
 			<url>http://repo.pyrata.org/release/maven2</url>
 		</repository>
-		<!-- <repository> <id>dexboard</id> <url>file:///projects/shared/dextra_dexboard/repo</url> </repository> -->
+		<!-- <repository> <id>dexboard</id> <url>file:///projects/shared/dextra_dexboard/repo</url>
+			</repository> -->
 		<repository>
 			<id>jakubiak-gdata</id>
 			<url>http://jakubiak-gdata.googlecode.com/svn/trunk/jakubiak-gdata/repo
@@ -421,6 +429,82 @@
 	</dependencyManagement>
 
 	<profiles>
+		<profile>
+			<id>default</id>
+			<activation>
+				<property>
+					<name>!m2e.version</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>build-helper-maven-plugin</artifactId>
+						<version>1.7</version>
+						<executions>
+							<execution>
+								<id>gapi-key-dir-regex-property</id>
+								<goals>
+									<goal>regex-property</goal>
+								</goals>
+								<configuration>
+									<name>gapi.service.account.key.dir</name>
+									<value>${gapi.service.account.key}</value>
+									<regex>^(.*)\/([^\/]*)$</regex>
+									<replacement>$1</replacement>
+									<failIfNoMatch>true</failIfNoMatch>
+								</configuration>
+							</execution>
+							<execution>
+								<id>gapi-key-file-regex-property</id>
+								<goals>
+									<goal>regex-property</goal>
+								</goals>
+								<configuration>
+									<name>gapi.service.account.key.file</name>
+									<value>${gapi.service.account.key}</value>
+									<regex>^(.*)\/([^\/]*)$</regex>
+									<replacement>$2</replacement>
+									<failIfNoMatch>true</failIfNoMatch>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<version>2.3</version>
+						<configuration>
+							<archiveClasses>true</archiveClasses>
+							<warSourceExcludes>WEB-INF/classes/</warSourceExcludes>
+							<webResources>
+								<!-- in order to interpolate version from pom into appengine-web.xml -->
+								<resource>
+									<directory>${basedir}/src/main/webapp/WEB-INF</directory>
+									<filtering>true</filtering>
+									<targetPath>WEB-INF</targetPath>
+									<includes>
+										<include>**/*.xml</include>
+									</includes>
+								</resource>
+								<!-- GAPI key -->
+								<resource>
+									<directory>${gapi.service.account.key.dir}</directory>
+									<includes>
+										<include>${gapi.service.account.key.file}</include>
+									</includes>
+									<filtering>false</filtering>
+									<targetPath>WEB-INF/classes</targetPath>
+								</resource>
+							</webResources>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
 		<profile>
 			<id>integration-build</id>
 			<properties>
