@@ -29,7 +29,7 @@ public class NotificacaoDao {
 
 	private static final Logger LOG = LoggerFactory.getLogger(NotificacaoDao.class);
 
-	private static final int DIAS_PARA_NOTIFICAR = 3;
+	private static final int DIAS_PARA_NOTIFICAR = 2;
 	private static final int DIAS_PARA_RENOTIFICAR = 4;
 
 	private Objectify ofy;
@@ -109,7 +109,7 @@ public class NotificacaoDao {
 		if (validadeProp != null) {
 			return Integer.parseInt(validadeProp);
 		}
-		return 20;
+		return 25;
 	}
 
 	public void notificarEquipeProjeto(Projeto projeto) {
