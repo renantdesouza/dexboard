@@ -13,6 +13,9 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import br.com.dextra.dexboard.domain.Indicador;
 import br.com.dextra.dexboard.domain.Notificacao;
 import br.com.dextra.dexboard.domain.Projeto;
@@ -22,6 +25,8 @@ import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
 
 public class NotificacaoDao {
+
+	private static final Logger LOG = LoggerFactory.getLogger(NotificacaoDao.class);
 
 	private static final int DIAS_PARA_NOTIFICAR = 3;
 	private static final int DIAS_PARA_RENOTIFICAR = 4;
@@ -118,6 +123,9 @@ public class NotificacaoDao {
 		String msgBody = "<img src=\"http://dexboard-reload.appspot.com/img/lazy.jpg\"/>";
 
 		Message msg = new MimeMessage(session);
+
+		LOG.info("Enviando email de notificacao: projeto=" + projeto.getNome() + ", equipe=" + projeto.getEquipe() + ", email="
+				+ projeto.getEmail());
 
 		try {
 			msg.setFrom(new InternetAddress("dexboard@dextra-sw.com", "Dexboard Reload"));

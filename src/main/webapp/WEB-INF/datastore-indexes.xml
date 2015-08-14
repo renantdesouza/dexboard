@@ -1,9 +1,0 @@
-<datastore-indexes>
-
-	<datastore-index kind="RegistroAlteracao" ancestor="false"
-		source="manual">
-		<property name="indicador" direction="asc" />
-		<property name="data" direction="desc" />
-	</datastore-index>
-
-</datastore-indexes>
