@@ -8,11 +8,11 @@ public class PlanilhaPrincipal extends PlanilhaDexboard {
 
 	private static final int COLUNA_QUANTIDADE_PROJETOS = 9;
 
-	private static final String COLUNA_ID_PROJETO_X = "id no PMA";
-	private static final String COLUNA_NOME_PROJETO_X = "NickName";
-	private static final String COLUNA_EQUIPE_PROJETO_X = "Equipe";
-	private static final String COLUNA_EMAIL_PROJETO_X = "Email";
-	private static final String COLUNA_CPI_PROJETO_X = "CPI";
+	private static final String COLUNA_ID_PROJETO = "id no PMA";
+	private static final String COLUNA_NOME_PROJETO = "NickName";
+	private static final String COLUNA_EQUIPE_PROJETO = "Equipe";
+	private static final String COLUNA_EMAIL_PROJETO = "Email";
+	private static final String COLUNA_CPI_PROJETO = "CPI";
 
 	public PlanilhaPrincipal() {
 		super("Principal");
@@ -23,11 +23,11 @@ public class PlanilhaPrincipal extends PlanilhaDexboard {
 	}
 
 	private String buscarNomeDoProjeto(int indiceProjeto) {
-		return recuperarConteudoCelula(indiceProjeto, COLUNA_NOME_PROJETO_X);
+		return recuperarConteudoCelula(indiceProjeto, COLUNA_NOME_PROJETO);
 	}
 
 	private String buscarEquipeProjeto(int indiceProjeto) {
-		String equipe = recuperarConteudoCelula(indiceProjeto, COLUNA_EQUIPE_PROJETO_X);
+		String equipe = recuperarConteudoCelula(indiceProjeto, COLUNA_EQUIPE_PROJETO);
 		if (equipe != null) {
 			return equipe.toUpperCase();
 		}
@@ -35,19 +35,15 @@ public class PlanilhaPrincipal extends PlanilhaDexboard {
 	}
 
 	private String buscarEmailProjeto(int indiceProjeto) {
-		String equipe = recuperarConteudoCelula(indiceProjeto, COLUNA_EMAIL_PROJETO_X);
-		if (equipe != null) {
-			return equipe.toUpperCase();
-		}
-		return null;
+		return recuperarConteudoCelula(indiceProjeto, COLUNA_EMAIL_PROJETO);
 	}
 
-	private Long buscarIdProjetoX(int indiceProjeto) {
-		return recuperarConteudoCelulaInt(indiceProjeto, COLUNA_ID_PROJETO_X).longValue();
+	private Long buscarIdProjeto(int indiceProjeto) {
+		return recuperarConteudoCelulaInt(indiceProjeto, COLUNA_ID_PROJETO).longValue();
 	}
 
 	private Double buscarCpiProjetoX(int indiceProjeto) {
-		return recuperarConteudoCelulaDouble(indiceProjeto, COLUNA_CPI_PROJETO_X);
+		return recuperarConteudoCelulaDouble(indiceProjeto, COLUNA_CPI_PROJETO);
 	}
 
 	public Map<Long, Projeto> buscarDadosDosProjetos() {
@@ -57,7 +53,7 @@ public class PlanilhaPrincipal extends PlanilhaDexboard {
 
 		for (int i = 0; i < quantidadeProjetos; ++i) {
 			Projeto projeto = new Projeto();
-			projeto.setIdPma(buscarIdProjetoX(i));
+			projeto.setIdPma(buscarIdProjeto(i));
 			projeto.setNome(buscarNomeDoProjeto(i));
 			projeto.setEquipe(buscarEquipeProjeto(i));
 			projeto.setEmail(buscarEmailProjeto(i));
