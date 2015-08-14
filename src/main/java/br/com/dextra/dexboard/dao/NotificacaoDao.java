@@ -129,7 +129,7 @@ public class NotificacaoDao {
 		try {
 			msg.setFrom(new InternetAddress("dexboard@dextra-sw.com", "Dexboard Reload"));
 			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(projeto.getEmail(), projeto.getEquipe()));
-			msg.setSubject("Projeto desatualizado: " + projeto.getNome());
+			msg.setSubject("[dexboard] Atualizar projeto: " + projeto.getNome());
 			msg.setContent(createMessageBody(projeto), "text/html");
 			Transport.send(msg);
 		} catch (UnsupportedEncodingException | MessagingException e) {
@@ -139,8 +139,8 @@ public class NotificacaoDao {
 
 	private String createMessageBody(Projeto projeto) {
 		StringBuilder msgBody = new StringBuilder();
-		msgBody.append(String.format("<p><b>%s</b>, seu projeto <b>%s</b> est&aacute; atualizado no Dexboard!</p>", projeto.getEquipe(),
-				projeto.getNome()));
+		msgBody.append(String.format("<p><b>%s</b>, n&atilde;o deixe seu projeto <b>%s</b> ficar desatualizado...</p>",
+				projeto.getEquipe(), projeto.getNome()));
 		msgBody.append("<p>Acesse o dexboard para atualiz&aacute;-lo: <a href=\"http://dexboard-reload.appspot.com\">dexboard-reload.appspot.com</a></p>");
 		msgBody.append("<img width=300 src=\"" + getImg() + "\"/>");
 		return msgBody.toString();
