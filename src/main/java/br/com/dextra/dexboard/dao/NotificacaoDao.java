@@ -120,7 +120,7 @@ public class NotificacaoDao {
 		Properties props = new Properties();
 		Session session = Session.getDefaultInstance(props, null);
 
-		String msgBody = "<img src=\"http://dexboard-reload.appspot.com/img/lazy.jpg\"/>";
+		String msgBody = "<img src=\"http://itsinfoworld.com/wp-content/uploads/2015/03/Being-lazy.jpg\"/>";
 
 		Message msg = new MimeMessage(session);
 
@@ -130,7 +130,7 @@ public class NotificacaoDao {
 		try {
 			msg.setFrom(new InternetAddress("dexboard@dextra-sw.com", "Dexboard Reload"));
 			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(projeto.getEmail(), projeto.getEquipe()));
-			msg.setSubject("Atualizar projeto ;)");
+			msg.setSubject("Seu projeto está desatualizado!");
 			msg.setContent(msgBody, "text/html");
 			Transport.send(msg);
 		} catch (UnsupportedEncodingException | MessagingException e) {

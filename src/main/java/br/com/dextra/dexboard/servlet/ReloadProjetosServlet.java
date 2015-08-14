@@ -96,10 +96,12 @@ public class ReloadProjetosServlet extends HttpServlet {
 			Projeto projetoAtual = projetosPlanilha.get(projetoEmCache.getIdPma());
 			if (projetoAtual != null) {
 				if (alterouInformacoesProjeto(projetoEmCache, projetoAtual)) {
-					LOG.info(String.format("Atualizando cpi do projeto \"%s\" para \"%s\"", projetoAtual.getNome(), projetoAtual.getCpi()));
+					LOG.info(String.format("Atualizando cpi do projeto %s para %s - equipe=%s, email=%s", projetoAtual.getNome(),
+							projetoAtual.getCpi(), projetoAtual.getEquipe(), projetoAtual.getEmail()));
 					projetoEmCache.setNome(projetoAtual.getNome());
 					projetoEmCache.setCpi(projetoAtual.getCpi());
 					projetoEmCache.setEquipe(projetoAtual.getEquipe());
+					projetoEmCache.setEmail(projetoAtual.getEmail());
 					dao.salvarProjeto(projetoEmCache);
 					LOG.info(String.format("Projeto \"%s\" salvo", projetoAtual.getNome()));
 				}
@@ -113,11 +115,12 @@ public class ReloadProjetosServlet extends HttpServlet {
 
 	private boolean alterouInformacoesProjeto(Projeto projetoEmCache, Projeto projetoAtual) {
 		return alterou(projetoEmCache.getCpi(), projetoAtual.getCpi()) || alterou(projetoEmCache.getNome(), projetoAtual.getNome())
-				|| alterou(projetoEmCache.getEquipe(), projetoAtual.getEquipe());
+				|| alterou(projetoEmCache.getEquipe(), projetoAtual.getEquipe())
+				|| alterou(projetoEmCache.getEmail(), projetoAtual.getEmail());
 	}
 
 	private boolean alterou(Object valorEmCache, Object valorAtual) {
-		if(valorAtual == null) {
+		if (valorAtual == null) {
 			return false;
 		}
 		return valorEmCache == null || !valorEmCache.equals(valorAtual);
