@@ -5,6 +5,15 @@
 	version="2.5">
 
 	<servlet>
+		<servlet-name>NotificacaoServlet</servlet-name>
+		<servlet-class>br.com.dextra.dexboard.servlet.NotificacaoServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NotificacaoServlet</servlet-name>
+		<url-pattern>/notificacao/projetos</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>ReloadProjetosServlet</servlet-name>
 		<servlet-class>br.com.dextra.dexboard.servlet.ReloadProjetosServlet</servlet-class>
 	</servlet>
@@ -40,14 +49,9 @@
 		<url-pattern>/indicador</url-pattern>
 	</servlet-mapping>
 
-	<!-- servlet>
-		<servlet-name>ReIndexServlet</servlet-name>
-		<servlet-class>endpoint.tools.ReIndexServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ReIndexServlet</servlet-name>
-		<url-pattern>/_tools/reindex/*</url-pattern>
-	</servlet-mapping-->
+	<!-- servlet> <servlet-name>ReIndexServlet</servlet-name> <servlet-class>endpoint.tools.ReIndexServlet</servlet-class>
+		</servlet> <servlet-mapping> <servlet-name>ReIndexServlet</servlet-name>
+		<url-pattern>/_tools/reindex/*</url-pattern> </servlet-mapping -->
 
 	<filter>
 		<filter-name>AuthFilter</filter-name>
