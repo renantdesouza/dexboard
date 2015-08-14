@@ -115,15 +115,15 @@ public class NotificacaoDao {
 		Properties props = new Properties();
 		Session session = Session.getDefaultInstance(props, null);
 
-		String msgBody = "...";
+		String msgBody = "<img src=\"http://dexboard-reload.appspot.com/img/lazy.jpg\"/>";
 
 		Message msg = new MimeMessage(session);
 
 		try {
-			msg.setFrom(new InternetAddress("jose.guede@dextra-sw.com", "José Fernando Guedes"));
+			msg.setFrom(new InternetAddress("dexboard@dextra-sw.com", "Dexboard Reload"));
 			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(projeto.getEmail(), projeto.getEquipe()));
-			msg.setSubject("Your Example.com account has been activated");
-			msg.setText(msgBody);
+			msg.setSubject("Atualizar projeto ;)");
+			msg.setContent(msgBody, "text/html");
 			Transport.send(msg);
 		} catch (UnsupportedEncodingException | MessagingException e) {
 			e.printStackTrace();
