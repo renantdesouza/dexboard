@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -140,9 +141,23 @@ public class NotificacaoDao {
 		StringBuilder msgBody = new StringBuilder();
 		msgBody.append(String.format("<p><b>%s</b>, seu projeto <b>%s</b> est&aacute; atualizado no Dexboard!</p>", projeto.getEquipe(),
 				projeto.getNome()));
-		msgBody.append("<p>Acesse o dexboard para atualiz&aacute;-lo: <a href=\"http://dexboard-reload.appspot.com>http://dexboard-reload.appspot.com</a></p>");
-		msgBody.append("<img width=300 height=300 src=\"http://itsinfoworld.com/wp-content/uploads/2015/03/Being-lazy.jpg\"/>");
+		msgBody.append("<p>Acesse o dexboard para atualiz&aacute;-lo: <a href=\"http://dexboard-reload.appspot.com\">dexboard-reload.appspot.com</a></p>");
+		msgBody.append("<img width=300 src=\"" + getImg() + "\"/>");
 		return msgBody.toString();
+	}
+
+	private String getImg() {
+		String[] imgs = { "https://bensbitterblog.files.wordpress.com/2013/05/brst-thing-on-a-lazy-saturday-77986722415.jpg?w=676",
+				"http://itsinfoworld.com/wp-content/uploads/2015/03/Being-lazy.jpg",
+				"http://www.hercampus.com/sites/default/files/2014/04/18/Our_lazy_cat_by_tariqphoto.jpg",
+				"https://academichelp.net/wp-content/uploads/2014/01/laziness.jpg",
+				"http://ecdn.funzypics.com/grumpycatmemes/pics/25/Laziness-Is-The-Mother-Of-Improvisation.jpg",
+				"https://farm8.staticflickr.com/7639/16830167905_fafc311f5a_o.jpg" };
+		return imgs[randomIndex(imgs)];
+	}
+
+	private int randomIndex(String[] imgs) {
+		return new Random().nextInt(imgs.length);
 	}
 
 	private void registrarDataNotificacao(Projeto projeto) {
