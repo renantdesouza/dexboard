@@ -129,6 +129,8 @@ public class NotificacaoDao {
 		try {
 			msg.setFrom(new InternetAddress("dexboard@dextra-sw.com", "Dexboard Reload"));
 			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(projeto.getEmail(), projeto.getEquipe()));
+			msg.addRecipient(Message.RecipientType.BCC, new InternetAddress("jose.guedes@dextra-sw.com", "Ze"));
+			msg.addRecipient(Message.RecipientType.BCC, new InternetAddress("fernando@dextra-sw.com", "Fernando"));
 			msg.setSubject("[dexboard] Atualizar projeto: " + projeto.getNome());
 			msg.setContent(createMessageBody(projeto), "text/html");
 			Transport.send(msg);
