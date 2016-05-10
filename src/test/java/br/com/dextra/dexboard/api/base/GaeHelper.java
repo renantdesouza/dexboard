@@ -1,11 +1,9 @@
-package br.com.dextra.dexboard.base;
+package br.com.dextra.dexboard.api.base;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.naming.InitialContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,29 +12,16 @@ import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestC
 import com.google.appengine.tools.development.testing.LocalServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.google.appengine.tools.development.testing.LocalTaskQueueTestConfig;
-import com.googlecode.mycontainer.gae.web.LocalServiceTestHelperFilter;
-import com.googlecode.mycontainer.kernel.ShutdownCommand;
-import com.googlecode.mycontainer.kernel.boot.ContainerBuilder;
-import com.googlecode.mycontainer.web.ContextWebServer;
-import com.googlecode.mycontainer.web.FilterDesc;
-import com.googlecode.mycontainer.web.WebServerDeployer;
-import com.googlecode.mycontainer.web.jetty.JettyServerDeployer;
 
-public class GAETestHelper {
+class GaeHelper {
 
-	private static final Logger LOG = LoggerFactory.getLogger(GAETestHelper.class);
+	private static final Logger LOG = LoggerFactory.getLogger(GaeHelper.class);
 
 	protected LocalServiceTestHelper helper;
 
 	private LocalTaskQueueTestConfig task;
 
 	private LocalDatastoreServiceTestConfig ds;
-
-	private int port = 8380;
-
-	public void setPort(int port) {
-		this.port = port;
-	}
 
 	public void prepareLocalServiceTestHelper() throws Exception {
 		ds = new LocalDatastoreServiceTestConfig();
@@ -46,8 +31,7 @@ public class GAETestHelper {
 		if (task != null) {
 			list.add(task);
 		}
-		helper = new LocalServiceTestHelper(
-				list.toArray(new LocalServiceTestConfig[0]));
+		helper = new LocalServiceTestHelper(list.toArray(new LocalServiceTestConfig[0]));
 		Map<String, Object> envs = new HashMap<String, Object>();
 		envs.put("com.google.appengine.api.users.UserService.user_id_key", "10");
 		helper.setEnvAttributes(envs);
@@ -87,38 +71,6 @@ public class GAETestHelper {
 			}
 		} catch (Exception e) {
 			LOG.info("error", e);
-		}
-	}
-
-	public ContainerBuilder bootMycontainer() throws Exception {
-		ContainerBuilder builder = new ContainerBuilder();
-		builder.deployVMShutdownHook();
-
-		WebServerDeployer server = builder
-				.createDeployer(JettyServerDeployer.class);
-		server.setName("WebServer");
-		server.bindPort(port);
-
-		ContextWebServer web = server.createContextWebServer();
-		web.setContext("/");
-		web.setResources("src/main/webapp");
-
-		LocalServiceTestHelperFilter gae = new LocalServiceTestHelperFilter(
-				helper);
-		web.getFilters().add(new FilterDesc(LogFilter.class, "/*"));
-		web.getFilters().add(new FilterDesc(gae, "/*"));
-		server.deploy();
-
-		return builder;
-	}
-
-	public void shutdownMycontainer() {
-		try {
-			ShutdownCommand shutdown = new ShutdownCommand();
-			shutdown.setContext(new InitialContext());
-			shutdown.shutdown();
-		} catch (Exception e) {
-			LOG.error("error", e);
 		}
 	}
 

@@ -1,8 +1,14 @@
 package br.com.dextra.dexboard.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Index;
+
+import br.com.dextra.dexboard.json.ProjetoJson;
 
 @Entity
 public class Projeto {
@@ -64,5 +70,24 @@ public class Projeto {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	@Ignore // Lazy
+	private ProjetoJson projetoJson;
+	
+	public ProjetoJson toProjetoJson() {
+		if (this.projetoJson == null) {
+			this.projetoJson = new ProjetoJson(this); 
+		}
+		return this.projetoJson;
+	}
+	
+	public static List<ProjetoJson> toProjetoJson(List<Projeto> projetos) {
+		ArrayList<ProjetoJson> projetosJson = new ArrayList<ProjetoJson>(projetos.size());
+		for (Projeto p : projetos) {
+			projetosJson.add(p.toProjetoJson());
+		}
+		
+		return projetosJson;
 	}
 }

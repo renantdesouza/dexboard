@@ -1,30 +1,28 @@
-package br.com.dextra.dexboard;
+package br.com.dextra.dexboard.api;
 
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
-import br.com.dextra.dexboard.base.DexboardTestCase;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+import br.com.dextra.dexboard.api.base.IntegrationTest;
 import br.com.dextra.dexboard.dao.ProjetoDao;
 import br.com.dextra.dexboard.domain.Classificacao;
 import br.com.dextra.dexboard.domain.Indicador;
 import br.com.dextra.dexboard.domain.RegistroAlteracao;
 import br.com.dextra.dexboard.json.IndicadorJson;
 
-import com.googlecode.restitory.gae.http.Response;
-
-import flexjson.JSONDeserializer;
-
-public class DexboardTest extends DexboardTestCase {
+public class ITestDexboard extends IntegrationTest {
 
 	private static final int ID_PROJETO_CONTPLAY = 495;
 	private static final int ID_INDICADOR_1 = 1;
@@ -37,36 +35,45 @@ public class DexboardTest extends DexboardTestCase {
 
 	@Test
 	public void testQueryProjetos() {
-		List<Map<Object, Object>> projetos = queryProjetosJson(null);
+		JsonArray projetos = queryProjetosJson(null);
 
 		assertEquals(23, projetos.size());
+		
+		JsonObject a4c = projetos.get(0).getAsJsonObject();
+		JsonObject adv = projetos.get(1).getAsJsonObject();
 
-		assertProjeto(495, "A4C", "CHAOS", 1.01, projetos.get(0));
-		assertProjeto(585, "ADV: Fase II", "MUSTACHE", 1.39, projetos.get(1));
+		assertProjeto(495, "A4C", "CHAOS", 1.01, a4c);
+		assertProjeto(585, "ADV: Fase II", "MUSTACHE", 1.39, adv);
 	}
 
 	@Test
 	public void testQueryProjetosEquipe() {
-		List<Map<Object, Object>> projetos = queryProjetosJson("Rocket");
-
+		JsonArray projetos = queryProjetosJson("Rocket");
+		
 		assertEquals(2, projetos.size());
 
-		assertProjeto(565, "Confidence", "ROCKET", 0.99, projetos.get(0));
-		assertProjeto(579, "Movile", "ROCKET", 1.70, projetos.get(1));
+		JsonObject confidence = projetos.get(0).getAsJsonObject();
+		JsonObject movile = projetos.get(1).getAsJsonObject();
+		
+		assertProjeto(565, "Confidence", "ROCKET", 0.99, confidence);
+		assertProjeto(579, "Movile", "ROCKET", 1.70, movile);
 
 	}
 
-	private List<Map<Object, Object>> queryProjetosJson(String equipe) {
-		String path = "/query" + (equipe != null ? "?equipe=" + equipe : "");
-		Response response = adapter.success("GET", path, null, null);
-		return new JSONDeserializer<List<Map<Object, Object>>>().use(null, ArrayList.class).deserialize(response.getContent().getText());
+	private JsonArray queryProjetosJson(String equipe) {
+		Map<String, String> query = new HashMap<>();
+		if (equipe != null && !equipe.isEmpty()) {
+			query.put("equipe", equipe);
+		}
+		
+		return this.service.get("/query", query).getAsJsonArray();
 	}
 
-	private void assertProjeto(int idPma, String nome, String equipe, double cpi, Map<Object, Object> projetoJson) {
-		assertEquals(idPma, projetoJson.get("idPma"));
-		assertEquals(nome, projetoJson.get("nome"));
-		assertEquals(equipe, projetoJson.get("equipe"));
-		assertEquals(cpi, projetoJson.get("cpi"));
+	private void assertProjeto(int idPma, String nome, String equipe, double cpi, JsonObject projetoJson) {
+		assertEquals(idPma, projetoJson.get("idPma").getAsInt());
+		assertEquals(nome, projetoJson.get("nome").getAsString());
+		assertEquals(equipe, projetoJson.get("equipe").getAsString());
+		assertEquals(cpi, projetoJson.get("cpi").getAsDouble(), 0.001);
 	}
 
 	@Test

@@ -25,11 +25,12 @@ public class ReloadProjetosServlet extends HttpServlet {
 	private static final Logger LOG = LoggerFactory.getLogger(ReloadProjetosServlet.class);
 
 	private static final long serialVersionUID = -1248500946944090403L;
-	private ProjetoDao dao = new ProjetoDao();
 	private List<Indicador> indicadores = null;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		ProjetoDao dao = new ProjetoDao();
 
 		resp.setContentType("application/json");
 		PlanilhaIndicadores planilhaIndicadores = new PlanilhaIndicadores();
@@ -67,6 +68,8 @@ public class ReloadProjetosServlet extends HttpServlet {
 	}
 
 	private void adicionaProjetosNovos(Map<Long, Projeto> mapProjetosDataStore, Collection<Projeto> ativos) {
+		
+		ProjetoDao dao = new ProjetoDao();
 
 		for (Projeto p : ativos) {
 			Projeto projeto = mapProjetosDataStore.get(p.getIdPma());
@@ -87,6 +90,8 @@ public class ReloadProjetosServlet extends HttpServlet {
 	}
 
 	private void atualizaProjetosAtivos(Map<Long, Projeto> projetosPlanilha, List<Projeto> projetosEmCache) {
+		
+		ProjetoDao dao = new ProjetoDao();
 
 		if (projetosEmCache == null) {
 			return;

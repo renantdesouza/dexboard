@@ -1,6 +1,7 @@
 package br.com.dextra.dexboard.repository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,6 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Text;
 
-import edu.emory.mathcs.backport.java.util.Collections;
 import flexjson.JSONDeserializer;
 import flexjson.JSONSerializer;
 
@@ -61,8 +61,7 @@ public class ProjetoRepository {
 		serializer.exclude("*.class");
 		String data = serializer.deepSerialize(lista);
 
-		DatastoreService service = DatastoreServiceFactory
-				.getDatastoreService();
+		DatastoreService service = DatastoreServiceFactory.getDatastoreService();
 		Entity entity = new Entity("projectData", "data");
 		entity.setProperty("json", new Text(data));
 		entity.setProperty("lastModified", new Date().getTime());

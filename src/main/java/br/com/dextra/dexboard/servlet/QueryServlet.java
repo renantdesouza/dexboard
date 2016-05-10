@@ -1,7 +1,6 @@
 package br.com.dextra.dexboard.servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -10,22 +9,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
 
 import br.com.dextra.dexboard.dao.ProjetoDao;
 import br.com.dextra.dexboard.domain.Projeto;
 import br.com.dextra.dexboard.json.ProjetoJson;
 import br.com.dextra.dexboard.repository.ProjetoComparator;
-
-import com.google.appengine.api.memcache.MemcacheService;
-import com.google.appengine.api.memcache.MemcacheServiceFactory;
-
 import flexjson.JSONSerializer;
 
 public class QueryServlet extends HttpServlet {
-
-	private static final Logger LOG = LoggerFactory.getLogger(QueryServlet.class);
 
 	private static final String EQUIPE_HTTP_PARAMETER = "equipe";
 
@@ -60,19 +53,13 @@ public class QueryServlet extends HttpServlet {
 
 	private String getJsonProjetos(String equipe) {
 		ProjetoDao dao = new ProjetoDao();
-		List<ProjetoJson> projetos = new ArrayList<ProjetoJson>();
-		List<Projeto> buscarTodosProjetos = dao.buscarTodosProjetos(true, equipe);
-
-		for (Projeto projeto : buscarTodosProjetos) {
-			LOG.info("buscando projeto: " + projeto.getNome());
-			projetos.add(new ProjetoJson(projeto));
-		}
-
+		List<Projeto> projetos = dao.buscarTodosProjetos(true, equipe);
 		Collections.sort(projetos, new ProjetoComparator());
 
+		List<ProjetoJson> projetosJson = Projeto.toProjetoJson(projetos);
 		JSONSerializer serializer = new JSONSerializer();
 		serializer.exclude("*.class", "*.projeto");
-		String json = serializer.deepSerialize(projetos);
+		String json = serializer.deepSerialize(projetosJson);
 		return json;
 	}
 

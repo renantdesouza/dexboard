@@ -1,12 +1,12 @@
 package br.com.dextra.dexboard.domain;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
-import com.ibm.icu.text.SimpleDateFormat;
 
 import flexjson.JSON;
 

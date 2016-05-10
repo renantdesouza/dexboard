@@ -13,8 +13,7 @@ import com.google.appengine.api.memcache.MemcacheServiceFactory;
 
 public class ProjetoPlanilhaService {
 
-	public final static Logger LOG = LoggerFactory
-			.getLogger(ProjetoPlanilhaService.class);
+	public final static Logger LOG = LoggerFactory.getLogger(ProjetoPlanilhaService.class);
 
 	public static Map<Long, Projeto> buscarDadosProjetosAtivos() {
 		PlanilhaPrincipal planilhaPrincipal = new PlanilhaPrincipal();
@@ -22,8 +21,7 @@ public class ProjetoPlanilhaService {
 	}
 
 	public static void limparCache() {
-		MemcacheService cache = MemcacheServiceFactory
-				.getMemcacheService("dados-projetos");
+		MemcacheService cache = MemcacheServiceFactory.getMemcacheService("dados-projetos");
 		cache.delete("dados-projetos");
 	}
 
