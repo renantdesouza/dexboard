@@ -20,15 +20,11 @@ public abstract class IntegrationTest {
 
 	private static final String APP_TEST = "app.test";
 
-	protected GaeHelper helper;
-
-	protected HttpFacade service = new HttpFacade();
+	protected LocalHttpFacade service = new LocalHttpFacade();
 
 	@Before
 	public void setUp() throws Exception {
 		System.setProperty(APP_TEST, "true");
-		helper = new GaeHelper();
-		helper.prepareLocalServiceTestHelper();
 	}
 
 	protected void alteraIndicadorDeProjeto(long idProjeto, int idIndicador, Classificacao classificacao) throws IOException, SAXException {

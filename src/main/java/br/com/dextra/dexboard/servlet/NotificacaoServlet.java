@@ -15,8 +15,6 @@ public class NotificacaoServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -9049212521731856178L;
 
-	private NotificacaoDao dao = new NotificacaoDao();
-
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("application/json");
@@ -25,6 +23,8 @@ public class NotificacaoServlet extends HttpServlet {
 	}
 
 	private void notificarProjetosAtrasados() {
+		
+		NotificacaoDao dao = new NotificacaoDao();
 
 		List<Projeto> projetos = dao.buscarProjetosParaNotificar();
 		for (Projeto projeto : projetos) {

@@ -1,5 +1,7 @@
 package br.com.dextra.dexboard.planilha;
 
+import br.com.dextra.dexboard.servlet.Context;
+
 public class PlanilhaDexboard extends Planilha {
 
 	private static final String CHAVE_PLANILHA_DEXBOARD_PRODUCAO = "1Fjul3zOetgENCTfnnd3gDaxOEh3WaIQr4uV3Th2wRQo";
@@ -11,13 +13,10 @@ public class PlanilhaDexboard extends Planilha {
 	}
 
 	private static String getChavePlanilha() {
-		if (isTestEnvironment()) {
+		if (Context.isTestEnvironment()) {
 			return CHAVE_PLANILHA_DEXBOARD_TESTE;
 		}
 		return CHAVE_PLANILHA_DEXBOARD_PRODUCAO;
 	}
 
-	private static boolean isTestEnvironment() {
-		return System.getProperty("app.test") != null && System.getProperty("app.test").equals("true");
-	}
 }

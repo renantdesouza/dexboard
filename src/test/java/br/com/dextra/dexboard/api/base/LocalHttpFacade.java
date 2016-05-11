@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
-public class HttpFacade {
+public class LocalHttpFacade {
 
 	private static final String BASE_URL = "http://localhost:8080";
 	private static final Client CLIENT = ClientBuilder.newClient();
@@ -25,8 +25,6 @@ public class HttpFacade {
 		WebTarget target = this.appendQuery(query).path(path);
 		Builder request = target.request(MediaType.APPLICATION_JSON);
 		String responseText = request.get(String.class);
-		
-		//System.out.println(responseText);
 		
 		return this.parser.parse(responseText);
 	}
