@@ -134,6 +134,7 @@
 			<artifactId>gapi</artifactId>
 			<version>1.0</version>
 		</dependency>
+		
 	</dependencies>
 	
 	<profiles>
@@ -346,6 +347,18 @@
 				<configuration>
 					<stopPort>8005</stopPort>
 					<stopKey>STOP</stopKey>
+					<loginServices>
+						<loginService implementation="org.eclipse.jetty.security.HashLoginService">
+							<name>Test Realm</name>
+							<config>${project.basedir}/src/test/resources/realm.properties</config>
+						</loginService>
+					</loginServices>
+					<systemProperties>
+						<systemProperty>
+							<name>integration-test</name>
+							<value>true</value>
+						</systemProperty>
+					</systemProperties>
 				</configuration>
 <!--
 				<executions>

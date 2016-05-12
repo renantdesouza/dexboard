@@ -15,7 +15,7 @@ import com.google.gson.JsonParser;
 public class LocalHttpFacade {
 
 	private static final String BASE_URL = "http://localhost:8080";
-	private static final Client CLIENT = ClientBuilder.newClient();
+	private static final Client CLIENT = ClientBuilder.newClient().register(Authenticator.class);
 	private static final HashMap<String, String> EMPTY_QUERY = new HashMap<>(0);
 
 	private final WebTarget target = CLIENT.target(BASE_URL);
