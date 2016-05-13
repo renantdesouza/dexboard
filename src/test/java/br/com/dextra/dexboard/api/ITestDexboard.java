@@ -6,20 +6,22 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import br.com.dextra.dexboard.api.base.IntegrationTest;
 import br.com.dextra.dexboard.dao.ProjetoDao;
 import br.com.dextra.dexboard.domain.Classificacao;
 import br.com.dextra.dexboard.domain.Indicador;
-import br.com.dextra.dexboard.domain.RegistroAlteracao;
 import br.com.dextra.dexboard.json.IndicadorJson;
 
 public class ITestDexboard extends IntegrationTest {
@@ -38,7 +40,7 @@ public class ITestDexboard extends IntegrationTest {
 		JsonArray projetos = queryProjetosJson(null);
 
 		assertEquals(23, projetos.size());
-		
+
 		JsonObject a4c = projetos.get(0).getAsJsonObject();
 		JsonObject adv = projetos.get(1).getAsJsonObject();
 
@@ -49,12 +51,12 @@ public class ITestDexboard extends IntegrationTest {
 	@Test
 	public void testQueryProjetosEquipe() {
 		JsonArray projetos = queryProjetosJson("Rocket");
-		
+
 		assertEquals(2, projetos.size());
 
 		JsonObject confidence = projetos.get(0).getAsJsonObject();
 		JsonObject movile = projetos.get(1).getAsJsonObject();
-		
+
 		assertProjeto(565, "Confidence", "ROCKET", 0.99, confidence);
 		assertProjeto(579, "Movile", "ROCKET", 1.70, movile);
 
@@ -65,7 +67,7 @@ public class ITestDexboard extends IntegrationTest {
 		if (equipe != null && !equipe.isEmpty()) {
 			query.put("equipe", equipe);
 		}
-		
+
 		return this.service.get("/query", query).getAsJsonArray();
 	}
 
@@ -79,14 +81,21 @@ public class ITestDexboard extends IntegrationTest {
 	@Test
 	public void testAlterarIndicadores() throws IOException, SAXException {
 		alteraIndicadorDeProjeto(ID_PROJETO_CONTPLAY, ID_INDICADOR_1, Classificacao.OK);
-		alteraIndicadorDeProjeto(ID_PROJETO_CONTPLAY, ID_INDICADOR_2, Classificacao.ATENCAO);
-
 		verificaSeProjetoEstaComIndicadorPreenchido(ID_PROJETO_CONTPLAY, ID_INDICADOR_1, Classificacao.OK);
+	}
+	
+	@Test
+	public void testAlterarIndicadores2() throws IOException, SAXException {
+		alteraIndicadorDeProjeto(ID_PROJETO_CONTPLAY, ID_INDICADOR_2, Classificacao.ATENCAO);
 		verificaSeProjetoEstaComIndicadorPreenchido(ID_PROJETO_CONTPLAY, ID_INDICADOR_2, Classificacao.ATENCAO);
 	}
 
 	@Test
 	public void testAtrasoIndicadorJson() throws Exception {
+		Assert.assertTrue(false);
+		
+		/*
+		
 		carregaProjetos();
 
 		for (int i = 1; i <= 6; i++) {
@@ -100,29 +109,42 @@ public class ITestDexboard extends IntegrationTest {
 		Assert.assertFalse(indicadorJson.getAtrasado());
 		System.setProperty("validade", "-3");
 		Assert.assertTrue(indicadorJson.getAtrasado());
+		*/
 	}
 
+	private void verificaSeProjetoEstaComIndicadorPreenchido(int idProjeto, 
+			int idIndicadorAlterado, Classificacao classificacao) {
+		
+		
+		JsonObject projeto = this.getProjeto(idProjeto);
+		JsonArray indicadores = projeto.get("indicadores").getAsJsonArray();
+		
+		JsonObject indicadorAlterado = encontraIndicadorDeId(indicadores, idIndicadorAlterado);
+		
+		String classificacaoAlterada = indicadorAlterado.get("classificacao").getAsString();
+		JsonArray registrosAlterados = indicadorAlterado.get("registros").getAsJsonArray();
+		JsonObject ultimaAlteracao = registrosAlterados.get(0).getAsJsonObject();
+		JsonElement dataAlterada = ultimaAlteracao.get("data");
+		String usuarioAlterado = ultimaAlteracao.get("usuario").getAsString();
 
-	private void verificaSeProjetoEstaComIndicadorPreenchido(int idProjeto, int idIndicadorAlterado, Classificacao classificacao) {
-		ProjetoDao dao = new ProjetoDao();
-		List<Indicador> indicadores = dao.buscarIndicadoresDoProjeto(new Long(idProjeto));
-
-		IndicadorJson indicadorAlterado = encontraIndicadorDeId(indicadores, idIndicadorAlterado);
-
-		Assert.assertNotNull(indicadorAlterado);
-		Assert.assertEquals(classificacao, indicadorAlterado.getClassificacao());
-		RegistroAlteracao registroAlteracao = indicadorAlterado.getRegistros().get(0);
-		Assert.assertNotNull(registroAlteracao.getData());
-		Assert.assertEquals("test@dextra-sw.com", registroAlteracao.getUsuario());
+		Assert.assertEquals(classificacao, Classificacao.valueOf(classificacaoAlterada));
+		Assert.assertNotNull(dataAlterada);
+		Assert.assertEquals("test@dextra-sw.com", usuarioAlterado);
 
 	}
 
-	private IndicadorJson encontraIndicadorDeId(List<Indicador> indicadores, int idParaEncontrar) {
-		for (Indicador ind : indicadores) {
-			if (ind.getId().intValue() == idParaEncontrar) {
-				return new IndicadorJson(ind);
+	private JsonObject encontraIndicadorDeId(JsonArray indicadores, int idParaEncontrar) {
+		LoggerFactory.getLogger(this.getClass()).error(indicadores.toString());
+		for (JsonElement el : indicadores) {
+			JsonObject indicador = el.getAsJsonObject();
+			int id = indicador.get("id").getAsInt();
+			if (id == idParaEncontrar) {
+				LoggerFactory.getLogger(this.getClass()).error("***************************************");
+				LoggerFactory.getLogger(this.getClass()).error(indicador.toString());
+				LoggerFactory.getLogger(this.getClass()).error("***************************************");
+				return indicador;
 			}
 		}
-		return null;
+		throw new NoSuchElementException(Integer.toString(idParaEncontrar));
 	}
 }

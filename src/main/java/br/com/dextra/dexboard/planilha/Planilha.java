@@ -20,6 +20,11 @@ public abstract class Planilha {
 	protected Planilha(String chave, String sheet) {
 		this.sheetName = sheet;
 		this.spreadSheet = new GoogleAPI().spreadsheet(chave);
+		
+		if (this.spreadSheet == null) {
+			throw new RuntimeException("SpreadSheet " + chave + " does "
+					+ "not exist or certificate lacks permission to view it.");
+		}
 
 		if (!spreadSheet.hasWorksheet(sheetName)) {
 			throw new RuntimeException("worksheet " + sheetName + " does not exist.");

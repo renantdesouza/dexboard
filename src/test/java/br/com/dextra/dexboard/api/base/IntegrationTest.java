@@ -3,18 +3,18 @@ package br.com.dextra.dexboard.api.base;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
+import java.util.NoSuchElementException;
+
+import javax.ws.rs.core.Form;
 
 import org.junit.Before;
 import org.xml.sax.SAXException;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.meterware.httpunit.PostMethodWebRequest;
-import com.meterware.httpunit.WebRequest;
-import com.meterware.servletunit.ServletRunner;
-import com.meterware.servletunit.ServletUnitClient;
 
 import br.com.dextra.dexboard.domain.Classificacao;
-import br.com.dextra.dexboard.servlet.IndicadorServlet;
 
 public abstract class IntegrationTest {
 
@@ -28,23 +28,37 @@ public abstract class IntegrationTest {
 	}
 
 	protected void alteraIndicadorDeProjeto(long idProjeto, int idIndicador, Classificacao classificacao) throws IOException, SAXException {
-	
-		ServletRunner sr = new ServletRunner();
-		sr.registerServlet("indicadorServlet", IndicadorServlet.class.getName());
-	
-		ServletUnitClient sc = sr.newClient();
-		WebRequest request = new PostMethodWebRequest("http://localhost:8380/indicadorServlet");
-		request.setParameter("projeto", idProjeto + "");
-		request.setParameter("indicador", idIndicador + "");
-		request.setParameter("registro", "{ 'classificacao' : '" + classificacao + "', 'descricao': 'desc desc' }");
-	
-		sc.getResponse(request);
+		String registro = "{\"classificacao\": \"%s\", \"comentario\": \"desc desc\"}";
+		
+		Form form = new Form();
+		form.param("projeto", Long.toString(idProjeto));
+		form.param("indicador", Integer.toString(idIndicador));
+		form.param("registro", String.format(registro, classificacao));
+		
+		this.service.post("/indicador", form);
 	}
 
 	protected void carregaProjetos() {
 		JsonObject response = this.service.get("/reload/projetos").getAsJsonObject();
 		String status = response.get("status").getAsString();
 		
-		assertEquals( "success", status);
+		assertEquals("success", status);
 	}
+	
+	protected JsonObject getProjeto(long id) {
+		JsonArray projetos = this.getProjetos();
+		for (JsonElement p : projetos) {
+			JsonObject projeto = p.getAsJsonObject();
+			if (projeto.get("idPma").getAsLong() == id) {
+				return projeto;
+			}
+		}
+		
+		throw new NoSuchElementException(Long.toString(id));
+	}
+
+	private JsonArray getProjetos() {
+		return this.service.get("/query").getAsJsonArray();
+	}
+	
 }

@@ -31,8 +31,7 @@ public class IndicadorServlet extends HttpServlet {
 
 		JSONDeserializer<RegistroAlteracao> des = new JSONDeserializer<RegistroAlteracao>();
 		String json = req.getParameter("registro");
-		RegistroAlteracao regAlteracao = des.deserialize(json,
-				RegistroAlteracao.class);
+		RegistroAlteracao regAlteracao = des.deserialize(json, RegistroAlteracao.class);
 
 		UserService userService = UserServiceFactory.getUserService();
 
