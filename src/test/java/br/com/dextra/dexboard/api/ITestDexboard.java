@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -19,10 +18,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import br.com.dextra.dexboard.api.base.IntegrationTest;
-import br.com.dextra.dexboard.dao.ProjetoDao;
 import br.com.dextra.dexboard.domain.Classificacao;
-import br.com.dextra.dexboard.domain.Indicador;
-import br.com.dextra.dexboard.json.IndicadorJson;
 
 public class ITestDexboard extends IntegrationTest {
 
