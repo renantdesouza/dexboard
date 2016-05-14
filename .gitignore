@@ -1,6 +1,6 @@
 .classpath
 .project
-
+.externalToolBuilders
 .settings
 target
-commit.sh
+maven-eclipse.xml
