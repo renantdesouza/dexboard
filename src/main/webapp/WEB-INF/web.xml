@@ -49,19 +49,6 @@
 		<url-pattern>/indicador</url-pattern>
 	</servlet-mapping>
 
-	<!-- servlet> <servlet-name>ReIndexServlet</servlet-name> <servlet-class>endpoint.tools.ReIndexServlet</servlet-class>
-		</servlet> <servlet-mapping> <servlet-name>ReIndexServlet</servlet-name>
-		<url-pattern>/_tools/reindex/*</url-pattern> </servlet-mapping -->
-
-	<filter>
-		<filter-name>LocalEnvironmentFilter</filter-name>
-		<filter-class>br.com.dextra.dexboard.servlet.LocalEnvironmentFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>LocalEnvironmentFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-
 	<filter>
 		<filter-name>AuthFilter</filter-name>
 		<filter-class>br.com.dextra.dexboard.servlet.AuthFilter</filter-class>

@@ -16,6 +16,7 @@
 		<gapi.service.account.key>${env.GAPI_SERVICE_ACCOUNT_KEY}</gapi.service.account.key>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<skip.integration.tests>true</skip.integration.tests>
+		<integration.test>false</integration.test>
 	</properties>
 
 	<repositories>
@@ -174,7 +175,6 @@
 							</execution>
 						</executions>
 					</plugin>
--->
 
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -184,7 +184,6 @@
 							<archiveClasses>true</archiveClasses>
 							<warSourceExcludes>WEB-INF/classes/</warSourceExcludes>
 							<webResources>
-								<!-- in order to interpolate version from pom into appengine-web.xml -->
 								<resource>
 									<directory>${basedir}/src/main/webapp/WEB-INF</directory>
 									<filtering>true</filtering>
@@ -193,8 +192,6 @@
 										<include>**/*.xml</include>
 									</includes>
 								</resource>
-								<!-- GAPI key -->
-<!--
 								<resource>
 									<directory>${gapi.service.account.key.dir}</directory>
 									<includes>
@@ -203,10 +200,10 @@
 									<filtering>false</filtering>
 									<targetPath>WEB-INF/classes</targetPath>
 								</resource>
--->
 							</webResources>
 						</configuration>
 					</plugin>
+-->
 				</plugins>
 			</build>
 		</profile>
@@ -364,6 +361,18 @@
 -->
 			</plugin>
 		</plugins>
+		
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<targetPath>${basedir}/target/dexboard/WEB-INF</targetPath>
+				<includes>
+					<include>appengine-web.xml</include>
+				</includes>
+			</resource>
+		</resources>
+
 	</build>
 
 </project>
