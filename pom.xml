@@ -16,7 +16,6 @@
 		<gapi.service.account.key>${env.GAPI_SERVICE_ACCOUNT_KEY}</gapi.service.account.key>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<skip.integration.tests>true</skip.integration.tests>
-		<integration.test>false</integration.test>
 	</properties>
 
 	<repositories>
@@ -308,60 +307,24 @@
 				<groupId>com.google.appengine</groupId>
 				<artifactId>appengine-maven-plugin</artifactId>
 				<version>${gae.version}</version>
-				<configuration>
-					<jvmFlags>
-						<jvmFlag>-Xdebug</jvmFlag>
-						<jvmFlag>-Xrunjdwp:transport=dt_socket,address=4001,server=y,suspend=n</jvmFlag>
-					</jvmFlags>
-				</configuration>
-			</plugin>
-			
-			<!-- TODO: tentar usar o plugin do appengine para fazer isso -->
-			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.3.8.v20160314</version>
-				<configuration>
-					<stopPort>8005</stopPort>
-					<stopKey>STOP</stopKey>
-					<loginServices>
-						<loginService implementation="org.eclipse.jetty.security.HashLoginService">
-							<name>Test Realm</name>
-							<config>${project.basedir}/src/test/resources/realm.properties</config>
-						</loginService>
-					</loginServices>
-					<systemProperties>
-						<systemProperty>
-							<name>integration-test</name>
-							<value>true</value>
-						</systemProperty>
-					</systemProperties>
-				</configuration>
-<!--
 				<executions>
 					<execution>
-						<id>start-jetty</id>
+						<id>start-appengine</id>
 						<phase>pre-integration-test</phase>
 						<goals>
-							<goal>start</goal>
+							<goal>devserver_start</goal>
 						</goals>
-						<configuration>
-							<scanIntervalSeconds>0</scanIntervalSeconds>
-							<daemon>true</daemon>
-						</configuration>
 					</execution>
 					<execution>
-						<id>stop-jetty</id>
+						<id>stop-appengine</id>
 						<phase>post-integration-test</phase>
 						<goals>
-							<goal>stop</goal>
+							<goal>devserver_stop</goal>
 						</goals>
 					</execution>
 				</executions>
--->
 			</plugin>
-		</plugins>
-		
+			
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>

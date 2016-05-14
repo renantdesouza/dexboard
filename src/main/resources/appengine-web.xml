@@ -19,7 +19,7 @@
 
 	<system-properties>
 		<property name="java.util.logging.config.file" value="WEB-INF/logging.properties" />
-		<property name="integration-test" value="${integration.test}"/>
+		<property name="skip-integration-test" value="${skip.integration.tests}"/>
 <!-- 		<property name="gapi.service.account.email" value="136167132204@developer.gserviceaccount.com" /> -->
 <!-- 		<property name="gapi.service.account.key" value="/google-querysheet-key.p12" /> -->
 	</system-properties>
