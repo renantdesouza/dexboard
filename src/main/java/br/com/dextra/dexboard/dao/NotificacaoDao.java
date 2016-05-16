@@ -17,14 +17,13 @@ import javax.mail.internet.MimeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.googlecode.objectify.Objectify;
+import com.googlecode.objectify.ObjectifyService;
+
 import br.com.dextra.dexboard.domain.Indicador;
 import br.com.dextra.dexboard.domain.Notificacao;
 import br.com.dextra.dexboard.domain.Projeto;
 import br.com.dextra.dexboard.domain.RegistroAlteracao;
-
-import com.googlecode.objectify.Key;
-import com.googlecode.objectify.Objectify;
-import com.googlecode.objectify.ObjectifyService;
 
 public class NotificacaoDao {
 
@@ -60,12 +59,12 @@ public class NotificacaoDao {
 	}
 
 	private Notificacao buscarUltimaNotificacao(Projeto projeto) {
-		Key<Notificacao> key = Key.create(Notificacao.class, projeto.getIdPma());
-		return ofy.load().key(key).now();
+		return ofy.load().type(Notificacao.class).id(projeto.getIdPma()).now();
 	}
 
 	private List<Projeto> buscarProjetosAtrasados() {
 		List<Projeto> projetosAtrasados = new ArrayList<Projeto>();
+		int validadeAlteracao = getValidadeAlteracao();
 
 		List<Projeto> projetos = buscarProjetos();
 		for (Projeto projeto : projetos) {
@@ -78,9 +77,10 @@ public class NotificacaoDao {
 					break;
 				}
 
-				long diasAtras = calculaDiasAtras(registroAlteracao.getData());
+				Date dataAlteracao = registroAlteracao.getData();
+				long diasAtras = calculaDiasAtras(dataAlteracao);
 
-				if (diasAtras >= getValidadeAlteracao() - DIAS_PARA_NOTIFICAR) {
+				if (diasAtras >= validadeAlteracao - DIAS_PARA_NOTIFICAR) {
 					projetosAtrasados.add(projeto);
 					break;
 				}
@@ -115,11 +115,11 @@ public class NotificacaoDao {
 	}
 
 	public void notificarEquipeProjeto(Projeto projeto) {
-		envioarEmailEquipeProjeto(projeto);
+		enviarEmailEquipeProjeto(projeto);
 		registrarDataNotificacao(projeto);
 	}
 
-	private void envioarEmailEquipeProjeto(Projeto projeto) {
+	private void enviarEmailEquipeProjeto(Projeto projeto) {
 		Properties props = new Properties();
 		Session session = Session.getDefaultInstance(props, null);
 
@@ -168,6 +168,6 @@ public class NotificacaoDao {
 		Notificacao notificacao = new Notificacao();
 		notificacao.setDate(new Date());
 		notificacao.setIdPma(projeto.getIdPma());
-		ofy.save().entity(notificacao);
+		ofy.save().entity(notificacao).now();
 	}
 }

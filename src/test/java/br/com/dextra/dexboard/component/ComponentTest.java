@@ -15,7 +15,7 @@ import br.com.dextra.dexboard.servlet.Context;
  * para representar os demais componentes como banco e servicos externos.
  * 
  */
-abstract class ComponentTest {
+public class ComponentTest {
 
 	private Closeable objectfy;
 	private Closeable localGaeEnvironment;
@@ -23,6 +23,7 @@ abstract class ComponentTest {
 	@Before
 	public void setUp() {
 		Context.forceMock(true);
+		System.setProperty("validade", "15");
 		this.objectfy = ObjectifyService.begin();
 		this.localGaeEnvironment = LocalGaeEnvironment.setUp();
 	}

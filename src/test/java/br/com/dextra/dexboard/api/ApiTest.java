@@ -24,7 +24,7 @@ import br.com.dextra.dexboard.domain.Classificacao;
  * Devem portanto ser o tipo de teste de menor numero.
  *
  */
-abstract class ApiTest {
+public class ApiTest {
 
 	protected LocalHttpFacade service = new LocalHttpFacade();
 
