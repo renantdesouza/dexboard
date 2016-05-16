@@ -2,12 +2,10 @@ package br.com.dextra.dexboard.component;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Test;
-import org.xml.sax.SAXException;
 
 import br.com.dextra.dexboard.dao.NotificacaoDao;
 import br.com.dextra.dexboard.dao.ProjetoDao;
@@ -22,7 +20,7 @@ public class ITestNotificacao extends ComponentTest {
 	private static final long ID_PROJETO_CONFIDENCE = 565l;
 	
 	@Test
-	public void testNotificacaoAtraso() throws Exception {
+	public void testNotificacaoAtraso() {
 		(new ReloadProjetosServlet()).doReload();
 		registraAlteracoesEmProjetos();
 
@@ -40,7 +38,7 @@ public class ITestNotificacao extends ComponentTest {
 		assertEquals(0, projetos.size());
 	}
 
-	private void registraAlteracoesEmProjetos() throws IOException, SAXException {
+	private void registraAlteracoesEmProjetos() {
 		ProjetoDao dao = new ProjetoDao();
 
 		List<Projeto> projetos = dao.buscarTodosProjetos();
