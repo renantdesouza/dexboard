@@ -1,4 +1,4 @@
-package br.com.dextra.dexboard.api.base;
+package br.com.dextra.dexboard.api;
 
 import java.io.IOException;
 
@@ -6,7 +6,7 @@ import javax.ws.rs.client.ClientRequestContext;
 import javax.ws.rs.client.ClientRequestFilter;
 import javax.ws.rs.core.MultivaluedMap;
 
-public class Authenticator implements ClientRequestFilter {
+class Authenticator implements ClientRequestFilter {
 
 	@Override
 	public void filter(ClientRequestContext requestContext) throws IOException {

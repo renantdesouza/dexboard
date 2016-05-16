@@ -1,4 +1,4 @@
-package br.com.dextra.dexboard.servlet.dev;
+package br.com.dextra.dexboard.component;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -6,19 +6,13 @@ import java.io.IOException;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 
-public class LocalGaeEnvironment implements Closeable {
+class LocalGaeEnvironment implements Closeable {
 	
 	private final LocalServiceTestHelper gaeHelper;
 	
 	private LocalGaeEnvironment() {
-		
-		LocalDatastoreServiceTestConfig ds = new LocalDatastoreServiceTestConfig()
-				.setApplyAllHighRepJobPolicy()
-				.setBackingStoreLocation("target/temp.db")
-				.setNoStorage(false);
-		
-		this.gaeHelper = new LocalServiceTestHelper(ds)
-				.setEnvIsAdmin(false)
+		this.gaeHelper = new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig())
+				.setEnvIsAdmin(true)
 				.setEnvIsLoggedIn(true)
 				.setEnvEmail("test@dextra-sw.com")
 				.setEnvAuthDomain("dextra-sw.com");

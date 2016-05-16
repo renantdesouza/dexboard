@@ -2,7 +2,9 @@ package br.com.dextra.dexboard.planilha;
 
 import br.com.dextra.dexboard.servlet.Context;
 
-public class PlanilhaDexboard extends Planilha {
+class PlanilhaDexboard extends Planilha {
+	
+	// TODO: trazer de propriedades do sistema
 
 	private static final String CHAVE_PLANILHA_DEXBOARD_PRODUCAO = "1Fjul3zOetgENCTfnnd3gDaxOEh3WaIQr4uV3Th2wRQo";
 
@@ -13,7 +15,7 @@ public class PlanilhaDexboard extends Planilha {
 	}
 
 	private static String getChavePlanilha() {
-		if (Context.isTestEnvironment()) {
+		if (Context.isIntegrationTestEnvironment()) {
 			return CHAVE_PLANILHA_DEXBOARD_TESTE;
 		}
 		return CHAVE_PLANILHA_DEXBOARD_PRODUCAO;

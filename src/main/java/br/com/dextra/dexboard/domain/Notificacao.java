@@ -28,4 +28,5 @@ public class Notificacao {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+
 }

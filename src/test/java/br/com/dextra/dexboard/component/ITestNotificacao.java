@@ -1,4 +1,4 @@
-package br.com.dextra.dexboard.api;
+package br.com.dextra.dexboard.component;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,21 +9,21 @@ import java.util.List;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
-import br.com.dextra.dexboard.api.base.IntegrationTest;
 import br.com.dextra.dexboard.dao.NotificacaoDao;
 import br.com.dextra.dexboard.dao.ProjetoDao;
 import br.com.dextra.dexboard.domain.Classificacao;
 import br.com.dextra.dexboard.domain.Projeto;
 import br.com.dextra.dexboard.domain.RegistroAlteracao;
+import br.com.dextra.dexboard.servlet.ReloadProjetosServlet;
 
-public class ITestNotificacao extends IntegrationTest {
+public class ITestNotificacao extends ComponentTest {
 
 	private static final long ID_PROJETO_CONTPLAY = 495l;
 	private static final long ID_PROJETO_CONFIDENCE = 565l;
-
+	
 	@Test
 	public void testNotificacaoAtraso() throws Exception {
-		carregaProjetos();
+		(new ReloadProjetosServlet()).doReload();
 		registraAlteracoesEmProjetos();
 
 		NotificacaoDao dao = new NotificacaoDao();
@@ -63,9 +63,15 @@ public class ITestNotificacao extends IntegrationTest {
 			}
 
 			for (int i = 1; i <= 6; i++) {
-				alteraIndicadorDeProjeto(projeto.getIdPma(), i, Classificacao.ATENCAO);
+				dao.salvaAlteracao(projeto.getIdPma(), (long) i, criaRegistroAlteracao());
 			}
 		}
+	}
+	
+	private RegistroAlteracao criaRegistroAlteracao() {
+		RegistroAlteracao registro = criaRegistroAlteracaoNaData(Calendar.getInstance());
+		registro.setClassificacao(Classificacao.ATENCAO);
+		return registro;
 	}
 
 	private RegistroAlteracao criaRegistroAlteracaoNaData(Calendar c) {

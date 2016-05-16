@@ -1,4 +1,4 @@
-package br.com.dextra.dexboard.api.base;
+package br.com.dextra.dexboard.api;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -13,16 +13,11 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
-public class LocalHttpFacade {
+class LocalHttpFacade {
 
-	private static final Logger LOG = LoggerFactory.getLogger(LocalHttpFacade.class);
-	
 	private static final String BASE_URL = "http://localhost:8080";
 	private static final Client CLIENT = ClientBuilder.newClient().register(Authenticator.class);
 	private static final HashMap<String, String> EMPTY_QUERY = new HashMap<>(0);
@@ -35,8 +30,6 @@ public class LocalHttpFacade {
 		Builder request = target.request(MediaType.APPLICATION_JSON);
 		String responseText = request.get(String.class);
 
-		LOG.info(responseText);
-
 		return this.parser.parse(responseText);
 	}
 	
@@ -45,8 +38,6 @@ public class LocalHttpFacade {
 		Builder request = target.request(MediaType.APPLICATION_JSON);
 		Entity<Form> entity = Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED);
 		String responseText = request.post(entity, String.class);
-
-		LOG.info(responseText);
 
 		return this.parser.parse(responseText);
 	}

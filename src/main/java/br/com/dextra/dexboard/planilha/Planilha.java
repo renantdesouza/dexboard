@@ -9,7 +9,7 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
-public abstract class Planilha {
+abstract class Planilha {
 
 	private final String sheetName;
 

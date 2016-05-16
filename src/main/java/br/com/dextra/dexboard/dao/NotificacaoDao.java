@@ -22,6 +22,7 @@ import br.com.dextra.dexboard.domain.Notificacao;
 import br.com.dextra.dexboard.domain.Projeto;
 import br.com.dextra.dexboard.domain.RegistroAlteracao;
 
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
 
@@ -59,7 +60,8 @@ public class NotificacaoDao {
 	}
 
 	private Notificacao buscarUltimaNotificacao(Projeto projeto) {
-		return ofy.load().type(Notificacao.class).filter("idPma", projeto.getIdPma()).order("-data").first().now();
+		Key<Notificacao> key = Key.create(Notificacao.class, projeto.getIdPma());
+		return ofy.load().key(key).now();
 	}
 
 	private List<Projeto> buscarProjetosAtrasados() {

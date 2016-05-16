@@ -131,6 +131,17 @@
 	</dependencies>
 	
 	<profiles>
+	
+		<profile>
+			<id>desenv</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<dev.environment>true</dev.environment>
+			</properties>
+		</profile>
+	
 		<profile>
 			<id>integration-build</id>
 			<properties>
@@ -160,6 +171,7 @@
 			</activation>
 			<properties>
 				<skip.integration.tests>false</skip.integration.tests>
+				<integration.test>true</integration.test>
 			</properties>
 		</profile>
 

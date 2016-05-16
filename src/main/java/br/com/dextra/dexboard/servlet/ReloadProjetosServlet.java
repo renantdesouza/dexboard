@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import br.com.dextra.dexboard.dao.ProjetoDao;
 import br.com.dextra.dexboard.domain.Indicador;
 import br.com.dextra.dexboard.domain.Projeto;
+import br.com.dextra.dexboard.planilha.PlanilhaFactory;
 import br.com.dextra.dexboard.planilha.PlanilhaIndicadores;
 import br.com.dextra.dexboard.service.ProjetoPlanilhaService;
 
@@ -29,11 +30,15 @@ public class ReloadProjetosServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
-		ProjetoDao dao = new ProjetoDao();
-
 		resp.setContentType("application/json");
-		PlanilhaIndicadores planilhaIndicadores = new PlanilhaIndicadores();
+		this.doReload();
+		resp.getWriter().print("{status: 'success'}");
+	}
+
+	public void doReload() {
+		ProjetoDao dao = new ProjetoDao();
+		
+		PlanilhaIndicadores planilhaIndicadores = PlanilhaFactory.indicadores();
 		LOG.info("Buscando lista de indicadores ...");
 		this.indicadores = planilhaIndicadores.criarListaDeIndicadores();
 
@@ -50,13 +55,11 @@ public class ReloadProjetosServlet extends HttpServlet {
 		LOG.info("Buscando projetos inativos ...");
 		projetosDataStore.addAll(dao.buscarTodosProjetos(false, null));
 
-		LOG.info("Ataulizando projetos ...");
+		LOG.info("Atualizando projetos ...");
 		Map<Long, Projeto> mapProjetosDataStore = createMapProjetos(projetosDataStore);
 
 		adicionaProjetosNovos(mapProjetosDataStore, projetosPlanilha.values());
-
 		LOG.info("Sucesso!");
-		resp.getWriter().print("{status: 'success'}");
 	}
 
 	private Map<Long, Projeto> createMapProjetos(List<Projeto> projetos) {

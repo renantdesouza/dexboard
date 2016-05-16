@@ -2,7 +2,6 @@ package br.com.dextra.dexboard.api;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -11,16 +10,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.LoggerFactory;
-import org.xml.sax.SAXException;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import br.com.dextra.dexboard.api.base.IntegrationTest;
 import br.com.dextra.dexboard.domain.Classificacao;
 
-public class ITestDexboard extends IntegrationTest {
+public class ITestDexboard extends ApiTest {
 
 	private static final int ID_PROJETO_CONTPLAY = 495;
 	private static final int ID_INDICADOR_1 = 1;
@@ -75,19 +72,19 @@ public class ITestDexboard extends IntegrationTest {
 	}
 
 	@Test
-	public void testAlterarIndicadores() throws IOException, SAXException {
+	public void testAlterarIndicadores() {
 		alteraIndicadorDeProjeto(ID_PROJETO_CONTPLAY, ID_INDICADOR_1, Classificacao.OK);
 		verificaSeProjetoEstaComIndicadorPreenchido(ID_PROJETO_CONTPLAY, ID_INDICADOR_1, Classificacao.OK);
 	}
 	
 	@Test
-	public void testAlterarIndicadores2() throws IOException, SAXException {
+	public void testAlterarIndicadores2() {
 		alteraIndicadorDeProjeto(ID_PROJETO_CONTPLAY, ID_INDICADOR_2, Classificacao.ATENCAO);
 		verificaSeProjetoEstaComIndicadorPreenchido(ID_PROJETO_CONTPLAY, ID_INDICADOR_2, Classificacao.ATENCAO);
 	}
 
 	@Test
-	public void testAtrasoIndicadorJson() throws Exception {
+	public void testAtrasoIndicadorJson() {
 		Assert.assertTrue(false);
 		
 		/*
@@ -130,14 +127,10 @@ public class ITestDexboard extends IntegrationTest {
 	}
 
 	private JsonObject encontraIndicadorDeId(JsonArray indicadores, int idParaEncontrar) {
-		LoggerFactory.getLogger(this.getClass()).error(indicadores.toString());
 		for (JsonElement el : indicadores) {
 			JsonObject indicador = el.getAsJsonObject();
 			int id = indicador.get("id").getAsInt();
 			if (id == idParaEncontrar) {
-				LoggerFactory.getLogger(this.getClass()).error("***************************************");
-				LoggerFactory.getLogger(this.getClass()).error(indicador.toString());
-				LoggerFactory.getLogger(this.getClass()).error("***************************************");
 				return indicador;
 			}
 		}
