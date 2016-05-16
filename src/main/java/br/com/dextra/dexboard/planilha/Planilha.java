@@ -1,7 +1,7 @@
 package br.com.dextra.dexboard.planilha;
 
-import gapi.GoogleAPI;
-import gapi.SpreadsheetAPI;
+import com.github.feroult.gapi.GoogleAPI;
+import com.github.feroult.gapi.SpreadsheetAPI;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
