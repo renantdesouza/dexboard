@@ -84,24 +84,17 @@ public class ITestDexboard extends ApiTest {
 
 	@Test
 	public void testAtrasoIndicadorJson() {
-		Assert.assertTrue(false);
-		
-		/*
-		
 		carregaProjetos();
-
+		
 		for (int i = 1; i <= 6; i++) {
 			alteraIndicadorDeProjeto(ID_PROJETO_CONTPLAY, i, Classificacao.ATENCAO);
 		}
-
-		ProjetoDao dao = new ProjetoDao();
-		List<Indicador> indicadores = dao.buscarIndicadoresDoProjeto(495l);
-		Indicador indicador = indicadores.get(0);
-		IndicadorJson indicadorJson = new IndicadorJson(indicador);
-		Assert.assertFalse(indicadorJson.getAtrasado());
-		System.setProperty("validade", "-3");
-		Assert.assertTrue(indicadorJson.getAtrasado());
-		*/
+		
+		JsonObject projeto = getProjeto((long) ID_PROJETO_CONTPLAY);
+		JsonArray indicadores = projeto.get("indicadores").getAsJsonArray();
+		JsonObject indicador = indicadores.get(0).getAsJsonObject();
+		
+		Assert.assertFalse(indicador.get("atrasado").getAsBoolean());
 	}
 
 	private void verificaSeProjetoEstaComIndicadorPreenchido(int idProjeto, 
