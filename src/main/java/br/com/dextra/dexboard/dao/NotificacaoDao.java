@@ -71,7 +71,7 @@ public class NotificacaoDao {
 		for (Projeto projeto : projetos) {
 			List<Indicador> indicadores = buscarIndicadores(projeto);
 			for (Indicador indicador : indicadores) {
-				RegistroAlteracao registroAlteracao = buscarRegistrosAletracoes(projeto, indicador);
+				RegistroAlteracao registroAlteracao = buscarRegistrosAlteracoes(projeto, indicador);
 
 				if (registroAlteracao == null) {
 					projetosAtrasados.add(projeto);
@@ -94,7 +94,7 @@ public class NotificacaoDao {
 		return (new Date().getTime() - data.getTime()) / (1000 * 60 * 60 * 24);
 	}
 
-	private RegistroAlteracao buscarRegistrosAletracoes(Projeto projeto, Indicador indicador) {
+	private RegistroAlteracao buscarRegistrosAlteracoes(Projeto projeto, Indicador indicador) {
 		return ofy.load().type(RegistroAlteracao.class).filter("indicador", indicador).order("-data").first().now();
 	}
 
