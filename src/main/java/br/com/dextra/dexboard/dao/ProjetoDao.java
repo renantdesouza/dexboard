@@ -36,7 +36,7 @@ public class ProjetoDao {
 	public void salvarProjeto(Projeto p) {
 		MemcacheServiceFactory.getMemcacheService().delete(KEY_CACHE);
 		MemcacheServiceFactory.getMemcacheService().delete(HISTORY_CACHE);
-		ofy.save().entity(p);
+		ofy.save().entity(p).now();
 	}
 
 	public Projeto buscarProjeto(Long idProjeto) {
@@ -130,7 +130,7 @@ public class ProjetoDao {
 		registroAlteracao.setIndicador(keyIndicador);
 		registroAlteracao.setProjeto(keyProjeto);
 		registroAlteracao.defineId();
-		ofy.save().entity(registroAlteracao);
+		ofy.save().entity(registroAlteracao).now();
 	}
 
 }
