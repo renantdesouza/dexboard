@@ -29,8 +29,7 @@ public class NotificacaoDao {
 
 	private static final Logger LOG = LoggerFactory.getLogger(NotificacaoDao.class);
 
-	private static final int DIAS_PARA_NOTIFICAR = 2;
-	private static final int DIAS_PARA_RENOTIFICAR = 4;
+	private static final int DIAS_PARA_RENOTIFICAR = 3;
 
 	private Objectify ofy;
 
@@ -48,9 +47,8 @@ public class NotificacaoDao {
 
 			Notificacao notificacao = buscarUltimaNotificacao(projeto);
 
-			if (notificacao == null || calculaDiasAtras(notificacao.getDate()) == DIAS_PARA_RENOTIFICAR) {
+			if (notificacao == null || calculaDiasAtras(notificacao.getDate()) >= DIAS_PARA_RENOTIFICAR) {
 				projetosParaNotificar.add(projeto);
-				continue;
 			}
 
 		}
@@ -80,7 +78,7 @@ public class NotificacaoDao {
 				Date dataAlteracao = registroAlteracao.getData();
 				long diasAtras = calculaDiasAtras(dataAlteracao);
 
-				if (diasAtras >= validadeAlteracao - DIAS_PARA_NOTIFICAR) {
+				if (diasAtras >= validadeAlteracao) {
 					projetosAtrasados.add(projeto);
 					break;
 				}
