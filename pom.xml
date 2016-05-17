@@ -32,8 +32,8 @@
 
 	<distributionManagement>
 		<repository>
-			<id>local</id>
-			<name>local</name>
+			<id>local-fs</id>
+			<name>local-fs</name>
 			<url>file://${project.build.directory}</url>
 		</repository>
 	</distributionManagement>
