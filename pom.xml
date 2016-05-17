@@ -24,6 +24,13 @@
 		</repository>
 	</repositories>
 
+	<scm>
+		<connection>scm:git:ssh://git@github.com/dextra/dexboard.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/dextra/dexboard.git</developerConnection>
+		<url>https://github.com/dextra/dexboard</url>
+		<tag>HEAD</tag>
+	</scm>
+
 	<dependencies>
 	
 		<!-- ######### TESTING ######### -->
