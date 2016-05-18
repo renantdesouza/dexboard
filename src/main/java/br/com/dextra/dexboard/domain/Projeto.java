@@ -57,7 +57,7 @@ public class Projeto {
 	}
 
 	public void setEquipe(String equipe) {
-		this.equipe = equipe;
+		this.equipe = equipe.toUpperCase();
 	}
 
 	public String getEquipe() {
