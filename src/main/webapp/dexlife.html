@@ -1,8 +1,9 @@
 <html>
 <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>DxLife</title>
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
@@ -14,8 +15,7 @@
 	
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 	
-	<script type="text/javascript" src="js/mustache.js"></script>
-	<script type="text/javascript" src="js/utils.js"></script>
+	<script type="text/javascript" src="js/lib/handlebars-v4.0.5.js"></script>
 
 	<style type="text/css">
 		html { height: 100%; }
@@ -76,11 +76,16 @@
 		.dx-panel .panel-body {
 			height : 195px;
 		}
+		
+		.dx-container .row {
+			margin-left: 0px;
+			margin-right: 0px;
+		}
 
 	</style>
 	
-	<script type="text/x-mustache" id="template">
-		{{#registros}}
+	<script type="text/x-handlebars-template" id="template">
+		{{#each registros}}
 		<div class="panel-column">
 			<div class="panel panel-info dx-panel">
 				<div class="panel-heading">
@@ -96,26 +101,26 @@
 				</div>
 			</div>
 		</div>
-		{{/registros}}
+		{{/each}}
 	</script>
 </head>
 
 <body>
 
 <nav class="navbar dx-navbar" role="navigation">
-  <div class="container-fluid">
+	<div class="container-fluid">
 
-    <div class="navbar-header">
-      <span class="navbar-brand" href="#">DxLife</span>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
-<!--         <li><a href="#"><span class="btn btn-info"><i class="fa fa-pencil-square-o"></i>&nbsp;Compose</span></a></li> -->
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+		<div class="navbar-header">
+			<span class="navbar-brand">DxLife</span>
+		</div>
+	
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav navbar-right">
+	<!--		 <li><a href="#"><span class="btn btn-info"><i class="fa fa-pencil-square-o"></i>&nbsp;Compose</span></a></li> -->
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
 </nav>
 
 <div class="dx-container">
@@ -131,19 +136,15 @@
 		$('.dx-container').height($("body").height() - $('.dx-navbar').height() - 35);
 		var panelHtml = $('#template').html();
 		var panelParent = $('.row');
+		var template = Handlebars.compile(panelHtml);
 		
 		$.getJSON("/history", function(resultado) {
-        	if (resultado) {
-        		panelParent.append(Mustache.render(panelHtml, {'registros':resultado}));
-        		
-        		if (getURLParameter('fromTv') === 'true') {
-        			$('.panel-column').addClass('col-xs-12 col-sm-6');
-        		} else {
-        			$('.panel-column').addClass('col-xs-8 col-sm-4');
-        		}
-        		
-        	}
-        });
+			if (resultado) {
+				var html = template({"registros": resultado});
+				panelParent.append(html);
+				$('.panel-column').addClass('col-xs-12 col-sm-6');
+			}
+		});
 	});
 </script>
 </html>
