@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import com.google.gson.JsonArray;
@@ -21,11 +20,6 @@ public class ITestDexboard extends ApiTest {
 	private static final int ID_PROJETO_CONTPLAY = 495;
 	private static final int ID_INDICADOR_1 = 1;
 	private static final int ID_INDICADOR_2 = 2;
-
-	@Before
-	public void before() {
-		carregaProjetos();
-	}
 
 	@Test
 	public void testQueryProjetos() {
@@ -60,7 +54,7 @@ public class ITestDexboard extends ApiTest {
 			query.put("equipe", equipe);
 		}
 
-		return this.service.get("/query", query).getAsJsonArray();
+		return service.get("/query", query).getAsJsonArray();
 	}
 
 	private void assertProjeto(int idPma, String nome, String equipe, double cpi, JsonObject projetoJson) {

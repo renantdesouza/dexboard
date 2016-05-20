@@ -6,6 +6,9 @@ import java.util.NoSuchElementException;
 
 import javax.ws.rs.core.Form;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -26,7 +29,19 @@ import br.com.dextra.dexboard.domain.Classificacao;
  */
 public class ApiTest {
 
-	protected LocalHttpFacade service = new LocalHttpFacade();
+	protected static LocalHttpFacade service;
+	
+	@BeforeClass
+	public static void init() {
+		service = new LocalHttpFacade();
+		carregaProjetos();
+	}
+	
+	@AfterClass
+	public static void destroy() {
+		service.close();
+	}
+	
 
 	protected void alteraIndicadorDeProjeto(long idProjeto, int idIndicador, Classificacao classificacao) {
 		String registro = "{\"classificacao\": \"%s\", \"comentario\": \"desc desc\"}";
@@ -36,11 +51,11 @@ public class ApiTest {
 		form.param("indicador", Integer.toString(idIndicador));
 		form.param("registro", String.format(registro, classificacao));
 		
-		this.service.post("/indicador", form);
+		service.post("/indicador", form);
 	}
 
-	protected void carregaProjetos() {
-		JsonObject response = this.service.get("/reload/projetos").getAsJsonObject();
+	public static void carregaProjetos() {
+		JsonObject response = service.get("/reload/projetos").getAsJsonObject();
 		String status = response.get("status").getAsString();
 		
 		assertEquals("success", status);
@@ -59,7 +74,7 @@ public class ApiTest {
 	}
 
 	private JsonArray getProjetos() {
-		return this.service.get("/query").getAsJsonArray();
+		return service.get("/query").getAsJsonArray();
 	}
 	
 }
