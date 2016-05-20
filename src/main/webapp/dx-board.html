@@ -5,11 +5,14 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>DexBoard Reload</title>
 	<script type="text/javascript" src="js/lib/jquery-2.2.3.min.js"></script>
+	<script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="js/lib/handlebars-v4.0.5.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/dx-board.css"/>
 </head>
 <body>
+	<div id="dialog-overlay"></div>
 	<div id="tabela-principal" class="dx-table dx-table-flip"></div>
+	<div id="dialog"></div>
 	
 	<script type="text/x-handlebars-template" id="dexboard-template">
 		<table>
@@ -21,12 +24,12 @@
 					{{/each}}
 				</tr>
 				{{#each projetos}}
-				<tr>
-					<td class="{{lowerCase classificacao}}{{#if atrasado}} atrasado{{/if}}">
+				<tr data-index="{{@index}}">
+					<td class="{{lowercase classificacao}}{{#if atrasado}} atrasado{{/if}}">
 						<div class="vertical">{{nome}}</div>
 					</td>
 					{{#each indicadores}}
-					<td class="{{lowerCase classificacao}}{{#if atrasado}} atrasado{{/if}}">{{#if @first}}{{../cpi}}{{/if}}</td>
+					<td data-index="{{@index}}" class="indicador {{lowercase classificacao}}{{#if atrasado}} atrasado{{/if}}">{{#if @first}}{{../cpi}}{{/if}}</td>
 					{{/each}}
 				</tr>
 				{{/each}}
@@ -34,12 +37,69 @@
 		</table>
 	</script>
 	
+	<script type="text/x-handlebars-template" id="edicao-indicador-template">
+		<div class="dialog-content">
+			<div class="dialog-close-button" title="Fechar janela">X</div>
+			<div class="card">
+
+				<h4>{{indicador.nome}}<span>{{projeto.nome}}<span></h4>
+
+				<fieldset id="fieldsetNovaAlteracao">
+					<legend>Nova altera&ccedil;&atilde;o</legend>
+					<div id="edicaoIndicadorDescricao">
+						<textarea id="edicaoIndicadorTxtDescricao" rows="3" cols="35" tabindex="1"></textarea>
+					</div>
+				</fieldset>
+
+				{{#if indicador.registros}}
+				<fieldset id="fieldsetUltimaAlteracao">
+					<legend>Hist&oacute;rico de altera&ccedil;&otilde;es</legend>
+					<ul id="historico" class="ul-historico">
+						{{#each indicador.registros}}
+						<li class="{{lowercase classificacao}}">
+							Alterado em <b>{{ultimaAlteracaoString}}</b> por <b>{{usuario}}</b><br>
+							<span class="comentario">{{comentario}}</span>
+						</li>
+						{{/each}}
+					</ul>
+				</fieldset>
+				{{/if}}
+
+			</div>
+
+			<div id="divOptions" class="options">
+				<input type="button" value="Stop the line!" class="btn-perigo" name="PERIGO" tabindex="2" />
+				<input type="button" value="Aten&ccedil;&atilde;o" class="btn-atencao" name="ATENCAO" tabindex="3" />
+				<input type="button" value="Caminho livre!" class="btn-ok" name="OK" tabindex="4" />
+				<input type="button" value="Sem mudan&ccedil;as" class="btn-sem-mudancas" name="SEMMUDANCAS" tabindex="5" />
+			</div>
+		</div>
+	</script>
+	
 	<script type="text/javascript">
 		var templateSource = $("#dexboard-template").html();
 		var container = $("#tabela-principal");
 		var template = Handlebars.compile(templateSource);
 		
-		Handlebars.registerHelper("lowerCase", function(str) {
+		var edicaoIndicadorTemplateSource = $("#edicao-indicador-template").html();
+		var dialog = $("#dialog");
+		var edicaoIndicadorTemplate = Handlebars.compile(edicaoIndicadorTemplateSource);
+		
+		var overlay = $("#dialog-overlay");
+		
+		var closePopup = function() {
+			overlay.hide();
+			dialog.dialog("close");
+		}
+		
+		overlay.click(closePopup);
+		$(document).keydown(function(e) {
+			if (e.which === 27) {
+				closePopup();
+			}
+		});
+		
+		Handlebars.registerHelper("lowercase", function(str) {
 			return str.toLowerCase();
 		});
 		
@@ -52,7 +112,33 @@
 					"projetos" : projetos,
 					"indicadores" : indicadores
 				}));
+				
+				$(".indicador").click(function() {
+					var indexProjeto = parseInt($(this).parent().data("index"));
+					var indexIndicador = parseInt($(this).data("index"));
+					
+					var projeto = projetos[indexProjeto];
+					var indicador = projeto.indicadores[indexIndicador];
+					
+					dialog.html(edicaoIndicadorTemplate({
+						"projeto" : projeto,
+						"indicador" : indicador
+					}));
+					
+					dialog.dialog("open");
+					overlay.show();
+					
+					$("#dialog .dialog-close-button").click(closePopup);
+					
+					console.info(indexProjeto, indexIndicador, projeto, indicador);
+				});
 			}
+		});
+		
+		dialog.dialog({
+			"dialogClass": "no-close",
+			"autoOpen" : false,
+			"width" : 600
 		});
 	</script>
 	
