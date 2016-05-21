@@ -71,10 +71,30 @@
 			</div>
 
 			<div id="divOptions" class="options">
-				<input type="button" value="Stop the line!" class="btn-perigo" name="PERIGO" tabindex="2" />
-				<input type="button" value="Aten&ccedil;&atilde;o" class="btn-atencao" name="ATENCAO" tabindex="3" />
-				<input type="button" value="Caminho livre!" class="btn-ok" name="OK" tabindex="4" />
-				<input type="button" value="Sem mudan&ccedil;as" class="btn-sem-mudancas" name="SEMMUDANCAS" tabindex="5" />
+				<input type="button"
+						value="Stop the line!"
+						disabled
+						class="btn-perigo change"
+						name="PERIGO"
+						tabindex="2" />
+				<input type="button"
+						value="Aten&ccedil;&atilde;o"
+						disabled
+						class="btn-atencao change"
+						name="ATENCAO"
+						tabindex="3" />
+				<input type="button"
+						value="Caminho livre!"
+						disabled
+						class="btn-ok change"
+						name="OK"
+						tabindex="4" />
+				<input type="button"
+						value="Sem mudan&ccedil;as"
+						{{#unless indicador.registros}}disabled{{/unless}}
+						class="btn-sem-mudancas"
+						name="SEMMUDANCAS"
+						tabindex="5" />
 			</div>
 		</div>
 	</script>
@@ -129,6 +149,7 @@
 					
 					var projeto = projetos[indexProjeto];
 					var indicador = projeto.indicadores[indexIndicador];
+					var hasHistorico = indicador.registros ? indicador.registros.length > 0 : false;
 					
 					dialog.html(edicaoIndicadorTemplate({
 						"projeto" : projeto,
@@ -139,6 +160,21 @@
 					overlay.show();
 					
 					$("#dialog .dialog-close-button").click(closePopup);
+					
+					inputChange = $("#dialog input.change");
+					inputKeep = $("#dialog input.btn-sem-mudancas");
+					
+					$("#dialog textarea").keyup(function() {
+						if ($(this).val().length > 0) {
+							inputChange.prop("disabled", false);
+							inputKeep.prop("disabled", true);
+						} else {
+							inputChange.prop("disabled", true);
+							if (hasHistorico) {
+								inputKeep.prop("disabled", false);
+							}
+						}
+					});
 					
 					var historico = $("ul.historico");
 					
