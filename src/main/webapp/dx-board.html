@@ -56,7 +56,7 @@
 
 				{{#if indicador.registros}}
 				<fieldset>
-					<legend>Hist&oacute;rico de altera&ccedil;&otilde;es</legend>
+					<legend class="toggle-historico"><span>+</span> Hist&oacute;rico de altera&ccedil;&otilde;es</legend>
 					<ul class="historico">
 						{{#each indicador.registros}}
 						<li class="{{lowercase classificacao}}">
@@ -90,7 +90,14 @@
 		
 		var overlay = $("#dialog-overlay");
 		
-		var closePopup = function() {
+		var stopPropagation = function(event) {
+			event.preventDefault();
+			event.stopPropagation(); 
+			return false;
+		}
+		
+		var closePopup = function(event) {
+			stopPropagation(event);
 			overlay.hide();
 			dialog.dialog("close");
 		}
@@ -98,7 +105,7 @@
 		overlay.click(closePopup);
 		$(document).keydown(function(e) {
 			if (e.which === 27) {
-				closePopup();
+				closePopup(e);
 			}
 		});
 		
@@ -133,7 +140,19 @@
 					
 					$("#dialog .dialog-close-button").click(closePopup);
 					
-					console.info(indexProjeto, indexIndicador, projeto, indicador);
+					var historico = $("ul.historico");
+					
+					$(".toggle-historico").mousedown(stopPropagation);
+					$(".toggle-historico").click(function(e) {
+						stopPropagation(e);
+						if (historico.is(":visible")) {
+							historico.hide();
+							$(this).find("span").html("+");
+						} else {
+							historico.show();
+							$(this).find("span").html("-");
+						}
+					});
 				});
 			}
 		});

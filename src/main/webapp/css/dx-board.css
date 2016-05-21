@@ -311,11 +311,20 @@ ul {
 
 .dialog-content #divOptions>input:focus { outline: dotted 1px #555; }
 
+.toggle-historico {
+  cursor: pointer;
+}
+
+.toggle-historico:hover {
+  color: #333;
+}
+
 .historico {
   background-color: #f0f0f0;
   border: 1px solid #DDD;
   border-radius: 3px;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.23) inset;
+  display: none;
   margin-top: 2px;
   max-height: 170px;
   overflow: auto;
