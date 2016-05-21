@@ -47,7 +47,7 @@
 
 				<h4>{{indicador.nome}}<span>{{projeto.nome}}<span></h4>
 
-				<fieldset id="fieldsetNovaAlteracao">
+				<fieldset>
 					<legend>Novo status</legend>
 					<div id="edicaoIndicadorDescricao">
 						<textarea id="edicaoIndicadorTxtDescricao" rows="3" cols="35" tabindex="1"></textarea>
@@ -55,9 +55,9 @@
 				</fieldset>
 
 				{{#if indicador.registros}}
-				<fieldset id="fieldsetUltimaAlteracao">
+				<fieldset>
 					<legend>Hist&oacute;rico de altera&ccedil;&otilde;es</legend>
-					<ul id="historico" class="ul-historico">
+					<ul class="historico">
 						{{#each indicador.registros}}
 						<li class="{{lowercase classificacao}}">
 							Alterado em <b>{{ultimaAlteracaoString}}</b> por <b>{{usuario}}</b><br>
