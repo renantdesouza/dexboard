@@ -13,10 +13,10 @@ table {
   white-space: nowrap;
 }
 
-input {
+input, textarea {
   border: 0;
   margin: 0;
-  outline: 0;
+  outline: none;
 }
 
 ul {
@@ -262,7 +262,7 @@ ul {
 .dialog-content #divOptions>input[disabled]:hover,
 .dialog-content #divOptions>input[disabled]:active,
 .dialog-content #divOptions>input[disabled]:focus {
-  opacity: .5; cursor: default; box-shadow: none;
+  opacity: .3; cursor: default; box-shadow: none;
 }
 
 .dialog-content #divOptions>input:first-child {
@@ -298,6 +298,7 @@ ul {
 
 .ul-historico {
   background-color: #f0f0f0;
+  border: 1px solid #DDD;
   border-radius: 3px;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.23) inset;
   margin-top: 2px;
@@ -310,7 +311,6 @@ ul {
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   padding: 7px;
   color: rgba(0, 0, 0, .8);
-  text-shadow: 0 1px 0 #fff;
   margin:  7px;
   text-align: left;
 }
