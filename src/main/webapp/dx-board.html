@@ -8,6 +8,7 @@
 	<script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="js/lib/handlebars-v4.0.5.js"></script>
 	<script type="text/javascript" src="js/indicador.js"></script>
+	<script type="text/javascript" src="js/projeto.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/dx-board.css"/>
 </head>
 <body>
@@ -50,9 +51,7 @@
 
 				<fieldset>
 					<legend>Novo status</legend>
-					<div id="edicaoIndicadorDescricao">
-						<textarea id="edicaoIndicadorTxtDescricao" rows="3" cols="35" tabindex="1"></textarea>
-					</div>
+					<textarea rows="3" cols="35" tabindex="1"></textarea>
 				</fieldset>
 
 				{{#if indicador.registros}}
@@ -71,7 +70,7 @@
 
 			</div>
 
-			<div id="divOptions" class="options">
+			<div class="options">
 				<input type="button"
 						value="Stop the line!"
 						disabled
@@ -101,38 +100,7 @@
 	</script>
 	
 	<script type="text/javascript">
-		var templateSource = $("#dexboard-template").html();
-		var container = $("#tabela-principal");
-		var template = Handlebars.compile(templateSource);
-		
-		Handlebars.registerHelper("lowercase", function(str) {
-			return str.toLowerCase();
-		});
-		
-		$.getJSON("/query", function(projetos) {
-			if (projetos && projetos.length > 0) {
-				
-				var indicadores = projetos[0].indicadores;
-				
-				container.html(template({
-					"projetos" : projetos,
-					"indicadores" : indicadores
-				}));
-				
-				$(".indicador").click(function() {
-					var indexProjeto = parseInt($(this).parent().data("index"));
-					var indexIndicador = parseInt($(this).data("index"));
-					
-					var projeto = projetos[indexProjeto];
-					var indicador = projeto.indicadores[indexIndicador];
-					
-					var dialog = new dexboard.indicador.view.Dialog();
-					var dialogView = dialog.open(projeto, indicador);
-				});
-			}
-		});
-		
-		dexboard.indicador.view.init();
+		dexboard.projeto.view.init();
 	</script>
 	
 </body>

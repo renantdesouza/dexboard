@@ -44,7 +44,9 @@ dexboard.indicador = (function($, Handlebars) {
 			}
 		};
 		
-		this.init = function() {
+		this.init = function(projeto) {
+			
+			var popup = new view.Dialog();
 			
 			self.change.click(function(e) {
 				var button = $(this);
@@ -52,7 +54,8 @@ dexboard.indicador = (function($, Handlebars) {
 				if (!button.prop("disabled")) {
 					var comentario = textArea.val();
 					var status = button.prop("name");
-					console.info(status, comentario);
+					service.novoStatus(projeto, indicador, status, comentario);
+					popup.close();
 				}
 			});
 			
@@ -63,8 +66,8 @@ dexboard.indicador = (function($, Handlebars) {
 					var ultimo = indicador.registros[0];
 					var comentario = ultimo.comentario;
 					var status = ultimo.classificacao;
-					console.info(status, comentario);
-					// TODO enviar um evento com a resposta quando o status for atualizado
+					service.novoStatus(projeto, indicador, status, comentario);
+					popup.close();
 				}
 			});
 			
@@ -130,6 +133,25 @@ dexboard.indicador = (function($, Handlebars) {
 		
 	};
 	
+	service.novoStatus = function(projeto, indicador, status, comentario) {
+		return $.ajax({
+				"type" : "POST",
+				"url" : "/indicador",
+				"data" : {
+					"projeto" : projeto.idPma,
+					"indicador" : indicador.id,
+					"registro" : JSON.stringify({
+						"classificacao" : status,
+						"comentario" : comentario
+					})
+				}
+		})
+		.done(function() {
+			// FIXME enviar um evento com a resposta quando o status for atualizado
+			dexboard.projeto.service.query();
+		});
+	};
+	
 	view.Dialog = function() {
 		
 		var self = this;
@@ -155,7 +177,7 @@ dexboard.indicador = (function($, Handlebars) {
 			
 			self.container.find(".dialog-close-button").click(self.close);
 			
-			var buttons = (new dialog.Buttons(indicador)).init();
+			var buttons = (new dialog.Buttons(indicador)).init(projeto);
 			(new dialog.TextArea()).init(buttons);
 			(new dialog.Records()).init();
 			
@@ -163,7 +185,6 @@ dexboard.indicador = (function($, Handlebars) {
 		};
 		
 		this.init = function() {
-			
 			self.overlay.click(self.close);
 			
 			$(document).keydown(function(e) {
@@ -177,7 +198,6 @@ dexboard.indicador = (function($, Handlebars) {
 				"autoOpen" : false,
 				"width" : 600
 			});
-
 		};
 		
 	};
