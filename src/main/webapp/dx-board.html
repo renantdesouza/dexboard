@@ -7,6 +7,7 @@
 	<script type="text/javascript" src="js/lib/jquery-2.2.3.min.js"></script>
 	<script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="js/lib/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="js/indicador.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/dx-board.css"/>
 </head>
 <body>
@@ -104,31 +105,6 @@
 		var container = $("#tabela-principal");
 		var template = Handlebars.compile(templateSource);
 		
-		var edicaoIndicadorTemplateSource = $("#edicao-indicador-template").html();
-		var dialog = $("#dialog");
-		var edicaoIndicadorTemplate = Handlebars.compile(edicaoIndicadorTemplateSource);
-		
-		var overlay = $("#dialog-overlay");
-		
-		var stopPropagation = function(event) {
-			event.preventDefault();
-			event.stopPropagation(); 
-			return false;
-		}
-		
-		var closePopup = function(event) {
-			stopPropagation(event);
-			overlay.hide();
-			dialog.dialog("close");
-		}
-		
-		overlay.click(closePopup);
-		$(document).keydown(function(e) {
-			if (e.which === 27) {
-				closePopup(e);
-			}
-		});
-		
 		Handlebars.registerHelper("lowercase", function(str) {
 			return str.toLowerCase();
 		});
@@ -149,55 +125,14 @@
 					
 					var projeto = projetos[indexProjeto];
 					var indicador = projeto.indicadores[indexIndicador];
-					var hasHistorico = indicador.registros ? indicador.registros.length > 0 : false;
 					
-					dialog.html(edicaoIndicadorTemplate({
-						"projeto" : projeto,
-						"indicador" : indicador
-					}));
-					
-					dialog.dialog("open");
-					overlay.show();
-					
-					$("#dialog .dialog-close-button").click(closePopup);
-					
-					inputChange = $("#dialog input.change");
-					inputKeep = $("#dialog input.btn-sem-mudancas");
-					
-					$("#dialog textarea").keyup(function() {
-						if ($(this).val().length > 0) {
-							inputChange.prop("disabled", false);
-							inputKeep.prop("disabled", true);
-						} else {
-							inputChange.prop("disabled", true);
-							if (hasHistorico) {
-								inputKeep.prop("disabled", false);
-							}
-						}
-					});
-					
-					var historico = $("ul.historico");
-					
-					$(".toggle-historico").mousedown(stopPropagation);
-					$(".toggle-historico").click(function(e) {
-						stopPropagation(e);
-						if (historico.is(":visible")) {
-							historico.hide();
-							$(this).find("span").html("+");
-						} else {
-							historico.show();
-							$(this).find("span").html("-");
-						}
-					});
+					var dialog = new dexboard.indicador.view.Dialog();
+					var dialogView = dialog.open(projeto, indicador);
 				});
 			}
 		});
 		
-		dialog.dialog({
-			"dialogClass": "no-close",
-			"autoOpen" : false,
-			"width" : 600
-		});
+		dexboard.indicador.view.init();
 	</script>
 	
 </body>
