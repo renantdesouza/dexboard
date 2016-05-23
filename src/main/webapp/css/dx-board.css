@@ -166,15 +166,15 @@ ul {
 }
 
 .heatbar span.perigo {
-  background-color: #eb0000;
+  background-color: rgba(235, 0, 0, 0.9);
 }
 
 .heatbar span.atencao {
-  background-color: #f6d700;
+  background-color: rgba(246, 215, 0, 0.8);
 }
 
 .heatbar span.ok {
-  background-color: #59be00;
+  background-color: rgba(89, 190, 0, 0.9);
 }
 
 .heatbar span:first-child {
