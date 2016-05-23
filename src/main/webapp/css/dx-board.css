@@ -1,3 +1,7 @@
+html {
+  transform-origin: top left;
+}
+
 body {
   background: url('../img/body-pattern.png') repeat;
   color: white;
@@ -41,6 +45,7 @@ ul {
 .dx-table tbody {
   max-width: calc(100% - 345px);
   overflow-x: auto;
+  vertical-align: top;
 }
 
 .dx-table td, .dx-table th {
@@ -105,10 +110,7 @@ ul {
   width: 80px;
 }
 
-.dx-table tr th:first-child {
-  height: 237px;
-}
-.dx-table tr td:first-child {
+.dx-table tr td:first-child, .dx-table tr th:first-child {
   height: 250px;
   text-align: left;
 }

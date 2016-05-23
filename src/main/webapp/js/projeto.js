@@ -11,6 +11,23 @@ dexboard.projeto = (function($, Handlebars) {
 	var template = null;
 	var view = {};
 	
+	var isFullscreen = function() {
+		return (!window.screenTop && !window.screenY);
+	};
+	
+	var zoomVertical = function() {
+		var height = window.innerHeight;
+		var tableHeight = $("#tabela-principal").height() + $("#tabela-principal").offset().top + 15;
+		var scale = (height / tableHeight).toFixed(2);
+		var width = Math.floor((1 / scale) * 100);
+		
+		console.info(tableHeight, scale, width);
+		
+		$("html")
+			.css("transform", "scale(" + scale + ")")
+			.css("width", width + "%");
+	};
+	
 	model.Indicador = function(jsonIndicador) {
 		
 		var self = this;
@@ -86,6 +103,10 @@ dexboard.projeto = (function($, Handlebars) {
 		this.init = function(queryWrapper) {
 			
 			self.container.html(template(queryWrapper));
+			
+			if (isFullscreen()) {
+				zoomVertical(); // TV Mode
+			}
 			
 			self.container.find(".indicador").click(function() {
 				var indexProjeto = parseInt($(this).parent().data("index"));
