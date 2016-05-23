@@ -6,18 +6,67 @@ dexboard.projeto = (function($, Handlebars) {
 		return str.toLowerCase();
 	});
 	
+	var model = {};
 	var service = {};
 	var template = null;
 	var view = {};
+	
+	model.Indicador = function(jsonIndicador) {
+		
+		var self = this;
+		
+		this.id = jsonIndicador.id;
+		this.nome = jsonIndicador.nome;
+		this.quantidadeAtraso = 0;
+		this.quantidadePerigo = 0;
+		this.quantidadeAtencao = 0;
+		this.quantidadeOk = 0;
+		
+		this.addQuantidade = function(status) {
+			if (status === "ATRASADO") {
+				self.quantidadeAtraso = self.quantidadeAtraso + 1;
+			} else if (status === "PERIGO") {
+				self.quantidadePerigo++;
+			} else if (status === "ATENCAO") {
+				self.quantidadeAtencao++;
+			} else {
+				self.quantidadeOk++;
+			}
+		}
+	};
+	
+	model.Indicador.fromProjetos = function(projetos) {
+		if (!projetos[0]) return [];
+		
+		var map = {};
+		var indicadores = projetos[0].indicadores.map(function(jsonIndicador) {
+			var indicador = new model.Indicador(jsonIndicador);
+			map[jsonIndicador.id] = indicador;
+			return indicador;
+		});
+		
+		projetos.forEach(function(projeto) {
+			projeto.indicadores.forEach(function(json) {
+				var status = json.atrasado ? "ATRASADO" : json.classificacao;
+				map[json.id].addQuantidade(status);
+			});
+		});
+		
+		return indicadores;
+	};
+	
+	model.QueryWrapper = function(projetos) {
+		this.projetos = projetos || [];
+		this.indicadores = model.Indicador.fromProjetos(this.projetos);
+	};
 	
 	service.query = function() {
 		var query = document.location.search.substr(1).split("=");
 		var equipe = (query.length > 1 && query[0] === "equipe") ? query[1] : undefined;
 		
 		return $.getJSON("/query", {"equipe" : equipe}).done(function(projetos) {
-			if (projetos && projetos.length > 0) {
-				(new view.Projeto()).init(projetos);
-			}
+			var queryWrapper = new model.QueryWrapper(projetos);
+			(new view.Projeto()).init(queryWrapper);
 		});
 	};
 	
@@ -34,20 +83,15 @@ dexboard.projeto = (function($, Handlebars) {
 		
 		this.container = $("#tabela-principal");
 		
-		this.init = function(projetos) {
+		this.init = function(queryWrapper) {
 			
-			var indicadores = projetos[0].indicadores;
-			
-			self.container.html(template({
-				"projetos" : projetos,
-				"indicadores" : indicadores
-			}));
+			self.container.html(template(queryWrapper));
 			
 			self.container.find(".indicador").click(function() {
 				var indexProjeto = parseInt($(this).parent().data("index"));
 				var indexIndicador = parseInt($(this).data("index"));
 				
-				var projeto = projetos[indexProjeto];
+				var projeto = queryWrapper.projetos[indexProjeto];
 				var indicador = projeto.indicadores[indexIndicador];
 				
 				var dialog = new dexboard.indicador.view.Dialog();

@@ -19,7 +19,6 @@ dexboard.indicador = (function($, Handlebars) {
 		
 		var self = this;
 		var hasRecords = indicador.registros ? indicador.registros.length > 0 : false;
-		var textArea = new dialog.TextArea();
 		
 		this.change = $("#dialog input.change");
 		this.keep = $("#dialog input.btn-sem-mudancas");
@@ -46,6 +45,7 @@ dexboard.indicador = (function($, Handlebars) {
 		
 		this.init = function(projeto) {
 			
+			var textArea = new dialog.TextArea();
 			var popup = new view.Dialog();
 			
 			self.change.click(function(e) {
