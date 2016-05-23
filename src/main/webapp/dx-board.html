@@ -18,7 +18,7 @@
 	
 	<script type="text/x-handlebars-template" id="dexboard-template">
 		<table>
-			<tbody>
+			<thead>
 				<tr>
 					<th class="logo">
 						<img src="img/header-logo.png" alt="dxb - DexBoard">
@@ -36,6 +36,8 @@
 					</th>
 					{{/each}}
 				</tr>
+			</thead>
+			<tbody>
 				{{#each projetos}}
 				<tr data-index="{{@index}}">
 					<td class="{{lowercase classificacao}}{{#if atrasado}} atrasado{{/if}}">

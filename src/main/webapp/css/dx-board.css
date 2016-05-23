@@ -29,6 +29,20 @@ ul {
 
 ::-moz-focus-inner {border:0;}
 
+.dx-table thead, .dx-table tbody {
+  display: inline-block;
+}
+
+.dx-table thead {
+  margin-right: 5px;
+  width: 315px;
+}
+
+.dx-table tbody {
+  max-width: calc(100% - 345px);
+  overflow-x: auto;
+}
+
 .dx-table td, .dx-table th {
   box-sizing: border-box;
   font-weight: bold;
@@ -92,7 +106,10 @@ ul {
   width: 80px;
 }
 
-.dx-table tr td:first-child, .dx-table tr th:first-child {
+.dx-table tr th:first-child {
+  height: 237px;
+}
+.dx-table tr td:first-child {
   height: 250px;
   text-align: left;
 }
