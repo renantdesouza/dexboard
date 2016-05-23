@@ -11,7 +11,10 @@ dexboard.projeto = (function($, Handlebars) {
 	var view = {};
 	
 	service.query = function() {
-		return $.getJSON("/query").done(function(projetos) {
+		var query = document.location.search.substr(1).split("=");
+		var equipe = (query.length > 1 && query[0] === "equipe") ? query[1] : undefined;
+		
+		return $.getJSON("/query", {"equipe" : equipe}).done(function(projetos) {
 			if (projetos && projetos.length > 0) {
 				(new view.Projeto()).init(projetos);
 			}
