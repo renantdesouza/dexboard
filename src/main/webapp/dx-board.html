@@ -26,7 +26,7 @@
 					</th>
 					{{#each indicadores}}
 					<th>
-						<span>{{nome}}</span>
+						<span class="title">{{nome}}</span>
 						<div class="heatbar">
 							{{#if quantidadeAtraso}}<span style="width: {{quantidadeAtraso}}px"></span>{{/if}}
 							{{#if quantidadePerigo}}<span class="perigo" style="width: {{quantidadePerigo}}px"></span>{{/if}}
@@ -37,19 +37,32 @@
 					{{/each}}
 				</tr>
 			</thead>
-			<tbody>
+			<tbody {{#if tvMode}} class="tv-mode"{{/if}}>
 				{{#each projetos}}
 				<tr data-index="{{@index}}">
 					<td class="{{lowercase classificacao}}{{#if atrasado}} atrasado{{/if}}">
 						<div class="vertical">{{nome}}</div>
 					</td>
 					{{#each indicadores}}
-					<td data-index="{{@index}}" class="indicador {{lowercase classificacao}}{{#if atrasado}} atrasado{{/if}}">{{#if @first}}{{../cpi}}{{/if}}</td>
+					<td data-index="{{@index}}" class="indicador {{lowercase classificacao}}{{#if atrasado}} atrasado{{/if}}">
+						{{#if @first}}<span class="cpi">{{../cpi}}</span>{{/if}}
+					</td>
 					{{/each}}
 				</tr>
 				{{/each}}
 			</tbody>
 		</table>
+		{{#if tvMode}}
+		<div class="heatbar-global">
+			<div class="slider"></div>
+			<div class="heatbar">
+				<span style="width: 1px"></span>
+				<span class="perigo" style="width: 1px"></span>
+				<span class="atencao" style="width: 1px"></span>
+				<span class="ok" style="width: 1px"></span>
+			</div>
+		</div>
+		{{/if}}
 	</script>
 	
 	<script type="text/x-handlebars-template" id="edicao-indicador-template">

@@ -22,8 +22,6 @@ dexboard.projeto = (function($, Handlebars) {
 		var scale = (height / tableHeight).toFixed(2);
 		var width = Math.floor((1 / scale) * 100);
 		
-		console.info(tableHeight, scale, width);
-		
 		$("html")
 			.css("transform", "scale(" + scale + ")")
 			.css("width", width + "%");
@@ -31,6 +29,7 @@ dexboard.projeto = (function($, Handlebars) {
 	
 	var autoScroll = function() {
 		var container = (new view.Projeto()).container.find("tbody");
+		var fistProject = container.find("tr:first");
 		var lastProject = container.find("tr:last");
 		
 		// largura de cada coluna de projeto
@@ -44,21 +43,38 @@ dexboard.projeto = (function($, Handlebars) {
 		var visibleWidth = container.width();
 		
 		// largura ate o final da pagina
-		var totalWidth = lastProject.offset().left + projectWidth - offset;
+		var totalWidth = lastProject.offset().left - fistProject.offset().left + projectWidth;
 		
-		if (visibleWidth < totalWidth) {
+		//largura do scroll ate o final da pagina
+		var offsetLastElement = lastProject.offset().left + projectWidth - offset;
+
+		var heatbarWidth = $(".heatbar-global .heatbar").width() + 6;
+		var widthIndicadorScroll = (visibleWidth / totalWidth) * heatbarWidth;
+		$(".heatbar-global .slider").css("width", widthIndicadorScroll + "px");
+		
+		console.info(visibleWidth, offsetLastElement);
+		
+		if (visibleWidth < offsetLastElement) {
 			var currentScroll = container.scrollLeft();
 			var deltaScroll = Math.floor((visibleWidth / columnWidth)) * columnWidth;
-			var scrollTo = currentScroll + deltaScroll;
+			var scrollTo = Math.min(currentScroll + deltaScroll, totalWidth - visibleWidth);
+			
+			var left = (scrollTo / totalWidth) * heatbarWidth;
+			$(".heatbar-global .slider").css("left", left + "px");
 			
 			container.animate({"scrollLeft" : scrollTo + "px"});
 			return scrollTo;
 			
 		} else {
 			container.animate({"scrollLeft" : "0"});
+			
+			$(".heatbar-global .slider").css("left", "0");
+			
 			return 0;
 		}
 	};
+	
+	window.autoScroll = autoScroll;
 	
 	model.Indicador = function(jsonIndicador) {
 		
@@ -107,6 +123,7 @@ dexboard.projeto = (function($, Handlebars) {
 	model.QueryWrapper = function(projetos) {
 		this.projetos = projetos || [];
 		this.indicadores = model.Indicador.fromProjetos(this.projetos);
+		this.tvMode = true;
 	};
 	
 	service.query = function() {
@@ -138,7 +155,7 @@ dexboard.projeto = (function($, Handlebars) {
 			
 			if (isFullscreen()) {
 				zoomVertical(); // TV Mode
-				setInterval(autoScroll, 15000);
+				setInterval(autoScroll, 1500);
 			}
 			
 			self.container.find(".indicador").click(function() {
