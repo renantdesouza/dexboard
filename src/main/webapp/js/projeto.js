@@ -16,8 +16,9 @@ dexboard.projeto = (function($, Handlebars) {
 	};
 	
 	var zoomVertical = function() {
+		var container = (new view.Projeto()).container;
 		var height = window.innerHeight;
-		var tableHeight = $("#tabela-principal").height() + $("#tabela-principal").offset().top + 15;
+		var tableHeight = container.height() + container.offset().top + 15;
 		var scale = (height / tableHeight).toFixed(2);
 		var width = Math.floor((1 / scale) * 100);
 		
@@ -26,6 +27,37 @@ dexboard.projeto = (function($, Handlebars) {
 		$("html")
 			.css("transform", "scale(" + scale + ")")
 			.css("width", width + "%");
+	};
+	
+	var autoScroll = function() {
+		var container = (new view.Projeto()).container.find("tbody");
+		var lastProject = container.find("tr:last");
+		
+		// largura de cada coluna de projeto
+		var projectWidth = lastProject.width();
+		var columnWidth = projectWidth + 4;
+		
+		// comeco dos projetos em relacao a pagina
+		var offset = container.offset().left;
+		
+		// largura ate o scroll
+		var visibleWidth = container.width();
+		
+		// largura ate o final da pagina
+		var totalWidth = lastProject.offset().left + projectWidth - offset;
+		
+		if (visibleWidth < totalWidth) {
+			var currentScroll = container.scrollLeft();
+			var deltaScroll = Math.floor((visibleWidth / columnWidth)) * columnWidth;
+			var scrollTo = currentScroll + deltaScroll;
+			
+			container.animate({"scrollLeft" : scrollTo + "px"});
+			return scrollTo;
+			
+		} else {
+			container.animate({"scrollLeft" : "0"});
+			return 0;
+		}
 	};
 	
 	model.Indicador = function(jsonIndicador) {
@@ -106,6 +138,7 @@ dexboard.projeto = (function($, Handlebars) {
 			
 			if (isFullscreen()) {
 				zoomVertical(); // TV Mode
+				setInterval(autoScroll, 15000);
 			}
 			
 			self.container.find(".indicador").click(function() {
@@ -124,6 +157,7 @@ dexboard.projeto = (function($, Handlebars) {
 	};
 	
 	return {
+		"model" : model,
 		"view" : view,
 		"service" : service
 	};
