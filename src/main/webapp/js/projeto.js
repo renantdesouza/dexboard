@@ -11,70 +11,15 @@ dexboard.projeto = (function($, Handlebars) {
 	var template = null;
 	var view = {};
 	
-	var isFullscreen = function() {
-		return (!window.screenTop && !window.screenY);
+	var isTvMode = function() {
+		var search = document.location.search;
+		return search.indexOf("from") > 0 && search.indexOf("TV") > 0;
 	};
 	
-	var zoomVertical = function() {
-		var container = (new view.Projeto()).container;
-		var height = window.innerHeight;
-		var tableHeight = container.height() + container.offset().top + 15;
-		var scale = (height / tableHeight).toFixed(2);
-		var width = Math.floor((1 / scale) * 100);
-		
-		$("html")
-			.css("transform", "scale(" + scale + ")")
-			.css("width", width + "%");
+	var queryEquipe = function() {
+		var query = document.location.search.substr(1).split("=");
+		return (query.length > 1 && query[0] === "equipe") ? query[1] : undefined;
 	};
-	
-	var autoScroll = function() {
-		var container = (new view.Projeto()).container.find("tbody");
-		var fistProject = container.find("tr:first");
-		var lastProject = container.find("tr:last");
-		
-		// largura de cada coluna de projeto
-		var projectWidth = lastProject.width();
-		var columnWidth = projectWidth + 4;
-		
-		// comeco dos projetos em relacao a pagina
-		var offset = container.offset().left;
-		
-		// largura ate o scroll
-		var visibleWidth = container.width();
-		
-		// largura ate o final da pagina
-		var totalWidth = lastProject.offset().left - fistProject.offset().left + projectWidth;
-		
-		//largura do scroll ate o final da pagina
-		var offsetLastElement = lastProject.offset().left + projectWidth - offset;
-
-		var heatbarWidth = $(".heatbar-global .heatbar").width() + 6;
-		var widthIndicadorScroll = (visibleWidth / totalWidth) * heatbarWidth;
-		$(".heatbar-global .slider").css("width", widthIndicadorScroll + "px");
-		
-		console.info(visibleWidth, offsetLastElement);
-		
-		if (visibleWidth < offsetLastElement) {
-			var currentScroll = container.scrollLeft();
-			var deltaScroll = Math.floor((visibleWidth / columnWidth)) * columnWidth;
-			var scrollTo = Math.min(currentScroll + deltaScroll, totalWidth - visibleWidth);
-			
-			var left = (scrollTo / totalWidth) * heatbarWidth;
-			$(".heatbar-global .slider").css("left", left + "px");
-			
-			container.animate({"scrollLeft" : scrollTo + "px"});
-			return scrollTo;
-			
-		} else {
-			container.animate({"scrollLeft" : "0"});
-			
-			$(".heatbar-global .slider").css("left", "0");
-			
-			return 0;
-		}
-	};
-	
-	window.autoScroll = autoScroll;
 	
 	model.Indicador = function(jsonIndicador) {
 		
@@ -123,12 +68,11 @@ dexboard.projeto = (function($, Handlebars) {
 	model.QueryWrapper = function(projetos) {
 		this.projetos = projetos || [];
 		this.indicadores = model.Indicador.fromProjetos(this.projetos);
-		this.tvMode = true;
+		this.tvMode = isTvMode();
 	};
 	
 	service.query = function() {
-		var query = document.location.search.substr(1).split("=");
-		var equipe = (query.length > 1 && query[0] === "equipe") ? query[1] : undefined;
+		var equipe = queryEquipe();
 		
 		return $.getJSON("/query", {"equipe" : equipe}).done(function(projetos) {
 			var queryWrapper = new model.QueryWrapper(projetos);
@@ -143,6 +87,87 @@ dexboard.projeto = (function($, Handlebars) {
 		service.query();
 	};
 	
+	view.HeatBar = function() {
+		
+		var self = this;
+		
+		this.bar = $(".heatbar-global .heatbar");
+		this.slider = $(".heatbar-global .slider");
+		
+		var container = (new view.Projeto()).container.find("tbody");
+		var fistProject = container.find("tr:first");
+		var lastProject = container.find("tr:last");
+		
+		var heatbarWidth = this.bar.width() + 16;
+		
+		// largura de cada coluna de projeto
+		var projectWidth = lastProject.innerWidth();
+		
+		// comeco dos projetos em relacao a pagina
+		var offset = container.offset().left;
+		
+		// largura ate o scroll
+		var visibleWidth = container.innerWidth();
+		
+		// largura ate o final da pagina
+		var totalWidth = lastProject.offset().left - fistProject.offset().left + projectWidth;
+		
+		// maximo que pode ser rolado sem quebrar a visao de uma coluna no meio
+		var deltaScroll = Math.floor((visibleWidth / projectWidth)) * projectWidth;
+		
+		// ponto mais distante que pode ser rolado
+		var limitScroll = totalWidth - visibleWidth;
+		
+		var indicadorScrollWidth = (visibleWidth / totalWidth) * heatbarWidth;
+		
+		var displayScrollPosition = function(scrollTo) {
+			var left = (scrollTo / totalWidth) * heatbarWidth;
+			self.slider.css("left", left + "px");
+		};
+		
+		var reset = false;
+		
+		var nextScrollPosition = function() {
+			
+			//largura do scroll ate o final da pagina
+			var offsetLastElement = lastProject.offset().left + projectWidth - offset;
+			
+			if (visibleWidth < Math.floor(offsetLastElement)) {
+				var scrollTo = container.scrollLeft() + deltaScroll;
+				
+				if (scrollTo > limitScroll) {
+					if (reset) {
+						reset = false;
+						return 0;
+					}
+					reset = true;
+					return limitScroll;
+				}
+				
+				return scrollTo;
+				
+			} else {
+				return 0;
+			}
+			
+		};
+		
+		this.autoScroll = function() {
+			var scrollTo = nextScrollPosition();
+			container.animate({"scrollLeft" : scrollTo + "px"});
+			displayScrollPosition(scrollTo);
+		};
+		
+		this.init = function() {
+			self.slider
+				.css("display", "block")
+				.css("width", indicadorScrollWidth + "px");
+			displayScrollPosition(0);
+			return self;
+		};
+
+	};
+	
 	view.Projeto = function() {
 		
 		var self = this;
@@ -153,9 +178,9 @@ dexboard.projeto = (function($, Handlebars) {
 			
 			self.container.html(template(queryWrapper));
 			
-			if (isFullscreen()) {
-				zoomVertical(); // TV Mode
-				setInterval(autoScroll, 1500);
+			if (isTvMode()) {
+				var heatbar = (new view.HeatBar()).init();
+				setInterval(heatbar.autoScroll, 1500);
 			}
 			
 			self.container.find(".indicador").click(function() {
