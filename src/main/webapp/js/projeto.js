@@ -21,12 +21,10 @@ dexboard.projeto = (function($, Handlebars) {
 		return (query.length > 1 && query[0] === "equipe") ? query[1] : undefined;
 	};
 	
-	model.Indicador = function(jsonIndicador) {
+	model.StatusHistogram = function() {
 		
 		var self = this;
-		
-		this.id = jsonIndicador.id;
-		this.nome = jsonIndicador.nome;
+
 		this.quantidadeAtraso = 0;
 		this.quantidadePerigo = 0;
 		this.quantidadeAtencao = 0;
@@ -42,7 +40,18 @@ dexboard.projeto = (function($, Handlebars) {
 			} else {
 				self.quantidadeOk++;
 			}
-		}
+		};
+
+	};
+	
+	model.Indicador = function(jsonIndicador) {
+		
+		var self = this;
+		
+		this.id = jsonIndicador.id;
+		this.nome = jsonIndicador.nome;
+		this.status = new model.StatusHistogram();
+		
 	};
 	
 	model.Indicador.fromProjetos = function(projetos) {
@@ -58,7 +67,7 @@ dexboard.projeto = (function($, Handlebars) {
 		projetos.forEach(function(projeto) {
 			projeto.indicadores.forEach(function(json) {
 				var status = json.atrasado ? "ATRASADO" : json.classificacao;
-				map[json.id].addQuantidade(status);
+				map[json.id].status.addQuantidade(status);
 			});
 		});
 		
@@ -66,9 +75,20 @@ dexboard.projeto = (function($, Handlebars) {
 	};
 	
 	model.QueryWrapper = function(projetos) {
+		
+		var self = this;
+		
 		this.projetos = projetos || [];
 		this.indicadores = model.Indicador.fromProjetos(this.projetos);
 		this.tvMode = isTvMode();
+		
+		this.status = new model.StatusHistogram();
+		
+		projetos.forEach(function(projeto) {
+			var status = projeto.atrasado ? "ATRASADO" : projeto.classificacao;
+			self.status.addQuantidade(status);
+		});
+		
 	};
 	
 	service.query = function() {

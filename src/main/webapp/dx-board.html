@@ -28,10 +28,10 @@
 					<th>
 						<span class="title">{{nome}}</span>
 						<div class="heatbar">
-							{{#if quantidadeAtraso}}<span style="width: {{quantidadeAtraso}}px"></span>{{/if}}
-							{{#if quantidadePerigo}}<span class="perigo" style="width: {{quantidadePerigo}}px"></span>{{/if}}
-							{{#if quantidadeAtencao}}<span class="atencao" style="width: {{quantidadeAtencao}}px"></span>{{/if}}
-							{{#if quantidadeOk}}<span class="ok" style="width: {{quantidadeOk}}px"></span>{{/if}}
+							{{#if status.quantidadeAtraso}}<span style="width: {{status.quantidadeAtraso}}px"></span>{{/if}}
+							{{#if status.quantidadePerigo}}<span class="perigo" style="width: {{status.quantidadePerigo}}px"></span>{{/if}}
+							{{#if status.quantidadeAtencao}}<span class="atencao" style="width: {{status.quantidadeAtencao}}px"></span>{{/if}}
+							{{#if status.quantidadeOk}}<span class="ok" style="width: {{status.quantidadeOk}}px"></span>{{/if}}
 						</div>
 					</th>
 					{{/each}}
@@ -56,10 +56,10 @@
 		<div class="heatbar-global">
 			<div class="slider"></div>
 			<div class="heatbar">
-				<span style="width: 1px"></span>
-				<span class="perigo" style="width: 1px"></span>
-				<span class="atencao" style="width: 1px"></span>
-				<span class="ok" style="width: 1px"></span>
+				{{#if status.quantidadeAtraso}}<span style="width: {{status.quantidadeAtraso}}px"></span>{{/if}}
+				{{#if status.quantidadePerigo}}<span class="perigo" style="width: {{status.quantidadePerigo}}px"></span>{{/if}}
+				{{#if status.quantidadeAtencao}}<span class="atencao" style="width: {{status.quantidadeAtencao}}px"></span>{{/if}}
+				{{#if status.quantidadeOk}}<span class="ok" style="width: {{status.quantidadeOk}}px"></span>{{/if}}
 			</div>
 		</div>
 		{{/if}}
