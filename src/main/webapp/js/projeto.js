@@ -180,7 +180,7 @@ dexboard.projeto = (function($, Handlebars) {
 			
 			if (isTvMode()) {
 				var heatbar = (new view.HeatBar()).init();
-				setInterval(heatbar.autoScroll, 1500);
+				setInterval(heatbar.autoScroll, 15000);
 			}
 			
 			self.container.find(".indicador").click(function() {
