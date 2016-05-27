@@ -1,7 +1,3 @@
-html {
-  transform-origin: top left;
-}
-
 body {
   background: url('../img/body-pattern.png') repeat;
   color: white;
@@ -40,6 +36,7 @@ ul {
 }
 
 .dx-table thead, .dx-table tbody {
+  box-sizing: border-box;
   display: inline-block;
   font-size: 0;
 }
@@ -50,8 +47,13 @@ ul {
   vertical-align: top;
 }
 
-.dx-table tbody.tv-mode {
+.dx-table table.tv-mode tbody {
   overflow-x: hidden;
+  width: 78.5%;
+}
+
+.dx-table table.tv-mode thead {
+  width: 21%;
 }
 
 .dx-table td, .dx-table th {
@@ -117,8 +119,9 @@ ul {
 }
 
 .dx-table th:first-child {
-  background: unset;
+  background: none;
   border: none;
+  box-shadow: none;
 }
 
 .dx-table tr td {
@@ -154,6 +157,8 @@ ul {
   text-overflow: ellipsis;
   transform: rotate(270deg);
   transform-origin: bottom left;
+  -webkit-transform: rotate(270deg);
+  -webkit-transform-origin: bottom left;
 }
 
 .logo img {
@@ -194,6 +199,7 @@ ul {
 
 .dx-table tr {
   padding: 0 0.8vh;
+  width: 11vh;
 }
 
 .dx-table td, .dx-table th {
@@ -203,18 +209,17 @@ ul {
   padding-top: 2.5vh;
 }
 
-.dx-table td {
-  width: 11vh;
-}
-
 .dx-table tr td:first-child, .dx-table tr th:first-child {
   height: 32vh;
 }
 
 .dx-table th {
   margin-left: 0;
-  padding-left: 2.5vh;
   width: 36vh;
+}
+
+.dx-table th .title {
+  padding-left: 2.5vh;
 }
 
 .dx-table .vertical {
@@ -236,13 +241,14 @@ ul {
   height: 4px;
   left: 1px;
   position: absolute;
+  width: 100%; /* dextra-tv */
   width: calc(100% - 2px);
 }
 
 .heatbar-global .heatbar {
   box-sizing: border-box;
-  height: 4.8vh;
-  padding: 1.5vh 10px 2.2vh 5px;
+  display: table-row;
+  height: 1.1vh;
   position: relative;
 }
 
@@ -283,7 +289,11 @@ ul {
 }
 
 .heatbar-global {
+  display: table;
+  margin-left: 2px;
+  padding: 1.5vh 4px 0 4px;
   position: relative;
+  width: 100%;
 }
 
 .heatbar-global .slider {

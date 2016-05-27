@@ -118,7 +118,7 @@ dexboard.projeto = (function($, Handlebars) {
 		var fistProject = container.find("tr:first");
 		var lastProject = container.find("tr:last");
 		
-		var heatbarWidth = this.bar.width() + 16;
+		var heatbarWidth = this.bar.width() + 18;
 		
 		// largura de cada coluna de projeto
 		var projectWidth = lastProject.innerWidth();
@@ -174,7 +174,7 @@ dexboard.projeto = (function($, Handlebars) {
 		
 		this.autoScroll = function() {
 			var scrollTo = nextScrollPosition();
-			container.animate({"scrollLeft" : scrollTo + "px"});
+			container.scrollLeft(scrollTo);
 			displayScrollPosition(scrollTo);
 		};
 		

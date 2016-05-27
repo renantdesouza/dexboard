@@ -17,7 +17,7 @@
 	<div id="dialog"></div>
 	
 	<script type="text/x-handlebars-template" id="dexboard-template">
-		<table>
+		<table {{#if tvMode}} class="tv-mode"{{/if}}>
 			<thead>
 				<tr>
 					<th class="logo">
@@ -37,7 +37,7 @@
 					{{/each}}
 				</tr>
 			</thead>
-			<tbody {{#if tvMode}} class="tv-mode"{{/if}}>
+			<tbody>
 				{{#each projetos}}
 				<tr data-index="{{@index}}">
 					<td class="{{lowercase classificacao}}{{#if atrasado}} atrasado{{/if}}">
