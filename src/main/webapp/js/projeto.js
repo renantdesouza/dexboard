@@ -194,13 +194,25 @@ dexboard.projeto = (function($, Handlebars) {
 		
 		this.container = $("#tabela-principal");
 		
-		this.init = function(queryWrapper) {
+		var getScroll = function() {
+			return self.container.find("tbody").scrollLeft();
+		};
+		
+		var setScroll = function(scrollTo) {
+			self.container.find("tbody").scrollLeft(scrollTo);
+		};
+		
+		this.init = function(queryWrapper, scrollTo) {
 			
 			self.container.html(template(queryWrapper));
 			
 			if (isTvMode()) {
 				var heatbar = (new view.HeatBar()).init();
 				setInterval(heatbar.autoScroll, 15000);
+			}
+			
+			if (scrollTo) {
+				setScroll(scrollTo);
 			}
 			
 			self.container.find(".indicador").click(function() {
@@ -214,7 +226,20 @@ dexboard.projeto = (function($, Handlebars) {
 				dialog.open(projeto, indicador);
 			});
 			
+			if (view.Projeto.updateIndicador) {
+				self.container[0].removeEventListener("update-indicador", view.Projeto.updateIndicador);
+			}
+			
+			view.Projeto.updateIndicador = function() {
+				var updatedQuery = new model.QueryWrapper(queryWrapper.projetos);
+				(new view.Projeto()).init(updatedQuery, getScroll());
+			};
+			
+			self.container[0].addEventListener("update-indicador", view.Projeto.updateIndicador);
+			
 			dexboard.indicador.view.init();
+			
+			return self;
 		}
 	};
 	

@@ -145,10 +145,31 @@ dexboard.indicador = (function($, Handlebars) {
 						"comentario" : comentario
 					})
 				}
-		})
-		.done(function() {
-			// FIXME enviar um evento com a resposta quando o status for atualizado
-			dexboard.projeto.service.query();
+		}).then(function(registro) {
+			indicador.atrasado = false;
+			indicador.classificacao = registro.classificacao;
+			indicador.registros.unshift(registro);
+			
+			projeto.atrasado = projeto.indicadores.some(function(i) {
+				return i.atrasado;
+			});
+			
+			projeto.classificacao = projeto.indicadores.reduce(function(classificacao, i) {
+				if (classificacao === "PERIGO" || i.classificacao === "PERIGO") {
+					return "PERIGO";
+					
+				} else if (classificacao === "ATENCAO") {
+					return "ATENCAO";
+					
+				} else {
+					return i.classificacao;
+				}
+			});
+			
+		}).done(function() {
+			var container = (new dexboard.projeto.view.Projeto()).container[0];
+			var event = new CustomEvent("update-indicador", {"detail" : projeto});
+			container.dispatchEvent(event);
 		});
 	};
 	

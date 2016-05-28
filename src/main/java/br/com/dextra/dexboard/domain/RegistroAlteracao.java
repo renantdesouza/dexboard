@@ -29,6 +29,7 @@ public class RegistroAlteracao {
 		this.id = String.format("%s;%s;%s", this.getProjeto().getId(), this.getIndicador().getName(), System.currentTimeMillis() + "");
 	}
 
+	@JSON(include = false)
 	public Key<Projeto> getProjeto() {
 		return projeto;
 	}
@@ -37,6 +38,7 @@ public class RegistroAlteracao {
 		this.projeto = projeto;
 	}
 
+	@JSON(include = false)
 	public Key<Indicador> getIndicador() {
 		return indicador;
 	}

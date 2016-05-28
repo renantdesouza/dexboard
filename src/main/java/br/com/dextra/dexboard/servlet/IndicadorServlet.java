@@ -15,6 +15,7 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 
 import flexjson.JSONDeserializer;
+import flexjson.JSONSerializer;
 
 public class IndicadorServlet extends HttpServlet {
 
@@ -24,6 +25,7 @@ public class IndicadorServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
+		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("application/json");
 
 		Long idProjeto = Long.valueOf(req.getParameter("projeto"));
@@ -39,9 +41,10 @@ public class IndicadorServlet extends HttpServlet {
 		regAlteracao.setData(new Date());
 
 		ProjetoDao dao = new ProjetoDao();
-		dao.salvaAlteracao(idProjeto, idIndicador, regAlteracao);
-
-		resp.getWriter().println("true");
+		RegistroAlteracao registro = dao.salvaAlteracao(idProjeto, idIndicador, regAlteracao);
+		
+		JSONSerializer serializer = new JSONSerializer();
+		resp.getWriter().println(serializer.serialize(registro));
 	}
 
 	@Override

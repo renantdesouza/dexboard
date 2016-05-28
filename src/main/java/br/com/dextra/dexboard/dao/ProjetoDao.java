@@ -121,7 +121,7 @@ public class ProjetoDao {
 		ofy.save().entity(indicador);
 	}
 
-	public void salvaAlteracao(Long idProjetoPma, Long idIndicador, RegistroAlteracao registroAlteracao) {
+	public RegistroAlteracao salvaAlteracao(Long idProjetoPma, Long idIndicador, RegistroAlteracao registroAlteracao) {
 		MemcacheServiceFactory.getMemcacheService().delete(KEY_CACHE);
 		MemcacheServiceFactory.getMemcacheService().delete(HISTORY_CACHE);
 		Key<Projeto> keyProjeto = Key.create(Projeto.class, idProjetoPma);
@@ -131,6 +131,8 @@ public class ProjetoDao {
 		registroAlteracao.setProjeto(keyProjeto);
 		registroAlteracao.defineId();
 		ofy.save().entity(registroAlteracao).now();
+		
+		return registroAlteracao;
 	}
 
 }
