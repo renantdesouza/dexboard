@@ -8,6 +8,7 @@ import java.util.NoSuchElementException;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.slf4j.LoggerFactory;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -26,6 +27,8 @@ public class ITestDexboard extends ApiTest {
 		JsonArray projetos = queryProjetosJson(null);
 
 		assertEquals(23, projetos.size());
+		
+		LoggerFactory.getLogger(this.getClass()).info(projetos.toString());
 
 		JsonObject a4c = projetos.get(0).getAsJsonObject();
 		JsonObject adv = projetos.get(1).getAsJsonObject();

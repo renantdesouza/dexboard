@@ -35,6 +35,12 @@ public class ApiTest {
 	public static void init() {
 		service = new LocalHttpFacade();
 		carregaProjetos();
+		
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@AfterClass
