@@ -81,8 +81,6 @@ public class ITestDexboard extends ApiTest {
 
 	@Test
 	public void testAtrasoIndicadorJson() {
-		carregaProjetos();
-		
 		for (int i = 1; i <= 6; i++) {
 			alteraIndicadorDeProjeto(ID_PROJETO_CONTPLAY, i, Classificacao.ATENCAO);
 		}

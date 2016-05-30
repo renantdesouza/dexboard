@@ -8,16 +8,16 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.com.dextra.dexboard.domain.Indicador;
-import br.com.dextra.dexboard.domain.Projeto;
-import br.com.dextra.dexboard.domain.RegistroAlteracao;
-
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.LoadResult;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.cmd.Query;
+
+import br.com.dextra.dexboard.domain.Indicador;
+import br.com.dextra.dexboard.domain.Projeto;
+import br.com.dextra.dexboard.domain.RegistroAlteracao;
 
 public class ProjetoDao {
 
@@ -41,10 +41,6 @@ public class ProjetoDao {
 
 	public Projeto buscarProjeto(Long idProjeto) {
 		return ofy.load().type(Projeto.class).id(idProjeto).now();
-	}
-
-	public List<Projeto> buscarTodosProjetos() {
-		return buscarTodosProjetos(true, null);
 	}
 
 	public Projeto buscarProjetoByKey(Key<Projeto> key) {
@@ -75,20 +71,42 @@ public class ProjetoDao {
 			return list.subList(0, limit);
 		}
 	}
+	
+	public List<Projeto> buscarTodosProjetos() {
+		Query<Projeto> query = ofy.load()
+				.type(Projeto.class)
+				.filter("ativo", true);
+		return query.list();
+	}
+	
+	public List<Projeto> buscarProjetosInativos() {
+		Query<Projeto> query = ofy.load()
+				.type(Projeto.class)
+				.filter("ativo", false);
+		return query.list();
+	}
 
-	public List<Projeto> buscarTodosProjetos(boolean ativo, String equipe) {
-		Query<Projeto> query = ofy.load().type(Projeto.class).filter("ativo", ativo);
-
-		if (equipe != null) {
-			query = query.filter("equipe", equipe.toUpperCase());
-		}
-
+	public List<Projeto> buscarProjetosEquipe(String equipe) {
+		Query<Projeto> query = ofy.load()
+				.type(Projeto.class)
+				.filter("equipe", equipe.toUpperCase());
+		
 		List<Projeto> list = query.list();
-
-		if (list == null) {
-			list = new ArrayList<Projeto>();
+		List<Projeto> ativos = new ArrayList<>();
+		list.size();
+		
+		for (Projeto projeto : list) {
+			if (projeto.isAtivo()) {
+				ativos.add(projeto);
+			}
 		}
-		return list;
+		
+		return ativos;
+	}
+
+	public List<Projeto> buscarTodosProjetos(String equipe) {
+		boolean hasEquipe = equipe == null || equipe.trim().isEmpty();
+		return hasEquipe ? buscarTodosProjetos() : buscarProjetosEquipe(equipe);
 	}
 
 	public List<Indicador> buscarIndicadoresDoProjeto(Long idPma) {

@@ -54,7 +54,7 @@ public class QueryServlet extends HttpServlet {
 
 	private String getJsonProjetos(String equipe) {
 		ProjetoDao dao = new ProjetoDao();
-		List<Projeto> projetos = dao.buscarTodosProjetos(true, equipe);
+		List<Projeto> projetos = dao.buscarTodosProjetos(equipe);
 		Collections.sort(projetos, new ProjetoComparator());
 
 		List<ProjetoJson> projetosJson = Projeto.toProjetoJson(projetos);
