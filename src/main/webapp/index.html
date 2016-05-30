@@ -2,76 +2,131 @@
 <html>
 
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script type="text/javascript" src="js/lib/jquery-2.2.3.min.js"></script>
-<script type="text/javascript" src="js/lib/handlebars-v4.0.5.js"></script>
-<script type="text/javascript" src="js/carregaDados.js"></script>
-<script type="text/javascript" src="js/dexboard-rotate.js"></script>
-<script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/main.css" media="all" />
-<link rel="stylesheet" type="text/css" href="css/jquery-ui.min.css" media="all" />
-<link href='img/favicon.png' rel='shortcut icon' type='image/png' />
-
-<title>DexBoard Reload</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>DexBoard Reload</title>
+	<script type="text/javascript" src="js/lib/jquery-2.2.3.min.js"></script>
+	<script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/lib/handlebars-v4.0.5.js"></script>
+	<script type="text/javascript" src="js/indicador.js"></script>
+	<script type="text/javascript" src="js/projeto.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/dx-board.css"/>
+	<link href='img/favicon.png' rel='shortcut icon' type='image/png' />
 </head>
 <body>
 	<div id="dialog-overlay"></div>
-	<div id="wrapper" class="clearfix">
-		<div class="container-left">
-			<div class="content-logo">
-				<a href="#"> <img src="img/header-logo.png" alt="dxb - DexBoard"
-					width="" height="" />
-				</a>
+	<div id="tabela-principal" class="dx-table dx-table-flip"></div>
+	<div id="dialog"></div>
+	
+	<script type="text/x-handlebars-template" id="dexboard-template">
+		<table {{#if tvMode}} class="tv-mode"{{/if}}>
+			<thead>
+				<tr>
+					<th class="logo">
+						<img src="img/header-logo.png" alt="dxb - DexBoard">
+						<input type="text" placeholder="Busca de Projetos e Equipes">
+					</th>
+					{{#each indicadores}}
+					<th>
+						<span class="title">{{nome}}</span>
+						<div class="heatbar">
+							{{#if status.quantidadeAtraso}}<span style="width: {{status.quantidadeAtraso}}px"></span>{{/if}}
+							{{#if status.quantidadePerigo}}<span class="perigo" style="width: {{status.quantidadePerigo}}px"></span>{{/if}}
+							{{#if status.quantidadeAtencao}}<span class="atencao" style="width: {{status.quantidadeAtencao}}px"></span>{{/if}}
+							{{#if status.quantidadeOk}}<span class="ok" style="width: {{status.quantidadeOk}}px"></span>{{/if}}
+						</div>
+					</th>
+					{{/each}}
+				</tr>
+			</thead>
+			<tbody>
+				{{#each projetos}}
+				<tr data-index="{{@index}}">
+					<td class="{{lowercase classificacao}}{{#if atrasado}} atrasado{{/if}}">
+						<div class="vertical">{{nome}}</div>
+					</td>
+					{{#each indicadores}}
+					<td data-index="{{@index}}" class="indicador {{lowercase classificacao}}{{#if atrasado}} atrasado{{/if}}">
+						{{#if @first}}<span class="cpi">{{../cpi}}</span>{{/if}}
+					</td>
+					{{/each}}
+				</tr>
+				{{/each}}
+			</tbody>
+		</table>
+		{{#if tvMode}}
+		<div class="heatbar-global">
+			<div class="slider"></div>
+			<div class="heatbar">
+				{{#if status.quantidadeAtraso}}<span style="width: {{status.quantidadeAtraso}}px"></span>{{/if}}
+				{{#if status.quantidadePerigo}}<span class="perigo" style="width: {{status.quantidadePerigo}}px"></span>{{/if}}
+				{{#if status.quantidadeAtencao}}<span class="atencao" style="width: {{status.quantidadeAtencao}}px"></span>{{/if}}
+				{{#if status.quantidadeOk}}<span class="ok" style="width: {{status.quantidadeOk}}px"></span>{{/if}}
 			</div>
-			<div class="content-menu-indicadores">
-				<ul id="menuIndicadores" class="menu-indicadores">
-				</ul>
-			</div>
 		</div>
-		<div class="container-right clearfix">
-			<div class="content-projetos clearfix" id="data"></div>
-		</div>
+		{{/if}}
+	</script>
+	
+	<script type="text/x-handlebars-template" id="edicao-indicador-template">
+		<div class="dialog-content">
+			<div class="dialog-close-button" title="Fechar janela">X</div>
+			<div class="card">
 
-		<div id="heatbar" class="heatbar clear">
+				<h4>{{indicador.nome}}<span>{{projeto.nome}}</span></h4>
 
-		</div>
+				<fieldset>
+					<legend>Novo status</legend>
+					<textarea rows="3" cols="35" tabindex="1"></textarea>
+				</fieldset>
 
-		<div id="dialog">
-			<div class="dialog-content">
-				<div class="dialog-close-button" title="Fechar janela">X</div>
-				<h2>
-					<span id="edicaoIndicadorNomeProjeto"></span>
-				</h2>
-				<h4>
-					Indicador:
-					<div>
-						<span id="edicaoIndicadorNomeIndicador"></span>
-						 <a id="trigger" href="#explicacao-indicador" class="duvida-indicador">?</a>
-						 <div id="explicacao-indicador" style="display:none;" class="popover"></div>
-					</div>
-				</h4>
-				<fieldset id="fieldsetUltimaAlteracao">
-					<legend>Hist&oacute;rico de altera&ccedil;&otilde;es</legend>
-					<ul id="historico" class="ul-historico">
+				{{#if indicador.registros}}
+				<fieldset>
+					<legend class="toggle-historico"><span>+</span> Hist&oacute;rico de altera&ccedil;&otilde;es</legend>
+					<ul class="historico">
+						{{#each indicador.registros}}
+						<li class="{{lowercase classificacao}}">
+							Alterado em <b>{{ultimaAlteracaoString}}</b> por <b>{{usuario}}</b><br>
+							<span class="comentario">{{comentario}}</span>
+						</li>
+						{{/each}}
 					</ul>
 				</fieldset>
+				{{/if}}
 
-				<fieldset id="fieldsetNovaAlteracao">
-					<legend>Nova altera&ccedil;&atilde;o</legend>
-					<div id="edicaoIndicadorDescricao">
-						<textarea id="edicaoIndicadorTxtDescricao" rows="3" cols="35"
-							tabindex="1"></textarea>
-					</div>
-				</fieldset>
-				<div id="divOptions" class="options">
-					<input type="button" value="Stop the line!" class="btn-perigo"	name="PERIGO" tabindex="2" />
-					<input type="button" value="Aten&ccedil;&atilde;o" class="btn-atencao" name="ATENCAO" tabindex="3" />
-					<input type="button" value="Caminho livre!" class="btn-ok" name="OK"	tabindex="4" />
-					<input type="button" value="Sem mudan&ccedil;as" class="btn-sem-mudancas"	name="SEMMUDANCAS" tabindex="5" />
-				</div>
+			</div>
+
+			<div class="options">
+				<input type="button"
+						value="Stop the line!"
+						disabled
+						class="btn-perigo change"
+						name="PERIGO"
+						tabindex="2" />
+				<input type="button"
+						value="Aten&ccedil;&atilde;o"
+						disabled
+						class="btn-atencao change"
+						name="ATENCAO"
+						tabindex="3" />
+				<input type="button"
+						value="Caminho livre!"
+						disabled
+						class="btn-ok change"
+						name="OK"
+						tabindex="4" />
+				<input type="button"
+						value="Sem mudan&ccedil;as"
+						{{#unless indicador.registros}}disabled{{/unless}}
+						class="btn-sem-mudancas"
+						name="SEMMUDANCAS"
+						tabindex="5" />
 			</div>
 		</div>
-
-	</div>
+	</script>
+	
+	<script type="text/javascript">
+		dexboard.projeto.view.init();
+	</script>
+	
 </body>
 </html>
+
