@@ -110,7 +110,12 @@ dexboard.projeto = (function($, Handlebars) {
 		
 		service.query();
 		
-		$("#reload-projects").click(service.reloadPlanilhas);
+		var reload = $("#reload-projects");
+		if (isTvMode()) {
+			$("#reload-projects").hide();
+		} else {
+			$("#reload-projects").click(service.reloadPlanilhas);
+		}
 	};
 	
 	view.HeatBar = function() {
