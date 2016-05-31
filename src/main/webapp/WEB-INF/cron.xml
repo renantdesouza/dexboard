@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cronentries>
 	<cron>
-		<url>/reload/projetos</url>
+		<url>/cron/reload/projetos</url>
 		<schedule>every 15 minutes</schedule>
 	</cron>
 	<cron>
-		<url>/notificacao/projetos</url>
+		<url>/cron/notificacao/projetos</url>
 		<schedule>every 12 hours</schedule>
 	</cron>
 </cronentries>

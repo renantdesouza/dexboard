@@ -58,7 +58,7 @@ public class AuthFilter implements Filter {
 	}
 
 	private boolean isAdminPath(String uri) {
-		return uri.startsWith("/_ah") || uri.startsWith("/reload/") || uri.startsWith("/_tools");
+		return uri.startsWith("/_ah") || uri.startsWith("/cron/") || uri.startsWith("/_tools");
 	}
 
 	private void unautorizedRequest(HttpServletResponse response, UserService service) throws IOException {

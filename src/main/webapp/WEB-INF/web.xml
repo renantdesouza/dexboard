@@ -12,6 +12,10 @@
 		<servlet-name>NotificacaoServlet</servlet-name>
 		<url-pattern>/notificacao/projetos</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>NotificacaoServlet</servlet-name>
+		<url-pattern>/cron/notificacao/projetos</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>ReloadProjetosServlet</servlet-name>
@@ -20,6 +24,10 @@
 	<servlet-mapping>
 		<servlet-name>ReloadProjetosServlet</servlet-name>
 		<url-pattern>/reload/projetos</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ReloadProjetosServlet</servlet-name>
+		<url-pattern>/cron/reload/projetos</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -57,6 +65,17 @@
 		<filter-name>AuthFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>cron jobs</web-resource-name>
+			<url-pattern>/cron/reload/projetos</url-pattern>
+			<url-pattern>/cron/notificacao/projetos</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>admin</role-name>
+		</auth-constraint>
+	</security-constraint>
 
 	<filter>
 		<filter-name>ObjectifyFilter</filter-name>
