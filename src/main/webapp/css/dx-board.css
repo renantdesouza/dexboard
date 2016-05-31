@@ -508,3 +508,19 @@ ul {
 .historico .desatualizado { background-color: #c0c0c0; }
 
 /******************** FIM POPUP ********************/
+
+#reload-projects {
+  bottom: 2vh;
+  color: rgba(255,255,255,0.1);
+  cursor: pointer;
+  font-size: 1.6vh;
+  height: 1.6vh;
+  left: 20px;
+  margin: 1vh;
+  position: absolute;
+  width: 1.6vh;
+}
+
+#reload-projects:hover {
+  color: rgba(255,255,255,0.5);
+}

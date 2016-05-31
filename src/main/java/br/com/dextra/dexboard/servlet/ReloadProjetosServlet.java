@@ -32,7 +32,7 @@ public class ReloadProjetosServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("application/json");
 		this.doReload();
-		resp.getWriter().print("{status: 'success'}");
+		resp.getWriter().print("{\"status\": \"success\"}");
 	}
 
 	public void doReload() {

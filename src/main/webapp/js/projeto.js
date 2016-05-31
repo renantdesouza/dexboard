@@ -100,11 +100,17 @@ dexboard.projeto = (function($, Handlebars) {
 		});
 	};
 	
+	service.reloadPlanilhas = function() {
+		return $.getJSON("/reload/projetos").done(service.query);
+	};
+	
 	view.init = function() {
 		var source = $("#dexboard-template").html();
 		template = Handlebars.compile(source);
 		
 		service.query();
+		
+		$("#reload-projects").click(service.reloadPlanilhas);
 	};
 	
 	view.HeatBar = function() {
