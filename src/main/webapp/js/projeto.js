@@ -248,6 +248,31 @@ dexboard.projeto = (function($, Handlebars) {
 			
 			self.container[0].addEventListener("update-indicador", view.Projeto.updateIndicador);
 			
+			var presentationMode = false;
+			self.container.find("tr td:first-child").click(function() {
+				if (!presentationMode) {
+					presentationMode = true;
+					var column = $(this).parent();
+					column.addClass("chosen");
+					self.container.find("table").addClass("presentation-mode");
+					
+					var containerOffset = self.container.find("tbody").offset().left;
+					var columnOffset = column.offset().left;
+					var offset = columnOffset - containerOffset;
+					
+					column.css("transition", "0.5s 1.0s");
+					column.css("transform", "translateX(-" + offset + "px)");
+					
+				} else {
+					presentationMode = false;
+					var column = self.container.find("tr.chosen");
+					column.css("transition", "");
+					column.css("transform", "");
+					column.removeClass("chosen");
+					self.container.find("table").removeClass("presentation-mode");
+				}
+			});
+			
 			dexboard.indicador.view.init();
 			
 			return self;

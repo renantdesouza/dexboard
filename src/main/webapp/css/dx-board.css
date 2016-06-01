@@ -233,6 +233,20 @@ ul {
   width: 27vh;
 }
 
+/******************** ANIMACAO ESCOLHA PROJETO ********************/
+
+.dx-table table.presentation-mode tr:not(.chosen) td {
+  transition: 0.5s linear;
+  background-color: unset;
+  border-color: unset;
+  color: rgba(255,255,255,0) !important;
+  text-shadow: unset;
+}
+
+.dx-table table.presentation-mode tbody {
+  overflow-x: hidden;
+}
+
 /******************** HEATBAR ********************/
 
 .heatbar {
