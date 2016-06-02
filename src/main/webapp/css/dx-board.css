@@ -235,16 +235,28 @@ ul {
 
 /******************** ANIMACAO ESCOLHA PROJETO ********************/
 
-.dx-table table.presentation-mode tr:not(.chosen) td {
-  transition: 0.5s linear;
-  background-color: unset;
-  border-color: unset;
-  color: rgba(255,255,255,0) !important;
-  text-shadow: unset;
+.dx-table table.presentation-mode th,
+.dx-table table.presentation-mode tr.chosen td {
+  opacity: 0.2;
+  transition: opacity 4s ease-in-out;
+}
+
+.dx-table table.presentation-mode th.logo,
+.dx-table table.presentation-mode tr.chosen td:first-child {
+  opacity: 1;
+}
+
+.dx-table table.presentation-mode tbody tr:not(.chosen) {
+  transition: 1s ease-in-out;
+  opacity: 0;
 }
 
 .dx-table table.presentation-mode tbody {
   overflow-x: hidden;
+}
+
+.dx-table table.presentation-mode .heatbar {
+  display: none;
 }
 
 /******************** HEATBAR ********************/

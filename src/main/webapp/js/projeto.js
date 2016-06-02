@@ -260,13 +260,15 @@ dexboard.projeto = (function($, Handlebars) {
 					var columnOffset = column.offset().left;
 					var offset = columnOffset - containerOffset;
 					
-					column.css("transition", "0.5s 1.0s");
+					column.css("transition", "1.0s");
+					column.css("transition-delay", "1s");
 					column.css("transform", "translateX(-" + offset + "px)");
 					
 				} else {
 					presentationMode = false;
 					var column = self.container.find("tr.chosen");
 					column.css("transition", "");
+					column.css("transition-delay", "");
 					column.css("transform", "");
 					column.removeClass("chosen");
 					self.container.find("table").removeClass("presentation-mode");
