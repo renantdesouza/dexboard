@@ -18,7 +18,7 @@ dexboard.slides = (function($, Handlebars) {
 	
 	view.init = function() {
 		var projetos = new dexboard.projeto.view.Projeto();
-		projetos.container.find("tr td:first-child").click(function() {
+		projetos.container.find("tr.slides td:first-child").click(function() {
 			var isOpen = $("body").hasClass(presentationMode);
 			var main = new view.Main($(this).parent());
 			main.toggle(!isOpen);

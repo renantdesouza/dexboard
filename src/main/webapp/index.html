@@ -110,7 +110,7 @@
 			</thead>
 			<tbody>
 				{{#each projetos}}
-				<tr data-index="{{@index}}">
+				<tr data-index="{{@index}}"{{#if slides}} class="slides"{{/if}}>
 					<td class="{{lowercase classificacao}}{{#if atrasado}} atrasado{{/if}}">
 						<div class="vertical">{{nome}}</div>
 					</td>
