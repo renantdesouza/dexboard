@@ -9,12 +9,15 @@
 	<script type="text/javascript" src="js/lib/handlebars-v4.0.5.js"></script>
 	<script type="text/javascript" src="js/indicador.js"></script>
 	<script type="text/javascript" src="js/projeto.js"></script>
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/reveal-theme-black.css">
 	<link rel="stylesheet" type="text/css" href="css/dx-board.css"/>
 	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
 	<link href='img/favicon.png' rel='shortcut icon' type='image/png' />
 </head>
 <body>
 	<div id="dialog-overlay"></div>
+	<div id="presentation-overlay"><div class="reveal"><div class="slides"><section>Slide 1</section><section>Slide 2</section></div></div></div>
 	<div id="tabela-principal" class="dx-table dx-table-flip"></div>
 	<div id="reload-projects"><i class="fa fa-refresh"></i></div>
 	<div id="dialog"></div>
@@ -128,6 +131,8 @@
 	<script type="text/javascript">
 		dexboard.projeto.view.init();
 	</script>
+	
+	<script src="js/lib/reveal.js"></script>
 	
 </body>
 </html>

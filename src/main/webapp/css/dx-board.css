@@ -333,6 +333,30 @@ ul {
   z-index: 100;
 }
 
+/******************** OVERLAY ********************/
+
+#dialog-overlay, #presentation-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+
+#dialog-overlay {
+  background-color: rgba(0, 0, 0, 0.8);
+  display: none;
+  width: 100%;
+  z-index: 49;
+}
+
+#presentation-overlay {
+  box-sizing: border-box;
+  margin-left: 53vh;
+  opacity: 0;
+  width: calc(100% - 53vh);
+  z-index: -10;
+}
+
 /******************** POPUP ********************/
 
 .no-close {
@@ -345,17 +369,6 @@ ul {
 
 #dialog {
   min-height: 520px;
-}
-
-#dialog-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 49;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  display: none;
 }
 
 .dialog-close-button {

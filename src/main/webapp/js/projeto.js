@@ -260,9 +260,19 @@ dexboard.projeto = (function($, Handlebars) {
 					var columnOffset = column.offset().left;
 					var offset = columnOffset - containerOffset;
 					
-					column.css("transition", "1.0s");
+					column.css("transition", "1s");
 					column.css("transition-delay", "1s");
 					column.css("transform", "translateX(-" + offset + "px)");
+					
+					var presentation = $("#presentation-overlay");
+					presentation.css("transition", "2s");
+					presentation.css("transition-delay", "2s");
+					presentation.css("z-index", "49");
+					presentation.css("opacity", "1");
+					
+					$("#reload-projects").hide();
+					
+					window.Reveal.initialize();
 					
 				} else {
 					presentationMode = false;
@@ -272,6 +282,14 @@ dexboard.projeto = (function($, Handlebars) {
 					column.css("transform", "");
 					column.removeClass("chosen");
 					self.container.find("table").removeClass("presentation-mode");
+					
+					var presentation = $("#presentation-overlay");
+					presentation.css("transition", "");
+					presentation.css("transition-delay", "");
+					presentation.css("z-index", "-10");
+					presentation.css("opacity", "0");
+					
+					$("#reload-projects").show();
 				}
 			});
 			
