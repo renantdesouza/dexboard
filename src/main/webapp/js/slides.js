@@ -6,6 +6,16 @@ dexboard.slides = (function($, Handlebars) {
 	
 	var presentationMode = "presentation-mode";
 	
+	$(document).keydown(function(e) {
+		if (e.which === 27) {
+			var projetos = new dexboard.projeto.view.Projeto();
+			var column = projetos.container.find("tr.chosen");
+			if (column.length === 1) {
+				(new view.Main(column)).toggle(false);
+			}
+		}
+	});
+	
 	view.init = function() {
 		var projetos = new dexboard.projeto.view.Projeto();
 		projetos.container.find("tr td:first-child").click(function() {
