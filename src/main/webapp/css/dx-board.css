@@ -238,11 +238,23 @@ ul {
 body.presentation-mode .dx-table th,
 body.presentation-mode .dx-table tr.chosen td {
   opacity: 0.2;
-  transition: opacity 4s ease-in-out;
+  transition: opacity 2s ease-in-out;
+}
+
+body.presentation-mode .dx-table th.chosen-indicador {
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 0px 8px rgba(255, 255, 255, 0.5);
+  color: white;
+}
+
+body.presentation-mode .dx-table th.chosen-indicador,
+body.presentation-mode .dx-table tr.chosen td.chosen-indicador {
+  transition: opacity 0s;
 }
 
 body.presentation-mode .dx-table th.logo,
-body.presentation-mode .dx-table tr.chosen td:first-child {
+body.presentation-mode .dx-table tr.chosen td:first-child,
+body.presentation-mode .dx-table th.chosen-indicador,
+body.presentation-mode .dx-table tr.chosen td.chosen-indicador {
   opacity: 1;
 }
 
@@ -266,7 +278,7 @@ body.presentation-mode #reload-projects {
 body.presentation-mode #presentation-overlay {
   opacity: 1;
   transition: 2s;
-  transition-delay: 2s;
+  transition-delay: 1.5s;
   z-index: 49;
 }
 

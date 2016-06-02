@@ -21,6 +21,17 @@ dexboard.slides = (function($, Handlebars) {
 		
 		var projetos = new dexboard.projeto.view.Projeto();
 		var body = $("body");
+		var indexes = [-1, 6, 5, 2, 4, 3, 1];
+		
+		var highlightIndicador = function(event) {
+			var slide = event.currentSlide;
+			var indicadorId = $(slide).data("indicador");
+			var index = indexes[indicadorId] + 1;
+			
+			$(".chosen-indicador").removeClass("chosen-indicador");
+			projetos.container.find("th:nth-child(" + index + ")").addClass("chosen-indicador");
+			projetos.container.find("tr.chosen td:nth-child(" + index + ")").addClass("chosen-indicador");
+		};
 		
 		var openSlides = function() {
 			column.addClass("chosen");
@@ -42,6 +53,9 @@ dexboard.slides = (function($, Handlebars) {
 				"embedded" : true,
 				"help" : false
 			});
+			
+			Reveal.addEventListener("ready", highlightIndicador);
+			Reveal.addEventListener("slidechanged", highlightIndicador);
 		};
 		
 		var closeSlides = function() {
