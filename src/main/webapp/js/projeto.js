@@ -248,51 +248,7 @@ dexboard.projeto = (function($, Handlebars) {
 			
 			self.container[0].addEventListener("update-indicador", view.Projeto.updateIndicador);
 			
-			var presentationMode = false;
-			self.container.find("tr td:first-child").click(function() {
-				if (!presentationMode) {
-					presentationMode = true;
-					var column = $(this).parent();
-					column.addClass("chosen");
-					self.container.find("table").addClass("presentation-mode");
-					
-					var containerOffset = self.container.find("tbody").offset().left;
-					var columnOffset = column.offset().left;
-					var offset = columnOffset - containerOffset;
-					
-					column.css("transition", "1s");
-					column.css("transition-delay", "1s");
-					column.css("transform", "translateX(-" + offset + "px)");
-					
-					var presentation = $("#presentation-overlay");
-					presentation.css("transition", "2s");
-					presentation.css("transition-delay", "2s");
-					presentation.css("z-index", "49");
-					presentation.css("opacity", "1");
-					
-					$("#reload-projects").hide();
-					
-					window.Reveal.initialize();
-					
-				} else {
-					presentationMode = false;
-					var column = self.container.find("tr.chosen");
-					column.css("transition", "");
-					column.css("transition-delay", "");
-					column.css("transform", "");
-					column.removeClass("chosen");
-					self.container.find("table").removeClass("presentation-mode");
-					
-					var presentation = $("#presentation-overlay");
-					presentation.css("transition", "");
-					presentation.css("transition-delay", "");
-					presentation.css("z-index", "-10");
-					presentation.css("opacity", "0");
-					
-					$("#reload-projects").show();
-				}
-			});
-			
+			dexboard.slides.view.init();
 			dexboard.indicador.view.init();
 			
 			return self;

@@ -235,28 +235,39 @@ ul {
 
 /******************** ANIMACAO ESCOLHA PROJETO ********************/
 
-.dx-table table.presentation-mode th,
-.dx-table table.presentation-mode tr.chosen td {
+body.presentation-mode .dx-table th,
+body.presentation-mode .dx-table tr.chosen td {
   opacity: 0.2;
   transition: opacity 4s ease-in-out;
 }
 
-.dx-table table.presentation-mode th.logo,
-.dx-table table.presentation-mode tr.chosen td:first-child {
+body.presentation-mode .dx-table th.logo,
+body.presentation-mode .dx-table tr.chosen td:first-child {
   opacity: 1;
 }
 
-.dx-table table.presentation-mode tbody tr:not(.chosen) {
+body.presentation-mode .dx-table tbody tr:not(.chosen) {
   transition: 1s ease-in-out;
   opacity: 0;
 }
 
-.dx-table table.presentation-mode tbody {
+body.presentation-mode .dx-table tbody {
   overflow-x: hidden;
 }
 
-.dx-table table.presentation-mode .heatbar {
+body.presentation-mode .dx-table .heatbar {
   display: none;
+}
+
+body.presentation-mode #reload-projects {
+  display: none;
+}
+
+body.presentation-mode #presentation-overlay {
+  opacity: 1;
+  transition: 2s;
+  transition-delay: 2s;
+  z-index: 49;
 }
 
 /******************** HEATBAR ********************/
