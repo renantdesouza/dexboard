@@ -39,8 +39,11 @@ dexboard.slides = (function($, Handlebars) {
 			var index = indexes[indicadorId] + 1;
 			
 			$(".chosen-indicador").removeClass("chosen-indicador");
+			$(".unchosen-indicador").removeClass("unchosen-indicador");
 			projetos.container.find("th:nth-child(" + index + ")").addClass("chosen-indicador");
+			projetos.container.find("th:not(:nth-child(" + index + "))").addClass("unchosen-indicador");
 			projetos.container.find("tr.chosen td:nth-child(" + index + ")").addClass("chosen-indicador");
+			projetos.container.find("tr.chosen td:not(:nth-child(" + index + "))").addClass("unchosen-indicador");
 		};
 		
 		var openSlides = function() {

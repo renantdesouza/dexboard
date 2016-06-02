@@ -238,7 +238,7 @@ ul {
 body.presentation-mode .dx-table th,
 body.presentation-mode .dx-table tr.chosen td {
   opacity: 0.2;
-  transition: opacity 2s ease-in-out;
+  transition: opacity 3s ease-in-out;
 }
 
 body.presentation-mode .dx-table th.chosen-indicador {
@@ -247,8 +247,10 @@ body.presentation-mode .dx-table th.chosen-indicador {
 }
 
 body.presentation-mode .dx-table th.chosen-indicador,
-body.presentation-mode .dx-table tr.chosen td.chosen-indicador {
-  transition: opacity 0s;
+body.presentation-mode .dx-table tr.chosen td.chosen-indicador,
+body.presentation-mode .dx-table th.unchosen-indicador,
+body.presentation-mode .dx-table tr.chosen td.unchosen-indicador {
+ transition: opacity 0.5s ease-in-out;
 }
 
 body.presentation-mode .dx-table th.logo,
