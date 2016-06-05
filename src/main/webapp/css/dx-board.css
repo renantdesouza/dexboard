@@ -317,6 +317,13 @@ ul {
   display: none;
 }
 
+div.ui-dialog-titlebar {
+  height: 21px;
+  position: absolute;
+  width: calc(100% - 20px);
+  z-index: 100;
+}
+
 #dialog {
   min-height: 520px;
 }

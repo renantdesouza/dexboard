@@ -215,10 +215,14 @@ dexboard.indicador = (function($, Handlebars) {
 			});
 			
 			self.container.dialog({
-				"dialogClass": "no-close",
 				"autoOpen" : false,
-				"width" : 600
+				"dialogClass" : "no-close",
+				"draggable" : true,
+				"position" : {"my" : "bottom+50", "at" : "center", "of" : window},
+				"width" : 642
 			});
+			
+			self.container.dialog("widget").draggable("option", "cursor", "move");
 		};
 		
 	};
