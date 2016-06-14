@@ -8,7 +8,7 @@ dexboard.slides = (function($, Handlebars) {
 	var template;
 	
 	var initialized = false;
-	var fixOverlappingSlides() {
+	var fixOverlappingSlides = function() {
 		// sem isso os slides ficam sobrepostos ao abrir a apresentacao
 		// de dois projetos diferentes sem navegar pelos slides 
 		if (initialized) {
