@@ -6,7 +6,7 @@
 	<artifactId>dexboard</artifactId>
 	<packaging>war</packaging>
 	<name>dexboard</name>
-	<version>2.0.3-SNAPSHOT</version>
+	<version>2.1.0</version>
 
 	<properties>
 		<downloadSources>true</downloadSources>
@@ -20,7 +20,7 @@
 		<connection>scm:git:ssh://git@github.com/dextra/dexboard.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/dextra/dexboard.git</developerConnection>
 		<url>https://github.com/dextra/dexboard</url>
-		<tag>HEAD</tag>
+		<tag>dexboard-2.1.0</tag>
 	</scm>
 
 	<distributionManagement>
