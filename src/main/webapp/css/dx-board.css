@@ -284,6 +284,10 @@ body.presentation-mode #presentation-overlay {
   z-index: 49;
 }
 
+#presentation-overlay .reveal .slides > section {
+  position: relative;
+}
+
 /******************** HEATBAR ********************/
 
 .heatbar {
