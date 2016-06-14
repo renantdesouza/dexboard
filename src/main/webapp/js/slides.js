@@ -7,6 +7,17 @@ dexboard.slides = (function($, Handlebars) {
 	var presentationMode = "presentation-mode";
 	var template;
 	
+	var initialized = false;
+	var fixOverlappingSlides() {
+		// sem isso os slides ficam sobrepostos ao abrir a apresentacao
+		// de dois projetos diferentes sem navegar pelos slides 
+		if (initialized) {
+			window.Reveal.slide(2);
+		} else {
+			initialized = true;
+		}
+	};
+	
 	$(document).keydown(function(e) {
 		if (e.which === 27) {
 			var projetos = new dexboard.projeto.view.Projeto();
@@ -35,7 +46,7 @@ dexboard.slides = (function($, Handlebars) {
 	};
 	
 	view.Main = function(column, indicadores) {
-		
+
 		var self = this;
 		
 		var projetos = new dexboard.projeto.view.Projeto();
@@ -54,6 +65,8 @@ dexboard.slides = (function($, Handlebars) {
 		};
 		
 		var openSlides = function() {
+			fixOverlappingSlides();
+			
 			column.addClass("chosen");
 			body.addClass(presentationMode);
 			
