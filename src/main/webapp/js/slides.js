@@ -5,6 +5,7 @@ dexboard.slides = (function($, Handlebars) {
 	var view = {};
 	
 	var presentationMode = "presentation-mode";
+	var template;
 	
 	$(document).keydown(function(e) {
 		if (e.which === 27) {
@@ -16,27 +17,33 @@ dexboard.slides = (function($, Handlebars) {
 		}
 	});
 	
-	view.init = function() {
-		var projetos = new dexboard.projeto.view.Projeto();
-		projetos.container.find("tr.slides td:first-child").click(function() {
+	view.init = function(projetos) {
+		var projetosView = new dexboard.projeto.view.Projeto();
+		
+		if (!template) {
+			var source = $("#slides-apresentacao").html();
+			template = Handlebars.compile(source);
+		}
+		
+		projetosView.container.find("tr td:first-child").click(function() {
+			var column = $(this).parent();
+			var index = column.data("index");
 			var isOpen = $("body").hasClass(presentationMode);
-			var main = new view.Main($(this).parent());
+			var main = new view.Main(column, projetos[index].indicadores);
 			main.toggle(!isOpen);
 		});
 	};
 	
-	view.Main = function(column) {
+	view.Main = function(column, indicadores) {
 		
 		var self = this;
 		
 		var projetos = new dexboard.projeto.view.Projeto();
 		var body = $("body");
-		var indexes = [-1, 6, 5, 2, 4, 3, 1];
 		
 		var highlightIndicador = function(event) {
 			var slide = event.currentSlide;
-			var indicadorId = $(slide).data("indicador");
-			var index = indexes[indicadorId] + 1;
+			var index = $(slide).data("indicador") + 2;
 			
 			$(".chosen-indicador").removeClass("chosen-indicador");
 			$(".unchosen-indicador").removeClass("unchosen-indicador");
@@ -49,6 +56,8 @@ dexboard.slides = (function($, Handlebars) {
 		var openSlides = function() {
 			column.addClass("chosen");
 			body.addClass(presentationMode);
+			
+			$("#presentation-overlay").html(template({"indicadores" : indicadores}));
 			
 			// TODO recalcular no redimensionamento
 			var containerOffset = projetos.container.find("tbody").offset().left;

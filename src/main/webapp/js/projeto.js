@@ -87,10 +87,6 @@ dexboard.projeto = (function($, Handlebars) {
 		projetos.forEach(function(projeto) {
 			var status = projeto.atrasado ? "ATRASADO" : projeto.classificacao;
 			self.status.addQuantidade(status);
-			// FIXME remover (hard-coded)
-			if (projeto.idPma === 704 || projeto.idPma === 530) {
-				projeto.slides = true;
-			}
 		});
 		
 	};
@@ -252,7 +248,7 @@ dexboard.projeto = (function($, Handlebars) {
 			
 			self.container[0].addEventListener("update-indicador", view.Projeto.updateIndicador);
 			
-			dexboard.slides.view.init();
+			dexboard.slides.view.init(queryWrapper.projetos);
 			dexboard.indicador.view.init();
 			
 			return self;
