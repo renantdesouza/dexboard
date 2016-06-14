@@ -248,6 +248,7 @@ dexboard.projeto = (function($, Handlebars) {
 			
 			self.container[0].addEventListener("update-indicador", view.Projeto.updateIndicador);
 			
+			dexboard.slides.view.init(queryWrapper.projetos);
 			dexboard.indicador.view.init();
 			
 			return self;

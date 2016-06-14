@@ -233,6 +233,57 @@ ul {
   width: 27vh;
 }
 
+/******************** ANIMACAO ESCOLHA PROJETO ********************/
+
+body.presentation-mode .dx-table th,
+body.presentation-mode .dx-table tr.chosen td {
+  opacity: 0.2;
+  transition: opacity 3s ease-in-out;
+}
+
+body.presentation-mode .dx-table th.chosen-indicador {
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 0px 8px rgba(255, 255, 255, 0.5);
+  color: white;
+}
+
+body.presentation-mode .dx-table th.chosen-indicador,
+body.presentation-mode .dx-table tr.chosen td.chosen-indicador,
+body.presentation-mode .dx-table th.unchosen-indicador,
+body.presentation-mode .dx-table tr.chosen td.unchosen-indicador {
+ transition: opacity 0.5s ease-in-out;
+}
+
+body.presentation-mode .dx-table th.logo,
+body.presentation-mode .dx-table tr.chosen td:first-child,
+body.presentation-mode .dx-table th.chosen-indicador,
+body.presentation-mode .dx-table tr.chosen td.chosen-indicador {
+  opacity: 1;
+}
+
+body.presentation-mode .dx-table tbody tr:not(.chosen) {
+  transition: 1s ease-in-out;
+  opacity: 0;
+}
+
+body.presentation-mode .dx-table tbody {
+  overflow-x: hidden;
+}
+
+body.presentation-mode .dx-table .heatbar {
+  display: none;
+}
+
+body.presentation-mode #reload-projects {
+  display: none;
+}
+
+body.presentation-mode #presentation-overlay {
+  opacity: 1;
+  transition: 2s;
+  transition-delay: 1.5s;
+  z-index: 49;
+}
+
 /******************** HEATBAR ********************/
 
 .heatbar {
@@ -307,6 +358,30 @@ ul {
   z-index: 100;
 }
 
+/******************** OVERLAY ********************/
+
+#dialog-overlay, #presentation-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+
+#dialog-overlay {
+  background-color: rgba(0, 0, 0, 0.8);
+  display: none;
+  width: 100%;
+  z-index: 49;
+}
+
+#presentation-overlay {
+  box-sizing: border-box;
+  margin-left: 53vh;
+  opacity: 0;
+  width: calc(100% - 53vh);
+  z-index: -10;
+}
+
 /******************** POPUP ********************/
 
 .no-close {
@@ -326,17 +401,6 @@ div.ui-dialog-titlebar {
 
 #dialog {
   min-height: 520px;
-}
-
-#dialog-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 49;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  display: none;
 }
 
 .dialog-close-button {
