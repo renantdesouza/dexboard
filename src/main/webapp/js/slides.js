@@ -75,6 +75,7 @@ dexboard.slides = (function($, Handlebars) {
 				"embedded" : true,
 				"help" : false
 			});
+			window.Reveal.sync();
 			
 			Reveal.addEventListener("ready", highlightIndicador);
 			Reveal.addEventListener("slidechanged", highlightIndicador);
