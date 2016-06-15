@@ -1,18 +1,23 @@
 package br.com.dextra.dexboard.planilha;
 
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import br.com.dextra.dexboard.domain.Projeto;
 
 class PlanilhaPrincipalImpl extends PlanilhaDexboard implements PlanilhaPrincipal {
 
-	private static final int COLUNA_QUANTIDADE_PROJETOS = 9;
+	private static final int COLUNA_QUANTIDADE_PROJETOS = 10;
 
 	private static final String COLUNA_ID_PROJETO = "id no PMA";
 	private static final String COLUNA_NOME_PROJETO = "NickName";
 	private static final String COLUNA_EQUIPE_PROJETO = "Equipe";
 	private static final String COLUNA_EMAIL_PROJETO = "Email";
 	private static final String COLUNA_CPI_PROJETO = "CPI";
+	private static final String COLUNA_APRESENTACAO = "Apresentacao";
+	
+	private static final Pattern LINK_APRESENTACAO = Pattern.compile("https://(.+)embed");
 
 	public PlanilhaPrincipalImpl() {
 		super("Principal");
@@ -32,6 +37,16 @@ class PlanilhaPrincipalImpl extends PlanilhaDexboard implements PlanilhaPrincipa
 			return equipe.toUpperCase();
 		}
 		return null;
+	}
+	
+	private String buscarLinkApresentacao(int indiceProjeto) {
+		String rawLink = recuperarConteudoCelula(indiceProjeto, COLUNA_APRESENTACAO);
+		if (rawLink == null) return null;
+		
+		Matcher matcher = LINK_APRESENTACAO.matcher(rawLink);
+		if (!matcher.find()) return null;
+		
+		return matcher.group();
 	}
 
 	private String buscarEmailProjeto(int indiceProjeto) {
@@ -59,9 +74,11 @@ class PlanilhaPrincipalImpl extends PlanilhaDexboard implements PlanilhaPrincipa
 			projeto.setEquipe(buscarEquipeProjeto(i));
 			projeto.setEmail(buscarEmailProjeto(i));
 			projeto.setCpi(buscarCpiProjetoX(i));
+			projeto.setApresentacao(buscarLinkApresentacao(i));
 			projetos.put(projeto.getIdPma(), projeto);
 		}
 
 		return projetos;
 	}
+	
 }

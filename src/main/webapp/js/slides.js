@@ -44,12 +44,12 @@ dexboard.slides = (function($, Handlebars) {
 			var column = $(this).parent();
 			var index = column.data("index");
 			var isOpen = $("body").hasClass(presentationMode);
-			var main = new view.Main(column, projetos[index].indicadores);
+			var main = new view.Main(column, projetos[index]);
 			main.toggle(!isOpen);
 		});
 	};
 	
-	view.Main = function(column, indicadores) {
+	view.Main = function(column, projeto) {
 
 		var self = this;
 		
@@ -78,8 +78,8 @@ dexboard.slides = (function($, Handlebars) {
 			body.addClass(presentationMode);
 			
 			$("#presentation-overlay").html(template({
-				"slidesExtras" : view.slidesExtras,
-				"indicadores" : indicadores
+				"slidesExtras" : projeto.apresentacao,
+				"indicadores" : projeto.indicadores
 			}));
 			
 			// TODO recalcular no redimensionamento

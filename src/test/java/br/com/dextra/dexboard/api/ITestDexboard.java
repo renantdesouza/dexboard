@@ -21,6 +21,8 @@ public class ITestDexboard extends ApiTest {
 	private static final int ID_PROJETO_CONTPLAY = 495;
 	private static final int ID_INDICADOR_1 = 1;
 	private static final int ID_INDICADOR_2 = 2;
+	
+	private static final String APRESENTACAO = "https://docs.google.com/presentation/d/1ID6Oh3Dm0HHFQb9h8A32WJYy5Z-gufbLiTEcrdKAtM8/embed";
 
 	@Test
 	public void testQueryProjetos() {
@@ -32,9 +34,11 @@ public class ITestDexboard extends ApiTest {
 
 		JsonObject a4c = projetos.get(0).getAsJsonObject();
 		JsonObject adv = projetos.get(1).getAsJsonObject();
+		JsonObject facti = projetos.get(4).getAsJsonObject();
 
 		assertProjeto(495, "A4C", "CHAOS", 1.01, a4c);
 		assertProjeto(585, "ADV: Fase II", "MUSTACHE", 1.39, adv);
+		assertEquals(APRESENTACAO, facti.get("apresentacao").getAsString());
 	}
 
 	@Test

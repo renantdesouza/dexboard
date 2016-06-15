@@ -23,6 +23,8 @@ public class Projeto {
 	private String equipe;
 
 	private String email;
+	
+	private String apresentacao;
 
 	public Long getIdPma() {
 		return idPma;
@@ -70,6 +72,14 @@ public class Projeto {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public String getApresentacao() {
+		return apresentacao;
+	}
+	
+	public void setApresentacao(String apresentacao) {
+		this.apresentacao = apresentacao;
 	}
 	
 	@Ignore // Lazy

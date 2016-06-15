@@ -74,9 +74,13 @@ public class ProjetoJson {
 	public String getEquipe() {
 		return this.projeto.getEquipe();
 	}
-
+	
 	public Classificacao getClassificacao() {
 		return classificacao;
+	}
+
+	public String getApresentacao() {
+		return this.projeto.getApresentacao();
 	}
 
 	private boolean defineAtrasado() {
