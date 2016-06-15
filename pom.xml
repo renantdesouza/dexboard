@@ -258,6 +258,11 @@
 						<goals>
 							<goal>devserver_start</goal>
 						</goals>
+						<configuration>
+							<jvmFlags>
+								<jvmFlag>-Ddatastore.backing_store=${project.build.directory}/local_db.bin</jvmFlag>
+							</jvmFlags>
+						</configuration>
 					</execution>
 					<execution>
 						<id>stop-appengine</id>
