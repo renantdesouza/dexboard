@@ -54,14 +54,17 @@ dexboard.slides = (function($, Handlebars) {
 		
 		var highlightIndicador = function(event) {
 			var slide = event.currentSlide;
-			var index = $(slide).data("indicador") + 2;
+			var indicador = $(slide).data("indicador");
+			var index = indicador + 2;
 			
 			$(".chosen-indicador").removeClass("chosen-indicador");
 			$(".unchosen-indicador").removeClass("unchosen-indicador");
-			projetos.container.find("th:nth-child(" + index + ")").addClass("chosen-indicador");
-			projetos.container.find("th:not(:nth-child(" + index + "))").addClass("unchosen-indicador");
-			projetos.container.find("tr.chosen td:nth-child(" + index + ")").addClass("chosen-indicador");
-			projetos.container.find("tr.chosen td:not(:nth-child(" + index + "))").addClass("unchosen-indicador");
+			if (indicador !== undefined) {
+				projetos.container.find("th:nth-child(" + index + ")").addClass("chosen-indicador");
+				projetos.container.find("th:not(:nth-child(" + index + "))").addClass("unchosen-indicador");
+				projetos.container.find("tr.chosen td:nth-child(" + index + ")").addClass("chosen-indicador");
+				projetos.container.find("tr.chosen td:not(:nth-child(" + index + "))").addClass("unchosen-indicador");
+			}
 		};
 		
 		var openSlides = function() {
@@ -70,7 +73,10 @@ dexboard.slides = (function($, Handlebars) {
 			column.addClass("chosen");
 			body.addClass(presentationMode);
 			
-			$("#presentation-overlay").html(template({"indicadores" : indicadores}));
+			$("#presentation-overlay").html(template({
+				"slidesExtras" : view.slidesExtras,
+				"indicadores" : indicadores
+			}));
 			
 			// TODO recalcular no redimensionamento
 			var containerOffset = projetos.container.find("tbody").offset().left;

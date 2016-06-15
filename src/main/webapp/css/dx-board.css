@@ -284,6 +284,11 @@ body.presentation-mode #presentation-overlay {
   z-index: 49;
 }
 
+#presentation-overlay iframe.extra {
+  height: 700px;
+  width: 960px
+} 
+
 /******************** HEATBAR ********************/
 
 .heatbar {

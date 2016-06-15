@@ -144,6 +144,11 @@
 				</section>
 				{{/if}}
 			{{/each}}
+			{{#if slidesExtras}}
+				<section>
+					<iframe class="extra" src="{{slidesExtras}}?start=false&loop=false&delayms=3000" frameborder="0" allowfullscreen="true"></iframe>
+				</section>
+			{{/if}}
 			</div>
 		</div>
 	</script>
