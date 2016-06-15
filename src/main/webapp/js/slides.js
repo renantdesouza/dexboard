@@ -12,7 +12,11 @@ dexboard.slides = (function($, Handlebars) {
 		// sem isso os slides ficam sobrepostos ao abrir a apresentacao
 		// de dois projetos diferentes sem navegar pelos slides 
 		if (initialized) {
-			window.Reveal.slide(2);
+			try {
+				window.Reveal.slide(2);
+			} catch (err) {
+				console.info(err);
+			}
 		} else {
 			initialized = true;
 		}
