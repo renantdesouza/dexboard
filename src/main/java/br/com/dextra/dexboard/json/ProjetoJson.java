@@ -46,7 +46,7 @@ public class ProjetoJson {
 		Collections.sort(indicadores, new Comparator<IndicadorJson>() {
 			@Override
 			public int compare(IndicadorJson i1, IndicadorJson i2) {
-				return i1.getNome().compareToIgnoreCase(i2.getNome());
+				return i1.getPosicao() - i2.getPosicao();
 			}
 		});
 	}

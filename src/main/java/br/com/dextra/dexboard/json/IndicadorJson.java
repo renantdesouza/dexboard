@@ -45,6 +45,10 @@ public class IndicadorJson {
 		return indicador.getNome();
 	}
 
+	public int getPosicao() {
+		return indicador.getPosicao();
+	}
+
 	public boolean getAtrasado() {
 		if (registros.isEmpty()) {
 			return true;
