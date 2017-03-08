@@ -40,17 +40,13 @@ public class NotificacaoDao {
 
 	public List<Projeto> buscarProjetosParaNotificar() {
 		List<Projeto> projetosAtrasados = buscarProjetosAtrasados();
-
 		List<Projeto> projetosParaNotificar = new ArrayList<Projeto>();
 
 		for (Projeto projeto : projetosAtrasados) {
-
 			Notificacao notificacao = buscarUltimaNotificacao(projeto);
-
 			if (notificacao == null || calculaDiasAtras(notificacao.getDate()) >= DIAS_PARA_RENOTIFICAR) {
 				projetosParaNotificar.add(projeto);
 			}
-
 		}
 
 		return projetosParaNotificar;
@@ -69,22 +65,20 @@ public class NotificacaoDao {
 			List<Indicador> indicadores = buscarIndicadores(projeto);
 			for (Indicador indicador : indicadores) {
 				RegistroAlteracao registroAlteracao = buscarRegistrosAlteracoes(projeto, indicador);
-
 				if (registroAlteracao == null) {
 					projetosAtrasados.add(projeto);
 					break;
 				}
 
 				Date dataAlteracao = registroAlteracao.getData();
-				long diasAtras = calculaDiasAtras(dataAlteracao);
 
-				if (diasAtras >= validadeAlteracao) {
+				if (calculaDiasAtras(dataAlteracao) >= validadeAlteracao) {
 					projetosAtrasados.add(projeto);
 					break;
 				}
 			}
-
 		}
+
 		return projetosAtrasados;
 	}
 
@@ -118,9 +112,7 @@ public class NotificacaoDao {
 	}
 
 	private void enviarEmailEquipeProjeto(Projeto projeto) {
-		Properties props = new Properties();
-		Session session = Session.getDefaultInstance(props, null);
-
+		Session session = Session.getDefaultInstance(new Properties(), null);
 		Message msg = new MimeMessage(session);
 
 		LOG.info("Enviando email de notificacao: projeto=" + projeto.getNome() + ", equipe=" + projeto.getEquipe() + ", email="

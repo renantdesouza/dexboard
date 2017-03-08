@@ -14,16 +14,12 @@ import br.com.dextra.dexboard.planilha.PlanilhaPrincipal;
 
 public class ProjetoPlanilhaService {
 
-	public final static Logger LOG = LoggerFactory.getLogger(ProjetoPlanilhaService.class);
-
 	public static Map<Long, Projeto> buscarDadosProjetosAtivos() {
-		PlanilhaPrincipal planilhaPrincipal = PlanilhaFactory.principal();
-		return planilhaPrincipal.buscarDadosDosProjetos();
+		return PlanilhaFactory.principal().buscarDadosDosProjetos();
 	}
 
 	public static void limparCache() {
-		MemcacheService cache = MemcacheServiceFactory.getMemcacheService("dados-projetos");
-		cache.delete("dados-projetos");
+		MemcacheServiceFactory.getMemcacheService("dados-projetos").delete("dados-projetos");
 	}
 
 }

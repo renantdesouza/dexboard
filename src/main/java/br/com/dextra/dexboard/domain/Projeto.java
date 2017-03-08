@@ -23,8 +23,28 @@ public class Projeto {
 	private String equipe;
 
 	private String email;
-	
+
 	private String apresentacao;
+
+	@Index
+	private Double satisfacaoCliente;
+
+	@Index
+	private Double satisfacaoEquipe;
+
+	public Projeto() {
+	}
+
+	public Projeto(long id, String nome, String equipe, String email, double cpi,
+				   double satisfacaoCliente, double satisfacaoEquipe) {
+		setIdPma(id);
+		setNome(nome);
+		setEquipe(equipe);
+		setEmail(email);
+		setCpi(cpi);
+		setSatisfacaoCliente(satisfacaoCliente);
+		setSatisfacaoEquipe(satisfacaoEquipe);
+	}
 
 	public Long getIdPma() {
 		return idPma;
@@ -73,31 +93,44 @@ public class Projeto {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public String getApresentacao() {
 		return apresentacao;
 	}
-	
+
 	public void setApresentacao(String apresentacao) {
 		this.apresentacao = apresentacao;
 	}
-	
+
+	public Double getSatisfacaoCliente() {
+		return satisfacaoCliente;
+	}
+
+	public void setSatisfacaoCliente(Double satisfacaoCliente) {
+		this.satisfacaoCliente = satisfacaoCliente;
+	}
+
+	public Double getSatisfacaoEquipe() {
+		return satisfacaoEquipe;
+	}
+
+	public void setSatisfacaoEquipe(Double satisfacaoEquipe) {
+		this.satisfacaoEquipe = satisfacaoEquipe;
+	}
+
 	@Ignore // Lazy
 	private ProjetoJson projetoJson;
-	
+
 	public ProjetoJson toProjetoJson() {
-		if (this.projetoJson == null) {
-			this.projetoJson = new ProjetoJson(this); 
-		}
-		return this.projetoJson;
+		return projetoJson = (projetoJson == null) ? new ProjetoJson(this) : projetoJson;
 	}
-	
+
 	public static List<ProjetoJson> toProjetoJson(List<Projeto> projetos) {
-		ArrayList<ProjetoJson> projetosJson = new ArrayList<ProjetoJson>(projetos.size());
+		ArrayList<ProjetoJson> jsons = new ArrayList<>(projetos.size());
 		for (Projeto p : projetos) {
-			projetosJson.add(p.toProjetoJson());
+			jsons.add(p.toProjetoJson());
 		}
-		
-		return projetosJson;
+
+		return jsons ;
 	}
 }

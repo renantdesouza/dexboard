@@ -16,12 +16,11 @@ public class Indicador {
 	private String nome;
 
 	public Indicador() {
-		super();
 	}
 
-	public Indicador(Long id, String nomeIndicador) {
+	public Indicador(Long id, String nome) {
 		this.id = id;
-		this.nome = nomeIndicador;
+		this.nome = nome;
 	}
 
 	public Long getId() {
@@ -45,7 +44,6 @@ public class Indicador {
 	}
 
 	public void defineComposeId() {
-		String value = String.format("%s;%s", this.getProjeto().getId(), this.getId().toString());
-		this.composeId = value;
+		this.composeId = String.format("%s;%s", getProjeto().getId(), getId().toString());
 	}
 }

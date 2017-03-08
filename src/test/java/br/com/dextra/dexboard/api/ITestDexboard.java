@@ -21,7 +21,7 @@ public class ITestDexboard extends ApiTest {
 	private static final int ID_PROJETO_CONTPLAY = 495;
 	private static final int ID_INDICADOR_1 = 1;
 	private static final int ID_INDICADOR_2 = 2;
-	
+
 	private static final String APRESENTACAO = "https://docs.google.com/presentation/d/1ID6Oh3Dm0HHFQb9h8A32WJYy5Z-gufbLiTEcrdKAtM8/embed";
 
 	@Test
@@ -29,8 +29,8 @@ public class ITestDexboard extends ApiTest {
 		JsonArray projetos = queryProjetosJson(null);
 
 		assertEquals(23, projetos.size());
-		
-		LoggerFactory.getLogger(this.getClass()).info(projetos.toString());
+
+		LoggerFactory.getLogger(getClass()).info(projetos.toString());
 
 		JsonObject a4c = projetos.get(0).getAsJsonObject();
 		JsonObject adv = projetos.get(1).getAsJsonObject();
@@ -52,7 +52,6 @@ public class ITestDexboard extends ApiTest {
 
 		assertProjeto(565, "Confidence", "ROCKET", 0.99, confidence);
 		assertProjeto(579, "Movile", "ROCKET", 1.70, movile);
-
 	}
 
 	private JsonArray queryProjetosJson(String equipe) {
@@ -76,7 +75,7 @@ public class ITestDexboard extends ApiTest {
 		alteraIndicadorDeProjeto(ID_PROJETO_CONTPLAY, ID_INDICADOR_1, Classificacao.OK);
 		verificaSeProjetoEstaComIndicadorPreenchido(ID_PROJETO_CONTPLAY, ID_INDICADOR_1, Classificacao.OK);
 	}
-	
+
 	@Test
 	public void testAlterarIndicadores2() {
 		alteraIndicadorDeProjeto(ID_PROJETO_CONTPLAY, ID_INDICADOR_2, Classificacao.ATENCAO);
@@ -88,23 +87,22 @@ public class ITestDexboard extends ApiTest {
 		for (int i = 1; i <= 6; i++) {
 			alteraIndicadorDeProjeto(ID_PROJETO_CONTPLAY, i, Classificacao.ATENCAO);
 		}
-		
+
 		JsonObject projeto = getProjeto((long) ID_PROJETO_CONTPLAY);
 		JsonArray indicadores = projeto.get("indicadores").getAsJsonArray();
 		JsonObject indicador = indicadores.get(0).getAsJsonObject();
-		
+
 		Assert.assertFalse(indicador.get("atrasado").getAsBoolean());
 	}
 
-	private void verificaSeProjetoEstaComIndicadorPreenchido(int idProjeto, 
-			int idIndicadorAlterado, Classificacao classificacao) {
-		
-		
+	private void verificaSeProjetoEstaComIndicadorPreenchido(int idProjeto,
+															 int idIndicadorAlterado, Classificacao classificacao) {
+
 		JsonObject projeto = this.getProjeto(idProjeto);
 		JsonArray indicadores = projeto.get("indicadores").getAsJsonArray();
-		
+
 		JsonObject indicadorAlterado = encontraIndicadorDeId(indicadores, idIndicadorAlterado);
-		
+
 		String classificacaoAlterada = indicadorAlterado.get("classificacao").getAsString();
 		JsonArray registrosAlterados = indicadorAlterado.get("registros").getAsJsonArray();
 		JsonObject ultimaAlteracao = registrosAlterados.get(0).getAsJsonObject();

@@ -4,7 +4,6 @@
 	"projeto": "Globosat: Scrum 2011",
 	"fase": "sprint 04-11",
 	"id": 397,
-
     "satisfacaoDaEquipe": {
         "resultadoEntregue": "MUITO_SATISFEITO",
         "andamentoDoSprint": "INSATISFEITO"
@@ -20,4 +19,3 @@
         "andamentoDoSprint": "INSATISFEITO"
     }
 }
-

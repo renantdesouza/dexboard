@@ -16,42 +16,52 @@ public class ProjetoJson {
 	private Projeto projeto;
 	private List<IndicadorJson> indicadores = new ArrayList<IndicadorJson>();
 	private Classificacao classificacao;
+	private double satisfacaoCliente;
+	private double satisfacaoEquipe;
 	private boolean atrasado;
 
 	public ProjetoJson() {
-		super();
 	}
 
 	public ProjetoJson(Projeto projeto) {
 		this.projeto = projeto;
-		
+		satisfacaoCliente = projeto.getSatisfacaoCliente();
+		satisfacaoEquipe = projeto.getSatisfacaoEquipe();
+
 		inicializaIndicadores();
 		ordenaIndicadores();
-		
-		this.classificacao = defineClassificacao();
-		this.atrasado = defineAtrasado();
+
+		classificacao = defineClassificacao();
+		atrasado = defineAtrasado();
 	}
 
 	private void inicializaIndicadores() {
-		ProjetoDao dao = new ProjetoDao();
-		
-		List<Indicador> indicadoresDataStore = dao.buscarIndicadoresDoProjeto(getIdPma());
+		List<Indicador> indicadoresDataStore = new ProjetoDao().buscarIndicadoresDoProjeto(getIdPma());
 		for (Indicador i : indicadoresDataStore) {
-			this.indicadores.add(new IndicadorJson(i));
+			indicadores.add(new IndicadorJson(i));
 		}
 	}
 
 	private void ordenaIndicadores() {
-		Collections.sort(this.indicadores, new Comparator<IndicadorJson>() {
-            @Override
-            public int compare(IndicadorJson i1, IndicadorJson i2) {
-                return i1.getNome().compareToIgnoreCase(i2.getNome());
-            }
-        });
+		Collections.sort(indicadores, new Comparator<IndicadorJson>() {
+			@Override
+			public int compare(IndicadorJson i1, IndicadorJson i2) {
+				return i1.getNome().compareToIgnoreCase(i2.getNome());
+			}
+		});
 	}
 
 	public boolean getAtrasado() {
 		return atrasado;
+	}
+
+
+	public double getSatisfacaoCliente() {
+		return satisfacaoCliente;
+	}
+
+	public double getSatisfacaoEquipe() {
+		return satisfacaoEquipe;
 	}
 
 	@JSON
@@ -60,43 +70,42 @@ public class ProjetoJson {
 	}
 
 	public Long getIdPma() {
-		return this.projeto.getIdPma();
+		return projeto.getIdPma();
 	}
 
 	public String getNome() {
-		return this.projeto.getNome();
+		return projeto.getNome();
 	}
 
 	public Double getCpi() {
-		return this.projeto.getCpi();
+		return projeto.getCpi();
 	}
-	
+
 	public String getEquipe() {
 		return this.projeto.getEquipe();
 	}
-	
+
 	public Classificacao getClassificacao() {
 		return classificacao;
 	}
 
 	public String getApresentacao() {
-		return this.projeto.getApresentacao();
+		return projeto.getApresentacao();
 	}
 
 	private boolean defineAtrasado() {
-		for (IndicadorJson indicador : this.getIndicadores()) {
-			if(indicador.getAtrasado()) {
+		for (IndicadorJson indicador : getIndicadores()) {
+			if (indicador.getAtrasado()) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	private Classificacao defineClassificacao() {
 		Classificacao retorno = Classificacao.OK;
 
-		for (IndicadorJson indicador : this.getIndicadores()) {
-
+		for (IndicadorJson indicador : getIndicadores()) {
 			Classificacao classificacao = indicador.getClassificacao();
 
 			if (classificacao.equals(Classificacao.PERIGO)) {

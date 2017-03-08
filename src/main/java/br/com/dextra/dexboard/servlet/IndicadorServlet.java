@@ -24,14 +24,13 @@ public class IndicadorServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("application/json");
 
 		Long idProjeto = Long.valueOf(req.getParameter("projeto"));
 		Long idIndicador = Long.valueOf(req.getParameter("indicador"));
 
-		JSONDeserializer<RegistroAlteracao> des = new JSONDeserializer<RegistroAlteracao>();
+		JSONDeserializer<RegistroAlteracao> des = new JSONDeserializer<>();
 		String json = req.getParameter("registro");
 		RegistroAlteracao regAlteracao = des.deserialize(json, RegistroAlteracao.class);
 
@@ -42,7 +41,7 @@ public class IndicadorServlet extends HttpServlet {
 
 		ProjetoDao dao = new ProjetoDao();
 		RegistroAlteracao registro = dao.salvaAlteracao(idProjeto, idIndicador, regAlteracao);
-		
+
 		JSONSerializer serializer = new JSONSerializer();
 		resp.getWriter().println(serializer.serialize(registro));
 	}

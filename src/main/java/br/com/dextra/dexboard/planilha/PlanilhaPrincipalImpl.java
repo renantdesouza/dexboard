@@ -16,7 +16,9 @@ class PlanilhaPrincipalImpl extends PlanilhaDexboard implements PlanilhaPrincipa
 	private static final String COLUNA_EMAIL_PROJETO = "Email";
 	private static final String COLUNA_CPI_PROJETO = "CPI";
 	private static final String COLUNA_APRESENTACAO = "Apresentacao";
-	
+	private static final String COLUNA_SATISFACAO_CLIENTE = "Satisfacao Cliente";
+	private static final String COLUNA_SATISFACAO_EQUIPE = "Satisfacao Equipe";
+
 	private static final Pattern LINK_APRESENTACAO = Pattern.compile("https://(.+)embed");
 
 	public PlanilhaPrincipalImpl() {
@@ -38,14 +40,14 @@ class PlanilhaPrincipalImpl extends PlanilhaDexboard implements PlanilhaPrincipa
 		}
 		return null;
 	}
-	
+
 	private String buscarLinkApresentacao(int indiceProjeto) {
 		String rawLink = recuperarConteudoCelula(indiceProjeto, COLUNA_APRESENTACAO);
 		if (rawLink == null) return null;
-		
+
 		Matcher matcher = LINK_APRESENTACAO.matcher(rawLink);
 		if (!matcher.find()) return null;
-		
+
 		return matcher.group();
 	}
 
@@ -61,9 +63,17 @@ class PlanilhaPrincipalImpl extends PlanilhaDexboard implements PlanilhaPrincipa
 		return recuperarConteudoCelulaDouble(indiceProjeto, COLUNA_CPI_PROJETO);
 	}
 
+	private Double buscarSatisfacaoCliente(int indice) {
+		return recuperarConteudoCelulaDouble(indice, COLUNA_SATISFACAO_CLIENTE);
+	}
+
+	private Double buscarSatisfacaoEquipe(int indice) {
+		return recuperarConteudoCelulaDouble(indice, COLUNA_SATISFACAO_EQUIPE);
+	}
+
 	@Override
 	public Map<Long, Projeto> buscarDadosDosProjetos() {
-		Map<Long, Projeto> projetos = new java.util.HashMap<Long, Projeto>();
+		Map<Long, Projeto> projetos = new java.util.HashMap<>();
 
 		int quantidadeProjetos = buscarQuantidadeDeProjetos();
 
@@ -75,10 +85,13 @@ class PlanilhaPrincipalImpl extends PlanilhaDexboard implements PlanilhaPrincipa
 			projeto.setEmail(buscarEmailProjeto(i));
 			projeto.setCpi(buscarCpiProjetoX(i));
 			projeto.setApresentacao(buscarLinkApresentacao(i));
+			projeto.setSatisfacaoCliente(buscarSatisfacaoCliente(i));
+			projeto.setSatisfacaoEquipe(buscarSatisfacaoEquipe(i));
+
 			projetos.put(projeto.getIdPma(), projeto);
 		}
 
 		return projetos;
 	}
-	
+
 }

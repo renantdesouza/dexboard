@@ -31,16 +31,16 @@ public class ReloadProjetosServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("application/json");
-		this.doReload();
+		doReload();
 		resp.getWriter().print("{\"status\": \"success\"}");
 	}
 
 	public void doReload() {
 		ProjetoDao dao = new ProjetoDao();
-		
+
 		PlanilhaIndicadores planilhaIndicadores = PlanilhaFactory.indicadores();
 		LOG.info("Buscando lista de indicadores ...");
-		this.indicadores = planilhaIndicadores.criarListaDeIndicadores();
+		indicadores = planilhaIndicadores.criarListaDeIndicadores();
 
 		LOG.info("Buscando projetos ativos ...");
 		Map<Long, Projeto> projetosPlanilha = ProjetoPlanilhaService.buscarDadosProjetosAtivos();
@@ -71,7 +71,6 @@ public class ReloadProjetosServlet extends HttpServlet {
 	}
 
 	private void adicionaProjetosNovos(Map<Long, Projeto> mapProjetosDataStore, Collection<Projeto> ativos) {
-		
 		ProjetoDao dao = new ProjetoDao();
 
 		for (Projeto p : ativos) {
@@ -87,46 +86,54 @@ public class ReloadProjetosServlet extends HttpServlet {
 				projeto.setNome(p.getNome());
 				projeto.setCpi(p.getCpi());
 				projeto.setAtivo(true);
+				projeto.setSatisfacaoCliente(p.getSatisfacaoCliente());
+				projeto.setSatisfacaoEquipe(p.getSatisfacaoEquipe());
 				dao.salvarProjeto(projeto);
 			}
 		}
 	}
 
 	private void atualizaProjetosAtivos(Map<Long, Projeto> projetosPlanilha, List<Projeto> projetosEmCache) {
-		
 		ProjetoDao dao = new ProjetoDao();
 
 		if (projetosEmCache == null) {
 			return;
 		}
 
-		for (Projeto projetoEmCache : projetosEmCache) {
-			Projeto projetoAtual = projetosPlanilha.get(projetoEmCache.getIdPma());
-			if (projetoAtual != null) {
-				if (alterouInformacoesProjeto(projetoEmCache, projetoAtual)) {
-					LOG.info(String.format("Atualizando cpi do projeto %s para %s - equipe=%s, email=%s", projetoAtual.getNome(),
-							projetoAtual.getCpi(), projetoAtual.getEquipe(), projetoAtual.getEmail()));
-					projetoEmCache.setNome(projetoAtual.getNome());
-					projetoEmCache.setCpi(projetoAtual.getCpi());
-					projetoEmCache.setEquipe(projetoAtual.getEquipe());
-					projetoEmCache.setEmail(projetoAtual.getEmail());
-					projetoEmCache.setApresentacao(projetoAtual.getApresentacao());
-					dao.salvarProjeto(projetoEmCache);
-					LOG.info(String.format("Projeto \"%s\" salvo", projetoAtual.getNome()));
+		for (Projeto projeto : projetosEmCache) {
+			Projeto atual = projetosPlanilha.get(projeto.getIdPma());
+			if (atual != null) {
+				if (alterouInformacoesProjeto(projeto, atual)) {
+					String log = "Atualizando cpi do projeto %s para %s - equipe=%s, email=%s";
+					LOG.info(String.format(log, atual.getNome(), atual.getCpi(), atual.getEquipe(), atual.getEmail()));
+
+					projeto.setNome(atual.getNome());
+					projeto.setCpi(atual.getCpi());
+					projeto.setEquipe(atual.getEquipe());
+					projeto.setEmail(atual.getEmail());
+					projeto.setApresentacao(atual.getApresentacao());
+					projeto.setSatisfacaoCliente(atual.getSatisfacaoCliente());
+					projeto.setSatisfacaoEquipe(atual.getSatisfacaoEquipe());
+
+					dao.salvarProjeto(projeto);
+					LOG.info(String.format("Projeto \"%s\" salvo", atual.getNome()));
 				}
-			} else if (projetoEmCache.isAtivo()) {
-				LOG.info(String.format("Desativando projeto \"%s\"", projetoEmCache.getNome()));
-				projetoEmCache.setAtivo(false);
-				dao.salvarProjeto(projetoEmCache);
+			} else if (projeto.isAtivo()) {
+				LOG.info(String.format("Desativando projeto \"%s\"", projeto.getNome()));
+				projeto.setAtivo(false);
+				dao.salvarProjeto(projeto);
 			}
 		}
 	}
 
 	private boolean alterouInformacoesProjeto(Projeto projetoEmCache, Projeto projetoAtual) {
-		return alterou(projetoEmCache.getCpi(), projetoAtual.getCpi()) || alterou(projetoEmCache.getNome(), projetoAtual.getNome())
+		return alterou(projetoEmCache.getCpi(), projetoAtual.getCpi())
+				|| alterou(projetoEmCache.getNome(), projetoAtual.getNome())
 				|| alterou(projetoEmCache.getEquipe(), projetoAtual.getEquipe())
 				|| alterou(projetoEmCache.getEmail(), projetoAtual.getEmail())
-				|| alterou(projetoEmCache.getApresentacao(), projetoAtual.getApresentacao());
+				|| alterou(projetoEmCache.getApresentacao(), projetoAtual.getApresentacao())
+				|| alterou(projetoEmCache.getSatisfacaoCliente(), projetoAtual.getSatisfacaoCliente())
+				|| alterou(projetoEmCache.getSatisfacaoEquipe(), projetoAtual.getSatisfacaoEquipe());
 	}
 
 	private boolean alterou(Object valorEmCache, Object valorAtual) {

@@ -10,13 +10,9 @@ public class ProjetoComparator implements Comparator<Projeto> {
 
 	@Override
 	public int compare(Projeto projeto1, Projeto projeto2) {
-		
 		ProjetoJson p1 = projeto1.toProjetoJson();
 		ProjetoJson p2 = projeto2.toProjetoJson();
-		
-		Classificacao c1 = p1.getClassificacao();
-		Classificacao c2 = p2.getClassificacao();
-		
+
 		if(!p1.getAtrasado() && p2.getAtrasado()) {
 			return 1;
 		}
@@ -24,7 +20,10 @@ public class ProjetoComparator implements Comparator<Projeto> {
 		if(p1.getAtrasado() && !p2.getAtrasado()) {
 			return -1;
 		}
-				
+
+		Classificacao c1 = p1.getClassificacao();
+		Classificacao c2 = p2.getClassificacao();
+
 		if (c1 == c2) {
 			return p1.getNome().compareTo(p2.getNome());
 		} else {

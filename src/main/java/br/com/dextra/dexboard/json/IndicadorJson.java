@@ -20,16 +20,13 @@ public class IndicadorJson {
 	private List<RegistroAlteracao> registros;
 
 	public IndicadorJson() {
-		super();
 	}
 
 	public IndicadorJson(Indicador indicador) {
 		this.indicador = indicador;
+		registros = new ProjetoDao().buscarRegistrosDeAlteracoes(indicador);
 
-		ProjetoDao projetoDao = new ProjetoDao();
-		this.registros = projetoDao.buscarRegistrosDeAlteracoes(indicador);
-
-		Collections.sort(this.registros, new Comparator<RegistroAlteracao>() {
+		Collections.sort(registros, new Comparator<RegistroAlteracao>() {
 			@Override
 			public int compare(RegistroAlteracao r1, RegistroAlteracao r2) {
 				return r2.getData().compareTo(r1.getData());
@@ -38,20 +35,19 @@ public class IndicadorJson {
 	}
 
 	public Long getId() {
-		return this.indicador.getId();
+		return indicador.getId();
 	}
 
 	public String getNome() {
-		return this.indicador.getNome();
+		return indicador.getNome();
 	}
 
 	public boolean getAtrasado() {
-		if (this.registros.isEmpty()) {
+		if (registros.isEmpty()) {
 			return true;
 		}
-		RegistroAlteracao ultimaAlteracao = this.registros.get(0);
 
-		if (!isValido(ultimaAlteracao.getData())) {
+		if (!isValido(getUltimaAlteracao().getData())) {
 			return true;
 		}
 
@@ -59,11 +55,10 @@ public class IndicadorJson {
 	}
 
 	public Classificacao getClassificacao() {
-		if (this.registros.isEmpty()) {
+		if (registros.isEmpty()) {
 			return Classificacao.PERIGO;
 		}
-		RegistroAlteracao ultimaAlteracao = this.registros.get(0);
-		return ultimaAlteracao.getClassificacao();
+		return getUltimaAlteracao().getClassificacao();
 	}
 
 	@JSON
@@ -78,6 +73,10 @@ public class IndicadorJson {
 
 		boolean validade = calendar.getTime().compareTo(new Date()) > -1;
 		return validade;
+	}
+
+	private RegistroAlteracao getUltimaAlteracao() {
+		return registros.get(0);
 	}
 
 }

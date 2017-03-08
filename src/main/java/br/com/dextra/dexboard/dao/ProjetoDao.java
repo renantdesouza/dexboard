@@ -10,10 +10,8 @@ import org.slf4j.LoggerFactory;
 
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.LoadResult;
 import com.googlecode.objectify.Objectify;
 import com.googlecode.objectify.ObjectifyService;
-import com.googlecode.objectify.cmd.Query;
 
 import br.com.dextra.dexboard.domain.Indicador;
 import br.com.dextra.dexboard.domain.Projeto;
@@ -44,81 +42,57 @@ public class ProjetoDao {
 	}
 
 	public Projeto buscarProjetoByKey(Key<Projeto> key) {
-		LoadResult<Projeto> first = ofy.load().type(Projeto.class).filterKey(key).first();
-		return first.now();
+		return ofy.load().type(Projeto.class).filterKey(key).first().now();
 	}
 
 	public Indicador buscarIndicadorByKey(Key<Indicador> key) {
-		LoadResult<Indicador> first = ofy.load().type(Indicador.class).filterKey(key).first();
-		return first.now();
+		return ofy.load().type(Indicador.class).filterKey(key).first().now();
 	}
 
 	public List<RegistroAlteracao> buscarHistoricoAlteracoes(Date minDate, Integer limit) {
-		List<RegistroAlteracao> list;
-
-		Query<RegistroAlteracao> queryByDate = ofy.load().type(RegistroAlteracao.class).filter("data >=", minDate);
-		list = queryByDate.list();
+		List<RegistroAlteracao> list = ofy.load().type(RegistroAlteracao.class).filter("data >=", minDate).list();
 
 		if (list == null || list.size() == 0) {
-			return new ArrayList<RegistroAlteracao>();
+			return new ArrayList<>();
 		}
-		
+
 		Collections.reverse(list);
 
-		if (list.size() <= limit-1) {
-			return list;
-		} else {
-			return list.subList(0, limit);
-		}
+		return list.size() <= limit-1 ? list : list.subList(0, limit);
 	}
-	
+
 	public List<Projeto> buscarTodosProjetos() {
-		Query<Projeto> query = ofy.load()
-				.type(Projeto.class)
-				.filter("ativo", true);
-		return query.list();
+		return ofy.load().type(Projeto.class).filter("ativo", true).list();
 	}
-	
+
 	public List<Projeto> buscarProjetosInativos() {
-		Query<Projeto> query = ofy.load()
-				.type(Projeto.class)
-				.filter("ativo", false);
-		return query.list();
+		return ofy.load().type(Projeto.class).filter("ativo", false).list();
 	}
 
 	public List<Projeto> buscarProjetosEquipe(String equipe) {
-		Query<Projeto> query = ofy.load()
-				.type(Projeto.class)
-				.filter("equipe", equipe.toUpperCase());
-		
-		List<Projeto> list = query.list();
 		List<Projeto> ativos = new ArrayList<>();
-		list.size();
-		
-		for (Projeto projeto : list) {
+
+		for (Projeto projeto : ofy.load().type(Projeto.class).filter("equipe", equipe.toUpperCase()).list()) {
 			if (projeto.isAtivo()) {
 				ativos.add(projeto);
 			}
 		}
-		
+
 		return ativos;
 	}
 
 	public List<Projeto> buscarTodosProjetos(String equipe) {
-		boolean hasEquipe = equipe == null || equipe.trim().isEmpty();
-		return hasEquipe ? buscarTodosProjetos() : buscarProjetosEquipe(equipe);
+		return equipe == null || equipe.trim().isEmpty() ? buscarTodosProjetos() : buscarProjetosEquipe(equipe);
 	}
 
 	public List<Indicador> buscarIndicadoresDoProjeto(Long idPma) {
-		Projeto projeto = buscarProjeto(idPma);
-		List<Indicador> list = ofy.load().type(Indicador.class).filter("projeto", projeto).list();
-		return list;
+		return ofy.load().type(Indicador.class).filter("projeto", buscarProjeto(idPma)).list();
 	}
 
 	public List<RegistroAlteracao> buscarRegistrosDeAlteracoes(Indicador indicador) {
 		List<RegistroAlteracao> list = ofy.load().type(RegistroAlteracao.class).filter("indicador", indicador).list();
 		if (list == null) {
-			list = new ArrayList<RegistroAlteracao>();
+			list = new ArrayList<>();
 		}
 
 		if (indicador.getProjeto().getId() == 619) {
@@ -149,7 +123,7 @@ public class ProjetoDao {
 		registroAlteracao.setProjeto(keyProjeto);
 		registroAlteracao.defineId();
 		ofy.save().entity(registroAlteracao).now();
-		
+
 		return registroAlteracao;
 	}
 

@@ -1,7 +1,6 @@
 package br.com.dextra.dexboard.servlet;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -23,11 +22,8 @@ public class NotificacaoServlet extends HttpServlet {
 	}
 
 	private void notificarProjetosAtrasados() {
-		
 		NotificacaoDao dao = new NotificacaoDao();
-
-		List<Projeto> projetos = dao.buscarProjetosParaNotificar();
-		for (Projeto projeto : projetos) {
+		for (Projeto projeto : dao.buscarProjetosParaNotificar()) {
 			dao.notificarEquipeProjeto(projeto);
 		}
 	}

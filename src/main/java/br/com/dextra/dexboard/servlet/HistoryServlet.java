@@ -31,7 +31,7 @@ public class HistoryServlet extends HttpServlet {
 	private static final long serialVersionUID = 892806850164024145L;
 
 	public static final int CACHE_EXPIRATION_SECONDS = 60 * 60 * 6;
-	
+
 	private Map<Key<Indicador>, Object> cacheIndicador = new HashMap<Key<Indicador>, Object>();
 	private Map<Key<Projeto>, Object> cacheProjeto = new HashMap<Key<Projeto>, Object>();
 
@@ -58,11 +58,9 @@ public class HistoryServlet extends HttpServlet {
 
 		return json;
 	}
-	
+
 	private ProjetoDao getDao() {
-		if (dao == null)
-			dao = new ProjetoDao();
-		return dao;
+		return dao = dao == null ? new ProjetoDao() : dao;
 	}
 
 	private String getJsonHistory() {
@@ -89,7 +87,7 @@ public class HistoryServlet extends HttpServlet {
 			cache = getDao().buscarIndicadorByKey(key);
 			cacheIndicador.put(key, cache);
 		}
-		return (Indicador) cache; 
+		return (Indicador) cache;
 	}
 
 	private Projeto getProjeto(Key<Projeto> key) {
@@ -98,7 +96,7 @@ public class HistoryServlet extends HttpServlet {
 			cache = getDao().buscarProjetoByKey(key);
 			cacheProjeto.put(key, cache);
 		}
-		return (Projeto) cache; 
+		return (Projeto) cache;
 	}
 
 }
