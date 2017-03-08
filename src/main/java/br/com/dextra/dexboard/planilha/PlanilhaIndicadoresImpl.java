@@ -8,12 +8,24 @@ import br.com.dextra.dexboard.utils.StringUtils;
 
 class PlanilhaIndicadoresImpl extends PlanilhaDexboard implements PlanilhaIndicadores {
 
+	private static final String COLUNA_NOME = "nome do indicador";
+	private static final String COLUNA_DESCRICAO = "descricao do indicador";
+	private static final String COLUNA_POSICAO = "posicao do indicador";
+
 	public PlanilhaIndicadoresImpl() {
 		super("Indicadores");
 	}
 
 	private String buscarNomeDoIndicador(int linha) {
-		return recuperarConteudoCelula(linha, 1);
+		return recuperarConteudoCelula(linha, COLUNA_NOME);
+	}
+
+	private String buscarDescricaoDoIndicador(int linha) {
+		return recuperarConteudoCelula(linha, COLUNA_DESCRICAO);
+	}
+
+	private int buscarPosicaoDoIndicador(int linha) {
+		return recuperarConteudoCelulaInt(linha, COLUNA_POSICAO);
 	}
 
 	@Override
@@ -22,15 +34,18 @@ class PlanilhaIndicadoresImpl extends PlanilhaDexboard implements PlanilhaIndica
 
 		Long i = 1l;
 		while (true) {
-			String nomeIndicador = buscarNomeDoIndicador(i.intValue());
+			int index = i.intValue();
 
-			if (!StringUtils.isNullOrEmpty(nomeIndicador)) {
-				indicadores.add(new Indicador(i, nomeIndicador));
+			String nome = buscarNomeDoIndicador(index);
+			String descricao = buscarDescricaoDoIndicador(index);
+			int posicao = buscarPosicaoDoIndicador(index);
+
+			if (!StringUtils.isNullOrEmpty(nome)) {
+				indicadores.add(new Indicador(i, nome, descricao, posicao));
 				i++;
 			} else {
 				return indicadores;
 			}
 		}
-
 	}
 }

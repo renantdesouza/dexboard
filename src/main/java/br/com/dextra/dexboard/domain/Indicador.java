@@ -14,13 +14,17 @@ public class Indicador {
 	@Index
 	private Key<Projeto> projeto;
 	private String nome;
+	private String descricao;
+	private int posicao;
 
 	public Indicador() {
 	}
 
-	public Indicador(Long id, String nome) {
+	public Indicador(Long id, String nome, String descricao, int posicao) {
 		this.id = id;
 		this.nome = nome;
+		this.descricao = descricao;
+		this.posicao = posicao;
 	}
 
 	public Long getId() {
@@ -33,6 +37,22 @@ public class Indicador {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public int getPosicao() {
+		return posicao;
+	}
+
+	public void setPosicao(int posicao) {
+		this.posicao = posicao;
+	}
+
+	public void setComposeId(String composeId) {
+		this.composeId = composeId;
 	}
 
 	public Key<Projeto> getProjeto() {
