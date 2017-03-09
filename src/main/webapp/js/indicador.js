@@ -107,8 +107,6 @@ dexboard.indicador = (function($, Handlebars) {
 		};
 	};
 
-
-	/* TODO RENAN VERIFICAR COMO ISSO FUNCIONA*/
 	dialog.TextArea = function() {
 		var self = this;
 		
