@@ -16,7 +16,6 @@ dexboard.indicador = (function($, Handlebars) {
 	};
 	
 	dialog.Buttons = function(indicador) {
-		
 		var self = this;
 		var hasRecords = indicador.registros ? indicador.registros.length > 0 : false;
 		
@@ -76,7 +75,6 @@ dexboard.indicador = (function($, Handlebars) {
 	};
 	
 	dialog.Records = function() {
-		
 		var self = this;
 		
 		this.records = $("#dialog ul.historico");
@@ -108,9 +106,10 @@ dexboard.indicador = (function($, Handlebars) {
 			return self;
 		};
 	};
-	
+
+
+	/* TODO RENAN VERIFICAR COMO ISSO FUNCIONA*/
 	dialog.TextArea = function() {
-		
 		var self = this;
 		
 		this.el = $("#dialog textarea");
@@ -130,7 +129,6 @@ dexboard.indicador = (function($, Handlebars) {
 			
 			return self;
 		};
-		
 	};
 	
 	service.novoStatus = function(projeto, indicador, status, comentario) {
@@ -174,7 +172,6 @@ dexboard.indicador = (function($, Handlebars) {
 	};
 	
 	view.Dialog = function() {
-		
 		var self = this;
 		
 		this.container = $("#dialog");
@@ -185,9 +182,10 @@ dexboard.indicador = (function($, Handlebars) {
 			self.overlay.hide();
 			self.container.dialog("close");
 		};
-		
+
 		this.open = function(projeto, indicador) {
-			
+			prepareTemplate("#edicao-indicador-template");
+
 			self.container.html(template({
 				"projeto" : projeto,
 				"indicador" : indicador
@@ -203,6 +201,19 @@ dexboard.indicador = (function($, Handlebars) {
 			(new dialog.Records()).init();
 			
 			return dialog;
+		};
+
+		this.openDescription = function(indicador) {
+		    prepareTemplate('#descricao-indicador-template');
+
+		    self.container.html(template({
+		        'indicador': indicador
+		    }));
+
+		    self.overlay.show();
+		    self.container.dialog('open');
+
+		    self.container.find(".dialog-close-button").click(self.close);
 		};
 		
 		this.init = function() {
@@ -224,13 +235,12 @@ dexboard.indicador = (function($, Handlebars) {
 			
 			self.container.dialog("widget").draggable("option", "cursor", "move");
 		};
-		
 	};
 	
-	view.init = function() {
-		var source = $("#edicao-indicador-template").html();
-		template = Handlebars.compile(source);
-		(new view.Dialog()).init();
+	var prepareTemplate = function(name) {
+	    var source = $(name).html();
+        template = Handlebars.compile(source);
+        (new view.Dialog()).init();
 	};
 
 	return {

@@ -230,13 +230,24 @@ dexboard.projeto = (function($, Handlebars) {
 			
 			self.container.find(".indicador").click(function() {
 				var indexProjeto = parseInt($(this).parent().data("index"));
-				var indexIndicador = parseInt($(this).data("index"));
-				
-				var projeto = queryWrapper.projetos[indexProjeto];
-				var indicador = projeto.indicadores[indexIndicador];
-				
-				var dialog = new dexboard.indicador.view.Dialog();
-				dialog.open(projeto, indicador);
+
+                var isOpenDescription = false;
+
+                if (isNaN(indexProjeto)) {
+                    indexProjeto = 0;
+                    isOpenDescription = true;
+                }
+
+                var projeto = queryWrapper.projetos[indexProjeto];
+                var indexIndicador = parseInt($(this).data("index"));
+                var indicador = projeto.indicadores[indexIndicador];
+                var dialog = new dexboard.indicador.view.Dialog();
+
+				if (isOpenDescription) {
+                    dialog.openDescription(indicador);
+				} else {
+				    dialog.open(projeto, indicador);
+				}
 			});
 			
 			if (view.Projeto.updateIndicador) {

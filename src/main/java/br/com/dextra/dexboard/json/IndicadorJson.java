@@ -49,17 +49,16 @@ public class IndicadorJson {
 		return indicador.getPosicao();
 	}
 
+	public String getDescricao() {
+		return indicador.getDescricao();
+	}
+
 	public boolean getAtrasado() {
 		if (registros.isEmpty()) {
 			return true;
 		}
-		RegistroAlteracao ultimaAlteracao = this.registros.get(0);
 
-		if (!isValido(ultimaAlteracao.getData())) {
-			return true;
-		}
-
-		return false;
+		return !isValido(registros.get(0).getData());
 	}
 
 	public Classificacao getClassificacao() {
@@ -80,8 +79,7 @@ public class IndicadorJson {
 		calendar.setTime(data);
 		calendar.add(Calendar.DAY_OF_MONTH, NotificacaoDao.getValidadeAlteracao());
 
-		boolean validade = calendar.getTime().compareTo(new Date()) > -1;
-		return validade;
+		return calendar.getTime().compareTo(new Date()) > -1;
 	}
 
 }

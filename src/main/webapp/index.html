@@ -2,19 +2,18 @@
 <html>
 
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>DexBoard Reload</title>
-	<script type="text/javascript" src="js/lib/jquery-2.2.3.min.js"></script>
-	<script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="js/lib/handlebars-v4.0.5.js"></script>
-	<script type="text/javascript" src="js/indicador.js"></script>
-	<script type="text/javascript" src="js/projeto.js"></script>
-	<script type="text/javascript" src="js/slides.js"></script>
-	<link rel="stylesheet" href="css/reveal.css">
-	<link rel="stylesheet" href="css/reveal-theme-black.css">
-	<link rel="stylesheet" type="text/css" href="css/dx-board.css"/>
-	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
-	<link href='img/favicon.png' rel='shortcut icon' type='image/png' />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>DexBoard Reload</title>
+    <script type="text/javascript" src="js/lib/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/lib/handlebars-v4.0.5.js"></script>
+    <script type="text/javascript" src="js/indicador.js"></script>
+    <script type="text/javascript" src="js/projeto.js"></script>
+    <script type="text/javascript" src="js/slides.js"></script>
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" type="text/css" href="css/dx-board.css"/>
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
+    <link href='img/favicon.png' rel='shortcut icon' type='image/png'/>
 </head>
 <body>
 <div id="dialog-overlay"></div>
@@ -24,147 +23,154 @@
 <div id="dialog"></div>
 
 <script type="text/x-handlebars-template" id="dexboard-template">
-	<table {{#if tvMode}} class="tv-mode"{{/if}}>
-	<thead>
-	<tr>
-		<th class="logo">
-			<img src="img/header-logo.png" alt="dxb - DexBoard">
-			<input type="text" placeholder="Busca de Projetos e Equipes">
-		</th>
-		{{#each indicadores}}
-		<th>
-			<span class="title">{{nome}}</span>
-			<div class="heatbar">
-				{{#if status.quantidadeAtraso}}<span style="width: {{status.quantidadeAtraso}}px"></span>{{/if}}
-				{{#if status.quantidadePerigo}}<span class="perigo" style="width: {{status.quantidadePerigo}}px"></span>{{/if}}
-				{{#if status.quantidadeAtencao}}<span class="atencao" style="width: {{status.quantidadeAtencao}}px"></span>{{/if}}
-				{{#if status.quantidadeOk}}<span class="ok" style="width: {{status.quantidadeOk}}px"></span>{{/if}}
-			</div>
-		</th>
-		{{/each}}
-	</tr>
-	</thead>
-	<tbody>
-	{{#each projetos}}
-	<tr data-index="{{@index}}">
-		<td class="{{lowercase classificacao}}{{#if atrasado}} atrasado{{/if}}">
-			<div class="vertical">{{nome}}</div>
-		</td>
+    <table {{#if tvMode}} class="tv-mode" {{/if}}>
+    <thead>
+    <tr>
+        <th class="logo">
+            <img src="img/header-logo.png" alt="dxb - DexBoard">
+            <input type="text" placeholder="Busca de Projetos e Equipes">
+        </th>
+        {{#each indicadores}}
+        <th class="indicador" data-index="{{@index}}">
+            <span class="title">{{nome}}</span>
+            <div class="heatbar">
+                {{#if status.quantidadeAtraso}}<span style="width: {{status.quantidadeAtraso}}px"></span>{{/if}}
+                {{#if status.quantidadePerigo}}<span class="perigo" style="width: {{status.quantidadePerigo}}px"></span>{{/if}}
+                {{#if status.quantidadeAtencao}}<span class="atencao" style="width: {{status.quantidadeAtencao}}px"></span>{{/if}}
+                {{#if status.quantidadeOk}}<span class="ok" style="width: {{status.quantidadeOk}}px"></span>{{/if}}
+            </div>
+        </th>
+        {{/each}}
+    </tr>
+    </thead>
+    <tbody>
+    {{#each projetos}}
+    <tr data-index="{{@index}}">
+        <td class="{{lowercase classificacao}}{{#if atrasado}} atrasado{{/if}}">
+            <div class="vertical">{{nome}}</div>
+        </td>
 
-		{{#each indicadores}}
-		<td data-index="{{@index}}" class="indicador {{lowercase classificacao}}{{#if atrasado}} atrasado{{/if}}">
-			{{#if @first}}<span class="cpi">{{../cpi}}</span>{{/if}}
+        {{#each indicadores}}
+        <td data-index="{{@index}}" class="indicador {{lowercase classificacao}}{{#if atrasado}} atrasado{{/if}}">
+            {{#if @first}}<span class="cpi">{{../cpi}}</span>{{/if}}
 
-			{{#showSatisfaction 1 @index ../satisfacaoCliente}}
-			<span class="cpi">{{../satisfacaoCliente}}</span>
-			{{/showSatisfaction}}
+            {{#showSatisfaction 1 @index ../satisfacaoCliente}}
+            <span class="cpi">{{../satisfacaoCliente}}</span>
+            {{/showSatisfaction}}
 
-			{{#showSatisfaction 2 @index ../satisfacaoEquipe}}
-			<span class="cpi">{{../satisfacaoEquipe}}</span>
-			{{/showSatisfaction}}
-		</td>
-		{{/each}}
-	</tr>
-	{{/each}}
-	</tbody>
-	</table>
-	{{#if tvMode}}
-	<div class="heatbar-global">
-		<div class="slider"></div>
-		<div class="heatbar">
-			{{#if status.quantidadeAtraso}}<span style="width: {{status.quantidadeAtraso}}px"></span>{{/if}}
-			{{#if status.quantidadePerigo}}<span class="perigo" style="width: {{status.quantidadePerigo}}px"></span>{{/if}}
-			{{#if status.quantidadeAtencao}}<span class="atencao" style="width: {{status.quantidadeAtencao}}px"></span>{{/if}}
-			{{#if status.quantidadeOk}}<span class="ok" style="width: {{status.quantidadeOk}}px"></span>{{/if}}
-		</div>
-	</div>
-	{{/if}}
+            {{#showSatisfaction 2 @index ../satisfacaoEquipe}}
+            <span class="cpi">{{../satisfacaoEquipe}}</span>
+            {{/showSatisfaction}}
+        </td>
+        {{/each}}
+    </tr>
+    {{/each}}
+    </tbody>
+    </table>
+    {{#if tvMode}}
+    <div class="heatbar-global">
+        <div class="slider"></div>
+        <div class="heatbar">
+            {{#if status.quantidadeAtraso}}<span style="width: {{status.quantidadeAtraso}}px"></span>{{/if}}
+            {{#if status.quantidadePerigo}}<span class="perigo" style="width: {{status.quantidadePerigo}}px"></span>{{/if}}
+            {{#if status.quantidadeAtencao}}<span class="atencao" style="width: {{status.quantidadeAtencao}}px"></span>{{/if}}
+            {{#if status.quantidadeOk}}<span class="ok" style="width: {{status.quantidadeOk}}px"></span>{{/if}}
+        </div>
+    </div>
+    {{/if}}
+</script>
+
+<script type="text/x-handlebars-template" id="descricao-indicador-template">
+    <div class="dialog-content">
+        <div>
+            <div class="dialog-close-button" title="Fechar janela">X</div>
+            <div>
+                <h4>{{indicador.nome}}</h4>
+                <br/>
+                <span class="descricao">{{indicador.descricao}}</span>
+            </div>
+        </div>
+    </div>
 </script>
 
 <script type="text/x-handlebars-template" id="edicao-indicador-template">
-	<div class="dialog-content">
-		<div class="dialog-close-button" title="Fechar janela">X</div>
-		<div class="card">
+    <div class="dialog-content">
+        <div class="dialog-close-button" title="Fechar janela">X</div>
+        <div class="card">
+            <h4>{{indicador.nome}}<span>{{projeto.nome}}</span></h4>
 
-			<h4>{{indicador.nome}}<span>{{projeto.nome}}</span></h4>
+            <fieldset>
+                <legend>Novo status</legend>
+                <textarea rows="3" cols="35" tabindex="1"></textarea>
+            </fieldset>
 
-			<fieldset>
-				<legend>Novo status</legend>
-				<textarea rows="3" cols="35" tabindex="1"></textarea>
-			</fieldset>
+            {{#if indicador.registros}}
+            <fieldset>
+                <legend class="toggle-historico"><span>+</span> Hist&oacute;rico de altera&ccedil;&otilde;es</legend>
+                <ul class="historico">
+                    {{#each indicador.registros}}
+                    <li class="{{lowercase classificacao}}">
+                        Alterado em <b>{{ultimaAlteracaoString}}</b> por <b>{{usuario}}</b><br>
+                        <span class="comentario">{{comentario}}</span>
+                    </li>
+                    {{/each}}
+                </ul>
+            </fieldset>
+            {{/if}}
+        </div>
 
-			{{#if indicador.registros}}
-			<fieldset>
-				<legend class="toggle-historico"><span>+</span> Hist&oacute;rico de altera&ccedil;&otilde;es</legend>
-				<ul class="historico">
-					{{#each indicador.registros}}
-					<li class="{{lowercase classificacao}}">
-						Alterado em <b>{{ultimaAlteracaoString}}</b> por <b>{{usuario}}</b><br>
-						<span class="comentario">{{comentario}}</span>
-					</li>
-					{{/each}}
-				</ul>
-			</fieldset>
-			{{/if}}
-
-		</div>
-
-		<div class="options">
-			<input type="button"
-				   value="Stop the line!"
-				   disabled
-				   class="btn-perigo change"
-				   name="PERIGO"
-				   tabindex="2" />
-			<input type="button"
-				   value="Aten&ccedil;&atilde;o"
-				   disabled
-				   class="btn-atencao change"
-				   name="ATENCAO"
-				   tabindex="3" />
-			<input type="button"
-				   value="Caminho livre!"
-				   disabled
-				   class="btn-ok change"
-				   name="OK"
-				   tabindex="4" />
-			<input type="button"
-				   value="Sem mudan&ccedil;as"
-				   {{#unless indicador.registros}}disabled{{/unless}}
-			class="btn-sem-mudancas"
-			name="SEMMUDANCAS"
-			tabindex="5" />
-		</div>
-	</div>
+        <div class="options">
+            <input type="button"
+                   value="Stop the line!"
+                   disabled
+                   class="btn-perigo change"
+                   name="PERIGO"
+                   tabindex="2"/>
+            <input type="button"
+                   value="Aten&ccedil;&atilde;o"
+                   disabled
+                   class="btn-atencao change"
+                   name="ATENCAO"
+                   tabindex="3"/>
+            <input type="button"
+                   value="Caminho livre!"
+                   disabled
+                   class="btn-ok change"
+                   name="OK"
+                   tabindex="4"/>
+            <input type="button"
+                   value="Sem mudan&ccedil;as"
+                   {{#unless indicador.registros}}disabled{{/unless}}
+            class="btn-sem-mudancas"
+            name="SEMMUDANCAS"
+            tabindex="5" />
+        </div>
+    </div>
 </script>
 
 <script type="text/x-handlebars-template" id="slides-apresentacao">
-	<div class="reveal">
-		<div class="slides">
-			{{#each indicadores}}
-			{{#if registros.[0]}}
-			<section data-indicador="{{@index}}">
-				{{#with registros.[0]}}
-				<p>{{comentario}}</p><br>
-				{{/with}}
-				{{#with registros.[1]}}
-				<small><u>Anterior ({{ultimaAlteracaoString}}) {{classificacao}}</u><br> {{comentario}}</small>
-				{{/with}}
-			</section>
-			{{/if}}
-			{{/each}}
-			{{#if slidesExtras}}
-			<section>
-				<iframe class="extra" src="{{slidesExtras}}?start=false&loop=false&delayms=3000" frameborder="0" allowfullscreen="true"></iframe>
-			</section>
-			{{/if}}
-		</div>
-	</div>
+    <div class="reveal">
+        <div class="slides">
+            {{#each indicadores}}
+            {{#if registros.[0]}}
+            <section data-indicador="{{@index}}">
+                {{#with registros.[0]}}
+                <p>{{comentario}}</p><br>
+                {{/with}}
+                {{#with registros.[1]}}
+                <small><u>Anterior ({{ultimaAlteracaoString}}) {{classificacao}}</u><br> {{comentario}}</small>
+                {{/with}}
+            </section>
+            {{/if}}
+            {{/each}}
+            {{#if slidesExtras}}
+            <section>
+                <iframe class="extra" src="{{slidesExtras}}?start=false&loop=false&delayms=3000" frameborder="0" allowfullscreen="true"></iframe>
+            </section>
+            {{/if}}
+        </div>
+    </div>
 </script>
-
-<script type="text/javascript">
-		dexboard.projeto.view.init();
-	</script>
 
 <script src="js/lib/reveal.js"></script>
 
