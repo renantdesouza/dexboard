@@ -54,11 +54,7 @@ public class IndicadorJson {
 	}
 
 	public boolean getAtrasado() {
-		if (registros.isEmpty()) {
-			return true;
-		}
-
-		return !isValido(registros.get(0).getData());
+		return registros.isEmpty() || !isValido(registros.get(0).getData());
 	}
 
 	public Classificacao getClassificacao() {
