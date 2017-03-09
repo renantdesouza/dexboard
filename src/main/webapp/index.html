@@ -85,9 +85,9 @@
         <div>
             <div class="dialog-close-button" title="Fechar janela">X</div>
             <div>
-                <h4>{{indicador.nome}}</h4>
+                <h4 class="descricao">{{indicador.nome}}</h4>
                 <br/>
-                <span class="descricao">{{indicador.descricao}}</span>
+                <h5 class="descricao">{{indicador.descricao}}</h5>
             </div>
         </div>
     </div>
@@ -170,6 +170,10 @@
             {{/if}}
         </div>
     </div>
+</script>
+
+<script type="text/javascript">
+		dexboard.projeto.view.init();
 </script>
 
 <script src="js/lib/reveal.js"></script>

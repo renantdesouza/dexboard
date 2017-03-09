@@ -241,6 +241,9 @@ dexboard.indicador = (function($, Handlebars) {
         (new view.Dialog()).init();
 	};
 
+	view.init = function() {
+    };
+
 	return {
 		"view" : view,
 		"service" : service
