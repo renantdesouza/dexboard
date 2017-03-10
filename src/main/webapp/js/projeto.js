@@ -6,8 +6,8 @@ dexboard.projeto = (function($, Handlebars) {
 		return str.toLowerCase();
 	});
 
-	Handlebars.registerHelper("showSatisfaction", function(line, index, satisfaction) {
-        return line == index ? satisfaction : '';
+	Handlebars.registerHelper("showValue", function(line, index, value) {
+        return line == index ? value : '';
     });
 
 	var model = {};

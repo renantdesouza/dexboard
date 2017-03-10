@@ -18,6 +18,8 @@ class PlanilhaPrincipalImpl extends PlanilhaDexboard implements PlanilhaPrincipa
 	private static final String COLUNA_APRESENTACAO = "Apresentacao";
 	private static final String COLUNA_SATISFACAO_CLIENTE = "Satisfacao Cliente";
 	private static final String COLUNA_SATISFACAO_EQUIPE = "Satisfacao Equipe";
+	private static final String COLUNA_QUALIDADE_TECNICA = "Qualidade Tecnica";
+	private static final String COLUNA_UX = "ux";
 
 	private static final Pattern LINK_APRESENTACAO = Pattern.compile("https://(.+)embed");
 
@@ -71,6 +73,14 @@ class PlanilhaPrincipalImpl extends PlanilhaDexboard implements PlanilhaPrincipa
 		return recuperarConteudoCelulaDouble(indice, COLUNA_SATISFACAO_EQUIPE);
 	}
 
+	private Double buscarQualidadeTecnica(int indice) {
+		return recuperarConteudoCelulaDouble(indice, COLUNA_QUALIDADE_TECNICA);
+	}
+
+	private Double buscarUx(int indice) {
+		return recuperarConteudoCelulaDouble(indice, COLUNA_UX);
+	}
+
 	@Override
 	public Map<Long, Projeto> buscarDadosDosProjetos() {
 		Map<Long, Projeto> projetos = new java.util.HashMap<>();
@@ -87,6 +97,8 @@ class PlanilhaPrincipalImpl extends PlanilhaDexboard implements PlanilhaPrincipa
 			projeto.setApresentacao(buscarLinkApresentacao(i));
 			projeto.setSatisfacaoCliente(buscarSatisfacaoCliente(i));
 			projeto.setSatisfacaoEquipe(buscarSatisfacaoEquipe(i));
+			projeto.setQualidadeTecnica(buscarQualidadeTecnica(i));
+			projeto.setUx(buscarUx(i));
 
 			projetos.put(projeto.getIdPma(), projeto);
 		}

@@ -1,23 +1,21 @@
 package br.com.dextra.dexboard.json;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 import br.com.dextra.dexboard.dao.ProjetoDao;
 import br.com.dextra.dexboard.domain.Classificacao;
 import br.com.dextra.dexboard.domain.Indicador;
 import br.com.dextra.dexboard.domain.Projeto;
 import flexjson.JSON;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 public class ProjetoJson {
 
 	private Projeto projeto;
 	private List<IndicadorJson> indicadores = new ArrayList<IndicadorJson>();
 	private Classificacao classificacao;
-	private double satisfacaoCliente;
-	private double satisfacaoEquipe;
 	private boolean atrasado;
 
 	public ProjetoJson() {
@@ -25,8 +23,6 @@ public class ProjetoJson {
 
 	public ProjetoJson(Projeto projeto) {
 		this.projeto = projeto;
-		satisfacaoCliente = projeto.getSatisfacaoCliente();
-		satisfacaoEquipe = projeto.getSatisfacaoEquipe();
 
 		inicializaIndicadores();
 		ordenaIndicadores();
@@ -57,11 +53,11 @@ public class ProjetoJson {
 
 
 	public double getSatisfacaoCliente() {
-		return satisfacaoCliente;
+		return projeto.getSatisfacaoCliente();
 	}
 
 	public double getSatisfacaoEquipe() {
-		return satisfacaoEquipe;
+		return projeto.getSatisfacaoEquipe();
 	}
 
 	@JSON
@@ -82,7 +78,15 @@ public class ProjetoJson {
 	}
 
 	public String getEquipe() {
-		return this.projeto.getEquipe();
+		return projeto.getEquipe();
+	}
+
+	public double getUx() {
+		return projeto.getUx();
+	}
+
+	public double getQualidadeTecnica() {
+		return projeto.getQualidadeTecnica();
 	}
 
 	public Classificacao getClassificacao() {

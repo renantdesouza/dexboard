@@ -32,11 +32,16 @@ public class Projeto {
 	@Index
 	private Double satisfacaoEquipe;
 
+	private Double ux;
+
+	private Double qualidadeTecnica;
+
 	public Projeto() {
 	}
 
 	public Projeto(long id, String nome, String equipe, String email, double cpi,
-				   double satisfacaoCliente, double satisfacaoEquipe) {
+				   double satisfacaoCliente, double satisfacaoEquipe,
+				   double ux, double qualidadeTecnica) {
 		setIdPma(id);
 		setNome(nome);
 		setEquipe(equipe);
@@ -44,6 +49,8 @@ public class Projeto {
 		setCpi(cpi);
 		setSatisfacaoCliente(satisfacaoCliente);
 		setSatisfacaoEquipe(satisfacaoEquipe);
+		setUx(ux);
+		setQualidadeTecnica(qualidadeTecnica);
 	}
 
 	public Long getIdPma() {
@@ -90,6 +97,10 @@ public class Projeto {
 		return email;
 	}
 
+	public void setQualidadeTecnica(Double qualidadeTecnica) {
+		this.qualidadeTecnica = qualidadeTecnica;
+	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -116,6 +127,18 @@ public class Projeto {
 
 	public void setSatisfacaoEquipe(Double satisfacaoEquipe) {
 		this.satisfacaoEquipe = satisfacaoEquipe;
+	}
+
+	public Double getUx() {
+		return ux;
+	}
+
+	public void setUx(Double ux) {
+		this.ux = ux;
+	}
+
+	public Double getQualidadeTecnica() {
+		return qualidadeTecnica;
 	}
 
 	@Ignore // Lazy

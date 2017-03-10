@@ -133,7 +133,9 @@ public class ReloadProjetosServlet extends HttpServlet {
 				|| alterou(projetoEmCache.getEmail(), projetoAtual.getEmail())
 				|| alterou(projetoEmCache.getApresentacao(), projetoAtual.getApresentacao())
 				|| alterou(projetoEmCache.getSatisfacaoCliente(), projetoAtual.getSatisfacaoCliente())
-				|| alterou(projetoEmCache.getSatisfacaoEquipe(), projetoAtual.getSatisfacaoEquipe());
+				|| alterou(projetoEmCache.getSatisfacaoEquipe(), projetoAtual.getSatisfacaoEquipe())
+				|| alterou(projetoEmCache.getUx(), projetoAtual.getUx())
+				|| alterou(projetoEmCache.getQualidadeTecnica(), projetoAtual.getQualidadeTecnica());
 	}
 
 	private boolean alterou(Object valorEmCache, Object valorAtual) {

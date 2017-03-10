@@ -54,13 +54,21 @@
         <td data-index="{{@index}}" class="indicador {{lowercase classificacao}}{{#if atrasado}} atrasado{{/if}}">
             {{#if @first}}<span class="cpi">{{../cpi}}</span>{{/if}}
 
-            {{#showSatisfaction 1 @index ../satisfacaoCliente}}
+            {{#showValue 1 @index ../satisfacaoCliente}}
             <span class="cpi">{{../satisfacaoCliente}}</span>
-            {{/showSatisfaction}}
+            {{/showValue}}
 
-            {{#showSatisfaction 2 @index ../satisfacaoEquipe}}
+            {{#showValue 2 @index ../satisfacaoEquipe}}
             <span class="cpi">{{../satisfacaoEquipe}}</span>
-            {{/showSatisfaction}}
+            {{/showValue}}
+
+            {{#showValue 4 @index ../qualidadeTecnica}}
+            <span class="cpi">{{../qualidadeTecnica}}</span>
+            {{/showValue}}
+
+            {{#showValue 3 @index ../ux}}
+            <span class="cpi">{{../ux}}</span>
+            {{/showValue}}
         </td>
         {{/each}}
     </tr>
