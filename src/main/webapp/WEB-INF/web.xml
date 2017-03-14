@@ -52,7 +52,7 @@
 		<servlet-name>IndicadorServlet</servlet-name>
 		<servlet-class>br.com.dextra.dexboard.servlet.IndicadorServlet</servlet-class>
 	</servlet>
-	<servlet-mapping>
+	<servlet-mapping>p
 		<servlet-name>IndicadorServlet</servlet-name>
 		<url-pattern>/indicador</url-pattern>
 	</servlet-mapping>
