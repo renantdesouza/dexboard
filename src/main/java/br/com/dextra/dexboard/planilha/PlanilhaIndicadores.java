@@ -1,8 +1,8 @@
 package br.com.dextra.dexboard.planilha;
 
-import java.util.List;
-
 import br.com.dextra.dexboard.domain.Indicador;
+
+import java.util.List;
 
 public interface PlanilhaIndicadores {
 
