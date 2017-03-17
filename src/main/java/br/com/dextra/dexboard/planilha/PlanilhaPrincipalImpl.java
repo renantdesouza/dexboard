@@ -8,7 +8,7 @@ import br.com.dextra.dexboard.domain.Projeto;
 
 class PlanilhaPrincipalImpl extends PlanilhaDexboard implements PlanilhaPrincipal {
 
-	private static final int COLUNA_QUANTIDADE_PROJETOS = 10;
+	private static final int COLUNA_QUANTIDADE_PROJETOS = 14;
 
 	private static final String COLUNA_ID_PROJETO = "id no PMA";
 	private static final String COLUNA_NOME_PROJETO = "NickName";

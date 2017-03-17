@@ -2,6 +2,8 @@ package br.com.dextra.dexboard.planilha;
 
 import com.github.feroult.gapi.GoogleAPI;
 import com.github.feroult.gapi.SpreadsheetAPI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -10,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 abstract class Planilha {
+
+	private static final Logger LOG = LoggerFactory.getLogger(Planilha.class);
 
 	private final String sheetName;
 
@@ -42,7 +46,13 @@ abstract class Planilha {
 	}
 
 	protected String recuperarConteudoCelula(int linha, String nomeColuna) {
-		return spreadSheetMap.get(linha).get(normalizarNomeColuna(nomeColuna));
+		try {
+			return spreadSheetMap.get(linha).get(normalizarNomeColuna(nomeColuna));
+		} catch (IndexOutOfBoundsException aiobe) {
+			return null;
+		} catch (NumberFormatException nfe) {
+			return null;
+		}
 	}
 
 	private String normalizarNomeColuna(String nomeColuna) {

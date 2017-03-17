@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface PlanilhaIndicadores {
 
-	public List<Indicador> criarListaDeIndicadores();
+	List<Indicador> criarListaDeIndicadores();
 
 }

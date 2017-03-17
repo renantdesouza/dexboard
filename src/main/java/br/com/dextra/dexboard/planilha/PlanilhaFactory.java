@@ -14,7 +14,6 @@ public class PlanilhaFactory {
 	
 	public static PlanilhaPrincipal principal() {
 		return (MOCK) ? new MockPlanilhaPrincipal() : new PlanilhaPrincipalImpl();
-		
-	} 
+	}
 
 }

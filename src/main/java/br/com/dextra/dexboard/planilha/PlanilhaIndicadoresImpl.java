@@ -1,12 +1,13 @@
 package br.com.dextra.dexboard.planilha;
 
+import br.com.dextra.dexboard.domain.Indicador;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.dextra.dexboard.domain.Indicador;
-import br.com.dextra.dexboard.utils.StringUtils;
-
 class PlanilhaIndicadoresImpl extends PlanilhaDexboard implements PlanilhaIndicadores {
+
+	private static final int COLUNA_QUANTIDADE_DE_INDICADORES = 4;
 
 	private static final String COLUNA_NOME = "nome do indicador";
 	private static final String COLUNA_DESCRICAO = "descricao do indicador";
@@ -28,24 +29,27 @@ class PlanilhaIndicadoresImpl extends PlanilhaDexboard implements PlanilhaIndica
 		return recuperarConteudoCelulaInt(linha, COLUNA_POSICAO);
 	}
 
+	private int buscarQuantidadeDeColunas() {
+		return recuperarConteudoCelulaInt(2, COLUNA_QUANTIDADE_DE_INDICADORES);
+	}
+
 	@Override
 	public List<Indicador> criarListaDeIndicadores() {
-		List<Indicador> indicadores = new ArrayList<Indicador>();
+		List<Indicador> indicadores = new ArrayList<>();
 
-		Long i = 1l;
-		while (true) {
+		int quantidadeIndicadores = buscarQuantidadeDeColunas();
+
+		for (Long i = 0l; i < quantidadeIndicadores; ++i) {
 			int index = i.intValue();
 
 			String nome = buscarNomeDoIndicador(index);
 			String descricao = buscarDescricaoDoIndicador(index);
 			int posicao = buscarPosicaoDoIndicador(index);
 
-			if (!StringUtils.isNullOrEmpty(nome)) {
-				indicadores.add(new Indicador(i, nome, descricao, posicao));
-				i++;
-			} else {
-				return indicadores;
-			}
+			indicadores.add(new Indicador(i, nome, descricao, posicao));
 		}
+
+		return indicadores;
 	}
+
 }
