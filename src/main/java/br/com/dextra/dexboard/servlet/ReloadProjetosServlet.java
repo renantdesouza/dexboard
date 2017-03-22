@@ -75,12 +75,14 @@ public class ReloadProjetosServlet extends HttpServlet {
 
 		for (Projeto p : ativos) {
 			Projeto projeto = mapProjetosDataStore.get(p.getIdPma());
+
+			for (Indicador i : indicadores) {
+				dao.salvaIndicador(p.getIdPma(), i);
+			}
+
 			if (projeto == null) {
 				LOG.info(String.format("Adicionando projeto \"%s\"", p.getNome()));
 				dao.salvarProjeto(p);
-				for (Indicador i : indicadores) {
-					dao.salvaIndicador(p.getIdPma(), i);
-				}
 			} else if (!projeto.isAtivo()) {
 				LOG.info(String.format("Ativando projeto \"%s\"", p.getNome()));
 				projeto.setNome(p.getNome());
@@ -88,6 +90,8 @@ public class ReloadProjetosServlet extends HttpServlet {
 				projeto.setAtivo(true);
 				projeto.setSatisfacaoCliente(p.getSatisfacaoCliente());
 				projeto.setSatisfacaoEquipe(p.getSatisfacaoEquipe());
+				projeto.setQualidadeTecnica(p.getQualidadeTecnica());
+				projeto.setUx(p.getUx());
 				dao.salvarProjeto(projeto);
 			}
 		}
@@ -114,6 +118,8 @@ public class ReloadProjetosServlet extends HttpServlet {
 					projeto.setApresentacao(atual.getApresentacao());
 					projeto.setSatisfacaoCliente(atual.getSatisfacaoCliente());
 					projeto.setSatisfacaoEquipe(atual.getSatisfacaoEquipe());
+					projeto.setQualidadeTecnica(atual.getQualidadeTecnica());
+					projeto.setUx(atual.getUx());
 
 					dao.salvarProjeto(projeto);
 					LOG.info(String.format("Projeto \"%s\" salvo", atual.getNome()));
@@ -127,15 +133,15 @@ public class ReloadProjetosServlet extends HttpServlet {
 	}
 
 	private boolean alterouInformacoesProjeto(Projeto projetoEmCache, Projeto projetoAtual) {
-		return alterou(projetoEmCache.getCpi(), projetoAtual.getCpi())
+		return projetoEmCache.getCpi().equals(projetoAtual.getCpi())
 				|| alterou(projetoEmCache.getNome(), projetoAtual.getNome())
 				|| alterou(projetoEmCache.getEquipe(), projetoAtual.getEquipe())
 				|| alterou(projetoEmCache.getEmail(), projetoAtual.getEmail())
 				|| alterou(projetoEmCache.getApresentacao(), projetoAtual.getApresentacao())
-				|| alterou(projetoEmCache.getSatisfacaoCliente(), projetoAtual.getSatisfacaoCliente())
-				|| alterou(projetoEmCache.getSatisfacaoEquipe(), projetoAtual.getSatisfacaoEquipe())
-				|| alterou(projetoEmCache.getUx(), projetoAtual.getUx())
-				|| alterou(projetoEmCache.getQualidadeTecnica(), projetoAtual.getQualidadeTecnica());
+				|| projetoEmCache.getSatisfacaoCliente().equals(projetoAtual.getSatisfacaoCliente())
+				|| projetoEmCache.getSatisfacaoEquipe().equals(projetoAtual.getSatisfacaoEquipe())
+				|| projetoEmCache.getUx().equals(projetoAtual.getUx())
+				|| projetoEmCache.getQualidadeTecnica().equals(projetoAtual.getQualidadeTecnica());
 	}
 
 	private boolean alterou(Object valorEmCache, Object valorAtual) {

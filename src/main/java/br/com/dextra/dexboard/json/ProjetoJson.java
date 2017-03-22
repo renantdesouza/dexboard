@@ -51,15 +51,6 @@ public class ProjetoJson {
 		return atrasado;
 	}
 
-
-	public double getSatisfacaoCliente() {
-		return projeto.getSatisfacaoCliente();
-	}
-
-	public double getSatisfacaoEquipe() {
-		return projeto.getSatisfacaoEquipe();
-	}
-
 	@JSON
 	public List<IndicadorJson> getIndicadores() {
 		return indicadores;
@@ -81,20 +72,28 @@ public class ProjetoJson {
 		return projeto.getEquipe();
 	}
 
-	public double getUx() {
-		return projeto.getUx();
-	}
-
-	public double getQualidadeTecnica() {
-		return projeto.getQualidadeTecnica();
-	}
-
 	public Classificacao getClassificacao() {
 		return classificacao;
 	}
 
 	public String getApresentacao() {
 		return projeto.getApresentacao();
+	}
+
+	public String getSatisfacaoCliente() {
+		return emptyVal(projeto.getSatisfacaoCliente());
+	}
+
+	public String getSatisfacaoEquipe() {
+		return emptyVal(projeto.getSatisfacaoEquipe());
+	}
+
+	public String getUx() {
+		return emptyVal(projeto.getUx());
+	}
+
+	public String getQualidadeTecnica() {
+		return emptyVal(projeto.getQualidadeTecnica());
 	}
 
 	private boolean defineAtrasado() {
@@ -122,6 +121,10 @@ public class ProjetoJson {
 		}
 
 		return retorno;
+	}
+
+	private String emptyVal(Double d) {
+		return d == null ? "" : d.toString();
 	}
 
 }

@@ -156,4 +156,13 @@ public class Projeto {
 
 		return jsons ;
 	}
+
+	@Override
+	public String toString() {
+		return "projeto : { nome:'" + nome +
+					", satisfacaoCliente:" + satisfacaoCliente +
+					", satisfacaoEquipe:" + satisfacaoEquipe +
+					", qualidadeTecnica:" + qualidadeTecnica +
+					", ux:" + ux + '}';
+	}
 }

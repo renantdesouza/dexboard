@@ -1,10 +1,10 @@
 package br.com.dextra.dexboard.planilha;
 
+import br.com.dextra.dexboard.domain.Projeto;
+
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import br.com.dextra.dexboard.domain.Projeto;
 
 class PlanilhaPrincipalImpl extends PlanilhaDexboard implements PlanilhaPrincipal {
 
@@ -93,8 +93,8 @@ class PlanilhaPrincipalImpl extends PlanilhaDexboard implements PlanilhaPrincipa
 			projeto.setNome(buscarNomeDoProjeto(i));
 			projeto.setEquipe(buscarEquipeProjeto(i));
 			projeto.setEmail(buscarEmailProjeto(i));
-			projeto.setCpi(buscarCpiProjetoX(i));
 			projeto.setApresentacao(buscarLinkApresentacao(i));
+			projeto.setCpi(buscarCpiProjetoX(i));
 			projeto.setSatisfacaoCliente(buscarSatisfacaoCliente(i));
 			projeto.setSatisfacaoEquipe(buscarSatisfacaoEquipe(i));
 			projeto.setQualidadeTecnica(buscarQualidadeTecnica(i));

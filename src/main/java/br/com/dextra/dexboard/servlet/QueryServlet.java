@@ -1,22 +1,20 @@
 package br.com.dextra.dexboard.servlet;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
+import br.com.dextra.dexboard.dao.ProjetoDao;
+import br.com.dextra.dexboard.domain.Projeto;
+import br.com.dextra.dexboard.json.ProjetoJson;
+import br.com.dextra.dexboard.repository.ProjetoComparator;
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
+import flexjson.JSONSerializer;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.google.appengine.api.memcache.MemcacheService;
-import com.google.appengine.api.memcache.MemcacheServiceFactory;
-
-import br.com.dextra.dexboard.dao.ProjetoDao;
-import br.com.dextra.dexboard.domain.Projeto;
-import br.com.dextra.dexboard.json.ProjetoJson;
-import br.com.dextra.dexboard.repository.ProjetoComparator;
-import flexjson.JSONSerializer;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 public class QueryServlet extends HttpServlet {
 
@@ -58,9 +56,11 @@ public class QueryServlet extends HttpServlet {
 		Collections.sort(projetos, new ProjetoComparator());
 
 		List<ProjetoJson> projetosJson = Projeto.toProjetoJson(projetos);
+
 		JSONSerializer serializer = new JSONSerializer();
 		serializer.exclude("*.class", "*.projeto");
 		String json = serializer.deepSerialize(projetosJson);
+
 		return json;
 	}
 

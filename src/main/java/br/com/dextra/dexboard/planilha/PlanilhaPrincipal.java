@@ -6,6 +6,6 @@ import br.com.dextra.dexboard.domain.Projeto;
 
 public interface PlanilhaPrincipal {
 
-	public Map<Long, Projeto> buscarDadosDosProjetos();
+	Map<Long, Projeto> buscarDadosDosProjetos();
 	
 }

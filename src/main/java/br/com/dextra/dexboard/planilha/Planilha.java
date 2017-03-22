@@ -1,9 +1,8 @@
 package br.com.dextra.dexboard.planilha;
 
+import br.com.dextra.dexboard.utils.StringUtils;
 import com.github.feroult.gapi.GoogleAPI;
 import com.github.feroult.gapi.SpreadsheetAPI;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -12,8 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 abstract class Planilha {
-
-	private static final Logger LOG = LoggerFactory.getLogger(Planilha.class);
 
 	private final String sheetName;
 
@@ -76,13 +73,15 @@ abstract class Planilha {
 	}
 
 	private static Double parseDouble(String value) {
-		DecimalFormat df = new DecimalFormat();
 		DecimalFormatSymbols symbols = new DecimalFormatSymbols();
 		symbols.setDecimalSeparator(',');
 		symbols.setGroupingSeparator('.');
+
+		DecimalFormat df = new DecimalFormat();
 		df.setDecimalFormatSymbols(symbols);
+
 		try {
-			return df.parse(value).doubleValue();
+			return StringUtils.isNullOrEmpty(value) || !value.matches("-?\\d+(\\.|\\,\\d+)?") ? null : df.parse(value).doubleValue();
 		} catch (ParseException e) {
 			throw new RuntimeException(e);
 		}
