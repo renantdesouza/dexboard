@@ -133,19 +133,23 @@ public class ReloadProjetosServlet extends HttpServlet {
 	}
 
 	private boolean alterouInformacoesProjeto(Projeto projetoEmCache, Projeto projetoAtual) {
-		return projetoEmCache.getCpi().equals(projetoAtual.getCpi())
+		return alterou(projetoEmCache.getCpi(), projetoAtual.getCpi())
 				|| alterou(projetoEmCache.getNome(), projetoAtual.getNome())
 				|| alterou(projetoEmCache.getEquipe(), projetoAtual.getEquipe())
 				|| alterou(projetoEmCache.getEmail(), projetoAtual.getEmail())
 				|| alterou(projetoEmCache.getApresentacao(), projetoAtual.getApresentacao())
-				|| projetoEmCache.getSatisfacaoCliente().equals(projetoAtual.getSatisfacaoCliente())
-				|| projetoEmCache.getSatisfacaoEquipe().equals(projetoAtual.getSatisfacaoEquipe())
-				|| projetoEmCache.getUx().equals(projetoAtual.getUx())
-				|| projetoEmCache.getQualidadeTecnica().equals(projetoAtual.getQualidadeTecnica());
+				|| alterou(projetoEmCache.getSatisfacaoCliente(), projetoAtual.getSatisfacaoCliente(), false)
+				|| alterou(projetoEmCache.getSatisfacaoEquipe(), projetoAtual.getSatisfacaoEquipe(), false)
+				|| alterou(projetoEmCache.getUx(), projetoAtual.getUx(), false)
+				|| alterou(projetoEmCache.getQualidadeTecnica(), projetoAtual.getQualidadeTecnica(), false);
 	}
 
 	private boolean alterou(Object valorEmCache, Object valorAtual) {
-		if (valorAtual == null) {
+		return alterou(valorEmCache, valorAtual, true);
+	}
+
+	private boolean alterou(Object valorEmCache, Object valorAtual, boolean testaNull) {
+		if (testaNull && valorAtual == null) {
 			return false;
 		}
 		return valorEmCache == null || !valorEmCache.equals(valorAtual);
